@@ -1,0 +1,757 @@
+{
+  "@@locale": "en",
+
+  "appName": "GrowLog",
+  "@appName": {
+    "description": "Application name"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button label on error screen"
+  },
+
+  "errorTitle": "Something went wrong",
+  "@errorTitle": {
+    "description": "Error screen title"
+  },
+
+  "errorMessage": "We're sorry for the inconvenience. Please restart the app or try again.",
+  "@errorMessage": {
+    "description": "Error screen body text"
+  },
+
+  "today": "Today",
+  "@today": {
+    "description": "Relative date label for current day"
+  },
+
+  "yesterday": "Yesterday",
+  "@yesterday": {
+    "description": "Relative date label for previous day"
+  },
+
+  "daysAgo": "{count, plural, =1{1 day ago} other{{count} days ago}}",
+  "@daysAgo": {
+    "description": "Relative date label for days past",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+
+  "weeksAgo": "{count, plural, =1{1 week ago} other{{count} weeks ago}}",
+  "@weeksAgo": {
+    "description": "Relative date label for weeks past",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+
+  "monthsAgo": "{count, plural, =1{1 month ago} other{{count} months ago}}",
+  "@monthsAgo": {
+    "description": "Relative date label for months past",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "yearsAgo": "{count, plural, =1{1 year ago} other{{count} years ago}}",
+  "@yearsAgo": {
+    "description": "Relative date label for years past",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+
+  "notScheduled": "Not scheduled",
+  "@notScheduled": {
+    "description": "Care reminder status when no schedule exists"
+  },
+
+  "overdue": "Overdue",
+  "@overdue": {
+    "description": "Care reminder status when past due date"
+  },
+
+  "tomorrow": "Tomorrow",
+  "@tomorrow": {
+    "description": "Care reminder due tomorrow"
+  },
+
+  "careDueInDays": "In {count, plural, =1{1 day} other{{count} days}}",
+  "@careDueInDays": {
+    "description": "Care reminder due in number of days",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "careDueToday": "{careType} today",
+  "@careDueToday": {
+    "description": "Care reminder due today",
+    "placeholders": {
+      "careType": {
+        "type": "String",
+        "example": "Water"
+      }
+    }
+  },
+
+  "careOverdue": "{careType} overdue",
+  "@careOverdue": {
+    "description": "Care reminder overdue",
+    "placeholders": {
+      "careType": {
+        "type": "String",
+        "example": "Water"
+      }
+    }
+  },
+
+  "careDueWithType": "{careType} in {count, plural, =1{1 day} other{{count} days}}",
+  "@careDueWithType": {
+    "description": "Care reminder with type and days",
+    "placeholders": {
+      "careType": {
+        "type": "String",
+        "example": "Water"
+      },
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "careTypeWater": "Water",
+  "@careTypeWater": {
+    "description": "Water care action label"
+  },
+
+  "careTypeFertilize": "Fertilize",
+  "@careTypeFertilize": {
+    "description": "Fertilize care action label"
+  },
+
+  "careTypeMist": "Mist",
+  "@careTypeMist": {
+    "description": "Mist care action label"
+  },
+
+  "careTypeRepot": "Repot",
+  "@careTypeRepot": {
+    "description": "Repot care action label"
+  },
+
+  "careTypePrune": "Prune",
+  "@careTypePrune": {
+    "description": "Prune care action label"
+  },
+
+  "careTypeTreat": "Treat",
+  "@careTypeTreat": {
+    "description": "Treat care action label"
+  },
+
+  "searchPlants": "Search plants",
+  "@searchPlants": {
+    "description": "Search field hint and accessibility label"
+  },
+
+  "searchHint": "Search plants...",
+  "@searchHint": {
+    "description": "Search input placeholder text"
+  },
+
+  "needsCare": "Needs Care",
+  "@needsCare": {
+    "description": "Home screen section header for overdue plants"
+  },
+
+  "rooms": "Rooms",
+  "@rooms": {
+    "description": "Home screen section header for rooms"
+  },
+
+  "seeAll": "See All",
+  "@seeAll": {
+    "description": "Link to view all items in a section"
+  },
+
+  "myGarden": "My Garden",
+  "@myGarden": {
+    "description": "Home screen section header for plant grid"
+  },
+
+  "noPlantsYet": "No plants yet",
+  "@noPlantsYet": {
+    "description": "Empty state title when no plants exist"
+  },
+
+  "noPlantsSubtitle": "Tap the + button to add your first plant",
+  "@noPlantsSubtitle": {
+    "description": "Empty state subtitle instructions"
+  },
+
+  "addPlant": "Add Plant",
+  "@addPlant": {
+    "description": "Button to add a new plant"
+  },
+
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit action label"
+  },
+
+  "markAsDead": "Mark as Dead",
+  "@markAsDead": {
+    "description": "Action to mark plant deceased"
+  },
+
+  "revivePlant": "Revive Plant",
+  "@revivePlant": {
+    "description": "Action to restore dead plant to active"
+  },
+
+  "sharePhotos": "Share Photos",
+  "@sharePhotos": {
+    "description": "Action to share plant photos"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete action label"
+  },
+
+  "deletePlantTitle": "Delete Plant?",
+  "@deletePlantTitle": {
+    "description": "Delete confirmation dialog title"
+  },
+
+  "deletePlantMessage": "This will permanently delete {plantName} and all its photos.",
+  "@deletePlantMessage": {
+    "description": "Delete confirmation dialog body",
+    "placeholders": {
+      "plantName": {
+        "type": "String",
+        "example": "Monstera"
+      }
+    }
+  },
+
+  "deletePlantSimpleMessage": "This cannot be undone.",
+  "@deletePlantSimpleMessage": {
+    "description": "Short delete confirmation warning"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button label"
+  },
+
+  "navGarden": "Garden",
+  "@navGarden": {
+    "description": "Bottom navigation garden tab"
+  },
+
+  "navSchedule": "Schedule",
+  "@navSchedule": {
+    "description": "Bottom navigation schedule tab"
+  },
+
+  "navWishlist": "Wishlist",
+  "@navWishlist": {
+    "description": "Bottom navigation wishlist tab"
+  },
+
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Bottom navigation settings tab"
+  },
+
+  "navAddPlant": "Add new plant",
+  "@navAddPlant": {
+    "description": "Bottom navigation add button accessibility label"
+  },
+
+  "plantNotFound": "Plant not found",
+  "@plantNotFound": {
+    "description": "Error when plant ID does not exist"
+  },
+
+  "viewGrowthTimeline": "View Growth Timeline",
+  "@viewGrowthTimeline": {
+    "description": "Button to open growth comparison slider"
+  },
+
+  "photos": "Photos",
+  "@photos": {
+    "description": "Photo gallery section header"
+  },
+
+  "addPhoto": "Add Photo",
+  "@addPhoto": {
+    "description": "Button to add a new progress photo"
+  },
+
+  "careLoggedSnackbar": "{careType} logged for {plantName}",
+  "@careLoggedSnackbar": {
+    "description": "Confirmation after logging care action",
+    "placeholders": {
+      "careType": {
+        "type": "String",
+        "example": "Water"
+      },
+      "plantName": {
+        "type": "String",
+        "example": "Monstera"
+      }
+    }
+  },
+
+  "growthTimelineTitle": "Growth Timeline",
+  "@growthTimelineTitle": {
+    "description": "Growth timeline screen app bar title"
+  },
+
+  "beforeLabel": "Before",
+  "@beforeLabel": {
+    "description": "Label for earlier photo in comparison"
+  },
+
+  "afterLabel": "After",
+  "@afterLabel": {
+    "description": "Label for later photo in comparison"
+  },
+
+  "sliderHint": "Drag the slider to compare growth",
+  "@sliderHint": {
+    "description": "Instructional text below growth slider"
+  },
+
+  "shareGrowthText": "{plantName} growth — tracked with GrowLog",
+  "@shareGrowthText": {
+    "description": "Default share text for growth comparison",
+    "placeholders": {
+      "plantName": {
+        "type": "String",
+        "example": "Monstera"
+      }
+    }
+  },
+
+  "addPlantScreenTitle": "Add Plant",
+  "@addPlantScreenTitle": {
+    "description": "Add plant screen app bar title"
+  },
+
+  "plantNameLabel": "Plant name *",
+  "@plantNameLabel": {
+    "description": "Plant name input field label"
+  },
+
+  "speciesLabel": "Species (optional)",
+  "@speciesLabel": {
+    "description": "Species input field label"
+  },
+
+  "selectRoom": "Select room",
+  "@selectRoom": {
+    "description": "Room dropdown placeholder"
+  },
+
+  "careSchedule": "Care Schedule",
+  "@careSchedule": {
+    "description": "Care schedule section header"
+  },
+
+  "waterEvery": "Water every",
+  "@waterEvery": {
+    "description": "Water frequency input label"
+  },
+
+  "fertilizeEvery": "Fertilize every",
+  "@fertilizeEvery": {
+    "description": "Fertilize frequency input label"
+  },
+
+  "mistEvery": "Mist every",
+  "@mistEvery": {
+    "description": "Mist frequency input label"
+  },
+
+  "daysSuffix": "days",
+  "@daysSuffix": {
+    "description": "Suffix for frequency input fields"
+  },
+
+  "notesLabel": "Notes (optional)",
+  "@notesLabel": {
+    "description": "Notes input field label"
+  },
+
+  "savePlant": "Save Plant",
+  "@savePlant": {
+    "description": "Save plant button label"
+  },
+
+  "plantNameRequired": "Plant name is required",
+  "@plantNameRequired": {
+    "description": "Validation error when plant name is empty"
+  },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings screen title"
+  },
+
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme selection setting label"
+  },
+
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "System default theme option"
+  },
+
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Light theme option"
+  },
+
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Dark theme option"
+  },
+
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications setting section"
+  },
+
+  "backupRestore": "Backup & Restore",
+  "@backupRestore": {
+    "description": "Backup and restore section header"
+  },
+
+  "exportData": "Export Data",
+  "@exportData": {
+    "description": "Export data button label"
+  },
+
+  "importData": "Import Data",
+  "@importData": {
+    "description": "Import data button label"
+  },
+
+  "about": "About",
+  "@about": {
+    "description": "About section header"
+  },
+
+  "version": "Version",
+  "@version": {
+    "description": "Version info label"
+  },
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy link label"
+  },
+
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Terms of service link label"
+  },
+
+  "support": "Support",
+  "@support": {
+    "description": "Support link label"
+  },
+
+  "proFeatures": "Pro Features",
+  "@proFeatures": {
+    "description": "Pro features section header"
+  },
+
+  "upgradeToPro": "Upgrade to Pro",
+  "@upgradeToPro": {
+    "description": "Upgrade button label"
+  },
+
+  "restorePurchases": "Restore Purchases",
+  "@restorePurchases": {
+    "description": "Restore purchases button label"
+  },
+
+  "adFree": "Ad-free experience",
+  "@adFree": {
+    "description": "Pro feature description"
+  },
+
+  "aiPlantId": "AI Plant ID",
+  "@aiPlantId": {
+    "description": "Pro feature description"
+  },
+
+  "cloudSync": "Cloud Sync",
+  "@cloudSync": {
+    "description": "Pro feature description"
+  },
+
+  "monthly": "Monthly",
+  "@monthly": {
+    "description": "Monthly subscription option"
+  },
+
+  "yearly": "Yearly",
+  "@yearly": {
+    "description": "Yearly subscription option"
+  },
+
+  "roomsTitle": "Rooms",
+  "@roomsTitle": {
+    "description": "Rooms management screen title"
+  },
+
+  "addRoom": "Add Room",
+  "@addRoom": {
+    "description": "Add room button label"
+  },
+
+  "roomNameLabel": "Room name",
+  "@roomNameLabel": {
+    "description": "Room name input label"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Save button label"
+  },
+
+  "deleteRoomTitle": "Delete Room?",
+  "@deleteRoomTitle": {
+    "description": "Delete room confirmation title"
+  },
+
+  "wishlistTitle": "Wishlist",
+  "@wishlistTitle": {
+    "description": "Wishlist screen title"
+  },
+
+  "plantsToBuy": "Plants to buy",
+  "@plantsToBuy": {
+    "description": "Wishlist subtitle"
+  },
+
+  "noWishlistItems": "No wishlist items",
+  "@noWishlistItems": {
+    "description": "Empty state for wishlist"
+  },
+
+  "moveToGarden": "Move to Garden",
+  "@moveToGarden": {
+    "description": "Action to move wishlist plant to garden"
+  },
+
+  "careScheduleTitle": "Care Schedule",
+  "@careScheduleTitle": {
+    "description": "Care schedule screen title"
+  },
+
+  "upcoming": "Upcoming",
+  "@upcoming": {
+    "description": "Care schedule upcoming tab"
+  },
+
+  "overdueTab": "Overdue",
+  "@overdueTab": {
+    "description": "Care schedule overdue tab"
+  },
+
+  "all": "All",
+  "@all": {
+    "description": "Care schedule all tab"
+  },
+
+  "noUpcomingCare": "No upcoming care",
+  "@noUpcomingCare": {
+    "description": "Empty state for upcoming care"
+  },
+
+  "noOverdueCare": "No overdue care",
+  "@noOverdueCare": {
+    "description": "Empty state for overdue care"
+  },
+
+  "noPhotosYet": "No photos yet",
+  "@noPhotosYet": {
+    "description": "Empty state for photo timeline"
+  },
+
+  "addMeasurementsHint": "Add more measurements to see trends",
+  "@addMeasurementsHint": {
+    "description": "Empty state for measurement chart"
+  },
+
+  "growthOver": "Growth over {duration}",
+  "@growthOver": {
+    "description": "Growth stats header with time period",
+    "placeholders": {
+      "duration": {
+        "type": "String",
+        "example": "3 months"
+      }
+    }
+  },
+
+  "heightLabel": "Height",
+  "@heightLabel": {
+    "description": "Height measurement label"
+  },
+
+  "leavesLabel": "Leaves",
+  "@leavesLabel": {
+    "description": "Leaf count measurement label"
+  },
+
+  "undo": "Undo",
+  "@undo": {
+    "description": "Undo action label in snackbar"
+  },
+
+  "shareDefaultText": "My plant growth with GrowLog",
+  "@shareDefaultText": {
+    "description": "Default share text"
+  },
+
+  "sharePlantPhotosText": "{plantName} growth journey — tracked with GrowLog",
+  "@sharePlantPhotosText": {
+    "description": "Share text for plant photos",
+    "placeholders": {
+      "plantName": {
+        "type": "String",
+        "example": "Monstera"
+      }
+    }
+  },
+
+  "shareBackupText": "GrowLog backup",
+  "@shareBackupText": {
+    "description": "Share text for backup file"
+  },
+
+  "noSchedule": "No schedule",
+  "@noSchedule": {
+    "description": "Badge text when no care is scheduled"
+  },
+
+  "plantCardAccessibility": "{plantName} plant card",
+  "@plantCardAccessibility": {
+    "description": "Accessibility label for plant card",
+    "placeholders": {
+      "plantName": {
+        "type": "String",
+        "example": "Monstera"
+      }
+    }
+  },
+
+  "roomCardAccessibility": "{roomName}, {count, plural, =1{1 plant} other{{count} plants}}",
+  "@roomCardAccessibility": {
+    "description": "Accessibility label for room card",
+    "placeholders": {
+      "roomName": {
+        "type": "String",
+        "example": "Living Room"
+      },
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+
+  "photoAccessibility": "Photo from {date}",
+  "@photoAccessibility": {
+    "description": "Accessibility label for timeline photo",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Jan 15, 2026"
+      }
+    }
+  },
+
+  "logCareAccessibility": "Log {careType}",
+  "@logCareAccessibility": {
+    "description": "Accessibility label for care quick action button",
+    "placeholders": {
+      "careType": {
+        "type": "String",
+        "example": "Water"
+      }
+    }
+  },
+
+  "failedToAddPlant": "Failed to add plant",
+  "@failedToAddPlant": {
+    "description": "Error message when adding plant fails"
+  },
+
+  "failedToUpdatePlant": "Failed to update plant",
+  "@failedToUpdatePlant": {
+    "description": "Error message when updating plant fails"
+  },
+
+  "failedToDeletePlant": "Failed to delete plant",
+  "@failedToDeletePlant": {
+    "description": "Error message when deleting plant fails"
+  },
+
+  "failedToLogCare": "Failed to log care",
+  "@failedToLogCare": {
+    "description": "Error message when logging care fails"
+  },
+
+  "failedToAddPhoto": "Failed to add photo",
+  "@failedToAddPhoto": {
+    "description": "Error message when adding photo fails"
+  },
+
+  "failedToAddMeasurement": "Failed to add measurement",
+  "@failedToAddMeasurement": {
+    "description": "Error message when adding measurement fails"
+  },
+
+  "failedToClearData": "Failed to clear all data",
+  "@failedToClearData": {
+    "description": "Error message when clearing data fails"
+  },
+
+  "failedToExportBackup": "Failed to export backup",
+  "@failedToExportBackup": {
+    "description": "Error message when export fails"
+  },
+
+  "twoPhotosRequired": "Add at least 2 photos to see growth timeline",
+  "@twoPhotosRequired": {
+    "description": "Snackbar when user tries to view timeline with insufficient photos"
+  }
+}
