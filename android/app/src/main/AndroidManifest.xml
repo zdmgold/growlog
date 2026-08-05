@@ -1,1 +1,76 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Every permission below traces to a specific, confirmed
+         GrowLog feature — nothing copied from a generic template. -->
 
+    <!-- Baseline: required for AdMob and IAP store communication. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- GrowLog has a real daily-care reminder loop (watering,
+         fertilizing, misting, repotting, pruning, treating), so
+         scheduled local notifications are functionally necessary,
+         not a nice-to-have. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <!-- add_plant_screen.dart's _takePhoto() calls
+         ImagePicker(source: ImageSource.camera) directly. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- add_plant_screen.dart's _pickPhoto() calls
+         ImagePicker(source: ImageSource.gallery). On API 33+ this
+         goes through the system Photo Picker (no permission needed);
+         READ_MEDIA_IMAGES/READ_EXTERNAL_STORAGE below only apply on
+         older Android versions where the legacy picker is used. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- AdMob is active (banner ad in home_screen.dart) — Play's
+         "User Data" policy requires this be declared explicitly. -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+
+    <application
+        android:label="GrowLog"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+
+        <!-- AdMob requires this meta-data tag or the app crashes on
+             launch. REPLACE with your real AdMob Android App ID from
+             the AdMob console before release — this is a test ID. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+
+    <!-- Required so the system Photo Picker / file picker intents
+         resolve correctly on Android 11+ (package visibility). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+            <data android:mimeType="image/*" />
+        </intent>
+    </queries>
+</manifest>
