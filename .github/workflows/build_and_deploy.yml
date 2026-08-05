@@ -31,13 +31,21 @@ jobs:
       - name: Repair missing Android platform files
         run: flutter create --platforms=android .
 
-      - name: Fix Kotlin version mismatch in generated settings.gradle
+      - name: Fix Kotlin version in generated settings.gradle
         run: |
-          sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*" apply false/id "org.jetbrains.kotlin.android" version "1.9.24" apply false/' android/settings.gradle
+          sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*"/id "org.jetbrains.kotlin.android" version "1.9.24"/' android/settings.gradle
+          sed -i "s/id 'org.jetbrains.kotlin.android' version '[^']*'/id 'org.jetbrains.kotlin.android' version '1.9.24'/" android/settings.gradle
+          echo "=== settings.gradle ==="
           cat android/settings.gradle
 
       - name: Get Flutter packages
         run: flutter pub get
+
+      - name: Force compileSdk 34 on plugins requiring 35
+        run: |
+          find $PUB_CACHE -path "*/android/build.gradle" -exec sed -i 's/compileSdk 35/compileSdk 34/' {} +
+          find $PUB_CACHE -path "*/android/build.gradle" -exec sed -i 's/compileSdkVersion 35/compileSdkVersion 34/' {} +
+          echo "Patched plugins to compileSdk 34"
 
       - name: Generate localizations
         run: flutter gen-l10n
