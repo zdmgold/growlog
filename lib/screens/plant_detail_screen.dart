@@ -10,6 +10,7 @@ import '../widgets/care_quick_actions.dart';
 import '../widgets/growth_stats.dart';
 import '../widgets/measurement_chart.dart';
 import '../widgets/photo_timeline.dart';
+import '../widgets/skeleton_loader.dart';
 import 'growth_timeline_screen.dart';
 import 'add_plant_screen.dart';
 
@@ -53,22 +54,7 @@ class PlantDetailScreen extends StatelessWidget {
                 pinned: true,
                 backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: latestPhoto != null && File(latestPhoto.path).existsSync()
-                      ? Hero(
-                          tag: 'plant_${plant.id}',
-                          child: Image.file(
-                            File(latestPhoto.path),
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Container(
-                          color: AppColors.accent.withOpacity(0.1),
-                          child: const Icon(
-                            Icons.local_florist,
-                            size: 80,
-                            color: AppColors.accent,
-                          ),
-                        ),
+                  background: _buildHeroBackground(latestPhoto, plant.id),
                 ),
                 leading: IconButton(
                   icon: Icon(
@@ -161,6 +147,7 @@ class PlantDetailScreen extends StatelessWidget {
                         height: 200,
                         child: PhotoTimeline(
                           photos: plant.photos.take(5).toList(),
+                          plantProvider: plantProvider,
                           onTap: (photo) => _openGrowthTimeline(context, plant),
                         ),
                       ),
@@ -172,6 +159,46 @@ class PlantDetailScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  /// SURGICAL FIX (sync I/O removal): previously called
+  /// `File(latestPhoto.path).existsSync()` directly in build(), a
+  /// blocking disk stat every time this screen rebuilds (e.g. on every
+  /// care log). Now reads the async cache instead: null (not checked
+  /// yet) shows a SkeletonLoader, false/no-photo shows the same accent
+  /// placeholder icon as before, true shows the Hero-wrapped image
+  /// (unchanged — the Hero tag already correctly matched PlantCard's).
+  Widget _buildHeroBackground(dynamic latestPhoto, String plantId) {
+    if (latestPhoto == null) {
+      return _placeholderHero();
+    }
+
+    final exists = plantProvider.imageExists(latestPhoto.path);
+    if (exists == null) {
+      return const SkeletonLoader(borderRadius: BorderRadius.zero);
+    }
+    if (exists == false) {
+      return _placeholderHero();
+    }
+
+    return Hero(
+      tag: 'plant_$plantId',
+      child: Image.file(
+        File(latestPhoto.path),
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _placeholderHero() {
+    return Container(
+      color: AppColors.accent.withOpacity(0.1),
+      child: const Icon(
+        Icons.local_florist,
+        size: 80,
+        color: AppColors.accent,
+      ),
     );
   }
 
@@ -199,7 +226,10 @@ class PlantDetailScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => GrowthTimelineScreen(plant: plant),
+        builder: (_) => GrowthTimelineScreen(
+          plant: plant,
+          plantProvider: plantProvider,
+        ),
       ),
     );
   }
@@ -233,6 +263,9 @@ class PlantDetailScreen extends StatelessWidget {
                 leading: const Icon(Icons.archive),
                 title: Text(plant.isDead ? 'Revive Plant' : 'Mark as Dead'),
                 onTap: () {
+                  // SURGICAL ADDITION: haptic on archive toggle
+                  // (feature #8) — previously silent.
+                  HapticFeedback.lightImpact();
                   plantProvider.toggleDead(plant.id);
                   Navigator.pop(context);
                 },
@@ -254,6 +287,10 @@ class PlantDetailScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
+                            // SURGICAL ADDITION: haptic on the actual
+                            // destructive confirmation (feature #8) —
+                            // previously silent.
+                            HapticFeedback.mediumImpact();
                             plantProvider.deletePlant(plant.id);
                             Navigator.pop(context);
                             Navigator.pop(context);

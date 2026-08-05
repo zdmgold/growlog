@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/plant_model.dart';
 import '../models/room_model.dart';
 import '../providers/plant_provider.dart';
+import '../providers/theme_provider.dart';
+import '../services/admob_service.dart';
+import '../services/iap_service.dart';
 import '../utils/constants.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/plant_card.dart';
@@ -17,8 +21,21 @@ import 'wishlist_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final PlantProvider plantProvider;
+  // SURGICAL ADDITION: needed so Settings (File 32) can bind its theme
+  // picker to the real ThemeProvider instance created in main.dart,
+  // rather than each screen creating its own (which would desync).
+  final ThemeProvider themeProvider;
+  // SURGICAL ADDITION: needed both to conditionally hide the ad banner
+  // below (once Remove Ads is purchased) and to thread through to
+  // SettingsScreen for the actual purchase button.
+  final IAPService iapService;
 
-  const HomeScreen({super.key, required this.plantProvider});
+  const HomeScreen({
+    super.key,
+    required this.plantProvider,
+    required this.themeProvider,
+    required this.iapService,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,8 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
   String _searchQuery = '';
   int _selectedIndex = 0;
 
+  // SURGICAL ADDITION: debounce timer for search. Previously every
+  // keystroke triggered an immediate setState + full list rebuild.
+  Timer? _debounceTimer;
+
   @override
   void dispose() {
+    _debounceTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
@@ -44,8 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
+  /// SURGICAL FIX: previously called `Navigator.push(...)` without
+  /// awaiting it, then immediately called `setState(() => _selectedIndex
+  /// = 0)` right after — since `push` returns a Future rather than
+  /// blocking, that reset ran instantly, before the pushed screen even
+  /// finished animating in. The nav bar would flash the destination
+  /// icon as selected for a single frame and then snap back to Garden.
+  /// Chaining `.then()` on the push's Future defers the reset until the
+  /// user has actually navigated back, matching the fix-plan spec
+  /// ("Nav index managed via then() callback instead of flash-reset").
   void _onNavTap(int index) {
-    HapticFeedback.lightImpact();
+    // Haptic feedback now fires inside BottomNavBar's _NavItem/
+    // _CreateButton (Fix Phase B) before this callback is invoked, so
+    // the duplicate call that used to be here has been removed.
     if (index == 2) {
       Navigator.push(
         context,
@@ -60,26 +93,34 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => CareScheduleScreen(plantProvider: widget.plantProvider),
+          builder: (_) =>
+              CareScheduleScreen(plantProvider: widget.plantProvider),
         ),
-      );
-      setState(() => _selectedIndex = 0);
+      ).then((_) {
+        if (mounted) setState(() => _selectedIndex = 0);
+      });
     } else if (index == 3) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => WishlistScreen(plantProvider: widget.plantProvider),
         ),
-      );
-      setState(() => _selectedIndex = 0);
+      ).then((_) {
+        if (mounted) setState(() => _selectedIndex = 0);
+      });
     } else if (index == 4) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => SettingsScreen(plantProvider: widget.plantProvider),
+          builder: (_) => SettingsScreen(
+            plantProvider: widget.plantProvider,
+            themeProvider: widget.themeProvider,
+            iapService: widget.iapService,
+          ),
         ),
-      );
-      setState(() => _selectedIndex = 0);
+      ).then((_) {
+        if (mounted) setState(() => _selectedIndex = 0);
+      });
     }
   }
 
@@ -97,177 +138,232 @@ class _HomeScreenState extends State<HomeScreen> {
             final overdue = widget.plantProvider.overduePlants;
             final rooms = widget.plantProvider.rooms;
 
-            return CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.lg,
-                      AppSpacing.md,
-                      AppSpacing.lg,
-                      AppSpacing.md,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'GrowLog',
-                          style: AppTypography.display.copyWith(
-                            color: isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimary,
-                          ),
-                        ),
-                        Semantics(
-                          label: 'Search plants',
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.search,
+            // SURGICAL ADDITION: pull-to-refresh, per fix-plan feature
+            // #10. Wraps the existing CustomScrollView unchanged;
+            // RefreshIndicator handles its own gesture/spinner and just
+            // needs an async callback.
+            return RefreshIndicator(
+              onRefresh: () async {
+                HapticFeedback.lightImpact();
+                await widget.plantProvider.reload();
+              },
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.lg,
+                        AppSpacing.md,
+                        AppSpacing.lg,
+                        AppSpacing.md,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'GrowLog',
+                            style: AppTypography.display.copyWith(
                               color: isDark
                                   ? AppColors.textPrimaryDark
                                   : AppColors.textPrimary,
                             ),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                builder: (_) => _SearchSheet(
-                                  controller: _searchController,
-                                  onChanged: (v) => setState(() => _searchQuery = v),
+                          ),
+                          Semantics(
+                            label: 'Search plants',
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.search,
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimary,
+                              ),
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (_) => _SearchSheet(
+                                    controller: _searchController,
+                                    // SURGICAL FIX: debounce search input.
+                                    // Previously every keystroke called
+                                    // setState directly, rebuilding the
+                                    // full filtered grid on every
+                                    // character. Now waits 300ms of
+                                    // inactivity before filtering.
+                                    onChanged: (v) {
+                                      if (_debounceTimer?.isActive ?? false) {
+                                        _debounceTimer!.cancel();
+                                      }
+                                      _debounceTimer = Timer(
+                                        const Duration(milliseconds: 300),
+                                        () {
+                                          if (mounted) {
+                                            setState(() => _searchQuery = v);
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (overdue.isNotEmpty)
+                    SliverToBoxAdapter(
+                      child: _SectionHeader(title: 'Needs Care'),
+                    ),
+                  if (overdue.isNotEmpty)
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          itemCount: overdue.length,
+                          itemBuilder: (context, index) {
+                            final plant = overdue[index];
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(right: AppSpacing.md),
+                              child: SizedBox(
+                                width: 280,
+                                child: PlantCard(
+                                  plant: plant,
+                                  plantProvider: widget.plantProvider,
+                                  onTap: () => _openPlant(plant),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (overdue.isNotEmpty)
-                  SliverToBoxAdapter(
-                    child: _SectionHeader(title: 'Needs Care'),
-                  ),
-                if (overdue.isNotEmpty)
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 120,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                        ),
-                        itemCount: overdue.length,
-                        itemBuilder: (context, index) {
-                          final plant = overdue[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(right: AppSpacing.md),
-                            child: SizedBox(
-                              width: 280,
-                              child: PlantCard(
-                                plant: plant,
-                                onTap: () => _openPlant(plant),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                if (rooms.isNotEmpty)
+                  if (rooms.isNotEmpty)
+                    SliverToBoxAdapter(
+                      child: _SectionHeader(
+                        title: 'Rooms',
+                        action: TextButton(
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => RoomsScreen(
+                                plantProvider: widget.plantProvider,
+                              ),
+                            ),
+                          ),
+                          child: const Text('See All'),
+                        ),
+                      ),
+                    ),
+                  if (rooms.isNotEmpty)
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 160,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.lg,
+                          ),
+                          itemCount: rooms.length,
+                          itemBuilder: (context, index) {
+                            final room = rooms[index];
+                            final roomPlants =
+                                widget.plantProvider.plantsInRoom(room.id);
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(right: AppSpacing.md),
+                              child: SizedBox(
+                                width: 200,
+                                child: RoomCard(
+                                  room: room,
+                                  plants: roomPlants,
+                                  plantProvider: widget.plantProvider,
+                                  onTap: () {
+                                    // Filter garden by room
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   SliverToBoxAdapter(
-                    child: _SectionHeader(
-                      title: 'Rooms',
-                      action: TextButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => RoomsScreen(
+                    child: _SectionHeader(title: 'My Garden'),
+                  ),
+                  if (plants.isEmpty)
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: _EmptyGarden(
+                        onAdd: () => _onNavTap(2),
+                      ),
+                    )
+                  else
+                    SliverPadding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.lg,
+                      ),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: AppSpacing.md,
+                          crossAxisSpacing: AppSpacing.md,
+                          childAspectRatio: 0.82,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final plant = plants[index];
+                            return PlantCard(
+                              plant: plant,
                               plantProvider: widget.plantProvider,
-                            ),
-                          ),
+                              onTap: () => _openPlant(plant),
+                              onLongPress: () {
+                                HapticFeedback.lightImpact();
+                                _showPlantMenu(plant);
+                              },
+                            );
+                          },
+                          childCount: plants.length,
                         ),
-                        child: const Text('See All'),
                       ),
                     ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.xxxl),
                   ),
-                if (rooms.isNotEmpty)
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 160,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.lg,
-                        ),
-                        itemCount: rooms.length,
-                        itemBuilder: (context, index) {
-                          final room = rooms[index];
-                          final roomPlants = widget.plantProvider.plantsInRoom(room.id);
-                          return Padding(
-                            padding: const EdgeInsets.only(right: AppSpacing.md),
-                            child: SizedBox(
-                              width: 200,
-                              child: RoomCard(
-                                room: room,
-                                plants: roomPlants,
-                                onTap: () {
-                                  // Filter garden by room
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                SliverToBoxAdapter(
-                  child: _SectionHeader(title: 'My Garden'),
-                ),
-                if (plants.isEmpty)
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: _EmptyGarden(
-                      onAdd: () => _onNavTap(2),
-                    ),
-                  )
-                else
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.lg,
-                    ),
-                    sliver: SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: AppSpacing.md,
-                        crossAxisSpacing: AppSpacing.md,
-                        childAspectRatio: 0.82,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final plant = plants[index];
-                          return PlantCard(
-                            plant: plant,
-                            onTap: () => _openPlant(plant),
-                            onLongPress: () => _showPlantMenu(plant),
-                          );
-                        },
-                        childCount: plants.length,
-                      ),
-                    ),
-                  ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.xxxl),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _selectedIndex,
-        onTap: _onNavTap,
+      // SURGICAL ADDITION: this is the actual placement of the ad
+      // banner — AdMobService.bannerAd() existed as a real method but
+      // was never called from any screen anywhere in the app, meaning
+      // the "ads fund the free app" plan was producing zero revenue
+      // regardless of whether the ad SDK itself worked. Wrapped in a
+      // ListenableBuilder on iapService so it disappears immediately
+      // (no restart needed) the moment Remove Ads is purchased.
+      bottomNavigationBar: ListenableBuilder(
+        listenable: widget.iapService,
+        builder: (context, _) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (!widget.iapService.value) AdMobService.bannerAd(),
+              BottomNavBar(
+                currentIndex: _selectedIndex,
+                onTap: _onNavTap,
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -291,8 +387,23 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (_) => _PlantMenuSheet(
         plant: plant,
         onDelete: () {
+          // SURGICAL ADDITION: haptic on the destructive confirmation
+          // (feature #8), and an undo SnackBar (feature #3) instead of
+          // deleting silently and irreversibly — pairs with
+          // PlantProvider.restorePlant() added in Fix Phase A.
+          HapticFeedback.mediumImpact();
           widget.plantProvider.deletePlant(plant.id);
           Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('${plant.name} deleted'),
+              duration: const Duration(seconds: 4),
+              action: SnackBarAction(
+                label: 'Undo',
+                onPressed: () => widget.plantProvider.restorePlant(),
+              ),
+            ),
+          );
         },
       ),
     );
@@ -475,7 +586,7 @@ class _PlantMenuSheet extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.archive),
-              title: const Text(plant.isDead ? 'Revive' : 'Mark as Dead'),
+              title: Text(plant.isDead ? 'Revive' : 'Mark as Dead'),
               onTap: () {
                 // Toggle dead status
                 Navigator.pop(context);
@@ -495,7 +606,8 @@ class _PlantMenuSheet extends StatelessWidget {
                   context: context,
                   builder: (_) => AlertDialog(
                     title: const Text('Delete Plant?'),
-                    content: Text('This will permanently delete ${plant.name} and all its photos.'),
+                    content: Text(
+                        'This will permanently delete ${plant.name} and all its photos.'),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
@@ -503,7 +615,8 @@ class _PlantMenuSheet extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: onDelete,
-                        child: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                        child: const Text('Delete',
+                            style: TextStyle(color: AppColors.error)),
                       ),
                     ],
                   ),
