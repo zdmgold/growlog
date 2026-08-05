@@ -1,12 +1,5 @@
 name: Build Android
 
-# MANUAL TRIGGER ONLY — no push:/pull_request: trigger, by explicit
-# decision made at the start of this project and reaffirmed against
-# the blueprint (Section 5): an auto-trigger on every push has already
-# caused a documented free-tier exhaustion in a prior project (1,801
-# minutes burned from commit-triggered builds). A solo developer
-# iterating across many chat sessions pushes far more often than a
-# build is actually ready to run.
 on:
   workflow_dispatch:
     inputs:
@@ -34,6 +27,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Repair missing Android platform files
+        run: flutter create --platforms=android .
 
       - name: Get Flutter packages
         run: flutter pub get
