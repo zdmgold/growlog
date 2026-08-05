@@ -28,6 +28,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Android SDK Platform 35
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platforms;android-35"
+
       - name: Repair missing Android platform files
         run: flutter create --platforms=android .
 
