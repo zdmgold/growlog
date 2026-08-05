@@ -31,6 +31,11 @@ jobs:
       - name: Repair missing Android platform files
         run: flutter create --platforms=android .
 
+      - name: Fix Kotlin version mismatch in generated settings.gradle
+        run: |
+          sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*" apply false/id "org.jetbrains.kotlin.android" version "1.9.24" apply false/' android/settings.gradle
+          cat android/settings.gradle
+
       - name: Get Flutter packages
         run: flutter pub get
 
