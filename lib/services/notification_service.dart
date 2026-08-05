@@ -59,7 +59,7 @@ class NotificationService {
               'Reminders for watering, fertilizing, and other plant care tasks',
           importance: Importance.high,
           priority: Priority.high,
-          showBadge: true,
+          channelShowBadge: true,
           enableVibration: true,
         ),
         iOS: DarwinNotificationDetails(
