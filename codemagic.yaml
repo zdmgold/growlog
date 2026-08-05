@@ -1,0 +1,42 @@
+workflows:
+  ios-workflow:
+    name: "GrowLog iOS Build"
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      vars:
+        BUNDLE_ID: "com.zdmgold.growlog"
+      groups:
+        - app_store_credentials
+    triggering:
+      events: []  # manual trigger only via Codemagic UI/API, same
+                  # rationale as the Android workflow — no push trigger
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Generate localizations
+        script: |
+          flutter gen-l10n
+      - name: Install CocoaPods
+        script: |
+          cd ios
+          pod install --repo-update
+      - name: Build IPA
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=ios/ExportOptions.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/symbols/*.dSYM.zip
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_KEY_ID
+        api_issuer: $APP_STORE_CONNECT_ISSUER_ID
+        api_private_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        submit_to_testflight: true
+        submit_to_app_store: false   # flip to true only for the
+                                     # deliberate public release build
