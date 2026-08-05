@@ -1,6 +1,5 @@
 {
   "@@locale": "es",
-
   "appName": "GrowLog",
   "retry": "Reintentar",
   "errorTitle": "Algo salió mal",
@@ -65,6 +64,9 @@
   "waterEvery": "Regar cada",
   "fertilizeEvery": "Fertilizar cada",
   "mistEvery": "Rociar cada",
+  "repotEvery": "Trasplantar cada",
+  "pruneEvery": "Podar cada",
+  "treatEvery": "Tratar cada",
   "daysSuffix": "días",
   "notesLabel": "Notas (opcional)",
   "savePlant": "Guardar Planta",
@@ -120,6 +122,8 @@
   "roomCardAccessibility": "{roomName}, {count, plural, =1{1 planta} other{{count} plantas}}",
   "photoAccessibility": "Foto del {date}",
   "logCareAccessibility": "Registrar {careType}",
+  "takePhoto": "Tomar Foto",
+  "chooseFromGallery": "Elegir de la Galería",
   "failedToAddPlant": "No se pudo agregar la planta",
   "failedToUpdatePlant": "No se pudo actualizar la planta",
   "failedToDeletePlant": "No se pudo eliminar la planta",
