@@ -1,16 +1,22 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/photo_entry_model.dart';
+import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
+import 'skeleton_loader.dart';
 
 class PhotoTimeline extends StatelessWidget {
   final List<PhotoEntry> photos;
   final Function(PhotoEntry)? onTap;
+  // SURGICAL ADDITION: needed to read the async image-existence cache
+  // instead of File(path).existsSync() in build().
+  final PlantProvider plantProvider;
 
   const PhotoTimeline({
     super.key,
     required this.photos,
+    required this.plantProvider,
     this.onTap,
   });
 
@@ -23,11 +29,13 @@ class PhotoTimeline extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.photo_library_outlined, size: 48, color: AppColors.textTertiary),
+            Icon(Icons.photo_library_outlined,
+                size: 48, color: AppColors.textTertiary),
             const SizedBox(height: AppSpacing.md),
             Text(
               'No photos yet',
-              style: AppTypography.callout.copyWith(color: AppColors.textTertiary),
+              style:
+                  AppTypography.callout.copyWith(color: AppColors.textTertiary),
             ),
           ],
         ),
@@ -62,23 +70,30 @@ class PhotoTimeline extends StatelessWidget {
                           color: AppColors.accent,
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+                            color: isDark
+                                ? AppColors.bgSecondaryDark
+                                : AppColors.bgSecondary,
                             width: 2,
                           ),
                         ),
                       ),
                       if (!isFirst)
-                        Container(width: 2, height: 80, color: AppColors.borderSubtle),
+                        Container(
+                            width: 2, height: 80, color: AppColors.borderSubtle),
                     ],
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+                        color: isDark
+                            ? AppColors.bgSecondaryDark
+                            : AppColors.bgSecondary,
                         borderRadius: BorderRadius.circular(AppRadii.lg),
                         border: Border.all(
-                          color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+                          color: isDark
+                              ? AppColors.borderSubtleDark
+                              : AppColors.borderSubtle,
                           width: 0.5,
                         ),
                       ),
@@ -91,15 +106,7 @@ class PhotoTimeline extends StatelessWidget {
                             ),
                             child: AspectRatio(
                               aspectRatio: 16 / 9,
-                              child: File(photo.path).existsSync()
-                                  ? Image.file(File(photo.path), fit: BoxFit.cover)
-                                  : Container(
-                                      color: AppColors.bgTertiary,
-                                      child: const Icon(
-                                        Icons.image_not_supported,
-                                        color: AppColors.textTertiary,
-                                      ),
-                                    ),
+                              child: _buildPhoto(photo.path),
                             ),
                           ),
                           Padding(
@@ -113,24 +120,30 @@ class PhotoTimeline extends StatelessWidget {
                                     color: AppColors.textTertiary,
                                   ),
                                 ),
-                                if (photo.notes != null && photo.notes!.isNotEmpty) ...[
+                                if (photo.notes != null &&
+                                    photo.notes!.isNotEmpty) ...[
                                   const SizedBox(height: AppSpacing.xs),
                                   Text(
                                     photo.notes!,
                                     style: AppTypography.body.copyWith(
-                                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                                      color: isDark
+                                          ? AppColors.textPrimaryDark
+                                          : AppColors.textPrimary,
                                     ),
                                   ),
                                 ],
-                                if (photo.height != null || photo.leafCount != null) ...[
+                                if (photo.height != null ||
+                                    photo.leafCount != null) ...[
                                   const SizedBox(height: AppSpacing.xs),
                                   Wrap(
                                     spacing: AppSpacing.sm,
                                     children: [
                                       if (photo.height != null)
-                                        _MetricChip(label: '${photo.height} cm'),
+                                        _MetricChip(
+                                            label: '${photo.height} cm'),
                                       if (photo.leafCount != null)
-                                        _MetricChip(label: '${photo.leafCount} leaves'),
+                                        _MetricChip(
+                                            label: '${photo.leafCount} leaves'),
                                     ],
                                   ),
                                 ],
@@ -148,6 +161,27 @@ class PhotoTimeline extends StatelessWidget {
         );
       },
     );
+  }
+
+  /// SURGICAL FIX: previously called `File(photo.path).existsSync()`
+  /// directly during build. Now reads the async cache: null (not
+  /// checked yet) shows a SkeletonLoader, false shows the same
+  /// "image not supported" placeholder as before, true shows the image.
+  Widget _buildPhoto(String path) {
+    final exists = plantProvider.imageExists(path);
+    if (exists == null) {
+      return const SkeletonLoader(borderRadius: BorderRadius.zero);
+    }
+    if (exists == false) {
+      return Container(
+        color: AppColors.bgTertiary,
+        child: const Icon(
+          Icons.image_not_supported,
+          color: AppColors.textTertiary,
+        ),
+      );
+    }
+    return Image.file(File(path), fit: BoxFit.cover);
   }
 }
 

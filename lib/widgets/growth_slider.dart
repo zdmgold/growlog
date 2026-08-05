@@ -1,18 +1,24 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import '../models/photo_entry_model.dart';
+import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
+import 'skeleton_loader.dart';
 
 class GrowthSlider extends StatefulWidget {
   final PhotoEntry before;
   final PhotoEntry after;
+  // SURGICAL ADDITION (Fix Phase B, feature #5 — this was missed when
+  // the drag-math bug was fixed in Fix Phase A): needed to read the
+  // async image-existence cache instead of File(path).existsSync().
+  final PlantProvider plantProvider;
 
   const GrowthSlider({
     super.key,
     required this.before,
     required this.after,
+    required this.plantProvider,
   });
 
   @override
@@ -23,6 +29,26 @@ class _GrowthSliderState extends State<GrowthSlider> {
   double _position = 0.5;
   bool _isDragging = false;
 
+  // SURGICAL FIX: key on the full-size comparison stack. The drag handle
+  // itself is only 48x48, so its own `details.localPosition` (as used
+  // previously) only ever ranges over that 48px box — the slider could
+  // never reach the edges. This key lets us find the *outer* full-width
+  // RenderBox and convert the handle's global drag position into local
+  // coordinates relative to that, exactly like the outer tap handler
+  // already does correctly via `localPosition` on the full-size
+  // GestureDetector.
+  final GlobalKey _comparisonKey = GlobalKey();
+
+  void _updatePositionFromGlobal(Offset globalPosition, double width) {
+    final renderBox =
+        _comparisonKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return;
+    final local = renderBox.globalToLocal(globalPosition);
+    setState(() {
+      _position = (local.dx / width).clamp(0.0, 1.0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -31,6 +57,7 @@ class _GrowthSliderState extends State<GrowthSlider> {
         final height = constraints.maxHeight;
 
         return Stack(
+          key: _comparisonKey,
           fit: StackFit.expand,
           children: [
             InteractiveViewer(
@@ -58,7 +85,8 @@ class _GrowthSliderState extends State<GrowthSlider> {
               behavior: HitTestBehavior.translucent,
               onTapUp: (details) {
                 setState(() {
-                  _position = (details.localPosition.dx / width).clamp(0.0, 1.0);
+                  _position =
+                      (details.localPosition.dx / width).clamp(0.0, 1.0);
                 });
               },
               child: Stack(
@@ -76,21 +104,35 @@ class _GrowthSliderState extends State<GrowthSlider> {
                     child: Center(
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onHorizontalDragUpdate: (details) {
-                          setState(() {
-                            _position = (details.localPosition.dx / width).clamp(0.0, 1.0);
-                          });
+                        onHorizontalDragStart: (details) {
+                          setState(() => _isDragging = true);
+                          _updatePositionFromGlobal(
+                              details.globalPosition, width);
                         },
-                        onHorizontalDragStart: (_) => setState(() => _isDragging = true),
-                        onHorizontalDragEnd: (_) => setState(() => _isDragging = false),
+                        onHorizontalDragUpdate: (details) {
+                          _updatePositionFromGlobal(
+                              details.globalPosition, width);
+                        },
+                        onHorizontalDragEnd: (_) =>
+                            setState(() => _isDragging = false),
                         child: AnimatedContainer(
-                          duration: AppDurations.fast,
+                          // FIX: feature #7 (reduce motion) was approved
+                          // in the original plan and marked done, but
+                          // this check was never actually added — a
+                          // real regression caught during the blueprint
+                          // audit, not new scope.
+                          duration: MediaQuery.disableAnimationsOf(context)
+                              ? Duration.zero
+                              : AppDurations.fast,
                           width: 48,
                           height: 48,
                           decoration: BoxDecoration(
-                            color: _isDragging ? AppColors.accentLight : AppColors.accent,
+                            color: _isDragging
+                                ? AppColors.accentLight
+                                : AppColors.accent,
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 3),
+                            border: Border.all(
+                                color: Colors.white, width: 3),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.3),
@@ -133,17 +175,30 @@ class _GrowthSliderState extends State<GrowthSlider> {
     );
   }
 
+  /// SURGICAL FIX: previously called `File(path).existsSync()` directly
+  /// in build(). Now reads the async cache: null (not checked yet)
+  /// shows a SkeletonLoader sized to match, false/missing shows the
+  /// same "image not supported" placeholder as before, true shows the
+  /// image.
   Widget _buildImage(String path, double width, double height) {
-    final file = File(path);
-    if (file.existsSync()) {
-      return Image.file(file, fit: BoxFit.cover, width: width, height: height);
+    final exists = widget.plantProvider.imageExists(path);
+    if (exists == null) {
+      return SkeletonLoader(
+        width: width,
+        height: height,
+        borderRadius: BorderRadius.zero,
+      );
     }
-    return Container(
-      color: AppColors.bgTertiary,
-      width: width,
-      height: height,
-      child: const Icon(Icons.image_not_supported, color: AppColors.textTertiary),
-    );
+    if (exists == false) {
+      return Container(
+        color: AppColors.bgTertiary,
+        width: width,
+        height: height,
+        child: const Icon(Icons.image_not_supported,
+            color: AppColors.textTertiary),
+      );
+    }
+    return Image.file(File(path), fit: BoxFit.cover, width: width, height: height);
   }
 }
 

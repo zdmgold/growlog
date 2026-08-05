@@ -2,18 +2,24 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/room_model.dart';
 import '../models/plant_model.dart';
+import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
+import 'skeleton_loader.dart';
 
 class RoomCard extends StatelessWidget {
   final Room room;
   final List<Plant> plants;
   final VoidCallback onTap;
+  // SURGICAL ADDITION: needed to read the async image-existence cache
+  // instead of File(path).existsSync() in the photo grid below.
+  final PlantProvider plantProvider;
 
   const RoomCard({
     super.key,
     required this.room,
     required this.plants,
     required this.onTap,
+    required this.plantProvider,
   });
 
   @override
@@ -35,7 +41,9 @@ class RoomCard extends StatelessWidget {
             color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
             borderRadius: BorderRadius.circular(AppRadii.lg),
             border: Border.all(
-              color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+              color: isDark
+                  ? AppColors.borderSubtleDark
+                  : AppColors.borderSubtle,
               width: 0.5,
             ),
           ),
@@ -49,7 +57,9 @@ class RoomCard extends StatelessWidget {
                   ),
                   child: previewPhotos.isEmpty
                       ? Container(
-                          color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
+                          color: isDark
+                              ? AppColors.bgTertiaryDark
+                              : AppColors.bgTertiary,
                           child: Center(
                             child: Icon(
                               Icons.meeting_room,
@@ -58,7 +68,10 @@ class RoomCard extends StatelessWidget {
                             ),
                           ),
                         )
-                      : _PhotoGrid(photos: previewPhotos),
+                      : _PhotoGrid(
+                          photos: previewPhotos,
+                          plantProvider: plantProvider,
+                        ),
                 ),
               ),
               Padding(
@@ -69,7 +82,9 @@ class RoomCard extends StatelessWidget {
                     Text(
                       room.name,
                       style: AppTypography.title2.copyWith(
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimary,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -94,7 +109,9 @@ class RoomCard extends StatelessWidget {
 
 class _PhotoGrid extends StatelessWidget {
   final List<String> photos;
-  const _PhotoGrid({required this.photos});
+  final PlantProvider plantProvider;
+
+  const _PhotoGrid({required this.photos, required this.plantProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +153,18 @@ class _PhotoGrid extends StatelessWidget {
     );
   }
 
+  /// SURGICAL FIX: previously called `File(path).existsSync()` directly
+  /// during build. Now reads the async cache: null (not checked yet)
+  /// shows a SkeletonLoader, false shows the same black12 placeholder
+  /// as before, true shows the image.
   Widget _buildImage(String path, {BoxFit fit = BoxFit.cover}) {
-    final file = File(path);
-    if (file.existsSync()) {
-      return Image.file(file, fit: fit);
+    final exists = plantProvider.imageExists(path);
+    if (exists == null) {
+      return const SkeletonLoader(borderRadius: BorderRadius.zero);
     }
-    return Container(color: Colors.black12);
+    if (exists == false) {
+      return Container(color: Colors.black12);
+    }
+    return Image.file(File(path), fit: fit);
   }
 }

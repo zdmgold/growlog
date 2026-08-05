@@ -93,9 +93,7 @@ class _StatRow extends StatelessWidget {
         const SizedBox(width: AppSpacing.sm),
         Text(
           label,
-          style: AppTypography.body.copyWith(
-            color: AppColors.textSecondary,
-          ),
+          style: AppTypography.body.copyWith(color: AppColors.textSecondary),
         ),
         const Spacer(),
         Text(

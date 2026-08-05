@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/plant_model.dart';
 import '../utils/constants.dart';
-import '../utils/date_formatter.dart';
 
 class NextCareBadge extends StatelessWidget {
   final Plant plant;
@@ -10,9 +9,19 @@ class NextCareBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FIX: original source only checked water/fertilize/mist. This
+    // predates Fix Phase A's addition of repot/prune/treat scheduling
+    // to plant_model.dart/plant_provider.dart, and was never updated
+    // to match — meaning this badge (shown on every plant card, room
+    // card, and the care schedule screen) would silently ignore any
+    // upcoming/overdue repot, prune, or treat care. Now checks all 6,
+    // matching plant_provider.dart's own _scheduleRemindersForPlant.
     final nextWater = plant.nextWaterDate;
     final nextFertilize = plant.nextFertilizeDate;
     final nextMist = plant.nextMistDate;
+    final nextRepot = plant.nextRepotDate;
+    final nextPrune = plant.nextPruneDate;
+    final nextTreat = plant.nextTreatDate;
 
     final now = DateTime.now();
     DateTime? nearest;
@@ -29,6 +38,9 @@ class NextCareBadge extends StatelessWidget {
     check(nextWater, 'Water');
     check(nextFertilize, 'Fertilize');
     check(nextMist, 'Mist');
+    check(nextRepot, 'Repot');
+    check(nextPrune, 'Prune');
+    check(nextTreat, 'Treat');
 
     if (nearest == null) {
       return _Badge(

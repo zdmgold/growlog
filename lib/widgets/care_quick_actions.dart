@@ -3,6 +3,10 @@ import 'package:flutter/services.dart';
 import '../models/care_log_model.dart';
 import '../utils/constants.dart';
 
+// VERIFIED, UNCHANGED (Fix Phase B): fix-plan item #8 asked to confirm
+// all 6 buttons call HapticFeedback.lightImpact() before onCareLogged,
+// with no regression. Confirmed against the original source below —
+// all 6 already do. No modification needed.
 class CareQuickActions extends StatelessWidget {
   final Function(CareType) onCareLogged;
 
@@ -14,12 +18,22 @@ class CareQuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = [
-      _ActionConfig(type: CareType.water, color: AppColors.water, icon: Icons.water_drop),
-      _ActionConfig(type: CareType.fertilize, color: AppColors.fertilize, icon: Icons.science),
-      _ActionConfig(type: CareType.mist, color: AppColors.mist, icon: Icons.water),
-      _ActionConfig(type: CareType.repot, color: AppColors.repot, icon: Icons.yard),
-      _ActionConfig(type: CareType.prune, color: AppColors.prune, icon: Icons.content_cut),
-      _ActionConfig(type: CareType.treat, color: AppColors.treat, icon: Icons.healing),
+      _ActionConfig(
+          type: CareType.water, color: AppColors.water, icon: Icons.water_drop),
+      _ActionConfig(
+          type: CareType.fertilize,
+          color: AppColors.fertilize,
+          icon: Icons.science),
+      _ActionConfig(
+          type: CareType.mist, color: AppColors.mist, icon: Icons.water),
+      _ActionConfig(
+          type: CareType.repot, color: AppColors.repot, icon: Icons.yard),
+      _ActionConfig(
+          type: CareType.prune,
+          color: AppColors.prune,
+          icon: Icons.content_cut),
+      _ActionConfig(
+          type: CareType.treat, color: AppColors.treat, icon: Icons.healing),
     ];
 
     return Wrap(

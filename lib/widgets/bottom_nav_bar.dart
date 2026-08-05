@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../utils/constants.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -20,14 +21,17 @@ class BottomNavBar extends StatelessWidget {
         color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
         border: Border(
           top: BorderSide(
-            color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+            color: isDark
+                ? AppColors.borderSubtleDark
+                : AppColors.borderSubtle,
             width: 0.5,
           ),
         ),
       ),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -86,7 +90,16 @@ class _NavItem extends StatelessWidget {
       selected: isActive,
       button: true,
       child: GestureDetector(
-        onTap: onTap,
+        // SURGICAL ADDITION: haptic feedback on nav taps (feature #8).
+        // Note on feature #7 (reduce motion): this widget has no
+        // implicit animations (no AnimatedContainer/AnimatedOpacity
+        // etc.) to begin with, so there's nothing here that needs to
+        // respect MediaQuery.disableAnimationsOf — the fix-plan item
+        // is a no-op for this specific file.
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
         behavior: HitTestBehavior.opaque,
         child: SizedBox(
           width: 56,
@@ -123,7 +136,11 @@ class _CreateButton extends StatelessWidget {
       label: 'Add new plant',
       button: true,
       child: GestureDetector(
-        onTap: onTap,
+        // SURGICAL ADDITION: haptic feedback (feature #8).
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
         behavior: HitTestBehavior.opaque,
         child: Container(
           width: 56,
