@@ -18,7 +18,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '
 
 android {
     namespace 'com.zdmgold.growlog'
-    compileSdk flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -42,20 +42,23 @@ android {
 
     signingConfigs {
         release {
-            // REPLACE before a real release build: point these at
-            // your actual upload keystore. Placeholder values below
-            // will fail a release build on purpose rather than
-            // silently sign with a debug key.
-            storeFile file(System.getenv("GROWLOG_KEYSTORE_PATH") ?: "NOT_SET")
-            storePassword System.getenv("GROWLOG_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("GROWLOG_KEY_ALIAS")
-            keyPassword System.getenv("GROWLOG_KEY_PASSWORD")
+            def keystorePath = System.getenv("GROWLOG_KEYSTORE_PATH")
+            if (keystorePath != null) {
+                storeFile file(keystorePath)
+                storePassword System.getenv("GROWLOG_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("GROWLOG_KEY_ALIAS")
+                keyPassword System.getenv("GROWLOG_KEY_PASSWORD")
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (System.getenv("GROWLOG_KEYSTORE_PATH") != null) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
