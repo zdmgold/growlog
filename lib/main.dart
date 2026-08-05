@@ -7,6 +7,7 @@ import 'providers/theme_provider.dart';
 import 'services/local_storage.dart';
 import 'services/notification_service.dart';
 import 'services/admob_service.dart';
+import 'services/iap_service.dart';
 import 'utils/error_handler.dart';
 import 'utils/constants.dart';
 import 'screens/home_screen.dart';
@@ -26,11 +27,13 @@ void main() async {
   final localStorage = LocalStorage();
   final plantProvider = PlantProvider(localStorage);
   final themeProvider = ThemeProvider();
+  final iapService = IAPService();
 
   runApp(
     GrowLogApp(
       plantProvider: plantProvider,
       themeProvider: themeProvider,
+      iapService: iapService,
     ),
   );
 }
@@ -38,11 +41,13 @@ void main() async {
 class GrowLogApp extends StatelessWidget {
   final PlantProvider plantProvider;
   final ThemeProvider themeProvider;
+  final IAPService iapService;
 
   const GrowLogApp({
     super.key,
     required this.plantProvider,
     required this.themeProvider,
+    required this.iapService,
   });
 
   @override
@@ -60,6 +65,11 @@ class GrowLogApp extends StatelessWidget {
           listenable: plantProvider,
           builder: (context, _) {
             return MaterialApp(
+              // Attached so ErrorHandler can recover to the root route
+              // (popUntil isFirst) from a global ErrorWidget.builder,
+              // which otherwise has no BuildContext of its own to
+              // navigate with. See lib/utils/error_handler.dart.
+              navigatorKey: ErrorHandler.navigatorKey,
               title: 'GrowLog',
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
@@ -84,7 +94,11 @@ class GrowLogApp extends StatelessWidget {
               theme: _lightTheme(),
               darkTheme: _darkTheme(),
               themeMode: themeProvider.value,
-              home: HomeScreen(plantProvider: plantProvider),
+              home: HomeScreen(
+                plantProvider: plantProvider,
+                themeProvider: themeProvider,
+                iapService: iapService,
+              ),
             );
           },
         );
