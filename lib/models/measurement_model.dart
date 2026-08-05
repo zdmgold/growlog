@@ -34,22 +34,22 @@ class Measurement {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'plantId': plantId,
-    'date': date.toIso8601String(),
-    'height': height,
-    'leafCount': leafCount,
-    'stemWidth': stemWidth,
-  };
+        'id': id,
+        'plantId': plantId,
+        'date': date.toIso8601String(),
+        'height': height,
+        'leafCount': leafCount,
+        'stemWidth': stemWidth,
+      };
 
   factory Measurement.fromJson(Map<String, dynamic> json) => Measurement(
-    id: json['id'] as String,
-    plantId: json['plantId'] as String,
-    date: DateTime.parse(json['date'] as String),
-    height: (json['height'] as num?)?.toDouble(),
-    leafCount: json['leafCount'] as int?,
-    stemWidth: (json['stemWidth'] as num?)?.toDouble(),
-  );
+        id: json['id'] as String,
+        plantId: json['plantId'] as String,
+        date: DateTime.parse(json['date'] as String),
+        height: (json['height'] as num?)?.toDouble(),
+        leafCount: json['leafCount'] as int?,
+        stemWidth: (json['stemWidth'] as num?)?.toDouble(),
+      );
 
   @override
   bool operator ==(Object other) =>

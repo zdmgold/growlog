@@ -26,18 +26,18 @@ class Room {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'icon': icon,
-    'sortOrder': sortOrder,
-  };
+        'id': id,
+        'name': name,
+        'icon': icon,
+        'sortOrder': sortOrder,
+      };
 
   factory Room.fromJson(Map<String, dynamic> json) => Room(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    icon: json['icon'] as String?,
-    sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
-  );
+        id: json['id'] as String,
+        name: json['name'] as String,
+        icon: json['icon'] as String?,
+        sortOrder: (json['sortOrder'] as num?)?.toInt() ?? 0,
+      );
 
   @override
   bool operator ==(Object other) =>

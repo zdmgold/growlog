@@ -18,6 +18,14 @@ class Plant {
   final int? waterFrequencyDays;
   final int? fertilizeFrequencyDays;
   final int? mistFrequencyDays;
+  // SURGICAL ADDITION: repot/prune/treat previously had no frequency
+  // fields at all, so PlantProvider could only ever schedule reminders
+  // for water/fertilize/mist — the other 3 of the app's advertised
+  // 6 care types silently never got a reminder. Mirrors the existing
+  // water/fertilize/mist fields exactly.
+  final int? repotFrequencyDays;
+  final int? pruneFrequencyDays;
+  final int? treatFrequencyDays;
 
   const Plant({
     required this.id,
@@ -35,6 +43,9 @@ class Plant {
     this.waterFrequencyDays,
     this.fertilizeFrequencyDays,
     this.mistFrequencyDays,
+    this.repotFrequencyDays,
+    this.pruneFrequencyDays,
+    this.treatFrequencyDays,
   });
 
   Plant copyWith({
@@ -53,6 +64,9 @@ class Plant {
     int? waterFrequencyDays,
     int? fertilizeFrequencyDays,
     int? mistFrequencyDays,
+    int? repotFrequencyDays,
+    int? pruneFrequencyDays,
+    int? treatFrequencyDays,
   }) {
     return Plant(
       id: id ?? this.id,
@@ -68,40 +82,46 @@ class Plant {
       isWishlist: isWishlist ?? this.isWishlist,
       createdAt: createdAt ?? this.createdAt,
       waterFrequencyDays: waterFrequencyDays ?? this.waterFrequencyDays,
-      fertilizeFrequencyDays: fertilizeFrequencyDays ?? this.fertilizeFrequencyDays,
+      fertilizeFrequencyDays:
+          fertilizeFrequencyDays ?? this.fertilizeFrequencyDays,
       mistFrequencyDays: mistFrequencyDays ?? this.mistFrequencyDays,
+      repotFrequencyDays: repotFrequencyDays ?? this.repotFrequencyDays,
+      pruneFrequencyDays: pruneFrequencyDays ?? this.pruneFrequencyDays,
+      treatFrequencyDays: treatFrequencyDays ?? this.treatFrequencyDays,
     );
   }
 
-  DateTime? get nextWaterDate {
-    final logs = careLogs.where((l) => l.type == CareType.water).toList()
+  DateTime? _nextDateFor(CareType type, int? frequencyDays) {
+    final logs = careLogs.where((l) => l.type == type).toList()
       ..sort((a, b) => b.date.compareTo(a.date));
-    if (logs.isEmpty || waterFrequencyDays == null) return null;
-    return logs.first.date.add(Duration(days: waterFrequencyDays!));
+    if (logs.isEmpty || frequencyDays == null) return null;
+    return logs.first.date.add(Duration(days: frequencyDays));
   }
 
-  DateTime? get nextFertilizeDate {
-    final logs = careLogs.where((l) => l.type == CareType.fertilize).toList()
-      ..sort((a, b) => b.date.compareTo(a.date));
-    if (logs.isEmpty || fertilizeFrequencyDays == null) return null;
-    return logs.first.date.add(Duration(days: fertilizeFrequencyDays!));
-  }
-
-  DateTime? get nextMistDate {
-    final logs = careLogs.where((l) => l.type == CareType.mist).toList()
-      ..sort((a, b) => b.date.compareTo(a.date));
-    if (logs.isEmpty || mistFrequencyDays == null) return null;
-    return logs.first.date.add(Duration(days: mistFrequencyDays!));
-  }
+  DateTime? get nextWaterDate =>
+      _nextDateFor(CareType.water, waterFrequencyDays);
+  DateTime? get nextFertilizeDate =>
+      _nextDateFor(CareType.fertilize, fertilizeFrequencyDays);
+  DateTime? get nextMistDate => _nextDateFor(CareType.mist, mistFrequencyDays);
+  DateTime? get nextRepotDate =>
+      _nextDateFor(CareType.repot, repotFrequencyDays);
+  DateTime? get nextPruneDate =>
+      _nextDateFor(CareType.prune, pruneFrequencyDays);
+  DateTime? get nextTreatDate =>
+      _nextDateFor(CareType.treat, treatFrequencyDays);
 
   bool get isOverdue {
     final now = DateTime.now();
-    final nw = nextWaterDate;
-    if (nw != null && nw.isBefore(now)) return true;
-    final nf = nextFertilizeDate;
-    if (nf != null && nf.isBefore(now)) return true;
-    final nm = nextMistDate;
-    if (nm != null && nm.isBefore(now)) return true;
+    for (final next in [
+      nextWaterDate,
+      nextFertilizeDate,
+      nextMistDate,
+      nextRepotDate,
+      nextPruneDate,
+      nextTreatDate,
+    ]) {
+      if (next != null && next.isBefore(now)) return true;
+    }
     return false;
   }
 
@@ -116,46 +136,53 @@ class Plant {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'species': species,
-    'roomId': roomId,
-    'acquiredDate': acquiredDate.toIso8601String(),
-    'photos': photos.map((p) => p.toJson()).toList(),
-    'careLogs': careLogs.map((l) => l.toJson()).toList(),
-    'measurements': measurements.map((m) => m.toJson()).toList(),
-    'notes': notes,
-    'isDead': isDead ? 1 : 0,
-    'isWishlist': isWishlist ? 1 : 0,
-    'createdAt': createdAt.toIso8601String(),
-    'waterFrequencyDays': waterFrequencyDays,
-    'fertilizeFrequencyDays': fertilizeFrequencyDays,
-    'mistFrequencyDays': mistFrequencyDays,
-  };
+        'id': id,
+        'name': name,
+        'species': species,
+        'roomId': roomId,
+        'acquiredDate': acquiredDate.toIso8601String(),
+        'photos': photos.map((p) => p.toJson()).toList(),
+        'careLogs': careLogs.map((l) => l.toJson()).toList(),
+        'measurements': measurements.map((m) => m.toJson()).toList(),
+        'notes': notes,
+        'isDead': isDead ? 1 : 0,
+        'isWishlist': isWishlist ? 1 : 0,
+        'createdAt': createdAt.toIso8601String(),
+        'waterFrequencyDays': waterFrequencyDays,
+        'fertilizeFrequencyDays': fertilizeFrequencyDays,
+        'mistFrequencyDays': mistFrequencyDays,
+        'repotFrequencyDays': repotFrequencyDays,
+        'pruneFrequencyDays': pruneFrequencyDays,
+        'treatFrequencyDays': treatFrequencyDays,
+      };
 
   factory Plant.fromJson(Map<String, dynamic> json) => Plant(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    species: json['species'] as String?,
-    roomId: json['roomId'] as String?,
-    acquiredDate: DateTime.parse(json['acquiredDate'] as String),
-    photos: (json['photos'] as List<dynamic>? ?? [])
-        .map((e) => PhotoEntry.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    careLogs: (json['careLogs'] as List<dynamic>? ?? [])
-        .map((e) => CareLog.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    measurements: (json['measurements'] as List<dynamic>? ?? [])
-        .map((e) => Measurement.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    notes: json['notes'] as String?,
-    isDead: (json['isDead'] as num?)?.toInt() == 1,
-    isWishlist: (json['isWishlist'] as num?)?.toInt() == 1,
-    createdAt: DateTime.parse(json['createdAt'] as String),
-    waterFrequencyDays: (json['waterFrequencyDays'] as num?)?.toInt(),
-    fertilizeFrequencyDays: (json['fertilizeFrequencyDays'] as num?)?.toInt(),
-    mistFrequencyDays: (json['mistFrequencyDays'] as num?)?.toInt(),
-  );
+        id: json['id'] as String,
+        name: json['name'] as String,
+        species: json['species'] as String?,
+        roomId: json['roomId'] as String?,
+        acquiredDate: DateTime.parse(json['acquiredDate'] as String),
+        photos: (json['photos'] as List<dynamic>? ?? [])
+            .map((e) => PhotoEntry.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        careLogs: (json['careLogs'] as List<dynamic>? ?? [])
+            .map((e) => CareLog.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        measurements: (json['measurements'] as List<dynamic>? ?? [])
+            .map((e) => Measurement.fromJson(e as Map<String, dynamic>))
+            .toList(),
+        notes: json['notes'] as String?,
+        isDead: (json['isDead'] as num?)?.toInt() == 1,
+        isWishlist: (json['isWishlist'] as num?)?.toInt() == 1,
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        waterFrequencyDays: (json['waterFrequencyDays'] as num?)?.toInt(),
+        fertilizeFrequencyDays:
+            (json['fertilizeFrequencyDays'] as num?)?.toInt(),
+        mistFrequencyDays: (json['mistFrequencyDays'] as num?)?.toInt(),
+        repotFrequencyDays: (json['repotFrequencyDays'] as num?)?.toInt(),
+        pruneFrequencyDays: (json['pruneFrequencyDays'] as num?)?.toInt(),
+        treatFrequencyDays: (json['treatFrequencyDays'] as num?)?.toInt(),
+      );
 
   @override
   bool operator ==(Object other) =>
