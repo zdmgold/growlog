@@ -1,1 +1,82 @@
-     
+name: Build Android
+
+# MANUAL TRIGGER ONLY — no push:/pull_request: trigger, by explicit
+# decision made at the start of this project and reaffirmed against
+# the blueprint (Section 5): an auto-trigger on every push has already
+# caused a documented free-tier exhaustion in a prior project (1,801
+# minutes burned from commit-triggered builds). A solo developer
+# iterating across many chat sessions pushes far more often than a
+# build is actually ready to run.
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - debug
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Get Flutter packages
+        run: flutter pub get
+
+      - name: Generate localizations
+        run: flutter gen-l10n
+
+      - name: Analyze
+        run: flutter analyze
+        continue-on-error: true
+
+      - name: Build App Bundle (for Play Store submission)
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        run: |
+          flutter build appbundle --release \
+            --obfuscate --split-debug-info=build/symbols
+
+      - name: Build APK (for direct sideload testing)
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        run: |
+          flutter build apk --release \
+            --obfuscate --split-debug-info=build/symbols
+
+      - name: Build debug APK
+        if: ${{ github.event.inputs.build_type == 'debug' }}
+        run: flutter build apk --debug
+
+      - name: Upload AAB
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: growlog-android-aab
+          path: build/app/outputs/bundle/release/*.aab
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: growlog-android-apk
+          path: build/app/outputs/flutter-apk/*.apk
+
+      - name: Upload debug symbols
+        if: ${{ github.event.inputs.build_type == 'release' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: growlog-android-symbols
+          path: build/symbols/
