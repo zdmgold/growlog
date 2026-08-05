@@ -13,6 +13,8 @@ import '../widgets/photo_timeline.dart';
 import '../widgets/skeleton_loader.dart';
 import 'growth_timeline_screen.dart';
 import 'add_plant_screen.dart';
+import 'paul_chat_screen.dart';
+import 'diagnosis_screen.dart';
 
 class PlantDetailScreen extends StatelessWidget {
   final PlantProvider plantProvider;
@@ -162,13 +164,6 @@ class PlantDetailScreen extends StatelessWidget {
     );
   }
 
-  /// SURGICAL FIX (sync I/O removal): previously called
-  /// `File(latestPhoto.path).existsSync()` directly in build(), a
-  /// blocking disk stat every time this screen rebuilds (e.g. on every
-  /// care log). Now reads the async cache instead: null (not checked
-  /// yet) shows a SkeletonLoader, false/no-photo shows the same accent
-  /// placeholder icon as before, true shows the Hero-wrapped image
-  /// (unchanged — the Hero tag already correctly matched PlantCard's).
   Widget _buildHeroBackground(dynamic latestPhoto, String plantId) {
     if (latestPhoto == null) {
       return _placeholderHero();
@@ -260,11 +255,41 @@ class PlantDetailScreen extends StatelessWidget {
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
+                leading: const Icon(Icons.eco, color: AppColors.accent),
+                title: const Text('Ask Paul about this plant'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PaulChatScreen(
+                        plantProvider: plantProvider,
+                        plant: plant,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.health_and_safety, color: AppColors.accent),
+                title: const Text('Health Check'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => DiagnosisScreen(
+                        plantProvider: plantProvider,
+                        plant: plant,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.archive),
                 title: Text(plant.isDead ? 'Revive Plant' : 'Mark as Dead'),
                 onTap: () {
-                  // SURGICAL ADDITION: haptic on archive toggle
-                  // (feature #8) — previously silent.
                   HapticFeedback.lightImpact();
                   plantProvider.toggleDead(plant.id);
                   Navigator.pop(context);
@@ -287,9 +312,6 @@ class PlantDetailScreen extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            // SURGICAL ADDITION: haptic on the actual
-                            // destructive confirmation (feature #8) —
-                            // previously silent.
                             HapticFeedback.mediumImpact();
                             plantProvider.deletePlant(plant.id);
                             Navigator.pop(context);
