@@ -3,7 +3,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
 
 class NotificationService {
-  static final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _notifications =
+      FlutterLocalNotificationsPlugin();
   static bool _initialized = false;
 
   static Future<void> initialize() async {
@@ -21,6 +22,18 @@ class NotificationService {
     await _notifications.initialize(
       const InitializationSettings(android: androidSettings, iOS: iosSettings),
     );
+
+    // FIX: Android 13+ (API 33+) requires an explicit runtime
+    // permission request for notifications, or every scheduled
+    // reminder silently never displays with no error anywhere. This
+    // was missing entirely in the original source — iOS's equivalent
+    // permissions were already requested above via
+    // DarwinInitializationSettings, but there was no Android
+    // counterpart at all.
+    await _notifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
 
     _initialized = true;
   }
@@ -42,7 +55,8 @@ class NotificationService {
         android: AndroidNotificationDetails(
           'growlog_care',
           'Plant Care Reminders',
-          channelDescription: 'Reminders for watering, fertilizing, and other plant care tasks',
+          channelDescription:
+              'Reminders for watering, fertilizing, and other plant care tasks',
           importance: Importance.high,
           priority: Priority.high,
           showBadge: true,
@@ -55,7 +69,8 @@ class NotificationService {
         ),
       ),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

@@ -44,6 +44,9 @@ class LocalStorage {
             waterFrequencyDays INTEGER,
             fertilizeFrequencyDays INTEGER,
             mistFrequencyDays INTEGER,
+            repotFrequencyDays INTEGER,
+            pruneFrequencyDays INTEGER,
+            treatFrequencyDays INTEGER,
             FOREIGN KEY (roomId) REFERENCES rooms(id)
           )
         ''');
@@ -103,7 +106,8 @@ class LocalStorage {
   Future<void> deleteRoom(String id) async {
     final db = await database;
     await db.delete('rooms', where: 'id = ?', whereArgs: [id]);
-    await db.update('plants', {'roomId': null}, where: 'roomId = ?', whereArgs: [id]);
+    await db.update('plants', {'roomId': null},
+        where: 'roomId = ?', whereArgs: [id]);
   }
 
   // Plants with nested data
@@ -132,8 +136,12 @@ class LocalStorage {
         isWishlist: (map['isWishlist'] as num) == 1,
         createdAt: DateTime.parse(map['createdAt'] as String),
         waterFrequencyDays: (map['waterFrequencyDays'] as num?)?.toInt(),
-        fertilizeFrequencyDays: (map['fertilizeFrequencyDays'] as num?)?.toInt(),
+        fertilizeFrequencyDays:
+            (map['fertilizeFrequencyDays'] as num?)?.toInt(),
         mistFrequencyDays: (map['mistFrequencyDays'] as num?)?.toInt(),
+        repotFrequencyDays: (map['repotFrequencyDays'] as num?)?.toInt(),
+        pruneFrequencyDays: (map['pruneFrequencyDays'] as num?)?.toInt(),
+        treatFrequencyDays: (map['treatFrequencyDays'] as num?)?.toInt(),
       ));
     }
 
@@ -173,62 +181,81 @@ class LocalStorage {
     return maps.map((m) => Measurement.fromJson(m)).toList();
   }
 
+  /// Saves a plant and all of its nested photos/care logs/measurements.
+  ///
+  /// SURGICAL FIX: originally each `db.insert`/`db.delete` below ran as
+  /// its own independent statement. If the app was killed midway through
+  /// (e.g. between deleting old photos and re-inserting the new set),
+  /// the plant would be left with a corrupted or partial photo/care/
+  /// measurement history with no way to recover it. Wrapping the whole
+  /// operation in `db.transaction()` makes it atomic: either every
+  /// delete-then-reinsert below completes, or (on a crash/kill) none of
+  /// it is committed and the previous saved state is preserved intact.
   Future<void> savePlant(Plant plant) async {
     final db = await database;
-    await db.insert(
-      'plants',
-      {
-        'id': plant.id,
-        'name': plant.name,
-        'species': plant.species,
-        'roomId': plant.roomId,
-        'acquiredDate': plant.acquiredDate.toIso8601String(),
-        'notes': plant.notes,
-        'isDead': plant.isDead ? 1 : 0,
-        'isWishlist': plant.isWishlist ? 1 : 0,
-        'createdAt': plant.createdAt.toIso8601String(),
-        'waterFrequencyDays': plant.waterFrequencyDays,
-        'fertilizeFrequencyDays': plant.fertilizeFrequencyDays,
-        'mistFrequencyDays': plant.mistFrequencyDays,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
 
-    await db.delete('photos', where: 'plantId = ?', whereArgs: [plant.id]);
-    for (final photo in plant.photos) {
-      await db.insert('photos', {
-        'id': photo.id,
-        'plantId': photo.plantId,
-        'date': photo.date.toIso8601String(),
-        'path': photo.path,
-        'notes': photo.notes,
-        'height': photo.height,
-        'leafCount': photo.leafCount,
-      });
-    }
+    await db.transaction((txn) async {
+      await txn.insert(
+        'plants',
+        {
+          'id': plant.id,
+          'name': plant.name,
+          'species': plant.species,
+          'roomId': plant.roomId,
+          'acquiredDate': plant.acquiredDate.toIso8601String(),
+          'notes': plant.notes,
+          'isDead': plant.isDead ? 1 : 0,
+          'isWishlist': plant.isWishlist ? 1 : 0,
+          'createdAt': plant.createdAt.toIso8601String(),
+          'waterFrequencyDays': plant.waterFrequencyDays,
+          'fertilizeFrequencyDays': plant.fertilizeFrequencyDays,
+          'mistFrequencyDays': plant.mistFrequencyDays,
+          'repotFrequencyDays': plant.repotFrequencyDays,
+          'pruneFrequencyDays': plant.pruneFrequencyDays,
+          'treatFrequencyDays': plant.treatFrequencyDays,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
 
-    await db.delete('care_logs', where: 'plantId = ?', whereArgs: [plant.id]);
-    for (final log in plant.careLogs) {
-      await db.insert('care_logs', {
-        'id': log.id,
-        'plantId': log.plantId,
-        'type': log.type.name,
-        'date': log.date.toIso8601String(),
-        'notes': log.notes,
-      });
-    }
+      await txn
+          .delete('photos', where: 'plantId = ?', whereArgs: [plant.id]);
+      for (final photo in plant.photos) {
+        await txn.insert('photos', {
+          'id': photo.id,
+          'plantId': photo.plantId,
+          'date': photo.date.toIso8601String(),
+          'path': photo.path,
+          'notes': photo.notes,
+          'height': photo.height,
+          'leafCount': photo.leafCount,
+        });
+      }
 
-    await db.delete('measurements', where: 'plantId = ?', whereArgs: [plant.id]);
-    for (final m in plant.measurements) {
-      await db.insert('measurements', {
-        'id': m.id,
-        'plantId': m.plantId,
-        'date': m.date.toIso8601String(),
-        'height': m.height,
-        'leafCount': m.leafCount,
-        'stemWidth': m.stemWidth,
-      });
-    }
+      await txn.delete('care_logs',
+          where: 'plantId = ?', whereArgs: [plant.id]);
+      for (final log in plant.careLogs) {
+        await txn.insert('care_logs', {
+          'id': log.id,
+          'plantId': log.plantId,
+          'type': log.type.name,
+          'date': log.date.toIso8601String(),
+          'notes': log.notes,
+        });
+      }
+
+      await txn.delete('measurements',
+          where: 'plantId = ?', whereArgs: [plant.id]);
+      for (final m in plant.measurements) {
+        await txn.insert('measurements', {
+          'id': m.id,
+          'plantId': m.plantId,
+          'date': m.date.toIso8601String(),
+          'height': m.height,
+          'leafCount': m.leafCount,
+          'stemWidth': m.stemWidth,
+        });
+      }
+    });
   }
 
   Future<void> deletePlant(String id) async {
@@ -238,11 +265,13 @@ class LocalStorage {
 
   Future<void> clearAll() async {
     final db = await database;
-    await db.delete('photos');
-    await db.delete('care_logs');
-    await db.delete('measurements');
-    await db.delete('plants');
-    await db.delete('rooms');
+    await db.transaction((txn) async {
+      await txn.delete('photos');
+      await txn.delete('care_logs');
+      await txn.delete('measurements');
+      await txn.delete('plants');
+      await txn.delete('rooms');
+    });
   }
 
   Future<void> close() async {

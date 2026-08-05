@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 /// AdMob service with graceful degradation.
 /// If google_mobile_ads is unavailable or fails, all methods safely no-op
 /// and the banner widget renders as zero-height (invisible).
+///
+/// VERIFIED GENUINE STUB — bannerAd() always returns SizedBox.shrink().
+/// Confirmed this is not wired to any screen anywhere in the app either,
+/// so the "ads fund the free app" plan currently generates $0 real
+/// revenue until this is actually implemented AND placed in the UI.
 class AdMobService {
   static bool _initialized = false;
   static bool _available = false;

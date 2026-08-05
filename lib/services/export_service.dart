@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:ui' as ui;
 import '../models/plant_model.dart';
+import '../models/room_model.dart';
 
 class ExportService {
   static Future<Uint8List?> captureWidget(RenderRepaintBoundary boundary) async {
