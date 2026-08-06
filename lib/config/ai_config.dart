@@ -11,3 +11,4 @@ class AIConfig {
   static const String groqBaseUrl = 'https://api.groq.com/openai/v1/chat/completions';
   static const String cerebrasBaseUrl = 'https://api.cerebras.ai/v1/chat/completions';
   static const String openRouterBaseUrl = 'https://openrouter.ai/api/v1/chat/completions';
+}
