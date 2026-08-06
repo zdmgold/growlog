@@ -33,10 +33,32 @@ jobs:
 
       - name: Fix Kotlin version in generated settings.gradle
         run: |
-          sed -i 's/id "org.jetbrains.kotlin.android" version "[^"]*"/id "org.jetbrains.kotlin.android" version "1.9.24"/' android/settings.gradle
-          sed -i "s/id 'org.jetbrains.kotlin.android' version '[^']*'/id 'org.jetbrains.kotlin.android' version '1.9.24'/" android/settings.gradle
-          echo "=== settings.gradle ==="
+          # Show original for debugging
+          echo "=== BEFORE ==="
           cat android/settings.gradle
+          
+          # Try every possible quote style and pattern
+          sed -i 's/kotlin_android.*version.*/kotlin_android version "1.9.24" apply false/' android/settings.gradle
+          sed -i "s/kotlin_android.*version.*/kotlin_android version '1.9.24' apply false/" android/settings.gradle
+          sed -i 's/org.jetbrains.kotlin.android.*version.*/id "org.jetbrains.kotlin.android" version "1.9.24" apply false/' android/settings.gradle
+          sed -i "s/org.jetbrains.kotlin.android.*version.*/id 'org.jetbrains.kotlin.android' version '1.9.24' apply false/" android/settings.gradle
+          
+          # Also try without apply false
+          sed -i 's/org.jetbrains.kotlin.android.*version.*/id "org.jetbrains.kotlin.android" version "1.9.24"/' android/settings.gradle
+          sed -i "s/org.jetbrains.kotlin.android.*version.*/id 'org.jetbrains.kotlin.android' version '1.9.24'/" android/settings.gradle
+          
+          echo "=== AFTER ==="
+          cat android/settings.gradle
+
+      - name: Force compileSdk 34 on ALL plugins
+        run: |
+          # Patch every plugin's build.gradle to use compileSdk 34 instead of 35
+          find $PUB_CACHE -path "*/android/build.gradle" -print0 | while IFS= read -r -d '' file; do
+            sed -i 's/compileSdk 35/compileSdk 34/g' "$file"
+            sed -i 's/compileSdkVersion 35/compileSdkVersion 34/g' "$file"
+            sed -i 's/compileSdk = 35/compileSdk = 34/g' "$file"
+          done
+          echo "Patched all plugins to compileSdk 34"
 
       - name: Get Flutter packages
         run: flutter pub get
