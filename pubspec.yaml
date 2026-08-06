@@ -12,6 +12,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.19.0
+  google_generative_ai: ^0.4.6
+  flutter_markdown: ^0.7.3
+  http: ^1.2.2
   shared_preferences: ^2.3.0
   sqflite: ^2.3.0
   path: ^1.9.0
@@ -41,13 +44,6 @@ flutter:
   assets:
     - assets/images/
 
-# Section 10: custom launcher icon at all densities + branded splash
-# — no default Flutter icon, no blank-white-flash launch. Run
-# `dart run flutter_launcher_icons` and
-# `dart run flutter_native_splash:create` after adding the real
-# assets/images/icon.png and assets/images/splash_logo.png files
-# (not included here — these are binary image assets, not something
-# generated as Dart/config source).
 flutter_launcher_icons:
   android: true
   ios: true
