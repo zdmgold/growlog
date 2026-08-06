@@ -18,16 +18,12 @@ import 'care_schedule_screen.dart';
 import 'rooms_screen.dart';
 import 'settings_screen.dart';
 import 'wishlist_screen.dart';
+import 'paul_chat_screen.dart';
+import 'diagnosis_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final PlantProvider plantProvider;
-  // SURGICAL ADDITION: needed so Settings (File 32) can bind its theme
-  // picker to the real ThemeProvider instance created in main.dart,
-  // rather than each screen creating its own (which would desync).
   final ThemeProvider themeProvider;
-  // SURGICAL ADDITION: needed both to conditionally hide the ad banner
-  // below (once Remove Ads is purchased) and to thread through to
-  // SettingsScreen for the actual purchase button.
   final IAPService iapService;
 
   const HomeScreen({
@@ -45,9 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   int _selectedIndex = 0;
-
-  // SURGICAL ADDITION: debounce timer for search. Previously every
-  // keystroke triggered an immediate setState + full list rebuild.
   Timer? _debounceTimer;
 
   @override
@@ -66,19 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
-  /// SURGICAL FIX: previously called `Navigator.push(...)` without
-  /// awaiting it, then immediately called `setState(() => _selectedIndex
-  /// = 0)` right after — since `push` returns a Future rather than
-  /// blocking, that reset ran instantly, before the pushed screen even
-  /// finished animating in. The nav bar would flash the destination
-  /// icon as selected for a single frame and then snap back to Garden.
-  /// Chaining `.then()` on the push's Future defers the reset until the
-  /// user has actually navigated back, matching the fix-plan spec
-  /// ("Nav index managed via then() callback instead of flash-reset").
   void _onNavTap(int index) {
-    // Haptic feedback now fires inside BottomNavBar's _NavItem/
-    // _CreateButton (Fix Phase B) before this callback is invoked, so
-    // the duplicate call that used to be here has been removed.
     if (index == 2) {
       Navigator.push(
         context,
@@ -130,6 +111,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton.small(
+            heroTag: 'diagnosis',
+            backgroundColor: AppColors.accent.withOpacity(0.9),
+            foregroundColor: Colors.white,
+            elevation: 2,
+            onPressed: () {
+              HapticFeedback.mediumImpact();
+              if (widget.plantProvider.activePlants.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Add a plant first to use diagnosis!')),
+                );
+                return;
+              }
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DiagnosisScreen(
+                    plantProvider: widget.plantProvider,
+                    plant: widget.plantProvider.activePlants.first,
+                  ),
+                ),
+              );
+            },
+            child: const Icon(Icons.health_and_safety),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton.extended(
+            heroTag: 'paul',
+            backgroundColor: const Color(0xFF059669),
+            foregroundColor: Colors.white,
+            elevation: 4,
+            icon: const Icon(Icons.eco),
+            label: const Text('Ask Paul'),
+            onPressed: () {
+              HapticFeedback.mediumImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PaulChatScreen(
+                    plantProvider: widget.plantProvider,
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: SafeArea(
         child: ListenableBuilder(
           listenable: widget.plantProvider,
@@ -138,10 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
             final overdue = widget.plantProvider.overduePlants;
             final rooms = widget.plantProvider.rooms;
 
-            // SURGICAL ADDITION: pull-to-refresh, per fix-plan feature
-            // #10. Wraps the existing CustomScrollView unchanged;
-            // RefreshIndicator handles its own gesture/spinner and just
-            // needs an async callback.
             return RefreshIndicator(
               onRefresh: () async {
                 HapticFeedback.lightImpact();
@@ -184,12 +211,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   backgroundColor: Colors.transparent,
                                   builder: (_) => _SearchSheet(
                                     controller: _searchController,
-                                    // SURGICAL FIX: debounce search input.
-                                    // Previously every keystroke called
-                                    // setState directly, rebuilding the
-                                    // full filtered grid on every
-                                    // character. Now waits 300ms of
-                                    // inactivity before filtering.
                                     onChanged: (v) {
                                       if (_debounceTimer?.isActive ?? false) {
                                         _debounceTimer!.cancel();
@@ -284,9 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   room: room,
                                   plants: roomPlants,
                                   plantProvider: widget.plantProvider,
-                                  onTap: () {
-                                    // Filter garden by room
-                                  },
+                                  onTap: () {},
                                 ),
                               ),
                             );
@@ -343,13 +362,6 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
       ),
-      // SURGICAL ADDITION: this is the actual placement of the ad
-      // banner — AdMobService.bannerAd() existed as a real method but
-      // was never called from any screen anywhere in the app, meaning
-      // the "ads fund the free app" plan was producing zero revenue
-      // regardless of whether the ad SDK itself worked. Wrapped in a
-      // ListenableBuilder on iapService so it disappears immediately
-      // (no restart needed) the moment Remove Ads is purchased.
       bottomNavigationBar: ListenableBuilder(
         listenable: widget.iapService,
         builder: (context, _) {
@@ -387,10 +399,6 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (_) => _PlantMenuSheet(
         plant: plant,
         onDelete: () {
-          // SURGICAL ADDITION: haptic on the destructive confirmation
-          // (feature #8), and an undo SnackBar (feature #3) instead of
-          // deleting silently and irreversibly — pairs with
-          // PlantProvider.restorePlant() added in Fix Phase A.
           HapticFeedback.mediumImpact();
           widget.plantProvider.deletePlant(plant.id);
           Navigator.pop(context);
@@ -588,7 +596,6 @@ class _PlantMenuSheet extends StatelessWidget {
               leading: const Icon(Icons.archive),
               title: Text(plant.isDead ? 'Revive' : 'Mark as Dead'),
               onTap: () {
-                // Toggle dead status
                 Navigator.pop(context);
               },
             ),
