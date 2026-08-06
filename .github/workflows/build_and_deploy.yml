@@ -41,12 +41,6 @@ jobs:
       - name: Get Flutter packages
         run: flutter pub get
 
-      - name: Force compileSdk 34 on plugins requiring 35
-        run: |
-          find $PUB_CACHE -path "*/android/build.gradle" -exec sed -i 's/compileSdk 35/compileSdk 34/' {} +
-          find $PUB_CACHE -path "*/android/build.gradle" -exec sed -i 's/compileSdkVersion 35/compileSdkVersion 34/' {} +
-          echo "Patched plugins to compileSdk 34"
-
       - name: Generate localizations
         run: flutter gen-l10n
 
