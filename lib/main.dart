@@ -121,22 +121,53 @@ class GrowLogApp extends StatelessWidget {
     );
   }
 
+  TextTheme _textTheme(Color ink) {
+    return TextTheme(
+      displayLarge: AppTypography.display.copyWith(color: ink),
+      displayMedium: AppTypography.headline.copyWith(color: ink),
+      displaySmall: AppTypography.title1.copyWith(color: ink),
+      headlineLarge: AppTypography.headline.copyWith(color: ink),
+      headlineMedium: AppTypography.title1.copyWith(color: ink),
+      headlineSmall: AppTypography.title1.copyWith(color: ink),
+      titleLarge: AppTypography.title1.copyWith(color: ink),
+      titleMedium: AppTypography.title2.copyWith(color: ink),
+      titleSmall: AppTypography.callout.copyWith(color: ink),
+      bodyLarge: AppTypography.body.copyWith(color: ink),
+      bodyMedium: AppTypography.callout.copyWith(color: ink),
+      bodySmall: AppTypography.footnote.copyWith(color: ink),
+      labelLarge: AppTypography.callout.copyWith(color: ink),
+      labelMedium: AppTypography.caption.copyWith(color: ink),
+      labelSmall: AppTypography.caption.copyWith(color: ink),
+    );
+  }
+
   ThemeData _lightTheme() {
     return ThemeData(
       brightness: Brightness.light,
       useMaterial3: true,
+      fontFamily: AppTypography.sans,
+      textTheme: _textTheme(AppColors.textPrimary),
       scaffoldBackgroundColor: AppColors.bgPrimary,
       colorScheme: const ColorScheme.light(
         primary: AppColors.accent,
         onPrimary: Colors.white,
-        secondary: AppColors.accentLight,
+        secondary: AppColors.chlorophyll,
         surface: AppColors.bgSecondary,
+        onSurface: AppColors.textPrimary,
+        outline: AppColors.borderSubtle,
         error: AppColors.error,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
+        titleTextStyle: TextStyle(
+          fontFamily: AppTypography.serif,
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -162,6 +193,7 @@ class GrowLogApp extends StatelessWidget {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.lg),
+          side: const BorderSide(color: AppColors.borderSubtle),
         ),
         color: AppColors.bgSecondary,
       ),
@@ -172,23 +204,34 @@ class GrowLogApp extends StatelessWidget {
     return ThemeData(
       brightness: Brightness.dark,
       useMaterial3: true,
+      fontFamily: AppTypography.sans,
+      textTheme: _textTheme(AppColors.textPrimaryDark),
       scaffoldBackgroundColor: AppColors.bgPrimaryDark,
       colorScheme: const ColorScheme.dark(
         primary: AppColors.accentLight,
-        onPrimary: Colors.white,
-        secondary: AppColors.accent,
+        onPrimary: AppColors.bgPrimaryDark,
+        secondary: AppColors.chlorophyll,
         surface: AppColors.bgSecondaryDark,
+        onSurface: AppColors.textPrimaryDark,
+        outline: AppColors.borderSubtleDark,
         error: AppColors.errorDark,
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
+        titleTextStyle: TextStyle(
+          fontFamily: AppTypography.serif,
+          fontSize: 22,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimaryDark,
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.accentLight,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.bgPrimaryDark,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadii.md),
           ),
@@ -209,6 +252,7 @@ class GrowLogApp extends StatelessWidget {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppRadii.lg),
+          side: const BorderSide(color: AppColors.borderSubtleDark),
         ),
         color: AppColors.bgSecondaryDark,
       ),

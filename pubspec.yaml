@@ -26,6 +26,7 @@ dependencies:
   fl_chart: ^0.68.0
   in_app_purchase: ^3.0.0
   google_mobile_ads: ^9.1.0
+  phosphor_flutter: ^2.1.0
   cupertino_icons: ^1.0.8
   uuid: ^4.4.0
   file_picker: ^8.0.0
@@ -44,6 +45,26 @@ flutter:
   assets:
     - assets/images/
 
+  fonts:
+    - family: Fraunces
+      fonts:
+        - asset: assets/fonts/Fraunces-500.ttf
+          weight: 500
+        - asset: assets/fonts/Fraunces-600.ttf
+          weight: 600
+        - asset: assets/fonts/Fraunces-700.ttf
+          weight: 700
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-400.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-500.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-600.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-700.ttf
+          weight: 700
+
 flutter_launcher_icons:
   android: true
   ios: true
@@ -53,13 +74,13 @@ flutter_launcher_icons:
   adaptive_icon_foreground: "assets/images/icon_foreground.png"
 
 flutter_native_splash:
-  color: "#FAFAF8"
-  color_dark: "#0A0A0A"
+  color: "#F6F1E7"
+  color_dark: "#0E1A14"
   image: "assets/images/splash_logo.png"
   image_dark: "assets/images/splash_logo.png"
   android_12:
-    color: "#FAFAF8"
-    color_dark: "#0A0A0A"
+    color: "#F6F1E7"
+    color_dark: "#0E1A14"
     image: "assets/images/splash_logo.png"
   android: true
   ios: true
