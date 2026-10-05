@@ -27,6 +27,8 @@ dependencies:
   in_app_purchase: ^3.0.0
   google_mobile_ads: ^9.1.0
   phosphor_flutter: ^2.1.0
+  camera: ^0.12.1
+  image: ^4.10.1
   cupertino_icons: ^1.0.8
   uuid: ^4.4.0
   file_picker: ^8.0.0

@@ -7,6 +7,7 @@ import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../services/paul_ai_service.dart';
 import '../utils/constants.dart';
+import 'camera_screen.dart';
 
 class DiagnosisScreen extends StatefulWidget {
   final PlantProvider plantProvider;
@@ -36,6 +37,21 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
         _result = null;
       });
     }
+  }
+
+  Future<void> _openCamera() async {
+    final result = await Navigator.push<CameraResult>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const CameraScreen(),
+      ),
+    );
+    if (result == null || !mounted) return;
+    setState(() {
+      _imageFile = File(result.path);
+      _result = null;
+    });
   }
 
   Future<void> _analyze() async {
@@ -96,7 +112,7 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
                 title: const Text('Take Photo'),
                 onTap: () {
                   Navigator.pop(context);
-                  _pickImage(ImageSource.camera);
+                  _openCamera();
                 },
               ),
               ListTile(
