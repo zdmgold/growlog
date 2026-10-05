@@ -55,6 +55,9 @@ flutter:
           weight: 600
         - asset: assets/fonts/Fraunces-700.ttf
           weight: 700
+        - asset: assets/fonts/Fraunces-Italic-500.ttf
+          weight: 500
+          style: italic
     - family: PhosphorRegular
       fonts:
         - asset: assets/fonts/PhosphorRegular.ttf

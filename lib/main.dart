@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:growlog/l10n/app_localizations.dart';
 import 'providers/plant_provider.dart';
+import 'providers/locale_provider.dart';
 import 'providers/theme_provider.dart';
 import 'services/local_storage.dart';
 import 'services/notification_service.dart';
@@ -27,12 +28,14 @@ void main() async {
   final localStorage = LocalStorage();
   final plantProvider = PlantProvider(localStorage);
   final themeProvider = ThemeProvider();
+  final localeProvider = LocaleProvider();
   final iapService = IAPService();
 
   runApp(
     GrowLogApp(
       plantProvider: plantProvider,
       themeProvider: themeProvider,
+      localeProvider: localeProvider,
       iapService: iapService,
     ),
   );
@@ -41,12 +44,14 @@ void main() async {
 class GrowLogApp extends StatelessWidget {
   final PlantProvider plantProvider;
   final ThemeProvider themeProvider;
+  final LocaleProvider localeProvider;
   final IAPService iapService;
 
   const GrowLogApp({
     super.key,
     required this.plantProvider,
     required this.themeProvider,
+    required this.localeProvider,
     required this.iapService,
   });
 
@@ -62,7 +67,7 @@ class GrowLogApp extends StatelessWidget {
         _updateSystemUI(isDark);
 
         return ListenableBuilder(
-          listenable: plantProvider,
+          listenable: Listenable.merge([plantProvider, localeProvider]),
           builder: (context, _) {
             return MaterialApp(
               // Attached so ErrorHandler can recover to the root route
@@ -78,6 +83,7 @@ class GrowLogApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
+              locale: localeProvider.value,
               supportedLocales: const [
                 Locale('en'),
                 Locale('es'),
@@ -97,6 +103,7 @@ class GrowLogApp extends StatelessWidget {
               home: HomeScreen(
                 plantProvider: plantProvider,
                 themeProvider: themeProvider,
+                localeProvider: localeProvider,
                 iapService: iapService,
               ),
             );

@@ -12,11 +12,13 @@ import 'camera_screen.dart';
 class DiagnosisScreen extends StatefulWidget {
   final PlantProvider plantProvider;
   final Plant plant;
+  final String? initialImagePath;
 
   const DiagnosisScreen({
     super.key,
     required this.plantProvider,
     required this.plant,
+    this.initialImagePath,
   });
 
   @override
@@ -27,6 +29,13 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
   File? _imageFile;
   bool _analyzing = false;
   DiagnosisResult? _result;
+
+  @override
+  void initState() {
+    super.initState();
+    final path = widget.initialImagePath;
+    if (path != null) _imageFile = File(path);
+  }
 
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();

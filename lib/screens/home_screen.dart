@@ -1,35 +1,42 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import '../models/plant_model.dart';
-import '../models/room_model.dart';
+import '../providers/locale_provider.dart';
 import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/admob_service.dart';
 import '../services/iap_service.dart';
+import '../utils/care_due.dart';
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
 import '../widgets/bottom_nav_bar.dart';
-import '../widgets/plant_card.dart';
-import '../widgets/room_card.dart';
-import '../widgets/next_care_badge.dart';
-import 'plant_detail_screen.dart';
+import '../widgets/care_today_row.dart';
+import '../widgets/home_header.dart';
+import '../widgets/language_sheet.dart';
+import '../widgets/scan_hero_card.dart';
+import '../widgets/specimen_card.dart';
 import 'add_plant_screen.dart';
+import 'camera_screen.dart';
 import 'care_schedule_screen.dart';
-import 'rooms_screen.dart';
+import 'diagnosis_screen.dart';
+import 'paul_chat_screen.dart';
+import 'plant_detail_screen.dart';
 import 'settings_screen.dart';
 import 'wishlist_screen.dart';
-import 'paul_chat_screen.dart';
-import 'diagnosis_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final PlantProvider plantProvider;
   final ThemeProvider themeProvider;
+  final LocaleProvider localeProvider;
   final IAPService iapService;
 
   const HomeScreen({
     super.key,
     required this.plantProvider,
     required this.themeProvider,
+    required this.localeProvider,
     required this.iapService,
   });
 
@@ -40,6 +47,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  String? _roomFilter;
   int _selectedIndex = 0;
   Timer? _debounceTimer;
 
@@ -50,124 +58,162 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  List<Plant> _filteredPlants(List<Plant> plants) {
-    if (_searchQuery.isEmpty) return plants;
-    final q = _searchQuery.toLowerCase();
-    return plants.where((p) {
-      return p.name.toLowerCase().contains(q) ||
-          (p.species?.toLowerCase().contains(q) ?? false);
-    }).toList();
+  List<Plant> _gardenPlants(List<Plant> plants) {
+    var list = plants;
+    if (_roomFilter != null) {
+      list = list.where((p) => p.roomId == _roomFilter).toList();
+    }
+    if (_searchQuery.isNotEmpty) {
+      final q = _searchQuery.toLowerCase();
+      list = list.where((p) {
+        return p.name.toLowerCase().contains(q) ||
+            (p.species?.toLowerCase().contains(q) ?? false);
+      }).toList();
+    }
+    return list;
   }
+
+  void _push(Widget screen, {bool resetNav = false}) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => screen)).then((_) {
+      if (resetNav && mounted) setState(() => _selectedIndex = 0);
+    });
+  }
+
+  void _openSettings() => _push(
+        SettingsScreen(
+          plantProvider: widget.plantProvider,
+          themeProvider: widget.themeProvider,
+          iapService: widget.iapService,
+        ),
+      );
+
+  void _addPlant() =>
+      _push(AddPlantScreen(plantProvider: widget.plantProvider));
 
   void _onNavTap(int index) {
     if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => AddPlantScreen(plantProvider: widget.plantProvider),
-        ),
-      );
+      _addPlant();
       return;
     }
     setState(() => _selectedIndex = index);
     if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              CareScheduleScreen(plantProvider: widget.plantProvider),
-        ),
-      ).then((_) {
-        if (mounted) setState(() => _selectedIndex = 0);
-      });
+      _push(CareScheduleScreen(plantProvider: widget.plantProvider),
+          resetNav: true);
     } else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => WishlistScreen(plantProvider: widget.plantProvider),
-        ),
-      ).then((_) {
-        if (mounted) setState(() => _selectedIndex = 0);
-      });
+      _push(WishlistScreen(plantProvider: widget.plantProvider),
+          resetNav: true);
     } else if (index == 4) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => SettingsScreen(
-            plantProvider: widget.plantProvider,
-            themeProvider: widget.themeProvider,
-            iapService: widget.iapService,
-          ),
+      _push(
+        SettingsScreen(
+          plantProvider: widget.plantProvider,
+          themeProvider: widget.themeProvider,
+          iapService: widget.iapService,
         ),
-      ).then((_) {
-        if (mounted) setState(() => _selectedIndex = 0);
-      });
+        resetNav: true,
+      );
     }
+  }
+
+  Plant? _scanTarget() {
+    final plants = widget.plantProvider.activePlants;
+    return plants.isEmpty ? null : plants.first;
+  }
+
+  void _openDiagnosis(Plant plant, [String? imagePath]) {
+    _push(
+      DiagnosisScreen(
+        plantProvider: widget.plantProvider,
+        plant: plant,
+        initialImagePath: imagePath,
+      ),
+    );
+  }
+
+  Future<void> _scanWithCamera() async {
+    HapticFeedback.mediumImpact();
+    final target = _scanTarget();
+    if (target == null) {
+      _addPlant();
+      return;
+    }
+    final result = await Navigator.push<CameraResult>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const CameraScreen(),
+      ),
+    );
+    if (result == null || !mounted) return;
+    _openDiagnosis(target, result.path);
+  }
+
+  Future<void> _scanFromGallery() async {
+    final target = _scanTarget();
+    if (target == null) {
+      _addPlant();
+      return;
+    }
+    final picked = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1400,
+    );
+    if (picked == null || !mounted) return;
+    _openDiagnosis(target, picked.path);
+  }
+
+  void _openHealthCheck() {
+    final target = _scanTarget();
+    if (target == null) {
+      _addPlant();
+      return;
+    }
+    _openDiagnosis(target);
+  }
+
+  void _openPlant(Plant plant) {
+    _push(
+      PlantDetailScreen(
+        plantProvider: widget.plantProvider,
+        plantId: plant.id,
+      ),
+    );
+  }
+
+  void _openSearch() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _SearchSheet(
+        controller: _searchController,
+        onChanged: (v) {
+          if (_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
+          _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+            if (mounted) setState(() => _searchQuery = v);
+          });
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FloatingActionButton.small(
-            heroTag: 'diagnosis',
-            backgroundColor: AppColors.accent.withOpacity(0.9),
-            foregroundColor: Colors.white,
-            elevation: 2,
-            onPressed: () {
-              HapticFeedback.mediumImpact();
-              if (widget.plantProvider.activePlants.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Add a plant first to use diagnosis!')),
-                );
-                return;
-              }
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => DiagnosisScreen(
-                    plantProvider: widget.plantProvider,
-                    plant: widget.plantProvider.activePlants.first,
-                  ),
-                ),
-              );
-            },
-            child: const Icon(Icons.health_and_safety),
-          ),
-          const SizedBox(height: 8),
-          FloatingActionButton.extended(
-            heroTag: 'paul',
-            backgroundColor: const Color(0xFF059669),
-            foregroundColor: Colors.white,
-            elevation: 4,
-            icon: const Icon(Icons.eco),
-            label: const Text('Ask Paul'),
-            onPressed: () {
-              HapticFeedback.mediumImpact();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => PaulChatScreen(
-                    plantProvider: widget.plantProvider,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
       body: SafeArea(
+        bottom: false,
         child: ListenableBuilder(
           listenable: widget.plantProvider,
           builder: (context, _) {
-            final plants = _filteredPlants(widget.plantProvider.activePlants);
-            final overdue = widget.plantProvider.overduePlants;
+            final all = widget.plantProvider.activePlants;
             final rooms = widget.plantProvider.rooms;
+            final due = dueCare(all);
+            final upcoming = due.isEmpty ? nextUpcoming(all) : null;
+            final garden = _gardenPlants(all);
 
             return RefreshIndicator(
               onRefresh: () async {
@@ -175,186 +221,123 @@ class _HomeScreenState extends State<HomeScreen> {
                 await widget.plantProvider.reload();
               },
               child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.lg,
-                        AppSpacing.md,
-                        AppSpacing.lg,
-                        AppSpacing.md,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'GrowLog',
-                            style: AppTypography.display.copyWith(
-                              color: isDark
-                                  ? AppColors.textPrimaryDark
-                                  : AppColors.textPrimary,
-                            ),
-                          ),
-                          Semantics(
-                            label: 'Search plants',
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.search,
-                                color: isDark
-                                    ? AppColors.textPrimaryDark
-                                    : AppColors.textPrimary,
-                              ),
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) => _SearchSheet(
-                                    controller: _searchController,
-                                    onChanged: (v) {
-                                      if (_debounceTimer?.isActive ?? false) {
-                                        _debounceTimer!.cancel();
-                                      }
-                                      _debounceTimer = Timer(
-                                        const Duration(milliseconds: 300),
-                                        () {
-                                          if (mounted) {
-                                            setState(() => _searchQuery = v);
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: HomeHeader(
+                      themeProvider: widget.themeProvider,
+                      dueCount: due.length,
+                      plantCount: all.length,
+                      onLanguage: () =>
+                          showLanguageSheet(context, widget.localeProvider),
+                      onSettings: _openSettings,
                     ),
                   ),
-                  if (overdue.isNotEmpty)
-                    SliverToBoxAdapter(
-                      child: _SectionHeader(title: 'Needs Care'),
-                    ),
-                  if (overdue.isNotEmpty)
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 120,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.lg,
-                          ),
-                          itemCount: overdue.length,
-                          itemBuilder: (context, index) {
-                            final plant = overdue[index];
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(right: AppSpacing.md),
-                              child: SizedBox(
-                                width: 280,
-                                child: PlantCard(
-                                  plant: plant,
-                                  plantProvider: widget.plantProvider,
-                                  onTap: () => _openPlant(plant),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  if (rooms.isNotEmpty)
-                    SliverToBoxAdapter(
-                      child: _SectionHeader(
-                        title: 'Rooms',
-                        action: TextButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => RoomsScreen(
-                                plantProvider: widget.plantProvider,
-                              ),
-                            ),
-                          ),
-                          child: const Text('See All'),
-                        ),
-                      ),
-                    ),
-                  if (rooms.isNotEmpty)
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 160,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.lg,
-                          ),
-                          itemCount: rooms.length,
-                          itemBuilder: (context, index) {
-                            final room = rooms[index];
-                            final roomPlants =
-                                widget.plantProvider.plantsInRoom(room.id);
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(right: AppSpacing.md),
-                              child: SizedBox(
-                                width: 200,
-                                child: RoomCard(
-                                  room: room,
-                                  plants: roomPlants,
-                                  plantProvider: widget.plantProvider,
-                                  onTap: () {},
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
                   SliverToBoxAdapter(
-                    child: _SectionHeader(title: 'My Garden'),
-                  ),
-                  if (plants.isEmpty)
-                    SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: _EmptyGarden(
-                        onAdd: () => _onNavTap(2),
-                      ),
-                    )
-                  else
-                    SliverPadding(
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.lg,
                       ),
-                      sliver: SliverGrid(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: AppSpacing.md,
-                          crossAxisSpacing: AppSpacing.md,
-                          childAspectRatio: 0.82,
-                        ),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            final plant = plants[index];
-                            return PlantCard(
-                              plant: plant,
-                              plantProvider: widget.plantProvider,
-                              onTap: () => _openPlant(plant),
-                              onLongPress: () {
-                                HapticFeedback.lightImpact();
-                                _showPlantMenu(plant);
-                              },
-                            );
-                          },
-                          childCount: plants.length,
+                      child: ScanHeroCard(
+                        hasPlants: all.isNotEmpty,
+                        onPrimary: _scanWithCamera,
+                        onGallery: _scanFromGallery,
+                        onCheck: _openHealthCheck,
+                        onPaul: () => _push(
+                          PaulChatScreen(plantProvider: widget.plantProvider),
                         ),
                       ),
                     ),
+                  ),
+                  if (all.isNotEmpty) ...[
+                    SliverToBoxAdapter(
+                      child: _SectionTitle(
+                        title: "Today's care",
+                        trailing: TextButton(
+                          onPressed: () => _push(
+                            CareScheduleScreen(
+                              plantProvider: widget.plantProvider,
+                            ),
+                          ),
+                          child: const Text('See all'),
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: CareTodayRow(
+                        due: due,
+                        upcoming: upcoming,
+                        plantProvider: widget.plantProvider,
+                        onOpenPlant: _openPlant,
+                      ),
+                    ),
+                  ],
+                  SliverToBoxAdapter(
+                    child: _SectionTitle(
+                      title: 'My garden',
+                      trailing: all.isEmpty
+                          ? null
+                          : IconButton(
+                              tooltip: 'Search plants',
+                              icon: Icon(PhosphorRegular.magnifyingGlass,
+                                  size: 22, color: ink),
+                              onPressed: _openSearch,
+                            ),
+                    ),
+                  ),
+                  if (all.isEmpty)
+                    SliverToBoxAdapter(
+                      child: _EmptyGarden(onAdd: _addPlant),
+                    )
+                  else ...[
+                    if (rooms.isNotEmpty)
+                      SliverToBoxAdapter(
+                        child: _RoomChips(
+                          rooms: rooms.map((r) => (r.id, r.name)).toList(),
+                          selected: _roomFilter,
+                          onSelect: (id) => setState(() => _roomFilter = id),
+                        ),
+                      ),
+                    SliverToBoxAdapter(
+                      child: garden.isEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.all(AppSpacing.lg),
+                              child: Text(
+                                'No plants match this filter.',
+                                style: AppTypography.body.copyWith(color: sub),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 252,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.lg,
+                                ),
+                                itemCount: garden.length,
+                                separatorBuilder: (_, __) =>
+                                    const SizedBox(width: AppSpacing.md),
+                                itemBuilder: (context, i) {
+                                  final plant = garden[i];
+                                  return SizedBox(
+                                    width: 176,
+                                    child: SpecimenCard(
+                                      plant: plant,
+                                      plantProvider: widget.plantProvider,
+                                      onTap: () => _openPlant(plant),
+                                      onLongPress: () {
+                                        HapticFeedback.lightImpact();
+                                        _showPlantMenu(plant);
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                    ),
+                  ],
                   const SliverToBoxAdapter(
-                    child: SizedBox(height: AppSpacing.xxxl),
+                    child: SizedBox(height: AppSpacing.xxl),
                   ),
                 ],
               ),
@@ -376,18 +359,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         },
-      ),
-    );
-  }
-
-  void _openPlant(Plant plant) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PlantDetailScreen(
-          plantProvider: widget.plantProvider,
-          plantId: plant.id,
-        ),
       ),
     );
   }
@@ -418,33 +389,112 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _SectionHeader extends StatelessWidget {
+class _SectionTitle extends StatelessWidget {
   final String title;
-  final Widget? action;
-
-  const _SectionHeader({required this.title, this.action});
+  final Widget? trailing;
+  const _SectionTitle({required this.title, this.trailing});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-        AppSpacing.lg,
-        AppSpacing.lg,
-        AppSpacing.lg,
-        AppSpacing.sm,
+        AppSpacing.lg, AppSpacing.xl, AppSpacing.md, AppSpacing.sm,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: AppTypography.title1.copyWith(
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+          Expanded(
+            child: Text(
+              title,
+              style: AppTypography.title1.copyWith(
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+              ),
             ),
           ),
-          if (action != null) action!,
+          if (trailing != null) trailing!,
         ],
+      ),
+    );
+  }
+}
+
+class _RoomChips extends StatelessWidget {
+  final List<(String, String)> rooms;
+  final String? selected;
+  final ValueChanged<String?> onSelect;
+
+  const _RoomChips({
+    required this.rooms,
+    required this.selected,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 54,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md,
+        ),
+        children: [
+          _chip(context, 'All', selected == null, () => onSelect(null)),
+          for (final (id, name) in rooms)
+            _chip(context, name, selected == id, () => onSelect(id)),
+        ],
+      ),
+    );
+  }
+
+  Widget _chip(
+    BuildContext context,
+    String label,
+    bool active,
+    VoidCallback onTap,
+  ) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = active
+        ? (isDark ? AppColors.accentLight : AppColors.forest)
+        : (isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary);
+    final fg = active
+        ? (isDark ? AppColors.bgPrimaryDark : Colors.white)
+        : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary);
+    return Padding(
+      padding: const EdgeInsets.only(right: AppSpacing.sm),
+      child: Semantics(
+        button: true,
+        selected: active,
+        label: '$label rooms filter',
+        child: Material(
+          color: bg,
+          shape: StadiumBorder(
+            side: BorderSide(
+              color: active
+                  ? Colors.transparent
+                  : (isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle),
+            ),
+          ),
+          child: InkWell(
+            customBorder: const StadiumBorder(),
+            onTap: () {
+              HapticFeedback.selectionClick();
+              onTap();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Center(
+                child: Text(
+                  label,
+                  style: AppTypography.callout.copyWith(
+                    color: fg,
+                    fontWeight: active ? FontWeight.w600 : FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -452,45 +502,55 @@ class _SectionHeader extends StatelessWidget {
 
 class _EmptyGarden extends StatelessWidget {
   final VoidCallback onAdd;
-
   const _EmptyGarden({required this.onAdd});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.local_florist_outlined,
-            size: 64,
-            color: AppColors.textTertiary.withOpacity(0.5),
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+          borderRadius: BorderRadius.circular(AppRadii.lg),
+          border: Border.all(
+            color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
           ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            'No plants yet',
-            style: AppTypography.title1.copyWith(
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                color: accent.withOpacity(0.14),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(PhosphorFill.plant, size: 30, color: accent),
             ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            'Tap the + button to add your first plant',
-            style: AppTypography.body.copyWith(color: AppColors.textTertiary),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          SizedBox(
-            width: 200,
-            height: 48,
-            child: ElevatedButton.icon(
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              'Your garden is empty',
+              style: AppTypography.title1.copyWith(color: ink),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Plants you add appear here as specimen cards.',
+              textAlign: TextAlign.center,
+              style: AppTypography.footnote.copyWith(color: sub),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            TextButton.icon(
               onPressed: onAdd,
-              icon: const Icon(Icons.add),
-              label: const Text('Add Plant'),
+              icon: const Icon(PhosphorBold.plus, size: 18),
+              label: const Text('Add a plant'),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

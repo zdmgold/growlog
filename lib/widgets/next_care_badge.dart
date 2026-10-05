@@ -16,6 +16,7 @@ class NextCareBadge extends StatelessWidget {
     // card, and the care schedule screen) would silently ignore any
     // upcoming/overdue repot, prune, or treat care. Now checks all 6,
     // matching plant_provider.dart's own _scheduleRemindersForPlant.
+    final dark = Theme.of(context).brightness == Brightness.dark;
     final nextWater = plant.nextWaterDate;
     final nextFertilize = plant.nextFertilizeDate;
     final nextMist = plant.nextMistDate;
@@ -57,22 +58,22 @@ class NextCareBadge extends StatelessWidget {
       return _Badge(
         text: '$careType overdue',
         backgroundColor: AppColors.error.withOpacity(0.12),
-        textColor: AppColors.error,
+        textColor: dark ? AppColors.errorDark : AppColors.error,
       );
     }
 
     if (diff == 0) {
       return _Badge(
         text: '$careType today',
-        backgroundColor: AppColors.warning.withOpacity(0.12),
-        textColor: AppColors.warning,
+        backgroundColor: AppColors.warning.withOpacity(0.16),
+        textColor: dark ? AppColors.warningDark : AppColors.watchText,
       );
     }
 
     return _Badge(
       text: '$careType in $diff days',
       backgroundColor: AppColors.accent.withOpacity(0.12),
-      textColor: AppColors.accent,
+      textColor: dark ? AppColors.accentLight : AppColors.accent,
     );
   }
 }
