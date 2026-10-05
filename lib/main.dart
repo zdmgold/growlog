@@ -8,6 +8,7 @@ import 'providers/theme_provider.dart';
 import 'services/local_storage.dart';
 import 'services/notification_service.dart';
 import 'services/admob_service.dart';
+import 'services/ai/ai_settings.dart';
 import 'services/iap_service.dart';
 import 'utils/error_handler.dart';
 import 'utils/constants.dart';
@@ -18,6 +19,7 @@ void main() async {
   ErrorHandler.install();
 
   await NotificationService.initialize();
+  await AiSettings.instance.load();
   AdMobService.initialize();
 
   await SystemChrome.setPreferredOrientations([

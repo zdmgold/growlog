@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../services/ai/ai_client.dart';
 import '../services/paul_ai_service.dart';
 import '../utils/constants.dart';
 import 'camera_screen.dart';
@@ -81,8 +82,12 @@ class _DiagnosisScreenState extends State<DiagnosisScreen> {
       setState(() => _analyzing = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Diagnosis failed. Check your Gemini API key.'),
+          SnackBar(
+            content: Text(
+              e is AiException
+                  ? e.message
+                  : 'Diagnosis failed. Please try again.',
+            ),
             backgroundColor: AppColors.error,
           ),
         );

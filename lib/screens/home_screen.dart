@@ -7,17 +7,20 @@ import '../providers/locale_provider.dart';
 import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/admob_service.dart';
+import '../services/ai/ai_settings.dart';
 import '../services/iap_service.dart';
 import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/care_today_row.dart';
+import '../widgets/connect_ai_card.dart';
 import '../widgets/home_header.dart';
 import '../widgets/language_sheet.dart';
 import '../widgets/scan_hero_card.dart';
 import '../widgets/specimen_card.dart';
 import 'add_plant_screen.dart';
+import 'ai_setup_screen.dart';
 import 'camera_screen.dart';
 import 'care_schedule_screen.dart';
 import 'diagnosis_screen.dart';
@@ -90,6 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void _addPlant() =>
       _push(AddPlantScreen(plantProvider: widget.plantProvider));
 
+  void _openAiSetup() => _push(const AiSetupScreen());
+
+  /// Scanning needs an AI provider. Sends the user to set one up first.
+  bool _ensureAi() {
+    if (AiSettings.instance.isConfigured) return true;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Add your API key to scan plants.')),
+    );
+    _openAiSetup();
+    return false;
+  }
+
   void _onNavTap(int index) {
     if (index == 2) {
       _addPlant();
@@ -136,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _addPlant();
       return;
     }
+    if (!_ensureAi()) return;
     final result = await Navigator.push<CameraResult>(
       context,
       MaterialPageRoute(
@@ -153,6 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _addPlant();
       return;
     }
+    if (!_ensureAi()) return;
     final picked = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1400,
@@ -167,6 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _addPlant();
       return;
     }
+    if (!_ensureAi()) return;
     _openDiagnosis(target);
   }
 
@@ -247,6 +265,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           PaulChatScreen(plantProvider: widget.plantProvider),
                         ),
                       ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0,
+                      ),
+                      child: ConnectAiCard(onTap: _openAiSetup),
                     ),
                   ),
                   if (all.isNotEmpty) ...[

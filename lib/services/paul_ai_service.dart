@@ -1,10 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:http/http.dart' as http;
-import '../config/ai_config.dart';
 import '../models/plant_model.dart';
+import 'ai/ai_client.dart';
+import 'ai/ai_settings.dart';
 
 class ChatMessage {
   final String role;
@@ -80,48 +77,42 @@ class PaulAIService {
 
   /// Send a text message. Returns Paul's response.
   Future<String> sendMessage(String userMessage) async {
+    final client = AiSettings.instance.client;
+    if (client == null) {
+      return 'Add your API key to chat with me. Tap the key card on the home screen.';
+    }
     _memory.add(ChatMessage(role: 'user', text: userMessage));
-
-    // Try Gemini first
     try {
-      final response = await _askGemini(userMessage);
-      _memory.add(ChatMessage(role: 'model', text: response));
-      return response;
-    } catch (e) {
-      // Vision not supported on fallbacks — handled separately
+      final reply = await client.complete(
+        system: _buildSystemPrompt(),
+        messages: [
+          for (final m in _memory)
+            AiMessage(m.role == 'user' ? 'user' : 'assistant', m.text),
+        ],
+      );
+      _memory.add(ChatMessage(role: 'model', text: reply));
+      return reply;
+    } on AiException catch (e) {
+      _memory.removeLast();
+      return 'I could not answer: ${e.message}';
     }
-
-    // Fallback chain
-    final fallbacks = [
-      _askGroq,
-      _askCerebras,
-      _askOpenRouter,
-    ];
-
-    for (final fallback in fallbacks) {
-      try {
-        final response = await fallback(userMessage);
-        _memory.add(ChatMessage(role: 'model', text: response));
-        return response;
-      } catch (e) {
-        continue;
-      }
-    }
-
-    const errorMsg =
-        'Sorry, all AI services are resting right now. 🌙 Try again in a minute!';
-    _memory.add(ChatMessage(role: 'model', text: errorMsg));
-    return errorMsg;
   }
 
-  /// Analyze a plant photo using Gemini Vision.
+  /// Analyze a plant photo with the user's chosen AI provider.
+  /// Throws [AiException] with a plain-language message on failure.
   Future<DiagnosisResult> diagnosePlant(Uint8List imageBytes) async {
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: AIConfig.geminiApiKey,
-    );
+    final settings = AiSettings.instance;
+    final client = settings.client;
+    if (client == null) {
+      throw const AiException('Add your API key first to scan plants.');
+    }
+    if (!settings.supportsVision) {
+      throw const AiException(
+        'The connected AI model cannot read photos. Connect a different provider or model.',
+      );
+    }
 
-    final prompt = '''
+    const prompt = '''
 You are Paul, a plant health expert. Analyze this plant photo carefully.
 Identify visible diseases, pests, nutrient deficiencies, or environmental stress.
 
@@ -139,102 +130,12 @@ PREVENTION:
 2. [tip]
 ''';
 
-    final content = Content.multi([
-      TextPart(prompt),
-      DataPart('image/jpeg', imageBytes),
-    ]);
-
-    final response = await model.generateContent([content]);
-    final text = response.text ?? 'No response from vision model.';
-
+    final text = await client.complete(
+      messages: const [AiMessage('user', prompt)],
+      image: imageBytes,
+      maxTokens: 900,
+    );
     return _parseDiagnosis(text);
-  }
-
-  // ─── Gemini (Primary) ───
-  Future<String> _askGemini(String message) async {
-    final model = GenerativeModel(
-      model: 'gemini-1.5-flash',
-      apiKey: AIConfig.geminiApiKey,
-      systemInstruction: Content.text(_buildSystemPrompt()),
-    );
-
-    final history = _memory
-        .where((m) => m.role != 'error')
-        .map((m) => Content(m.role, [TextPart(m.text)]))
-        .toList();
-
-    final chat = model.startChat(history: history);
-    final response = await chat.sendMessage(Content.text(message));
-    return response.text ?? 'Hmm, I\'m not sure about that. 🤔';
-  }
-
-  // ─── Groq (Fallback 1) ───
-  Future<String> _askGroq(String message) async {
-    return _askOpenAICompatible(
-      baseUrl: AIConfig.groqBaseUrl,
-      apiKey: AIConfig.groqApiKey,
-      model: AIConfig.groqModel,
-      message: message,
-    );
-  }
-
-  // ─── Cerebras (Fallback 2) ───
-  Future<String> _askCerebras(String message) async {
-    return _askOpenAICompatible(
-      baseUrl: AIConfig.cerebrasBaseUrl,
-      apiKey: AIConfig.cerebrasApiKey,
-      model: AIConfig.cerebrasModel,
-      message: message,
-    );
-  }
-
-  // ─── OpenRouter (Fallback 3) ───
-  Future<String> _askOpenRouter(String message) async {
-    return _askOpenAICompatible(
-      baseUrl: AIConfig.openRouterBaseUrl,
-      apiKey: AIConfig.openRouterApiKey,
-      model: AIConfig.openRouterModel,
-      message: message,
-      extraHeaders: {
-        'HTTP-Referer': 'https://github.com/zdmgold/growlog',
-        'X-Title': 'GrowLog',
-      },
-    );
-  }
-
-  Future<String> _askOpenAICompatible({
-    required String baseUrl,
-    required String apiKey,
-    required String model,
-    required String message,
-    Map<String, String>? extraHeaders,
-  }) async {
-    final messages = <Map<String, String>>[
-      {'role': 'system', 'content': _buildSystemPrompt()},
-      ..._memory.map((m) => {'role': m.role, 'content': m.text}),
-    ];
-
-    final response = await http.post(
-      Uri.parse(baseUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
-        ...?extraHeaders,
-      },
-      body: jsonEncode({
-        'model': model,
-        'messages': messages,
-        'temperature': 0.7,
-        'max_tokens': 512,
-      }),
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('HTTP ${response.statusCode}: ${response.body}');
-    }
-
-    final data = jsonDecode(response.body) as Map<String, dynamic>;
-    return (data['choices'] as List).first['message']['content'] as String;
   }
 
   DiagnosisResult _parseDiagnosis(String raw) {
@@ -244,22 +145,29 @@ PREVENTION:
     final treatmentSteps = <String>[];
     final preventionTips = <String>[];
 
-    final lines = raw.split('\n').map((l) => l.trim()).where((l) => l.isNotEmpty);
+    final lines = raw
+        .replaceAll('**', '')
+        .replaceAll('#', '')
+        .split('\n')
+        .map((l) => l.trim())
+        .where((l) => l.isNotEmpty);
 
     String? currentSection;
     for (final line in lines) {
-      if (line.startsWith('DIAGNOSIS:')) {
+      final up = line.toUpperCase();
+      if (up.startsWith('DIAGNOSIS:')) {
         condition = line.substring('DIAGNOSIS:'.length).trim();
-      } else if (line.startsWith('SEVERITY:')) {
+      } else if (up.startsWith('SEVERITY:')) {
         severity = line.substring('SEVERITY:'.length).trim();
-      } else if (line.startsWith('DESCRIPTION:')) {
+      } else if (up.startsWith('DESCRIPTION:')) {
         description = line.substring('DESCRIPTION:'.length).trim();
-      } else if (line == 'TREATMENT:') {
+      } else if (up.startsWith('TREATMENT')) {
         currentSection = 'treatment';
-      } else if (line == 'PREVENTION:') {
+      } else if (up.startsWith('PREVENTION')) {
         currentSection = 'prevention';
-      } else if (line.startsWith('- ') || line.startsWith('1.') || line.startsWith('2.') || line.startsWith('3.')) {
-        final clean = line.replaceFirst(RegExp(r'^[-\d.\s]+'), '').trim();
+      } else if (RegExp(r'^(-|\u2022|\d+[.)])\s*').hasMatch(line)) {
+        final clean = line.replaceFirst(RegExp(r'^(-|\u2022|\d+[.)])\s*'), '').trim();
+        if (clean.isEmpty) continue;
         if (currentSection == 'treatment') treatmentSteps.add(clean);
         if (currentSection == 'prevention') preventionTips.add(clean);
       }
@@ -269,8 +177,12 @@ PREVENTION:
       condition: condition,
       severity: severity,
       description: description,
-      treatmentSteps: treatmentSteps.isEmpty ? ['Consult a local nursery for hands-on advice.'] : treatmentSteps,
-      preventionTips: preventionTips.isEmpty ? ['Monitor your plant regularly.'] : preventionTips,
+      treatmentSteps: treatmentSteps.isEmpty
+          ? ['Consult a local nursery for hands-on advice.']
+          : treatmentSteps,
+      preventionTips: preventionTips.isEmpty
+          ? ['Monitor your plant regularly.']
+          : preventionTips,
     );
   }
 }
