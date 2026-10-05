@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:growlog/l10n/app_localizations.dart';
 import 'constants.dart';
 
 /// Global navigator key so ErrorHandler can recover the app to its root

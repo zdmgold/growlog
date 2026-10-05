@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:growlog/l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 import '../models/room_model.dart';
 import '../providers/plant_provider.dart';

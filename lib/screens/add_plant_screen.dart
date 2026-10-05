@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:growlog/l10n/app_localizations.dart';
 import '../models/plant_model.dart';
 import '../models/photo_entry_model.dart';
 import '../providers/plant_provider.dart';

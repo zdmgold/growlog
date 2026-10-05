@@ -1,0 +1,54 @@
+name: Compile Check
+
+# Compiles Dart and Android Kotlin/Java, runs lint and unit tests.
+# Never builds or uploads an APK. The full report is written to the ci-report branch.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compile-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+          cache: true
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run checks
+        run: bash .github/scripts/compile_check.sh
+
+      - name: Publish report to ci-report branch
+        if: always()
+        run: |
+          set -e
+          [ -f /tmp/report.txt ] || echo "no report produced" > /tmp/report.txt
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report
+          git rm -rf . -q || true
+          cp /tmp/report.txt report.txt
+          git add report.txt
+          git commit -q -m "compile-check report for ${{ github.sha }}"
+          git push -f origin ci-report
+
+      - name: Fail the job if any check failed
+        run: test "$(cat /tmp/status 2>/dev/null || echo 1)" = "0"
