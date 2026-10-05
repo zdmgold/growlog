@@ -49,6 +49,17 @@ sec "android scaffold"
 flutter create --platforms=android . > /tmp/create.log 2>&1; echo "exit=$?" >> "$R"
 { ls android 2>/dev/null | head -20; ls android/app/src/main/kotlin 2>/dev/null | head; } >> "$R"
 
+sec "android diagnostics (which build script and app id are used)"
+{
+  echo "-- android/app files:"; ls -la android/app | head -20
+  echo "-- android/app/src files:"; find android/app/src -type f | sort | head -30
+  echo "-- build script settings:"; grep -n "namespace\|applicationId\|minSdk\|minifyEnabled\|proguardFiles\|signingConfig" android/app/build.gradle android/app/build.gradle.kts 2>/dev/null | cut -c1-200
+  echo "-- manifest activity + permissions:"; grep -n "MainActivity\|uses-permission\|APPLICATION_ID\|package=" android/app/src/main/AndroidManifest.xml | cut -c1-200
+  echo "-- MainActivity:"; find android/app/src/main/kotlin -name '*.kt' -exec sh -c 'echo {}; head -4 {}' \;
+  echo "-- settings.gradle.kts head:"; head -30 android/settings.gradle.kts
+} >> "$R" 2>&1
+( cd android && ./gradlew --no-daemon -q :app:properties 2>/dev/null | grep -E "^(buildFile|name|group):" ) >> "$R" 2>&1
+
 sec "android kotlin + java compile (no APK)"
 ( cd android && chmod +x gradlew && ./gradlew --no-daemon --console=plain :app:compileDebugKotlin :app:compileDebugJavaWithJavac > /tmp/gradle.log 2>&1 ); RC=$?
 grep -E "^e: |error:|FAILED|What went wrong|BUILD (SUCCESSFUL|FAILED)|Could not|Unsupported|incompatible" /tmp/gradle.log | cut -c1-260 | head -60 >> "$R"
