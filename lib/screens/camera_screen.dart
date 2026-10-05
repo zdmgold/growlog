@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
 
 /// Popped by [CameraScreen] when the user captured or picked a photo.
 class CameraResult {
@@ -189,9 +189,9 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   IconData get _flashIcon => switch (_flash) {
-        FlashMode.off => PhosphorIconsRegular.lightningSlash,
-        FlashMode.auto => PhosphorIconsRegular.lightningA,
-        _ => PhosphorIconsFill.lightning,
+        FlashMode.off => PhosphorRegular.lightningSlash,
+        FlashMode.auto => PhosphorRegular.lightningA,
+        _ => PhosphorFill.lightning,
       };
 
   @override
@@ -263,7 +263,7 @@ class _CameraScreenState extends State<CameraScreen>
       child: Row(
         children: [
           _RoundButton(
-            icon: PhosphorIconsRegular.x,
+            icon: PhosphorRegular.x,
             label: 'Close camera',
             onTap: () => Navigator.pop(context),
           ),
@@ -312,7 +312,7 @@ class _CameraScreenState extends State<CameraScreen>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _RoundButton(
-            icon: PhosphorIconsRegular.image,
+            icon: PhosphorRegular.image,
             label: 'Choose from gallery',
             onTap: _pickFromGallery,
           ),
@@ -331,8 +331,8 @@ class _CameraScreenState extends State<CameraScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PhosphorIcon(
-              PhosphorIconsDuotone.cameraSlash,
+            Icon(
+              PhosphorRegular.cameraSlash,
               size: 56,
               color: AppColors.accentLight,
             ),
@@ -398,7 +398,7 @@ class _RoundButton extends StatelessWidget {
             border: Border.all(color: Colors.white.withOpacity(0.18)),
           ),
           child: Center(
-            child: PhosphorIcon(icon, color: Colors.white, size: 22),
+            child: Icon(icon, color: Colors.white, size: 22),
           ),
         ),
       ),
