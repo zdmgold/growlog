@@ -32,7 +32,7 @@ android {
 
     defaultConfig {
         applicationId "com.zdmgold.growlog"
-        minSdk 21
+        minSdk 24
         targetSdk flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
