@@ -67,6 +67,13 @@ tail -n 15 /tmp/gradle.log | cut -c1-260 >> "$R"
 echo "exit=$RC" >> "$R"
 if [ $RC -ne 0 ]; then FAIL=1; fi
 
+sec "android release shrink check (R8, no APK)"
+( cd android && rm -f app/build.gradle.kts && timeout 1500 ./gradlew --no-daemon --console=plain :app:minifyReleaseWithR8 > /tmp/r8.log 2>&1 ); RC=$?
+grep -E "^e: |error:|FAILED|What went wrong|BUILD (SUCCESSFUL|FAILED)|Could not|Missing|proguard|R8" /tmp/r8.log | cut -c1-260 | head -40 >> "$R"
+tail -n 8 /tmp/r8.log | cut -c1-260 >> "$R"
+echo "exit=$RC" >> "$R"
+if [ $RC -ne 0 ]; then FAIL=1; fi
+
 sec "result"
 if [ $FAIL -eq 0 ]; then echo "ALL CHECKS PASSED" >> "$R"; else echo "CHECKS FAILED" >> "$R"; fi
 echo $FAIL > /tmp/status

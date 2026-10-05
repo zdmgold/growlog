@@ -20,7 +20,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.47.6'
           channel: 'stable'
 
       - uses: actions/setup-java@v4
@@ -31,25 +31,8 @@ jobs:
       - name: Repair missing Android platform files
         run: flutter create --platforms=android .
 
-      - name: Fix Kotlin version in generated settings.gradle
-        run: |
-          echo "=== BEFORE ==="
-          cat android/settings.gradle
-          
-          # Replace the entire kotlin plugin line safely using perl (handles any quote style)
-          perl -i -pe 's/id\s+["'\'']org\.jetbrains\.kotlin\.android["'\'']\s+version\s+["'\''][^"'\'']+["'\'']\s+apply\s+false/id "org.jetbrains.kotlin.android" version "1.9.24" apply false/' android/settings.gradle
-          
-          echo "=== AFTER ==="
-          cat android/settings.gradle
-
-      - name: Force compileSdk 34 on ALL plugins
-        run: |
-          find $PUB_CACHE -path "*/android/build.gradle" -print0 | while IFS= read -r -d '' file; do
-            sed -i 's/compileSdk 35/compileSdk 34/g' "$file"
-            sed -i 's/compileSdkVersion 35/compileSdkVersion 34/g' "$file"
-            sed -i 's/compileSdk = 35/compileSdk = 34/g' "$file"
-          done
-          echo "Patched all plugins to compileSdk 34"
+      - name: Use the repo's Android app build script
+        run: rm -f android/app/build.gradle.kts
 
       - name: Get Flutter packages
         run: flutter pub get
