@@ -15,7 +15,13 @@ import '../utils/constants.dart';
 class WishlistScreen extends StatelessWidget {
   final PlantProvider plantProvider;
 
-  const WishlistScreen({super.key, required this.plantProvider});
+  final bool embedded;
+
+  const WishlistScreen({
+    super.key,
+    required this.plantProvider,
+    this.embedded = false,
+  });
 
   void _showAddSheet(BuildContext context) {
     final controller = TextEditingController();
@@ -121,7 +127,7 @@ class WishlistScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor:
               isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-          appBar: AppBar(
+          appBar: embedded ? null : AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(

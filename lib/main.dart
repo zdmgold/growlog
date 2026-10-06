@@ -13,7 +13,7 @@ import 'services/scan_store.dart';
 import 'services/iap_service.dart';
 import 'utils/error_handler.dart';
 import 'utils/constants.dart';
-import 'screens/home_screen.dart';
+import 'screens/app_shell.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +34,10 @@ void main() async {
   final themeProvider = ThemeProvider();
   final localeProvider = LocaleProvider();
   final iapService = IAPService();
+  AdMobService.adsRemoved.value = iapService.value;
+  iapService.addListener(
+    () => AdMobService.adsRemoved.value = iapService.value,
+  );
 
   runApp(
     GrowLogApp(
@@ -104,7 +108,7 @@ class GrowLogApp extends StatelessWidget {
               theme: _lightTheme(),
               darkTheme: _darkTheme(),
               themeMode: themeProvider.value,
-              home: HomeScreen(
+              home: AppShell(
                 plantProvider: plantProvider,
                 themeProvider: themeProvider,
                 localeProvider: localeProvider,

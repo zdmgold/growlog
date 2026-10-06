@@ -1,48 +1,41 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-/// AdMob service with graceful degradation.
-/// If google_mobile_ads is unavailable or fails, all methods safely no-op
-/// and the banner widget renders as zero-height (invisible).
+/// Google AdMob, using Google's official sample ad units.
 ///
-/// VERIFIED GENUINE STUB — bannerAd() always returns SizedBox.shrink().
-/// Confirmed this is not wired to any screen anywhere in the app either,
-/// so the "ads fund the free app" plan currently generates $0 real
-/// revenue until this is actually implemented AND placed in the UI.
+/// These test units show real Google test ads (labelled "Test Ad") and are safe
+/// to tap. They earn nothing: swap in your own unit ID from your AdMob account
+/// before publishing. The app ID in AndroidManifest.xml must be swapped too.
 class AdMobService {
-  static bool _initialized = false;
-  static bool _available = false;
+  AdMobService._();
 
-  static Future<void> initialize() async {
-    if (_initialized) return;
+  /// Google's sample Android "Anchored adaptive banner" ad unit.
+  static const String _androidTestBanner =
+      'ca-app-pub-3940256099942544/9214589741';
+
+  /// True after the "Remove Ads" purchase. Kept in sync by main.dart.
+  static final ValueNotifier<bool> adsRemoved = ValueNotifier<bool>(false);
+
+  static Future<void>? _init;
+
+  static bool get isSupported => !kIsWeb && Platform.isAndroid;
+
+  static String? get bannerAdUnitId => isSupported ? _androidTestBanner : null;
+
+  /// Starts the Mobile Ads SDK once. Safe to call repeatedly.
+  static Future<void> initialize() => ready;
+
+  static Future<void> get ready {
+    return _init ??= _start();
+  }
+
+  static Future<void> _start() async {
+    if (!isSupported) return;
     try {
-      // Attempt to initialize AdMob if the plugin is present.
-      // If google_mobile_ads is removed from pubspec, this silently fails.
-      _available = true;
-      _initialized = true;
-      debugPrint('AdMob initialized');
+      await MobileAds.instance.initialize();
     } catch (e) {
-      _available = false;
-      _initialized = true;
-      debugPrint('AdMob unavailable: $e');
+      debugPrint('AdMobService initialize error: $e');
     }
   }
-
-  static bool get isAvailable => _available;
-
-  static String get bannerAdUnitId {
-    // Use test IDs during development. Replace with production IDs before release.
-    // iOS test banner: ca-app-pub-3940256099942544/2934735716
-    // Android test banner: ca-app-pub-3940256099942544/6300978111
-    return '';
-  }
-
-  static Widget bannerAd() {
-    if (!_available) return const SizedBox.shrink();
-    // If google_mobile_ads is integrated, replace this with:
-    // return BannerAdWidget(adUnitId: bannerAdUnitId);
-    // For now, return zero-height to keep builds passing.
-    return const SizedBox.shrink();
-  }
-
-  static void dispose() {}
 }

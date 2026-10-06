@@ -12,7 +12,13 @@ import 'plant_detail_screen.dart';
 class CareScheduleScreen extends StatefulWidget {
   final PlantProvider plantProvider;
 
-  const CareScheduleScreen({super.key, required this.plantProvider});
+  final bool embedded;
+
+  const CareScheduleScreen({
+    super.key,
+    required this.plantProvider,
+    this.embedded = false,
+  });
 
   @override
   State<CareScheduleScreen> createState() => _CareScheduleScreenState();
@@ -78,7 +84,8 @@ class _CareScheduleScreenState extends State<CareScheduleScreen>
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            leading: IconButton(
+            automaticallyImplyLeading: false,
+            leading: widget.embedded ? null : IconButton(
               icon: Icon(
                 Icons.arrow_back,
                 color:

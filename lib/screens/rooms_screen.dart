@@ -13,7 +13,13 @@ import '../widgets/room_card.dart';
 class RoomsScreen extends StatelessWidget {
   final PlantProvider plantProvider;
 
-  const RoomsScreen({super.key, required this.plantProvider});
+  final bool embedded;
+
+  const RoomsScreen({
+    super.key,
+    required this.plantProvider,
+    this.embedded = false,
+  });
 
   void _showAddRoomSheet(BuildContext context, {Room? existing}) {
     final controller = TextEditingController(text: existing?.name ?? '');
@@ -155,7 +161,7 @@ class RoomsScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor:
               isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-          appBar: AppBar(
+          appBar: embedded ? null : AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             leading: IconButton(

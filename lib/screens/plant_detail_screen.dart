@@ -6,6 +6,7 @@ import '../models/care_log_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
+import '../widgets/ad_banner.dart';
 import '../widgets/care_quick_actions.dart';
 import '../widgets/growth_stats.dart';
 import '../widgets/measurement_chart.dart';
@@ -52,6 +53,7 @@ class PlantDetailScreen extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
+          bottomNavigationBar: const AdBottomArea(safeBottom: true),
           body: CustomScrollView(
             slivers: [
               SliverAppBar(

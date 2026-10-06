@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import '../models/plant_model.dart';
 import '../providers/locale_provider.dart';
 import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
-import '../services/admob_service.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/scan_store.dart';
 import '../services/iap_service.dart';
 import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
-import '../widgets/bottom_nav_bar.dart';
+import '../utils/scan_launcher.dart';
 import '../widgets/care_today_row.dart';
+import '../widgets/room_chips.dart';
 import '../widgets/recent_scans_row.dart';
 import '../widgets/connect_ai_card.dart';
 import '../widgets/home_header.dart';
@@ -23,14 +22,11 @@ import '../widgets/scan_hero_card.dart';
 import '../widgets/specimen_card.dart';
 import 'add_plant_screen.dart';
 import 'ai_setup_screen.dart';
-import 'camera_screen.dart';
-import 'care_schedule_screen.dart';
 import 'paul_chat_screen.dart';
 import 'plant_detail_screen.dart';
 import 'scan_screen.dart';
 import 'scans_screen.dart';
 import 'settings_screen.dart';
-import 'wishlist_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final PlantProvider plantProvider;
@@ -38,12 +34,16 @@ class HomeScreen extends StatefulWidget {
   final LocaleProvider localeProvider;
   final IAPService iapService;
 
+  /// Switches the shell to a hub: 1 Garden, 2 Schedule, 3 Scans.
+  final ValueChanged<int> onGoToTab;
+
   const HomeScreen({
     super.key,
     required this.plantProvider,
     required this.themeProvider,
     required this.localeProvider,
     required this.iapService,
+    required this.onGoToTab,
   });
 
   @override
@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String? _roomFilter;
-  int _selectedIndex = 0;
   Timer? _debounceTimer;
 
   @override
@@ -79,10 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return list;
   }
 
-  void _push(Widget screen, {bool resetNav = false}) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen)).then((_) {
-      if (resetNav && mounted) setState(() => _selectedIndex = 0);
-    });
+  void _push(Widget screen) {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
   void _openSettings() => _push(
@@ -97,76 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
       _push(AddPlantScreen(plantProvider: widget.plantProvider));
 
   void _openAiSetup() => _push(const AiSetupScreen());
-
-  /// Scanning needs an AI provider. Sends the user to set one up first.
-  bool _ensureAi() {
-    if (AiSettings.instance.isConfigured) return true;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Add your API key to scan plants.')),
-    );
-    _openAiSetup();
-    return false;
-  }
-
-  void _onNavTap(int index) {
-    if (index == 2) {
-      _addPlant();
-      return;
-    }
-    setState(() => _selectedIndex = index);
-    if (index == 1) {
-      _push(CareScheduleScreen(plantProvider: widget.plantProvider),
-          resetNav: true);
-    } else if (index == 3) {
-      _push(WishlistScreen(plantProvider: widget.plantProvider),
-          resetNav: true);
-    } else if (index == 4) {
-      _push(
-        SettingsScreen(
-          plantProvider: widget.plantProvider,
-          themeProvider: widget.themeProvider,
-          iapService: widget.iapService,
-        ),
-        resetNav: true,
-      );
-    }
-  }
-
-  void _openScan(String imagePath) {
-    _push(
-      ScanScreen(
-        plantProvider: widget.plantProvider,
-        imagePath: imagePath,
-      ),
-    );
-  }
-
-  Future<void> _scanWithCamera() async {
-    HapticFeedback.mediumImpact();
-    if (!_ensureAi()) return;
-    final result = await Navigator.push<CameraResult>(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => const CameraScreen(),
-      ),
-    );
-    if (result == null || !mounted) return;
-    _openScan(result.path);
-  }
-
-  Future<void> _scanFromGallery() async {
-    if (!_ensureAi()) return;
-    final picked = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1400,
-    );
-    if (picked == null || !mounted) return;
-    _openScan(picked.path);
-  }
-
-  void _openHistory() =>
-      _push(ScansScreen(plantProvider: widget.plantProvider));
 
   void _openPlant(Plant plant) {
     _push(
@@ -238,9 +165,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: ScanHeroCard(
                         hasPlants: all.isNotEmpty,
-                        onPrimary: _scanWithCamera,
-                        onGallery: _scanFromGallery,
-                        onHistory: _openHistory,
+                        onPrimary: () => ScanLauncher.camera(context, widget.plantProvider),
+                        onGallery: () => ScanLauncher.gallery(context, widget.plantProvider),
+                        onHistory: () => widget.onGoToTab(3),
                         onPaul: () => _push(
                           PaulChatScreen(plantProvider: widget.plantProvider),
                         ),
@@ -260,11 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: _SectionTitle(
                         title: "Today's care",
                         trailing: TextButton(
-                          onPressed: () => _push(
-                            CareScheduleScreen(
-                              plantProvider: widget.plantProvider,
-                            ),
-                          ),
+                          onPressed: () => widget.onGoToTab(2),
                           child: const Text('See all'),
                         ),
                       ),
@@ -290,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _SectionTitle(
                               title: 'Recent scans',
                               trailing: TextButton(
-                                onPressed: _openHistory,
+                                onPressed: () => widget.onGoToTab(3),
                                 child: const Text('See all'),
                               ),
                             ),
@@ -327,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   else ...[
                     if (rooms.isNotEmpty)
                       SliverToBoxAdapter(
-                        child: _RoomChips(
+                        child: RoomChips(
                           rooms: rooms.map((r) => (r.id, r.name)).toList(),
                           selected: _roomFilter,
                           onSelect: (id) => setState(() => _roomFilter = id),
@@ -379,21 +302,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ),
-      ),
-      bottomNavigationBar: ListenableBuilder(
-        listenable: widget.iapService,
-        builder: (context, _) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (!widget.iapService.value) AdMobService.bannerAd(),
-              BottomNavBar(
-                currentIndex: _selectedIndex,
-                onTap: _onNavTap,
-              ),
-            ],
-          );
-        },
       ),
     );
   }
@@ -448,88 +356,6 @@ class _SectionTitle extends StatelessWidget {
           ),
           if (trailing != null) trailing!,
         ],
-      ),
-    );
-  }
-}
-
-class _RoomChips extends StatelessWidget {
-  final List<(String, String)> rooms;
-  final String? selected;
-  final ValueChanged<String?> onSelect;
-
-  const _RoomChips({
-    required this.rooms,
-    required this.selected,
-    required this.onSelect,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 54,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md,
-        ),
-        children: [
-          _chip(context, 'All', selected == null, () => onSelect(null)),
-          for (final (id, name) in rooms)
-            _chip(context, name, selected == id, () => onSelect(id)),
-        ],
-      ),
-    );
-  }
-
-  Widget _chip(
-    BuildContext context,
-    String label,
-    bool active,
-    VoidCallback onTap,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = active
-        ? (isDark ? AppColors.accentLight : AppColors.forest)
-        : (isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary);
-    final fg = active
-        ? (isDark ? AppColors.bgPrimaryDark : Colors.white)
-        : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary);
-    return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.sm),
-      child: Semantics(
-        button: true,
-        selected: active,
-        label: '$label rooms filter',
-        child: Material(
-          color: bg,
-          shape: StadiumBorder(
-            side: BorderSide(
-              color: active
-                  ? Colors.transparent
-                  : (isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle),
-            ),
-          ),
-          child: InkWell(
-            customBorder: const StadiumBorder(),
-            onTap: () {
-              HapticFeedback.selectionClick();
-              onTap();
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Center(
-                child: Text(
-                  label,
-                  style: AppTypography.callout.copyWith(
-                    color: fg,
-                    fontWeight: active ? FontWeight.w600 : FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
