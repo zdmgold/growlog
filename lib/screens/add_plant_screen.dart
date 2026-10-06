@@ -1,3 +1,4 @@
+import '../services/interstitial_service.dart';
 import '../widgets/ad_slot.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -122,6 +123,8 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     // exact file): haptic confirmation on successful save — previously
     // silent.
     HapticFeedback.mediumImpact();
+    // Interstitial point 3: a plant saved by hand is a finished task.
+    await InterstitialService.afterTask();
     if (mounted) {
       Navigator.pop(context);
     }

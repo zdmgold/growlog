@@ -9,6 +9,7 @@ import '../models/plant_model.dart';
 import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
 import '../services/ai/ai_client.dart';
+import '../services/interstitial_service.dart';
 import '../services/scan_service.dart';
 import '../services/scan_store.dart';
 import '../utils/constants.dart';
@@ -50,7 +51,30 @@ class _ScanScreenState extends State<ScanScreen>
   String? _error;
   bool _authError = false;
   bool _saving = false;
+  bool _taskCounted = false;
+  bool _leaving = false;
   late final AnimationController _sweep;
+
+  /// A scan done just now (not one opened from history) that holds a plant.
+  bool get _freshResult =>
+      _phase == _Phase.done &&
+      widget.record == null &&
+      (_record?.isPlant ?? false);
+
+  /// One finished scan counts as one task, however many ad points it passes.
+  Future<void> _interstitial() async {
+    final count = !_taskCounted;
+    _taskCounted = true;
+    await InterstitialService.afterTask(count: count);
+  }
+
+  /// Interstitial point 2: leaving a fresh result.
+  Future<void> _leave() async {
+    if (_leaving) return;
+    _leaving = true;
+    if (_freshResult) await _interstitial();
+    if (mounted) Navigator.pop(context);
+  }
 
   @override
   void initState() {
@@ -172,6 +196,8 @@ class _ScanScreenState extends State<ScanScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${r.commonName} added to your garden')),
       );
+      // Interstitial point 1: saving to the garden is a finished task.
+      await _interstitial();
     } catch (e) {
       debugPrint('ScanScreen._saveToGarden error: $e');
       if (!mounted) return;
@@ -212,7 +238,12 @@ class _ScanScreenState extends State<ScanScreen>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Scaffold(
+    return PopScope(
+      canPop: !_freshResult,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _leave();
+      },
+      child: Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       bottomNavigationBar: _phase == _Phase.done
           ? const SafeArea(top: false, child: AdSlot())
@@ -222,6 +253,7 @@ class _ScanScreenState extends State<ScanScreen>
         _Phase.error => _buildError(isDark),
         _Phase.done => _buildResult(isDark),
       },
+      ),
     );
   }
 
@@ -246,7 +278,7 @@ class _ScanScreenState extends State<ScanScreen>
             shape: const CircleBorder(),
             child: InkWell(
               customBorder: const CircleBorder(),
-              onTap: () => Navigator.pop(context),
+              onTap: _leave,
               child: const SizedBox(
                 width: 44,
                 height: 44,
@@ -560,7 +592,7 @@ class _ScanScreenState extends State<ScanScreen>
             saved: saved,
             onSave: _saveToGarden,
             onOpenPlant: saved ? () => _openSavedPlant(r.savedPlantId!) : null,
-            onDone: () => Navigator.pop(context),
+            onDone: _leave,
             onPaul: _askPaul,
           ),
         ),

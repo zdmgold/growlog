@@ -15,6 +15,9 @@ class AdSlot extends StatelessWidget {
 
   static final ValueNotifier<bool> _purchased = ValueNotifier<bool>(false);
 
+  /// True after the Remove Ads purchase. Added for GrowLog's interstitials.
+  static bool get isPurchased => _purchased.value;
+
   /// Called from main.dart whenever the purchase state changes.
   static void setPurchased(bool value) => _purchased.value = value;
 

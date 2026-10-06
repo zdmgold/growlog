@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,6 +11,7 @@ import 'services/notification_service.dart';
 import 'services/admob_service.dart';
 import 'widgets/ad_slot.dart';
 import 'services/ai/ai_settings.dart';
+import 'services/interstitial_service.dart';
 import 'services/scan_store.dart';
 import 'services/iap_service.dart';
 import 'utils/error_handler.dart';
@@ -23,6 +25,7 @@ void main() async {
   await NotificationService.initialize();
   await AiSettings.instance.load();
   await ScanStore.instance.load();
+  unawaited(InterstitialService.preload());
   AdMobService.initialize();
 
   await SystemChrome.setPreferredOrientations([
