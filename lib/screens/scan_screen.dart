@@ -14,6 +14,7 @@ import '../services/scan_store.dart';
 import '../utils/constants.dart';
 import '../utils/image_prep.dart';
 import '../utils/phosphor_icons.dart';
+import '../widgets/ad_slot.dart';
 import '../widgets/scan_widgets.dart';
 import 'ai_setup_screen.dart';
 import 'paul_chat_screen.dart';
@@ -213,6 +214,9 @@ class _ScanScreenState extends State<ScanScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
+      bottomNavigationBar: _phase == _Phase.done
+          ? const SafeArea(top: false, child: AdSlot())
+          : null,
       body: switch (_phase) {
         _Phase.analyzing => _buildAnalyzing(isDark),
         _Phase.error => _buildError(isDark),

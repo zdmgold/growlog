@@ -1,3 +1,4 @@
+import '../widgets/ad_slot.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -139,6 +140,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
+      bottomNavigationBar: const SafeArea(top: false, child: AdSlot()),
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

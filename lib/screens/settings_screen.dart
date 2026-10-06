@@ -1,3 +1,4 @@
+import '../widgets/ad_slot.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:growlog/l10n/app_localizations.dart';
@@ -208,6 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
+      bottomNavigationBar: const SafeArea(top: false, child: AdSlot()),
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

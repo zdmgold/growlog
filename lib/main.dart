@@ -8,6 +8,7 @@ import 'providers/theme_provider.dart';
 import 'services/local_storage.dart';
 import 'services/notification_service.dart';
 import 'services/admob_service.dart';
+import 'widgets/ad_slot.dart';
 import 'services/ai/ai_settings.dart';
 import 'services/scan_store.dart';
 import 'services/iap_service.dart';
@@ -34,10 +35,8 @@ void main() async {
   final themeProvider = ThemeProvider();
   final localeProvider = LocaleProvider();
   final iapService = IAPService();
-  AdMobService.adsRemoved.value = iapService.value;
-  iapService.addListener(
-    () => AdMobService.adsRemoved.value = iapService.value,
-  );
+  AdSlot.setPurchased(iapService.value);
+  iapService.addListener(() => AdSlot.setPurchased(iapService.value));
 
   runApp(
     GrowLogApp(

@@ -4,7 +4,7 @@ import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/iap_service.dart';
 import '../utils/scan_launcher.dart';
-import '../widgets/ad_banner.dart';
+import '../widgets/ad_slot.dart';
 import '../widgets/app_dock.dart';
 import 'care_schedule_screen.dart';
 import 'garden_screen.dart';
@@ -62,16 +62,19 @@ class _AppShellState extends State<AppShell> {
             ScansScreen(plantProvider: widget.plantProvider),
           ],
         ),
-        bottomNavigationBar: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const AdBottomArea(),
-            AppDock(
-              index: _index,
-              onTab: _go,
-              onScan: () => ScanLauncher.camera(context, widget.plantProvider),
-            ),
-          ],
+        bottomNavigationBar: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppDock(
+                index: _index,
+                onTab: _go,
+                onScan: () => ScanLauncher.camera(context, widget.plantProvider),
+              ),
+              const AdSlot(),
+            ],
+          ),
         ),
       ),
     );

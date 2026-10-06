@@ -28,9 +28,7 @@ class AppDock extends StatelessWidget {
           ),
         ),
       ),
-      child: SafeArea(
-        top: false,
-        child: SizedBox(
+      child: SizedBox(
           height: 72,
           child: Row(
             children: [
@@ -65,7 +63,6 @@ class AppDock extends StatelessWidget {
               ),
             ],
           ),
-        ),
       ),
     );
   }
