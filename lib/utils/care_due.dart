@@ -129,3 +129,19 @@ Plant withCareFrequency(Plant p, CareType t, int? days) {
     treatFrequencyDays: pick(CareType.treat),
   );
 }
+
+/// Every scheduled care after today, soonest first (one entry per plant and
+/// care type).
+List<DueCare> upcomingCare(List<Plant> plants) {
+  final endOfToday = _day(DateTime.now()).add(const Duration(days: 1));
+  final out = <DueCare>[];
+  for (final p in plants) {
+    for (final t in CareType.values) {
+      final d = nextCareDate(p, t);
+      if (d == null || d.isBefore(endOfToday)) continue;
+      out.add(DueCare(plant: p, type: t, due: d));
+    }
+  }
+  out.sort((a, b) => a.due.compareTo(b.due));
+  return out;
+}

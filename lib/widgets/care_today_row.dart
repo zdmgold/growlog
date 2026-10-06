@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../models/care_log_model.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../utils/care_actions.dart';
 import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
@@ -55,32 +55,8 @@ class _CareTodayRowState extends State<CareTodayRow> {
     super.dispose();
   }
 
-  Future<void> _markDone(DueCare item) async {
-    HapticFeedback.mediumImpact();
-    final log = CareLog(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
-      plantId: item.plant.id,
-      type: item.type,
-      date: DateTime.now(),
-    );
-    try {
-      await widget.plantProvider.addCareLog(item.plant.id, log);
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${item.type.label} logged for ${item.plant.name}'),
-        ),
-      );
-    } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not save that. Please try again.'),
-          backgroundColor: AppColors.error,
-        ),
-      );
-    }
-  }
+  Future<void> _markDone(DueCare item) =>
+      markCareDone(context, widget.plantProvider, item);
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +79,7 @@ class _CareTodayRowState extends State<CareTodayRow> {
               left: i == 0 ? AppSpacing.lg : 0,
               right: i == widget.due.length - 1 ? AppSpacing.lg : AppSpacing.md,
             ),
-            child: _CareTile(
+            child: CareDueTile(
               item: item,
               plantProvider: widget.plantProvider,
               onOpen: () => widget.onOpenPlant(item.plant),
@@ -116,13 +92,13 @@ class _CareTodayRowState extends State<CareTodayRow> {
   }
 }
 
-class _CareTile extends StatelessWidget {
+class CareDueTile extends StatelessWidget {
   final DueCare item;
   final PlantProvider plantProvider;
   final VoidCallback onOpen;
   final VoidCallback onDone;
 
-  const _CareTile({
+  const CareDueTile({
     required this.item,
     required this.plantProvider,
     required this.onOpen,
