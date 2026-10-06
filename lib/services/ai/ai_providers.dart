@@ -27,7 +27,7 @@ const List<AiProvider> aiProviders = [
     name: 'Anthropic (Claude)',
     format: ApiFormat.anthropic,
     baseUrl: 'https://api.anthropic.com',
-    keyUrl: 'https://console.anthropic.com/settings/keys',
+    keyUrl: 'https://platform.claude.com/settings/keys',
     hint: 'Pay as you go',
   ),
   AiProvider(

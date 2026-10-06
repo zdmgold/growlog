@@ -183,7 +183,7 @@ class AiSettings extends ChangeNotifier {
 @visibleForTesting
 List<String> rankModels(AiProvider p, List<AiModel> models) {
   final bad = RegExp(
-    r'embed|tts|whisper|transcribe|audio|realtime|moderation|imagen|veo|dall|guard|rerank|ocr|imagine|image-gen|search|instruct|codex',
+    r'embed|tts|whisper|transcribe|audio|realtime|moderation|imagen|veo|dall|guard|rerank|ocr|imagine|image-gen|search|gpt-3\.5-turbo-instruct|codex',
     caseSensitive: false,
   );
   final list = models.where((m) => !bad.hasMatch(m.id)).toList();
@@ -213,6 +213,7 @@ List<String> rankModels(AiProvider p, List<AiModel> models) {
         break;
       case 'xai':
         if (id.contains('grok')) s += 20;
+        if (id.contains('grok-4')) s += 10;
         if (id.contains('vision')) s += 10;
         if (id.contains('fast')) s += 5;
         break;
@@ -225,13 +226,18 @@ List<String> rankModels(AiProvider p, List<AiModel> models) {
       case 'groq':
         if (id.contains('scout') || id.contains('maverick')) s += 30;
         if (id.contains('llama-4')) s += 25;
+        if (id.contains('qwen3.8')) s += 35;
         if (id.contains('vision')) s += 20;
         break;
       case 'openrouter':
         if (id.endsWith(':free')) s += 10;
         break;
       case 'cerebras':
-        if (id.contains('llama')) s += 5;
+        if (id.contains('qwen-3.8') ||
+            id.contains('qwen3.8') ||
+            id.contains('gemma-4')) {
+          s += 35;
+        }
         break;
     }
     return s;
