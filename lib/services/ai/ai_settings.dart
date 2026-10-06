@@ -226,7 +226,7 @@ List<String> rankModels(AiProvider p, List<AiModel> models) {
       case 'groq':
         if (id.contains('scout') || id.contains('maverick')) s += 30;
         if (id.contains('llama-4')) s += 25;
-        if (id.contains('qwen3.8')) s += 35;
+        if (id.contains('qwen3.8')) s += 60;
         if (id.contains('vision')) s += 20;
         break;
       case 'openrouter':
