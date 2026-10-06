@@ -7,7 +7,7 @@ class ScanHeroCard extends StatelessWidget {
   final bool hasPlants;
   final VoidCallback onPrimary;
   final VoidCallback onGallery;
-  final VoidCallback onCheck;
+  final VoidCallback onHistory;
   final VoidCallback onPaul;
 
   const ScanHeroCard({
@@ -15,7 +15,7 @@ class ScanHeroCard extends StatelessWidget {
     required this.hasPlants,
     required this.onPrimary,
     required this.onGallery,
-    required this.onCheck,
+    required this.onHistory,
     required this.onPaul,
   });
 
@@ -83,14 +83,14 @@ class ScanHeroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  hasPlants ? 'Scan a plant' : 'Start your garden',
+                  'Scan a plant',
                   style: AppTypography.display.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   hasPlants
-                      ? 'Point your camera to check its health and get care steps.'
-                      : 'Add your first plant, then scan it to check its health.',
+                      ? 'Point your camera to identify it, check its health and get care steps.'
+                      : 'Identify a plant, check its health and start its care plan.',
                   style: AppTypography.body.copyWith(
                     color: Colors.white.withOpacity(0.82),
                   ),
@@ -98,7 +98,7 @@ class ScanHeroCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.lg),
                 Semantics(
                   button: true,
-                  label: hasPlants ? 'Open camera' : 'Add your first plant',
+                  label: 'Open camera',
                   child: Material(
                     color: AppColors.bgPrimary,
                     borderRadius: BorderRadius.circular(AppRadii.pill),
@@ -112,13 +112,13 @@ class ScanHeroCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              hasPlants ? PhosphorFill.camera : PhosphorBold.plus,
+                              PhosphorFill.camera,
                               size: 22,
                               color: AppColors.forest,
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              hasPlants ? 'Open camera' : 'Add your first plant',
+                              'Open camera',
                               style: AppTypography.title2.copyWith(
                                 color: AppColors.forest,
                               ),
@@ -140,9 +140,9 @@ class ScanHeroCard extends StatelessWidget {
                       onTap: onGallery,
                     ),
                     _Chip(
-                      icon: PhosphorRegular.stethoscope,
-                      label: "What's wrong?",
-                      onTap: onCheck,
+                      icon: PhosphorRegular.clock,
+                      label: 'My scans',
+                      onTap: onHistory,
                     ),
                     _Chip(
                       icon: PhosphorRegular.chatCircleDots,

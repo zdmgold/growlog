@@ -94,8 +94,11 @@ class Plant {
   DateTime? _nextDateFor(CareType type, int? frequencyDays) {
     final logs = careLogs.where((l) => l.type == type).toList()
       ..sort((a, b) => b.date.compareTo(a.date));
-    if (logs.isEmpty || frequencyDays == null) return null;
-    return logs.first.date.add(Duration(days: frequencyDays));
+    if (frequencyDays == null) return null;
+    // With no care logged yet, the schedule starts from the day the plant was
+    // added, so reminders begin immediately instead of after the first log.
+    final anchor = logs.isEmpty ? acquiredDate : logs.first.date;
+    return anchor.add(Duration(days: frequencyDays));
   }
 
   DateTime? get nextWaterDate =>

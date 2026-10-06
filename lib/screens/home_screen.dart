@@ -8,12 +8,14 @@ import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/admob_service.dart';
 import '../services/ai/ai_settings.dart';
+import '../services/scan_store.dart';
 import '../services/iap_service.dart';
 import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/care_today_row.dart';
+import '../widgets/recent_scans_row.dart';
 import '../widgets/connect_ai_card.dart';
 import '../widgets/home_header.dart';
 import '../widgets/language_sheet.dart';
@@ -23,9 +25,10 @@ import 'add_plant_screen.dart';
 import 'ai_setup_screen.dart';
 import 'camera_screen.dart';
 import 'care_schedule_screen.dart';
-import 'diagnosis_screen.dart';
 import 'paul_chat_screen.dart';
 import 'plant_detail_screen.dart';
+import 'scan_screen.dart';
+import 'scans_screen.dart';
 import 'settings_screen.dart';
 import 'wishlist_screen.dart';
 
@@ -129,28 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Plant? _scanTarget() {
-    final plants = widget.plantProvider.activePlants;
-    return plants.isEmpty ? null : plants.first;
-  }
-
-  void _openDiagnosis(Plant plant, [String? imagePath]) {
+  void _openScan(String imagePath) {
     _push(
-      DiagnosisScreen(
+      ScanScreen(
         plantProvider: widget.plantProvider,
-        plant: plant,
-        initialImagePath: imagePath,
+        imagePath: imagePath,
       ),
     );
   }
 
   Future<void> _scanWithCamera() async {
     HapticFeedback.mediumImpact();
-    final target = _scanTarget();
-    if (target == null) {
-      _addPlant();
-      return;
-    }
     if (!_ensureAi()) return;
     final result = await Navigator.push<CameraResult>(
       context,
@@ -160,33 +152,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
     if (result == null || !mounted) return;
-    _openDiagnosis(target, result.path);
+    _openScan(result.path);
   }
 
   Future<void> _scanFromGallery() async {
-    final target = _scanTarget();
-    if (target == null) {
-      _addPlant();
-      return;
-    }
     if (!_ensureAi()) return;
     final picked = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1400,
     );
     if (picked == null || !mounted) return;
-    _openDiagnosis(target, picked.path);
+    _openScan(picked.path);
   }
 
-  void _openHealthCheck() {
-    final target = _scanTarget();
-    if (target == null) {
-      _addPlant();
-      return;
-    }
-    if (!_ensureAi()) return;
-    _openDiagnosis(target);
-  }
+  void _openHistory() =>
+      _push(ScansScreen(plantProvider: widget.plantProvider));
 
   void _openPlant(Plant plant) {
     _push(
@@ -260,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         hasPlants: all.isNotEmpty,
                         onPrimary: _scanWithCamera,
                         onGallery: _scanFromGallery,
-                        onCheck: _openHealthCheck,
+                        onHistory: _openHistory,
                         onPaul: () => _push(
                           PaulChatScreen(plantProvider: widget.plantProvider),
                         ),
@@ -298,6 +278,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
+                  SliverToBoxAdapter(
+                    child: ListenableBuilder(
+                      listenable: ScanStore.instance,
+                      builder: (context, _) {
+                        if (ScanStore.instance.scans.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Column(
+                          children: [
+                            _SectionTitle(
+                              title: 'Recent scans',
+                              trailing: TextButton(
+                                onPressed: _openHistory,
+                                child: const Text('See all'),
+                              ),
+                            ),
+                            RecentScansRow(
+                              onOpen: (scan) => _push(
+                                ScanScreen(
+                                  plantProvider: widget.plantProvider,
+                                  record: scan,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
                   SliverToBoxAdapter(
                     child: _SectionTitle(
                       title: 'My garden',

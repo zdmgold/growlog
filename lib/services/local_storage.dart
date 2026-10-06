@@ -5,6 +5,7 @@ import '../models/plant_model.dart';
 import '../models/photo_entry_model.dart';
 import '../models/care_log_model.dart';
 import '../models/measurement_model.dart';
+import '../models/scan_record.dart';
 
 class LocalStorage {
   static Database? _db;
@@ -20,8 +21,12 @@ class LocalStorage {
 
     return openDatabase(
       path,
-      version: 1,
+      version: 2,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) await _createScansTable(db);
+      },
       onCreate: (db, version) async {
+        await _createScansTable(db);
         await db.execute('''
           CREATE TABLE rooms(
             id TEXT PRIMARY KEY,
@@ -85,6 +90,62 @@ class LocalStorage {
         ''');
       },
     );
+  }
+
+  static Future<void> _createScansTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS scans(
+        id TEXT PRIMARY KEY,
+        plantId TEXT,
+        imagePath TEXT NOT NULL,
+        createdAt TEXT NOT NULL,
+        isPlant INTEGER NOT NULL DEFAULT 1,
+        commonName TEXT NOT NULL,
+        latinName TEXT,
+        confidence TEXT,
+        health TEXT NOT NULL,
+        issue TEXT,
+        severity TEXT,
+        summary TEXT,
+        treatment TEXT,
+        prevention TEXT,
+        waterDays INTEGER,
+        fertilizeDays INTEGER,
+        light TEXT,
+        savedPlantId TEXT
+      )
+    ''');
+  }
+
+  // Scans
+  Future<List<ScanRecord>> getScans() async {
+    final db = await database;
+    final maps = await db.query('scans', orderBy: 'createdAt DESC');
+    return maps.map((m) => ScanRecord.fromMap(m)).toList();
+  }
+
+  Future<void> saveScan(ScanRecord record) async {
+    final db = await database;
+    await db.insert(
+      'scans',
+      record.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> markScanSaved(String scanId, String plantId) async {
+    final db = await database;
+    await db.update(
+      'scans',
+      {'savedPlantId': plantId},
+      where: 'id = ?',
+      whereArgs: [scanId],
+    );
+  }
+
+  Future<void> deleteScan(String id) async {
+    final db = await database;
+    await db.delete('scans', where: 'id = ?', whereArgs: [id]);
   }
 
   // Rooms

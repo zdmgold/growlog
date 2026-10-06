@@ -14,7 +14,10 @@ import '../widgets/skeleton_loader.dart';
 import 'growth_timeline_screen.dart';
 import 'add_plant_screen.dart';
 import 'paul_chat_screen.dart';
-import 'diagnosis_screen.dart';
+import '../services/ai/ai_settings.dart';
+import 'ai_setup_screen.dart';
+import 'camera_screen.dart';
+import 'scan_screen.dart';
 
 class PlantDetailScreen extends StatelessWidget {
   final PlantProvider plantProvider;
@@ -233,6 +236,39 @@ class PlantDetailScreen extends StatelessWidget {
     // Image picker logic would go here
   }
 
+  /// Doctor: take a photo of this plant and check its health. The result is
+  /// kept in the plant's history.
+  Future<void> _startDoctor(BuildContext context, Plant plant) async {
+    if (!AiSettings.instance.isConfigured) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Add your API key to check plant health.')),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const AiSetupScreen()),
+      );
+      return;
+    }
+    final result = await Navigator.push<CameraResult>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const CameraScreen(),
+      ),
+    );
+    if (result == null || !context.mounted) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ScanScreen(
+          plantProvider: plantProvider,
+          imagePath: result.path,
+          plant: plant,
+        ),
+      ),
+    );
+  }
+
   void _showOptions(BuildContext context, Plant plant) {
     showModalBottomSheet(
       context: context,
@@ -272,18 +308,10 @@ class PlantDetailScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.health_and_safety, color: AppColors.accent),
-                title: const Text('Health Check'),
+                title: const Text('Doctor: check health'),
                 onTap: () {
                   Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => DiagnosisScreen(
-                        plantProvider: plantProvider,
-                        plant: plant,
-                      ),
-                    ),
-                  );
+                  _startDoctor(context, plant);
                 },
               ),
               ListTile(

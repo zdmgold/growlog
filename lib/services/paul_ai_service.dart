@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import '../models/plant_model.dart';
 import 'ai/ai_client.dart';
 import 'ai/ai_settings.dart';
@@ -7,22 +6,6 @@ class ChatMessage {
   final String role;
   final String text;
   ChatMessage({required this.role, required this.text});
-}
-
-class DiagnosisResult {
-  final String condition;
-  final String severity;
-  final String description;
-  final List<String> treatmentSteps;
-  final List<String> preventionTips;
-
-  DiagnosisResult({
-    required this.condition,
-    required this.severity,
-    required this.description,
-    required this.treatmentSteps,
-    required this.preventionTips,
-  });
 }
 
 class PaulAIService {
@@ -96,93 +79,5 @@ class PaulAIService {
       _memory.removeLast();
       return 'I could not answer: ${e.message}';
     }
-  }
-
-  /// Analyze a plant photo with the user's chosen AI provider.
-  /// Throws [AiException] with a plain-language message on failure.
-  Future<DiagnosisResult> diagnosePlant(Uint8List imageBytes) async {
-    final settings = AiSettings.instance;
-    final client = settings.client;
-    if (client == null) {
-      throw const AiException('Add your API key first to scan plants.');
-    }
-    if (!settings.supportsVision) {
-      throw const AiException(
-        'The connected AI model cannot read photos. Connect a different provider or model.',
-      );
-    }
-
-    const prompt = '''
-You are Paul, a plant health expert. Analyze this plant photo carefully.
-Identify visible diseases, pests, nutrient deficiencies, or environmental stress.
-
-Respond in this EXACT format:
-
-DIAGNOSIS: [condition name]
-SEVERITY: [Low / Medium / High / Critical]
-DESCRIPTION: [2-3 sentences]
-TREATMENT:
-1. [step]
-2. [step]
-3. [step]
-PREVENTION:
-1. [tip]
-2. [tip]
-''';
-
-    final text = await client.complete(
-      messages: const [AiMessage('user', prompt)],
-      image: imageBytes,
-      maxTokens: 900,
-    );
-    return _parseDiagnosis(text);
-  }
-
-  DiagnosisResult _parseDiagnosis(String raw) {
-    String condition = 'Unknown condition';
-    String severity = 'Low';
-    String description = 'Unable to parse diagnosis details.';
-    final treatmentSteps = <String>[];
-    final preventionTips = <String>[];
-
-    final lines = raw
-        .replaceAll('**', '')
-        .replaceAll('#', '')
-        .split('\n')
-        .map((l) => l.trim())
-        .where((l) => l.isNotEmpty);
-
-    String? currentSection;
-    for (final line in lines) {
-      final up = line.toUpperCase();
-      if (up.startsWith('DIAGNOSIS:')) {
-        condition = line.substring('DIAGNOSIS:'.length).trim();
-      } else if (up.startsWith('SEVERITY:')) {
-        severity = line.substring('SEVERITY:'.length).trim();
-      } else if (up.startsWith('DESCRIPTION:')) {
-        description = line.substring('DESCRIPTION:'.length).trim();
-      } else if (up.startsWith('TREATMENT')) {
-        currentSection = 'treatment';
-      } else if (up.startsWith('PREVENTION')) {
-        currentSection = 'prevention';
-      } else if (RegExp(r'^(-|\u2022|\d+[.)])\s*').hasMatch(line)) {
-        final clean = line.replaceFirst(RegExp(r'^(-|\u2022|\d+[.)])\s*'), '').trim();
-        if (clean.isEmpty) continue;
-        if (currentSection == 'treatment') treatmentSteps.add(clean);
-        if (currentSection == 'prevention') preventionTips.add(clean);
-      }
-    }
-
-    return DiagnosisResult(
-      condition: condition,
-      severity: severity,
-      description: description,
-      treatmentSteps: treatmentSteps.isEmpty
-          ? ['Consult a local nursery for hands-on advice.']
-          : treatmentSteps,
-      preventionTips: preventionTips.isEmpty
-          ? ['Monitor your plant regularly.']
-          : preventionTips,
-    );
   }
 }
