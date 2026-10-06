@@ -86,3 +86,46 @@ DueCare? nextUpcoming(List<Plant> plants) {
   }
   return best;
 }
+
+int? careFrequency(Plant p, CareType t) {
+  switch (t) {
+    case CareType.water:
+      return p.waterFrequencyDays;
+    case CareType.fertilize:
+      return p.fertilizeFrequencyDays;
+    case CareType.mist:
+      return p.mistFrequencyDays;
+    case CareType.repot:
+      return p.repotFrequencyDays;
+    case CareType.prune:
+      return p.pruneFrequencyDays;
+    case CareType.treat:
+      return p.treatFrequencyDays;
+  }
+}
+
+/// A copy of [p] with one care schedule changed. Passing null removes that
+/// schedule (Plant.copyWith cannot clear a value).
+Plant withCareFrequency(Plant p, CareType t, int? days) {
+  int? pick(CareType x) => x == t ? days : careFrequency(p, x);
+  return Plant(
+    id: p.id,
+    name: p.name,
+    species: p.species,
+    roomId: p.roomId,
+    acquiredDate: p.acquiredDate,
+    photos: p.photos,
+    careLogs: p.careLogs,
+    measurements: p.measurements,
+    notes: p.notes,
+    isDead: p.isDead,
+    isWishlist: p.isWishlist,
+    createdAt: p.createdAt,
+    waterFrequencyDays: pick(CareType.water),
+    fertilizeFrequencyDays: pick(CareType.fertilize),
+    mistFrequencyDays: pick(CareType.mist),
+    repotFrequencyDays: pick(CareType.repot),
+    pruneFrequencyDays: pick(CareType.prune),
+    treatFrequencyDays: pick(CareType.treat),
+  );
+}

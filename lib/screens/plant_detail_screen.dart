@@ -1,23 +1,23 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../models/plant_model.dart';
 import '../models/care_log_model.dart';
+import '../models/plant_model.dart';
+import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
+import '../services/ai/ai_settings.dart';
+import '../services/scan_store.dart';
+import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
+import '../utils/phosphor_icons.dart';
 import '../widgets/ad_slot.dart';
-import '../widgets/care_quick_actions.dart';
-import '../widgets/growth_stats.dart';
-import '../widgets/measurement_chart.dart';
-import '../widgets/photo_timeline.dart';
+import '../widgets/care_today_row.dart' show careIcon;
+import '../widgets/scan_widgets.dart';
 import '../widgets/skeleton_loader.dart';
-import 'growth_timeline_screen.dart';
-import 'add_plant_screen.dart';
-import 'paul_chat_screen.dart';
-import '../services/ai/ai_settings.dart';
 import 'ai_setup_screen.dart';
 import 'camera_screen.dart';
+import 'paul_chat_screen.dart';
 import 'scan_screen.dart';
 
 class PlantDetailScreen extends StatelessWidget {
@@ -40,16 +40,19 @@ class PlantDetailScreen extends StatelessWidget {
         final plant = plantProvider.getPlant(plantId);
         if (plant == null) {
           return Scaffold(
+            appBar: AppBar(),
             body: Center(
               child: Text(
                 'Plant not found',
-                style: AppTypography.body.copyWith(color: AppColors.textTertiary),
+                style: AppTypography.body.copyWith(
+                  color: isDark
+                      ? AppColors.textTertiaryDark
+                      : AppColors.textTertiary,
+                ),
               ),
             ),
           );
         }
-
-        final latestPhoto = plant.latestPhoto;
 
         return Scaffold(
           backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
@@ -57,109 +60,59 @@ class PlantDetailScreen extends StatelessWidget {
           body: CustomScrollView(
             slivers: [
               SliverAppBar(
-                expandedHeight: 300,
+                expandedHeight: 340,
                 pinned: true,
-                backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: _buildHeroBackground(latestPhoto, plant.id),
-                ),
-                leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                  ),
-                  onPressed: () => Navigator.pop(context),
+                automaticallyImplyLeading: false,
+                backgroundColor:
+                    isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
+                surfaceTintColor: Colors.transparent,
+                leadingWidth: 64,
+                leading: _RoundButton(
+                  icon: PhosphorBold.arrowLeft,
+                  label: 'Back',
+                  isDark: isDark,
+                  onTap: () => Navigator.pop(context),
                 ),
                 actions: [
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () {
-                      // Navigate to edit
-                    },
+                  _RoundButton(
+                    icon: PhosphorBold.dotsThree,
+                    label: 'More options',
+                    isDark: isDark,
+                    onTap: () => _showOptions(context, plant),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.more_vert),
-                    onPressed: () => _showOptions(context, plant),
-                  ),
+                  const SizedBox(width: AppSpacing.md),
                 ],
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Stack(
+                    fit: StackFit.expand,
                     children: [
-                      Text(
-                        plant.name,
-                        style: AppTypography.headline.copyWith(
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                        ),
-                      ),
-                      if (plant.species != null)
-                        Text(
-                          plant.species!,
-                          style: AppTypography.body.copyWith(color: AppColors.textTertiary),
-                        ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text(
-                        'Acquired ${DateFormatter.relative(plant.acquiredDate)}',
-                        style: AppTypography.footnote.copyWith(color: AppColors.textTertiary),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      CareQuickActions(
-                        onCareLogged: (type) => _logCare(context, plant, type),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      if (plant.measurements.length >= 2) ...[
-                        GrowthStats(measurements: plant.measurements),
-                        const SizedBox(height: AppSpacing.lg),
-                        MeasurementChart(
-                          measurements: plant.measurements,
-                          title: 'Height Trend',
-                          showHeight: true,
-                          showLeafCount: false,
-                        ),
-                        const SizedBox(height: AppSpacing.lg),
-                      ],
-                      SizedBox(
-                        width: double.infinity,
-                        height: 54,
-                        child: ElevatedButton.icon(
-                          onPressed: () => _openGrowthTimeline(context, plant),
-                          icon: const Icon(Icons.compare_arrows),
-                          label: const Text(
-                            'View Growth Timeline',
-                            style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                      _buildHero(plant, isDark),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            stops: const [0.0, 0.55, 1.0],
+                            colors: [
+                              Colors.black.withOpacity(0.18),
+                              Colors.transparent,
+                              (isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary)
+                                  .withOpacity(0.0),
+                            ],
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Photos',
-                            style: AppTypography.title1.copyWith(
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () => _addPhoto(context, plant),
-                            child: const Text('Add Photo'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      SizedBox(
-                        height: 200,
-                        child: PhotoTimeline(
-                          photos: plant.photos.take(5).toList(),
-                          plantProvider: plantProvider,
-                          onTap: (photo) => _openGrowthTimeline(context, plant),
                         ),
                       ),
                     ],
                   ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: _Body(
+                  plant: plant,
+                  plantProvider: plantProvider,
+                  onLogCare: (type) => _logCare(context, plant, type),
+                  onDoctor: () => _startDoctor(context, plant),
+                  onEditSchedule: () => _showSchedule(context, plant),
                 ),
               ),
             ],
@@ -169,35 +122,26 @@ class PlantDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroBackground(dynamic latestPhoto, String plantId) {
-    if (latestPhoto == null) {
-      return _placeholderHero();
-    }
-
-    final exists = plantProvider.imageExists(latestPhoto.path);
-    if (exists == null) {
-      return const SkeletonLoader(borderRadius: BorderRadius.zero);
-    }
-    if (exists == false) {
-      return _placeholderHero();
-    }
-
+  Widget _buildHero(Plant plant, bool isDark) {
+    final photo = plant.latestPhoto;
+    if (photo == null) return _placeholderHero(isDark);
+    final exists = plantProvider.imageExists(photo.path);
+    if (exists == null) return const SkeletonLoader(borderRadius: BorderRadius.zero);
+    if (exists == false) return _placeholderHero(isDark);
     return Hero(
-      tag: 'plant_$plantId',
-      child: Image.file(
-        File(latestPhoto.path),
-        fit: BoxFit.cover,
-      ),
+      tag: 'plant_${plant.id}',
+      child: Image.file(File(photo.path), fit: BoxFit.cover),
     );
   }
 
-  Widget _placeholderHero() {
+  Widget _placeholderHero(bool isDark) {
     return Container(
-      color: AppColors.accent.withOpacity(0.1),
-      child: const Icon(
-        Icons.local_florist,
+      color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
+      alignment: Alignment.center,
+      child: Icon(
+        PhosphorFill.leaf,
         size: 80,
-        color: AppColors.accent,
+        color: isDark ? AppColors.accentLight : AppColors.accent,
       ),
     );
   }
@@ -205,7 +149,7 @@ class PlantDetailScreen extends StatelessWidget {
   void _logCare(BuildContext context, Plant plant, CareType type) {
     HapticFeedback.mediumImpact();
     final log = CareLog(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
       plantId: plant.id,
       type: type,
       date: DateTime.now(),
@@ -214,28 +158,6 @@ class PlantDetailScreen extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${type.label} logged for ${plant.name}')),
     );
-  }
-
-  void _openGrowthTimeline(BuildContext context, Plant plant) {
-    if (plant.photos.length < 2) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Add at least 2 photos to see growth timeline')),
-      );
-      return;
-    }
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => GrowthTimelineScreen(
-          plant: plant,
-          plantProvider: plantProvider,
-        ),
-      ),
-    );
-  }
-
-  void _addPhoto(BuildContext context, Plant plant) {
-    // Image picker logic would go here
   }
 
   /// Doctor: take a photo of this plant and check its health. The result is
@@ -271,32 +193,43 @@ class PlantDetailScreen extends StatelessWidget {
     );
   }
 
+  void _showSchedule(BuildContext context, Plant plant) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _ScheduleSheet(
+        plantId: plant.id,
+        plantProvider: plantProvider,
+      ),
+    );
+  }
+
   void _showOptions(BuildContext context, Plant plant) {
-    showModalBottomSheet(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    final err = isDark ? AppColors.errorDark : AppColors.error;
+
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => SafeArea(
+      builder: (sheetContext) => SafeArea(
         child: Container(
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? AppColors.bgSecondaryDark
-                : AppColors.bgSecondary,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadii.xl)),
+            color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AppRadii.xl),
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.share),
-                title: const Text('Share Photos'),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                leading: const Icon(Icons.eco, color: AppColors.accent),
+                leading: Icon(PhosphorRegular.chatCircleDots, color: accent),
                 title: const Text('Ask Paul about this plant'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -309,45 +242,53 @@ class PlantDetailScreen extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.health_and_safety, color: AppColors.accent),
+                leading: Icon(PhosphorRegular.calendarCheck, color: accent),
+                title: const Text('Edit care schedule'),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _showSchedule(context, plant);
+                },
+              ),
+              ListTile(
+                leading: Icon(PhosphorRegular.stethoscope, color: accent),
                 title: const Text('Doctor: check health'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                   _startDoctor(context, plant);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.archive),
-                title: Text(plant.isDead ? 'Revive Plant' : 'Mark as Dead'),
+                leading: const Icon(PhosphorRegular.leaf),
+                title: Text(plant.isDead ? 'Revive plant' : 'Mark as dead'),
                 onTap: () {
                   HapticFeedback.lightImpact();
                   plantProvider.toggleDead(plant.id);
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.delete, color: AppColors.error),
-                title: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                leading: Icon(PhosphorRegular.trash, color: err),
+                title: Text('Delete', style: TextStyle(color: err)),
                 onTap: () {
-                  Navigator.pop(context);
-                  showDialog(
+                  Navigator.pop(sheetContext);
+                  showDialog<void>(
                     context: context,
-                    builder: (_) => AlertDialog(
-                      title: const Text('Delete Plant?'),
+                    builder: (dialogContext) => AlertDialog(
+                      title: const Text('Delete plant?'),
                       content: const Text('This cannot be undone.'),
                       actions: [
                         TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pop(dialogContext),
                           child: const Text('Cancel'),
                         ),
                         TextButton(
                           onPressed: () {
                             HapticFeedback.mediumImpact();
                             plantProvider.deletePlant(plant.id);
-                            Navigator.pop(context);
+                            Navigator.pop(dialogContext);
                             Navigator.pop(context);
                           },
-                          child: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                          child: Text('Delete', style: TextStyle(color: err)),
                         ),
                       ],
                     ),
@@ -357,6 +298,644 @@ class PlantDetailScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _RoundButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isDark;
+  final VoidCallback onTap;
+
+  const _RoundButton({
+    required this.icon,
+    required this.label,
+    required this.isDark,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Semantics(
+        button: true,
+        label: label,
+        child: Material(
+          color: (isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary)
+              .withOpacity(0.92),
+          shape: CircleBorder(
+            side: BorderSide(
+              color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+            ),
+          ),
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: onTap,
+            child: SizedBox(
+              width: 42,
+              height: 42,
+              child: Icon(
+                icon,
+                size: 20,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  final Plant plant;
+  final PlantProvider plantProvider;
+  final void Function(CareType) onLogCare;
+  final VoidCallback onDoctor;
+  final VoidCallback onEditSchedule;
+
+  const _Body({
+    required this.plant,
+    required this.plantProvider,
+    required this.onLogCare,
+    required this.onDoctor,
+    required this.onEditSchedule,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final species = plant.species?.trim() ?? '';
+    final scheduled = [
+      for (final t in CareType.values)
+        if (nextCareDate(plant, t) != null) t,
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.xxl,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(plant.name, style: AppTypography.display.copyWith(color: ink)),
+          if (species.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                species,
+                style: AppTypography.latin.copyWith(color: sub, fontSize: 16),
+              ),
+            ),
+          const SizedBox(height: AppSpacing.md),
+          ListenableBuilder(
+            listenable: ScanStore.instance,
+            builder: (context, _) {
+              final scans = _plantScans();
+              return Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  if (scans.isNotEmpty) ScanHealthPill(health: scans.first.health),
+                  Text(
+                    'Added ${DateFormatter.relative(plant.acquiredDate).toLowerCase()}',
+                    style: AppTypography.footnote.copyWith(color: sub),
+                  ),
+                ],
+              );
+            },
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _SectionHeader(
+            title: 'Care',
+            action: 'Edit schedule',
+            onAction: onEditSchedule,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (scheduled.isEmpty)
+            _EmptyNote(
+              isDark: isDark,
+              text: 'No care schedule yet. Tap Edit schedule to add one.',
+            )
+          else
+            for (final t in scheduled)
+              Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: _CareRow(
+                  plant: plant,
+                  type: t,
+                  isDark: isDark,
+                  onDone: () => onLogCare(t),
+                ),
+              ),
+          const SizedBox(height: AppSpacing.md),
+          Text('Log care now',
+              style: AppTypography.caption.copyWith(color: sub)),
+          const SizedBox(height: AppSpacing.sm),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final t in CareType.values)
+                _LogChip(type: t, isDark: isDark, onTap: () => onLogCare(t)),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _SectionHeader(title: 'Doctor'),
+          const SizedBox(height: AppSpacing.sm),
+          _DoctorCard(
+            plant: plant,
+            plantProvider: plantProvider,
+            isDark: isDark,
+            onDoctor: onDoctor,
+          ),
+          if (plant.notes != null && plant.notes!.trim().isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.xl),
+            _SectionHeader(title: 'Notes'),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              plant.notes!,
+              style: AppTypography.body.copyWith(color: ink),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  List<ScanRecord> _plantScans() {
+    return ScanStore.instance.scans
+        .where((s) =>
+            s.isPlant && (s.plantId == plant.id || s.savedPlantId == plant.id))
+        .toList();
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final String? action;
+  final VoidCallback? onAction;
+  const _SectionHeader({required this.title, this.action, this.onAction});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: AppTypography.title1.copyWith(
+              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+            ),
+          ),
+        ),
+        if (action != null) TextButton(onPressed: onAction, child: Text(action!)),
+      ],
+    );
+  }
+}
+
+class _EmptyNote extends StatelessWidget {
+  final bool isDark;
+  final String text;
+  const _EmptyNote({required this.isDark, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+          color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+        ),
+      ),
+      child: Text(
+        text,
+        style: AppTypography.footnote.copyWith(
+          color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+        ),
+      ),
+    );
+  }
+}
+
+class _CareRow extends StatelessWidget {
+  final Plant plant;
+  final CareType type;
+  final bool isDark;
+  final VoidCallback onDone;
+
+  const _CareRow({
+    required this.plant,
+    required this.type,
+    required this.isDark,
+    required this.onDone,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final next = nextCareDate(plant, type)!;
+    final due = DueCare(plant: plant, type: type, due: next);
+    final overdue = due.isOverdue;
+    final status = overdue
+        ? 'Overdue ${due.daysLate} days'
+        : due.daysUntil <= 0
+            ? 'Due today'
+            : due.daysUntil == 1
+                ? 'Due tomorrow'
+                : 'In ${due.daysUntil} days';
+    final statusColor = overdue
+        ? (isDark ? AppColors.errorDark : AppColors.attention)
+        : due.daysUntil <= 0
+            ? (isDark ? AppColors.warningDark : AppColors.watchText)
+            : sub;
+    final freq = careFrequency(plant, type);
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+          color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: type.color.withOpacity(0.14),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(careIcon(type), size: 22, color: type.color),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(type.label,
+                    style: AppTypography.title2.copyWith(color: ink)),
+                const SizedBox(height: 2),
+                Text(
+                  freq == null ? status : '$status · every $freq days',
+                  style: AppTypography.footnote.copyWith(color: statusColor),
+                ),
+              ],
+            ),
+          ),
+          Semantics(
+            button: true,
+            label: 'Mark ${type.label} done',
+            child: Material(
+              color: isDark ? AppColors.accentLight : AppColors.accent,
+              shape: const CircleBorder(),
+              child: InkWell(
+                customBorder: const CircleBorder(),
+                onTap: onDone,
+                child: SizedBox(
+                  width: 44,
+                  height: 44,
+                  child: Icon(
+                    PhosphorBold.check,
+                    size: 20,
+                    color: isDark ? AppColors.bgPrimaryDark : Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LogChip extends StatelessWidget {
+  final CareType type;
+  final bool isDark;
+  final VoidCallback onTap;
+  const _LogChip({required this.type, required this.isDark, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Log ${type.label}',
+      child: Material(
+        color: type.color.withOpacity(0.12),
+        shape: const StadiumBorder(),
+        child: InkWell(
+          customBorder: const StadiumBorder(),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(careIcon(type), size: 18, color: type.color),
+                const SizedBox(width: 8),
+                Text(
+                  type.label,
+                  style: AppTypography.callout.copyWith(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DoctorCard extends StatelessWidget {
+  final Plant plant;
+  final PlantProvider plantProvider;
+  final bool isDark;
+  final VoidCallback onDoctor;
+
+  const _DoctorCard({
+    required this.plant,
+    required this.plantProvider,
+    required this.isDark,
+    required this.onDoctor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+          color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+        ),
+      ),
+      child: ListenableBuilder(
+        listenable: ScanStore.instance,
+        builder: (context, _) {
+          final scans = ScanStore.instance.scans
+              .where((s) =>
+                  s.isPlant &&
+                  (s.plantId == plant.id || s.savedPlantId == plant.id))
+              .take(8)
+              .toList();
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Take a photo and check how ${plant.name} is doing. Each check is kept here.',
+                style: AppTypography.footnote.copyWith(color: sub),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: onDoctor,
+                  icon: const Icon(PhosphorFill.camera, size: 20),
+                  label: const Text('Check health'),
+                ),
+              ),
+              if (scans.isNotEmpty) ...[
+                const SizedBox(height: AppSpacing.lg),
+                Text('History', style: AppTypography.caption.copyWith(color: sub)),
+                const SizedBox(height: AppSpacing.sm),
+                for (final s in scans)
+                  InkWell(
+                    borderRadius: BorderRadius.circular(AppRadii.md),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ScanScreen(
+                          plantProvider: plantProvider,
+                          record: s,
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(AppRadii.sm),
+                            child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: ScanThumb(scan: s),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  s.hasIssue ? s.issue : 'Looking healthy',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.title2.copyWith(
+                                    color: ink,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    ScanHealthPill(health: s.health, compact: true),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      scanDateLabel(s.createdAt),
+                                      style: AppTypography.caption
+                                          .copyWith(color: sub),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(PhosphorBold.caretRight, size: 16, color: sub),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+const Map<CareType, int> _defaultDays = {
+  CareType.water: 7,
+  CareType.fertilize: 30,
+  CareType.mist: 3,
+  CareType.repot: 365,
+  CareType.prune: 90,
+  CareType.treat: 14,
+};
+
+/// Change how often each kind of care repeats, or turn one off.
+class _ScheduleSheet extends StatelessWidget {
+  final String plantId;
+  final PlantProvider plantProvider;
+  const _ScheduleSheet({required this.plantId, required this.plantProvider});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.lg,
+        ),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(AppRadii.xl),
+          ),
+        ),
+        child: ListenableBuilder(
+          listenable: plantProvider,
+          builder: (context, _) {
+            final plant = plantProvider.getPlant(plantId);
+            if (plant == null) return const SizedBox.shrink();
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: sub.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(AppRadii.pill),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text('Care schedule',
+                    style: AppTypography.title1.copyWith(color: ink)),
+                const SizedBox(height: 2),
+                Text(
+                  'How many days between each kind of care. Reminders follow this.',
+                  style: AppTypography.footnote.copyWith(color: sub),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                for (final t in CareType.values)
+                  _ScheduleRow(
+                    type: t,
+                    days: careFrequency(plant, t),
+                    isDark: isDark,
+                    onChanged: (d) {
+                      HapticFeedback.selectionClick();
+                      plantProvider.updatePlant(withCareFrequency(plant, t, d));
+                    },
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ScheduleRow extends StatelessWidget {
+  final CareType type;
+  final int? days;
+  final bool isDark;
+  final ValueChanged<int?> onChanged;
+
+  const _ScheduleRow({
+    required this.type,
+    required this.days,
+    required this.isDark,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final d = days;
+
+    Widget stepButton(IconData icon, String label, VoidCallback onTap) {
+      return Semantics(
+        button: true,
+        label: label,
+        child: IconButton(
+          onPressed: onTap,
+          icon: Icon(icon, size: 18),
+          style: IconButton.styleFrom(
+            backgroundColor: type.color.withOpacity(0.12),
+          ),
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: [
+          Icon(careIcon(type), size: 20, color: type.color),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Text(type.label, style: AppTypography.title2.copyWith(color: ink)),
+          ),
+          if (d == null)
+            TextButton(
+              onPressed: () => onChanged(_defaultDays[type]),
+              child: const Text('Add'),
+            )
+          else ...[
+            stepButton(PhosphorBold.caretLeft, 'Fewer days for ${type.label}', () {
+              if (d <= 1) {
+                onChanged(null);
+              } else {
+                onChanged(d - 1);
+              }
+            }),
+            SizedBox(
+              width: 74,
+              child: Text(
+                'every $d d',
+                textAlign: TextAlign.center,
+                style: AppTypography.callout.copyWith(color: sub),
+              ),
+            ),
+            stepButton(PhosphorBold.caretRight, 'More days for ${type.label}', () {
+              if (d < 365) onChanged(d + 1);
+            }),
+          ],
+        ],
       ),
     );
   }
