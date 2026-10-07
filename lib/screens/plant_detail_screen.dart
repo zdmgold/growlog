@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/care_log_model.dart';
+import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
 import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
@@ -11,10 +13,13 @@ import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
 import '../utils/phosphor_icons.dart';
+import '../utils/image_prep.dart';
 import '../widgets/ad_slot.dart';
 import '../widgets/care_today_row.dart' show careIcon;
 import '../widgets/scan_widgets.dart';
 import '../widgets/skeleton_loader.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 import 'ai_setup_screen.dart';
 import 'camera_screen.dart';
 import 'paul_chat_screen.dart';
@@ -113,6 +118,7 @@ class PlantDetailScreen extends StatelessWidget {
                   onLogCare: (type) => _logCare(context, plant, type),
                   onDoctor: () => _startDoctor(context, plant),
                   onEditSchedule: () => _showSchedule(context, plant),
+                  onAddPhoto: () => _addPhotoUpdate(context, plant),
                 ),
               ),
             ],
@@ -191,6 +197,47 @@ class PlantDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Adds a plain photo to the plant's growth record. No AI, no key needed.
+  Future<void> _addPhotoUpdate(BuildContext context, Plant plant) async {
+    final result = await Navigator.push<CameraResult>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const CameraScreen(),
+      ),
+    );
+    if (result == null || !context.mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final bytes = await compute(prepareImageForAi, result.path);
+      final dir = await getApplicationDocumentsDirectory();
+      final path = '${dir.path}/plant_${const Uuid().v4()}.jpg';
+      await File(path).writeAsBytes(bytes);
+      await plantProvider.addPhoto(
+        plant.id,
+        PhotoEntry(
+          id: const Uuid().v4(),
+          plantId: plant.id,
+          date: DateTime.now(),
+          path: path,
+          notes: 'Photo update',
+        ),
+      );
+      HapticFeedback.mediumImpact();
+      messenger.showSnackBar(
+        SnackBar(content: Text('Photo added to ${plant.name}')),
+      );
+    } catch (e) {
+      debugPrint('Add photo update error: $e');
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text('Could not save that photo. Please try again.'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+    }
   }
 
   void _showSchedule(BuildContext context, Plant plant) {
@@ -355,6 +402,7 @@ class _Body extends StatelessWidget {
   final void Function(CareType) onLogCare;
   final VoidCallback onDoctor;
   final VoidCallback onEditSchedule;
+  final VoidCallback onAddPhoto;
 
   const _Body({
     required this.plant,
@@ -362,6 +410,7 @@ class _Body extends StatelessWidget {
     required this.onLogCare,
     required this.onDoctor,
     required this.onEditSchedule,
+    required this.onAddPhoto,
   });
 
   @override
@@ -445,6 +494,14 @@ class _Body extends StatelessWidget {
                 _LogChip(type: t, isDark: isDark, onTap: () => onLogCare(t)),
             ],
           ),
+          const SizedBox(height: AppSpacing.xl),
+          _SectionHeader(
+            title: 'Growth',
+            action: 'Add photo',
+            onAction: onAddPhoto,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          _GrowthSection(plant: plant, plantProvider: plantProvider, isDark: isDark),
           const SizedBox(height: AppSpacing.xl),
           _SectionHeader(title: 'Doctor'),
           const SizedBox(height: AppSpacing.sm),
@@ -936,6 +993,196 @@ class _ScheduleRow extends StatelessWidget {
             }),
           ],
         ],
+      ),
+    );
+  }
+}
+
+
+String _shortDate(DateTime d) {
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+  ];
+  return '${months[d.month - 1]} ${d.day}, ${d.year}';
+}
+
+/// Before and after of the oldest and newest photo, plus every photo by date.
+class _GrowthSection extends StatelessWidget {
+  final Plant plant;
+  final PlantProvider plantProvider;
+  final bool isDark;
+
+  const _GrowthSection({
+    required this.plant,
+    required this.plantProvider,
+    required this.isDark,
+  });
+
+  Widget _image(PhotoEntry p, {BoxFit fit = BoxFit.cover}) {
+    return Image.file(
+      File(p.path),
+      fit: fit,
+      errorBuilder: (_, __, ___) => Container(
+        color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
+        alignment: Alignment.center,
+        child: Icon(
+          PhosphorRegular.leaf,
+          color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiary,
+        ),
+      ),
+    );
+  }
+
+  void _open(BuildContext context, PhotoEntry p) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => _PhotoViewer(photo: p, plantName: plant.name),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final photos = [...plant.photos]..sort((a, b) => a.date.compareTo(b.date));
+
+    if (photos.length < 2) {
+      return _EmptyNote(
+        isDark: isDark,
+        text: 'Add a photo now and another later to see how '
+            '${plant.name} grows. Tap Add photo.',
+      );
+    }
+
+    final first = photos.first;
+    final last = photos.last;
+    final days = last.date.difference(first.date).inDays;
+
+    Widget half(PhotoEntry p, String label) {
+      return Expanded(
+        child: GestureDetector(
+          onTap: () => _open(context, p),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 0.8,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadii.md),
+                  child: _image(p),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(label,
+                  style: AppTypography.callout.copyWith(
+                    color: ink,
+                    fontWeight: FontWeight.w600,
+                  )),
+              Text(_shortDate(p.date),
+                  style: AppTypography.caption.copyWith(color: sub)),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+          color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              half(first, 'First'),
+              const SizedBox(width: AppSpacing.md),
+              half(last, 'Latest'),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            days <= 0
+                ? '${photos.length} photos'
+                : '${photos.length} photos over $days ${days == 1 ? 'day' : 'days'}',
+            style: AppTypography.footnote.copyWith(color: sub),
+          ),
+          if (photos.length > 2) ...[
+            const SizedBox(height: AppSpacing.md),
+            SizedBox(
+              height: 92,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: photos.length,
+                separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.sm),
+                itemBuilder: (context, i) {
+                  final p = photos[i];
+                  return GestureDetector(
+                    onTap: () => _open(context, p),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(AppRadii.sm),
+                          child: SizedBox(width: 72, height: 72, child: _image(p)),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '${p.date.month}/${p.date.day}',
+                          style: AppTypography.caption.copyWith(color: sub),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _PhotoViewer extends StatelessWidget {
+  final PhotoEntry photo;
+  final String plantName;
+  const _PhotoViewer({required this.photo, required this.plantName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        title: Text(
+          '$plantName · ${_shortDate(photo.date)}',
+          style: AppTypography.callout.copyWith(color: Colors.white),
+        ),
+      ),
+      body: Center(
+        child: InteractiveViewer(
+          maxScale: 5,
+          child: Image.file(
+            File(photo.path),
+            fit: BoxFit.contain,
+            errorBuilder: (_, __, ___) => const Icon(
+              PhosphorRegular.leaf,
+              color: Colors.white54,
+              size: 48,
+            ),
+          ),
+        ),
       ),
     );
   }
