@@ -1,4 +1,7 @@
+import '../services/admob_service.dart';
+import '../services/ai/ai_settings.dart';
 import '../widgets/ad_slot.dart';
+import 'ai_setup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:growlog/l10n/app_localizations.dart';
@@ -203,6 +206,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  /// Opens Google's privacy options form where it is required (for example
+  /// the EU and UK); elsewhere explains that nothing needs changing.
+  Future<void> _openAdPrivacy() async {
+    if (await AdMobService.isPrivacyOptionsRequired()) {
+      await AdMobService.showPrivacyOptions();
+      return;
+    }
+    if (!mounted) return;
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Ad privacy choices'),
+        content: const Text(
+          'Ad privacy options are only needed in some regions, such as the EU '
+          'and UK. Nothing to change for your location.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -291,6 +320,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: _confirmClearAll,
           ),
           const SizedBox(height: AppSpacing.lg),
+          const _SectionLabel(text: 'AI'),
+          ListenableBuilder(
+            listenable: AiSettings.instance,
+            builder: (context, _) {
+              final ai = AiSettings.instance;
+              return _SettingsTile(
+                icon: Icons.vpn_key_outlined,
+                label: ai.isConfigured
+                    ? 'AI connected: ${ai.provider?.name ?? ''}'
+                    : 'Add your API key',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AiSetupScreen()),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: AppSpacing.lg),
           _SectionLabel(text: l10n?.proFeatures ?? 'Remove Ads'),
           ListenableBuilder(
             listenable: widget.iapService,
@@ -319,6 +366,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               );
             },
+          ),
+          _SettingsTile(
+            icon: Icons.shield_outlined,
+            label: 'Ad privacy choices',
+            onTap: _openAdPrivacy,
           ),
           const SizedBox(height: AppSpacing.lg),
           _SectionLabel(text: l10n?.about ?? 'About'),

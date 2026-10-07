@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -24,9 +25,63 @@ class AdMobService {
   static Future<void> _start() async {
     if (!isSupported) return;
     try {
-      await MobileAds.instance.initialize();
+      await _gatherConsent();
+      // Google's rule: only start the SDK once the consent state allows ads.
+      if (await ConsentInformation.instance.canRequestAds()) {
+        await MobileAds.instance.initialize();
+      }
     } catch (e) {
       debugPrint('AdMobService initialize error: $e');
     }
+  }
+
+  /// Refreshes the user's consent state and shows Google's consent message
+  /// when one is required (for example in the EU or UK). The message itself
+  /// is created in your AdMob account under Privacy & messaging.
+  static Future<void> _gatherConsent() async {
+    final updated = Completer<void>();
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      ConsentRequestParameters(),
+      () {
+        if (!updated.isCompleted) updated.complete();
+      },
+      (FormError error) {
+        debugPrint('Consent info update failed: ${error.errorCode} ${error.message}');
+        if (!updated.isCompleted) updated.complete();
+      },
+    );
+    await updated.future;
+
+    final shown = Completer<void>();
+    ConsentForm.loadAndShowConsentFormIfRequired((FormError? error) {
+      if (error != null) {
+        debugPrint('Consent form error: ${error.errorCode} ${error.message}');
+      }
+      if (!shown.isCompleted) shown.complete();
+    });
+    await shown.future;
+  }
+
+  /// True when the user must be able to reopen their privacy choices.
+  static Future<bool> isPrivacyOptionsRequired() async {
+    if (!isSupported) return false;
+    try {
+      return await ConsentInformation.instance.isPrivacyOptionsRequired();
+    } catch (e) {
+      debugPrint('isPrivacyOptionsRequired error: $e');
+      return false;
+    }
+  }
+
+  /// Reopens Google's privacy options form. Completes when it is closed.
+  static Future<void> showPrivacyOptions() async {
+    final done = Completer<void>();
+    ConsentForm.showPrivacyOptionsForm((FormError? error) {
+      if (error != null) {
+        debugPrint('Privacy options error: ${error.errorCode} ${error.message}');
+      }
+      if (!done.isCompleted) done.complete();
+    });
+    await done.future;
   }
 }
