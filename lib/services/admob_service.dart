@@ -66,9 +66,11 @@ class AdMobService {
   static Future<bool> isPrivacyOptionsRequired() async {
     if (!isSupported) return false;
     try {
-      return await ConsentInformation.instance.isPrivacyOptionsRequired();
+      final status =
+          await ConsentInformation.instance.getPrivacyOptionsRequirementStatus();
+      return status == PrivacyOptionsRequirementStatus.required;
     } catch (e) {
-      debugPrint('isPrivacyOptionsRequired error: $e');
+      debugPrint('privacy options status error: $e');
       return false;
     }
   }
