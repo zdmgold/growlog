@@ -6,6 +6,7 @@ import '../utils/care_actions.dart';
 import '../utils/care_due.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
+import 'motion_widgets.dart';
 import 'plant_thumb.dart';
 
 IconData careIcon(CareType t) {
@@ -197,26 +198,12 @@ class CareDueTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              Semantics(
-                button: true,
-                label: 'Mark ${item.type.label} done for ${item.plant.name}',
-                child: Material(
-                  color: isDark ? AppColors.accentLight : AppColors.accent,
-                  shape: const CircleBorder(),
-                  child: InkWell(
-                    customBorder: const CircleBorder(),
-                    onTap: onDone,
-                    child: SizedBox(
-                      width: 48,
-                      height: 48,
-                      child: Icon(
-                        PhosphorBold.check,
-                        size: 22,
-                        color: isDark ? AppColors.bgPrimaryDark : Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+              DoneCheckButton(
+                type: item.type,
+                semanticLabel: 'Mark ${item.type.label} done for ${item.plant.name}',
+                background: isDark ? AppColors.accentLight : AppColors.accent,
+                foreground: isDark ? AppColors.bgPrimaryDark : Colors.white,
+                onDone: onDone,
               ),
             ],
           ),

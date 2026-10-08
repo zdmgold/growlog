@@ -16,6 +16,7 @@ import '../utils/constants.dart';
 import '../utils/image_prep.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/ad_slot.dart';
+import '../widgets/motion_widgets.dart';
 import '../widgets/scan_widgets.dart';
 import 'ai_setup_screen.dart';
 import 'paul_chat_screen.dart';
@@ -52,6 +53,7 @@ class _ScanScreenState extends State<ScanScreen>
   bool _authError = false;
   bool _saving = false;
   bool _taskCounted = false;
+  bool _unfurl = false;
   bool _leaving = false;
   late final AnimationController _sweep;
 
@@ -189,13 +191,17 @@ class _ScanScreenState extends State<ScanScreen>
       await widget.plantProvider.addPlant(plant);
       await ScanStore.instance.markSaved(r.id, plantId);
       if (!mounted) return;
+      final animate = !reduceMotion(context);
       setState(() {
         _record = r.copyWith(savedPlantId: plantId);
         _saving = false;
+        _unfurl = animate;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('${r.commonName} added to your garden')),
       );
+      // Let the leaf finish before any full-screen ad.
+      if (animate) await Future.delayed(const Duration(milliseconds: 750));
       // Interstitial point 1: saving to the garden is a finished task.
       await _interstitial();
     } catch (e) {
@@ -498,8 +504,22 @@ class _ScanScreenState extends State<ScanScreen>
                 ],
               ),
             ),
-            Transform.translate(
-              offset: const Offset(0, -28),
+            TweenAnimationBuilder<double>(
+              tween: Tween(
+                begin: reduceMotion(context) ? 1.0 : 0.0,
+                end: 1.0,
+              ),
+              duration: reduceMotion(context)
+                  ? Duration.zero
+                  : const Duration(milliseconds: 320),
+              curve: Curves.easeOutCubic,
+              builder: (context, t, child) => Opacity(
+                opacity: t,
+                child: Transform.translate(
+                  offset: Offset(0, -28 + (1 - t) * 90),
+                  child: child,
+                ),
+              ),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(
                   AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, 120,
@@ -525,21 +545,38 @@ class _ScanScreenState extends State<ScanScreen>
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    Text(
-                      r.commonName,
-                      style: AppTypography.display.copyWith(color: ink),
-                    ),
-                    if (r.latinName != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(
-                          r.latinName!,
-                          style: AppTypography.latin.copyWith(
-                            color: sub,
-                            fontSize: 16,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                r.commonName,
+                                style: AppTypography.display.copyWith(color: ink),
+                              ),
+                              if (r.latinName != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    r.latinName!,
+                                    style: AppTypography.latin.copyWith(
+                                      color: sub,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                      ),
+                        const SizedBox(width: AppSpacing.md),
+                        Builder(builder: (context) {
+                          final st = scanHealthStyle(r.health, isDark);
+                          return HealthRing(color: st.color, icon: st.icon);
+                        }),
+                      ],
+                    ),
                     if (r.summary.isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.md),
                       Text(
@@ -583,6 +620,12 @@ class _ScanScreenState extends State<ScanScreen>
           ],
         ),
         _backButton(),
+        if (_unfurl)
+          LeafUnfurl(
+            onDone: () {
+              if (mounted) setState(() => _unfurl = false);
+            },
+          ),
         Align(
           alignment: Alignment.bottomCenter,
           child: _ActionBar(

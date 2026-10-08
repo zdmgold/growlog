@@ -2,6 +2,7 @@ import '../services/ai/ai_settings.dart';
 import '../widgets/ad_slot.dart';
 import 'ai_setup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:growlog/l10n/app_localizations.dart';
 import 'package:file_picker/file_picker.dart';
@@ -43,7 +44,20 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  static const _site = 'https://growlog.zdmgold.workers.dev';
+  static const _email = 'stmakarios@gmail.com';
+
   String _version = '';
+
+  Future<void> _open(Uri uri) async {
+    final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!ok && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not open ${uri.toString()}')),
+      );
+    }
+  }
+
 
   @override
   void initState() {
@@ -338,6 +352,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
           _Group(
             isDark: isDark,
             children: [
+              _SettingsTile(
+                icon: PhosphorRegular.globe,
+                label: 'Website',
+                onTap: () => _open(Uri.parse(_site)),
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.question,
+                label: 'Help & Support',
+                onTap: () => _open(Uri.parse('$_site/support')),
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.shieldCheck,
+                label: l10n?.privacyPolicy ?? 'Privacy Policy',
+                onTap: () => _open(Uri.parse('$_site/privacy')),
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.chatCircleDots,
+                label: 'Contact us',
+                subtitle: _email,
+                onTap: () => _open(
+                  Uri(
+                    scheme: 'mailto',
+                    path: _email,
+                    query: 'subject=GrowLog support',
+                  ),
+                ),
+              ),
               _SettingsTile(
                 icon: PhosphorRegular.info,
                 label: l10n?.version ?? 'Version',

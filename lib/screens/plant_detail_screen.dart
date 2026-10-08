@@ -16,6 +16,7 @@ import '../utils/phosphor_icons.dart';
 import '../utils/image_prep.dart';
 import '../widgets/ad_slot.dart';
 import '../widgets/care_today_row.dart' show careIcon;
+import '../widgets/motion_widgets.dart';
 import '../widgets/scan_widgets.dart';
 import '../widgets/skeleton_loader.dart';
 import 'package:path_provider/path_provider.dart';
@@ -654,26 +655,13 @@ class _CareRow extends StatelessWidget {
               ],
             ),
           ),
-          Semantics(
-            button: true,
-            label: 'Mark ${type.label} done',
-            child: Material(
-              color: isDark ? AppColors.accentLight : AppColors.accent,
-              shape: const CircleBorder(),
-              child: InkWell(
-                customBorder: const CircleBorder(),
-                onTap: onDone,
-                child: SizedBox(
-                  width: 44,
-                  height: 44,
-                  child: Icon(
-                    PhosphorBold.check,
-                    size: 20,
-                    color: isDark ? AppColors.bgPrimaryDark : Colors.white,
-                  ),
-                ),
-              ),
-            ),
+          DoneCheckButton(
+            type: type,
+            size: 44,
+            semanticLabel: 'Mark ${type.label} done',
+            background: isDark ? AppColors.accentLight : AppColors.accent,
+            foreground: isDark ? AppColors.bgPrimaryDark : Colors.white,
+            onDone: onDone,
           ),
         ],
       ),
