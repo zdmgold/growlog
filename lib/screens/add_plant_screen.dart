@@ -1,17 +1,22 @@
-import '../services/interstitial_service.dart';
-import '../widgets/ad_slot.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:growlog/l10n/app_localizations.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:growlog/l10n/app_localizations.dart';
-import '../models/plant_model.dart';
+import '../models/care_log_model.dart';
 import '../models/photo_entry_model.dart';
+import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../services/interstitial_service.dart';
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
+import '../widgets/ad_slot.dart';
+import '../widgets/care_today_row.dart' show careIcon;
+import 'camera_screen.dart';
 
+/// Add a plant by hand. Care schedules are opt-in: only watering and feeding
+/// start switched on, so a new plant is not buried in tasks.
 class AddPlantScreen extends StatefulWidget {
   final PlantProvider plantProvider;
 
@@ -25,108 +30,124 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   final _nameController = TextEditingController();
   final _speciesController = TextEditingController();
   final _notesController = TextEditingController();
-  final _waterFreqController = TextEditingController(text: '7');
-  final _fertilizeFreqController = TextEditingController(text: '30');
-  final _mistFreqController = TextEditingController(text: '3');
-  // NEW: repot/prune/treat frequency inputs, closing the gap where
-  // plant_model.dart/plant_provider.dart already supported all 6 care
-  // types but no UI existed to actually set these 3.
-  final _repotFreqController = TextEditingController(text: '365');
-  final _pruneFreqController = TextEditingController(text: '90');
-  final _treatFreqController = TextEditingController(text: '14');
+
+  static const Map<CareType, int> _defaultDays = {
+    CareType.water: 7,
+    CareType.fertilize: 30,
+    CareType.mist: 3,
+    CareType.repot: 365,
+    CareType.prune: 90,
+    CareType.treat: 14,
+  };
+
+  late final Map<CareType, TextEditingController> _days = {
+    for (final t in CareType.values)
+      t: TextEditingController(text: '${_defaultDays[t]}'),
+  };
+  final Map<CareType, bool> _on = {
+    CareType.water: true,
+    CareType.fertilize: true,
+    CareType.mist: false,
+    CareType.repot: false,
+    CareType.prune: false,
+    CareType.treat: false,
+  };
+
   String? _selectedRoomId;
   File? _photoFile;
+  bool _saving = false;
 
   @override
   void dispose() {
     _nameController.dispose();
     _speciesController.dispose();
     _notesController.dispose();
-    _waterFreqController.dispose();
-    _fertilizeFreqController.dispose();
-    _mistFreqController.dispose();
-    _repotFreqController.dispose();
-    _pruneFreqController.dispose();
-    _treatFreqController.dispose();
+    for (final c in _days.values) {
+      c.dispose();
+    }
     super.dispose();
   }
 
   Future<void> _pickPhoto() async {
-    final picker = ImagePicker();
-    final picked =
-        await picker.pickImage(source: ImageSource.gallery, maxWidth: 1200);
-    if (picked != null) {
-      setState(() => _photoFile = File(picked.path));
+    final result = await Navigator.push<CameraResult>(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => const CameraScreen(),
+      ),
+    );
+    if (result != null && mounted) {
+      setState(() => _photoFile = File(result.path));
     }
   }
 
-  Future<void> _takePhoto() async {
-    final picker = ImagePicker();
-    final picked =
-        await picker.pickImage(source: ImageSource.camera, maxWidth: 1200);
-    if (picked != null) {
-      setState(() => _photoFile = File(picked.path));
-    }
+  int? _freq(CareType t) {
+    if (_on[t] != true) return null;
+    final n = int.tryParse(_days[t]!.text.trim());
+    if (n == null || n < 1) return _defaultDays[t];
+    return n > 3650 ? 3650 : n;
   }
 
   Future<void> _save() async {
+    if (_saving) return;
     final l10n = AppLocalizations.of(context);
     if (_nameController.text.trim().isEmpty) {
       _showError(l10n?.plantNameRequired ?? 'Plant name is required');
       return;
     }
+    setState(() => _saving = true);
 
-    String? photoPath;
-    if (_photoFile != null) {
-      final dir = await getApplicationDocumentsDirectory();
-      final fileName = 'plant_${const Uuid().v4()}.jpg';
-      photoPath = '${dir.path}/$fileName';
-      await _photoFile!.copy(photoPath);
-    }
+    try {
+      String? photoPath;
+      if (_photoFile != null) {
+        final dir = await getApplicationDocumentsDirectory();
+        photoPath = '${dir.path}/plant_${const Uuid().v4()}.jpg';
+        await _photoFile!.copy(photoPath);
+      }
 
-    final plantId = const Uuid().v4();
-    final now = DateTime.now();
+      final plantId = const Uuid().v4();
+      final now = DateTime.now();
+      final plant = Plant(
+        id: plantId,
+        name: _nameController.text.trim(),
+        species: _speciesController.text.trim().isEmpty
+            ? null
+            : _speciesController.text.trim(),
+        roomId: _selectedRoomId,
+        acquiredDate: now,
+        photos: photoPath != null
+            ? [
+                PhotoEntry(
+                  id: const Uuid().v4(),
+                  plantId: plantId,
+                  date: now,
+                  path: photoPath,
+                ),
+              ]
+            : [],
+        notes: _notesController.text.trim().isEmpty
+            ? null
+            : _notesController.text.trim(),
+        waterFrequencyDays: _freq(CareType.water),
+        fertilizeFrequencyDays: _freq(CareType.fertilize),
+        mistFrequencyDays: _freq(CareType.mist),
+        repotFrequencyDays: _freq(CareType.repot),
+        pruneFrequencyDays: _freq(CareType.prune),
+        treatFrequencyDays: _freq(CareType.treat),
+        createdAt: now,
+      );
 
-    final plant = Plant(
-      id: plantId,
-      name: _nameController.text.trim(),
-      species: _speciesController.text.trim().isEmpty
-          ? null
-          : _speciesController.text.trim(),
-      roomId: _selectedRoomId,
-      acquiredDate: now,
-      photos: photoPath != null
-          ? [
-              PhotoEntry(
-                id: const Uuid().v4(),
-                plantId: plantId,
-                date: now,
-                path: photoPath,
-              ),
-            ]
-          : [],
-      notes: _notesController.text.trim().isEmpty
-          ? null
-          : _notesController.text.trim(),
-      waterFrequencyDays: int.tryParse(_waterFreqController.text) ?? 7,
-      fertilizeFrequencyDays:
-          int.tryParse(_fertilizeFreqController.text) ?? 30,
-      mistFrequencyDays: int.tryParse(_mistFreqController.text) ?? 3,
-      repotFrequencyDays: int.tryParse(_repotFreqController.text) ?? 365,
-      pruneFrequencyDays: int.tryParse(_pruneFreqController.text) ?? 90,
-      treatFrequencyDays: int.tryParse(_treatFreqController.text) ?? 14,
-      createdAt: now,
-    );
-
-    await widget.plantProvider.addPlant(plant);
-    // SURGICAL ADDITION (Fix Phase B, feature #8, item flagged for this
-    // exact file): haptic confirmation on successful save — previously
-    // silent.
-    HapticFeedback.mediumImpact();
-    // Interstitial point 3: a plant saved by hand is a finished task.
-    await InterstitialService.afterTask();
-    if (mounted) {
-      Navigator.pop(context);
+      await widget.plantProvider.addPlant(plant);
+      HapticFeedback.mediumImpact();
+      // Interstitial point 3: a plant saved by hand is a finished task.
+      await InterstitialService.afterTask();
+      if (mounted) Navigator.pop(context);
+    } catch (e) {
+      debugPrint('AddPlantScreen._save error: $e');
+      if (mounted) {
+        setState(() => _saving = false);
+        _showError('Could not save the plant. Please try again.');
+      }
     }
   }
 
@@ -136,9 +157,28 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
     );
   }
 
+  String _label(CareType t, AppLocalizations? l10n) {
+    switch (t) {
+      case CareType.water:
+        return l10n?.waterEvery ?? 'Water every';
+      case CareType.fertilize:
+        return l10n?.fertilizeEvery ?? 'Feed every';
+      case CareType.mist:
+        return l10n?.mistEvery ?? 'Mist every';
+      case CareType.repot:
+        return l10n?.repotEvery ?? 'Repot every';
+      case CareType.prune:
+        return l10n?.pruneEvery ?? 'Prune every';
+      case CareType.treat:
+        return l10n?.treatEvery ?? 'Treat every';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
     final rooms = widget.plantProvider.rooms;
     final l10n = AppLocalizations.of(context);
 
@@ -146,152 +186,85 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       bottomNavigationBar: const SafeArea(top: false, child: AdSlot()),
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
+          tooltip: 'Back',
+          icon: Icon(PhosphorBold.arrowLeft, color: ink),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          l10n?.addPlantScreenTitle ?? 'Add Plant',
-          style: AppTypography.title1.copyWith(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
-        ),
-        centerTitle: true,
+        title: Text(l10n?.addPlantScreenTitle ?? 'Add Plant'),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xxl,
+        ),
         children: [
-          _PhotoPicker(
-            photoFile: _photoFile,
-            onGallery: _pickPhoto,
-            onCamera: _takePhoto,
-          ),
+          _PhotoPicker(photoFile: _photoFile, onTap: _pickPhoto, isDark: isDark),
           const SizedBox(height: AppSpacing.lg),
           TextField(
             controller: _nameController,
+            textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
-              hintText: l10n?.plantNameLabel ?? 'Plant name *',
-              filled: true,
-              fillColor:
-                  isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppRadii.md),
-                borderSide: BorderSide.none,
-              ),
+              labelText: l10n?.plantNameLabel ?? 'Plant name *',
             ),
           ),
           const SizedBox(height: AppSpacing.md),
           TextField(
             controller: _speciesController,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              hintText: l10n?.speciesLabel ?? 'Species (optional)',
-              filled: true,
-              fillColor:
-                  isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppRadii.md),
-                borderSide: BorderSide.none,
-              ),
+              labelText: l10n?.speciesLabel ?? 'Species (optional)',
+              helperText: 'For example: Monstera deliciosa',
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          if (rooms.isNotEmpty)
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              decoration: BoxDecoration(
-                color:
-                    isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-                borderRadius: BorderRadius.circular(AppRadii.md),
+          if (rooms.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.md),
+            DropdownButtonFormField<String>(
+              value: _selectedRoomId,
+              isExpanded: true,
+              decoration: InputDecoration(
+                labelText: l10n?.selectRoom ?? 'Select room',
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  hint: Text(l10n?.selectRoom ?? 'Select room'),
-                  value: _selectedRoomId,
-                  items: rooms.map((room) {
-                    return DropdownMenuItem(
-                      value: room.id,
-                      child: Text(room.name),
-                    );
-                  }).toList(),
-                  onChanged: (value) =>
-                      setState(() => _selectedRoomId = value),
-                ),
-              ),
+              items: [
+                for (final r in rooms)
+                  DropdownMenuItem(value: r.id, child: Text(r.name)),
+              ],
+              onChanged: (v) => setState(() => _selectedRoomId = v),
             ),
-          const SizedBox(height: AppSpacing.lg),
+          ],
+          const SizedBox(height: AppSpacing.xl),
           Text(
             l10n?.careSchedule ?? 'Care Schedule',
-            style: AppTypography.title2.copyWith(
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+            style: AppTypography.title1.copyWith(color: ink),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            'Switch on the care this plant needs. Reminders start from today.',
+            style: AppTypography.footnote.copyWith(color: sub),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          for (final t in CareType.values)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: _CareRow(
+                type: t,
+                label: _label(t, l10n),
+                suffix: l10n?.daysSuffix ?? 'days',
+                controller: _days[t]!,
+                enabled: _on[t] ?? false,
+                isDark: isDark,
+                onToggle: (v) => setState(() => _on[t] = v),
+              ),
             ),
-          ),
           const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.waterEvery ?? 'Water every',
-            controller: _waterFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.water_drop,
-            iconColor: AppColors.water,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.fertilizeEvery ?? 'Fertilize every',
-            controller: _fertilizeFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.science,
-            iconColor: AppColors.fertilize,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.mistEvery ?? 'Mist every',
-            controller: _mistFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.water,
-            iconColor: AppColors.mist,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.repotEvery ?? 'Repot every',
-            controller: _repotFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.yard,
-            iconColor: AppColors.repot,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.pruneEvery ?? 'Prune every',
-            controller: _pruneFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.content_cut,
-            iconColor: AppColors.prune,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          _FrequencyField(
-            label: l10n?.treatEvery ?? 'Treat every',
-            controller: _treatFreqController,
-            suffix: l10n?.daysSuffix ?? 'days',
-            icon: Icons.healing,
-            iconColor: AppColors.treat,
-          ),
-          const SizedBox(height: AppSpacing.lg),
           TextField(
             controller: _notesController,
             maxLines: 3,
+            textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
-              hintText: l10n?.notesLabel ?? 'Notes (optional)',
-              filled: true,
-              fillColor:
-                  isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppRadii.md),
-                borderSide: BorderSide.none,
-              ),
+              labelText: l10n?.notesLabel ?? 'Notes (optional)',
+              alignLabelWithHint: true,
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
@@ -299,18 +272,14 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             width: double.infinity,
             height: 54,
             child: ElevatedButton(
-              onPressed: _save,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadii.md),
-                ),
-              ),
-              child: Text(
-                l10n?.savePlant ?? 'Save Plant',
-                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-              ),
+              onPressed: _saving ? null : _save,
+              child: _saving
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2.5),
+                    )
+                  : Text(l10n?.savePlant ?? 'Save Plant'),
             ),
           ),
         ],
@@ -319,188 +288,178 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   }
 }
 
-/// NEW (was cut off mid-declaration in the original transcript — only
-/// `class _PhotoPicker extends StatelessWidget { final File? photoFile;
-/// final` existed, nothing further). Reconstructed to match the app's
-/// existing visual language (bgTertiary containers, AppRadii.md,
-/// accent-colored affordances) and the three callbacks the caller
-/// above already wires up: photoFile, onGallery, onCamera.
 class _PhotoPicker extends StatelessWidget {
   final File? photoFile;
-  final VoidCallback onGallery;
-  final VoidCallback onCamera;
+  final VoidCallback onTap;
+  final bool isDark;
 
   const _PhotoPicker({
     required this.photoFile,
-    required this.onGallery,
-    required this.onCamera,
+    required this.onTap,
+    required this.isDark,
   });
-
-  void _showPicker(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final l10n = AppLocalizations.of(context);
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(AppRadii.xl)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_camera),
-                title: Text(l10n?.takePhoto ?? 'Take Photo'),
-                onTap: () {
-                  Navigator.pop(context);
-                  onCamera();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: Text(l10n?.chooseFromGallery ?? 'Choose from Gallery'),
-                onTap: () {
-                  Navigator.pop(context);
-                  onGallery();
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
     final l10n = AppLocalizations.of(context);
 
-    return GestureDetector(
-      onTap: () => _showPicker(context),
-      child: Container(
-        height: 200,
-        width: double.infinity,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-          borderRadius: BorderRadius.circular(AppRadii.lg),
-          border: Border.all(
-            color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
-            width: 0.5,
+    return Semantics(
+      button: true,
+      label: photoFile == null ? 'Add a photo' : 'Change photo',
+      child: Material(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.xl),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppRadii.xl),
+          onTap: onTap,
+          child: Container(
+            height: 220,
+            width: double.infinity,
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadii.xl),
+              border: Border.all(
+                color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+              ),
+            ),
+            child: photoFile != null
+                ? Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.file(photoFile!, fit: BoxFit.cover),
+                      Positioned(
+                        right: AppSpacing.md,
+                        bottom: AppSpacing.md,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.55),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            PhosphorRegular.camera,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: accent.withOpacity(0.14),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(PhosphorFill.camera, size: 30, color: accent),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Text(
+                        l10n?.addPhoto ?? 'Add Photo',
+                        style: AppTypography.title2.copyWith(color: accent),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Take a photo or pick one from your gallery',
+                        style: AppTypography.footnote.copyWith(color: sub),
+                      ),
+                    ],
+                  ),
           ),
         ),
-        child: photoFile != null
-            ? Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.file(photoFile!, fit: BoxFit.cover),
-                  Positioned(
-                    right: AppSpacing.sm,
-                    bottom: AppSpacing.sm,
-                    child: Container(
-                      padding: const EdgeInsets.all(AppSpacing.sm),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.edit,
-                          color: Colors.white, size: 20),
-                    ),
-                  ),
-                ],
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.add_a_photo,
-                    size: 40,
-                    color: AppColors.textTertiary,
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    l10n?.addPhoto ?? 'Add Photo',
-                    style: AppTypography.body
-                        .copyWith(color: AppColors.textTertiary),
-                  ),
-                ],
-              ),
       ),
     );
   }
 }
 
-/// NEW (referenced by name in the cut-off original but its class
-/// definition was never reached). A labeled numeric input row matching
-/// the app's design tokens, used for water/fertilize/mist frequency.
-class _FrequencyField extends StatelessWidget {
+/// One care type: an on/off switch and how many days between each time.
+class _CareRow extends StatelessWidget {
+  final CareType type;
   final String label;
-  final TextEditingController controller;
   final String suffix;
-  final IconData icon;
-  final Color iconColor;
+  final TextEditingController controller;
+  final bool enabled;
+  final bool isDark;
+  final ValueChanged<bool> onToggle;
 
-  const _FrequencyField({
+  const _CareRow({
+    required this.type,
     required this.label,
-    required this.controller,
     required this.suffix,
-    required this.icon,
-    required this.iconColor,
+    required this.controller,
+    required this.enabled,
+    required this.isDark,
+    required this.onToggle,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
 
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
+        horizontal: AppSpacing.md, vertical: AppSpacing.sm,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
-        borderRadius: BorderRadius.circular(AppRadii.md),
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+          color: enabled
+              ? type.color.withOpacity(0.5)
+              : (isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle),
+        ),
       ),
       child: Row(
         children: [
-          Icon(icon, color: iconColor, size: 22),
-          const SizedBox(width: AppSpacing.sm),
+          Container(
+            width: 38,
+            height: 38,
+            decoration: BoxDecoration(
+              color: type.color.withOpacity(enabled ? 0.16 : 0.08),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(careIcon(type), size: 19, color: type.color),
+          ),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               label,
-              style: AppTypography.body.copyWith(
-                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-              ),
+              style: AppTypography.body.copyWith(color: enabled ? ink : sub),
             ),
           ),
-          SizedBox(
-            width: 48,
-            child: TextField(
-              controller: controller,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              style: AppTypography.body.copyWith(
-                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                fontWeight: FontWeight.w600,
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(vertical: 4),
+          if (enabled) ...[
+            SizedBox(
+              width: 52,
+              child: TextField(
+                controller: controller,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                style: AppTypography.body.copyWith(
+                  color: ink,
+                  fontWeight: FontWeight.w700,
+                ),
+                decoration: const InputDecoration(
+                  isDense: true,
+                  filled: false,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 6),
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: AppSpacing.xs),
-          Text(
-            suffix,
-            style: AppTypography.footnote.copyWith(color: AppColors.textTertiary),
-          ),
+            Text(suffix, style: AppTypography.footnote.copyWith(color: sub)),
+            const SizedBox(width: 4),
+          ],
+          Switch(value: enabled, onChanged: onToggle),
         ],
       ),
     );

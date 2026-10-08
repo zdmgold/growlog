@@ -14,6 +14,7 @@ import '../providers/theme_provider.dart';
 import '../services/export_service.dart';
 import '../services/iap_service.dart';
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
 
 /// NEW (Phase 5 cont., File 32). Fresh generation — nothing to recover
 /// from the source transcript. Every service call below (ExportService,
@@ -209,88 +210,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context);
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
 
     return Scaffold(
       bottomNavigationBar: const SafeArea(top: false, child: AdSlot()),
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
+          tooltip: 'Back',
+          icon: Icon(PhosphorBold.arrowLeft, color: ink),
           onPressed: () => Navigator.pop(context),
         ),
-        title: Text(
-          l10n?.settingsTitle ?? 'Settings',
-          style: AppTypography.title1.copyWith(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
-        ),
-        centerTitle: true,
+        title: Text(l10n?.settingsTitle ?? 'Settings'),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xxl,
+        ),
         children: [
           _SectionLabel(text: l10n?.theme ?? 'Theme'),
           ListenableBuilder(
             listenable: widget.themeProvider,
             builder: (context, _) {
-              return Container(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? AppColors.bgSecondaryDark
-                      : AppColors.bgSecondary,
-                  borderRadius: BorderRadius.circular(AppRadii.lg),
+              return _ThemeSelector(
+                value: widget.themeProvider.value,
+                isDark: isDark,
+                labels: (
+                  l10n?.themeSystem ?? 'System',
+                  l10n?.themeLight ?? 'Light',
+                  l10n?.themeDark ?? 'Dark',
                 ),
-                child: SegmentedButton<ThemeMode>(
-                  segments: [
-                    ButtonSegment(
-                      value: ThemeMode.system,
-                      label: Text(l10n?.themeSystem ?? 'System'),
-                      icon: const Icon(Icons.brightness_auto),
-                    ),
-                    ButtonSegment(
-                      value: ThemeMode.light,
-                      label: Text(l10n?.themeLight ?? 'Light'),
-                      icon: const Icon(Icons.light_mode),
-                    ),
-                    ButtonSegment(
-                      value: ThemeMode.dark,
-                      label: Text(l10n?.themeDark ?? 'Dark'),
-                      icon: const Icon(Icons.dark_mode),
-                    ),
-                  ],
-                  selected: {widget.themeProvider.value},
-                  onSelectionChanged: (selection) {
-                    HapticFeedback.lightImpact();
-                    widget.themeProvider.setTheme(selection.first);
-                  },
-                ),
+                onChanged: (mode) {
+                  HapticFeedback.lightImpact();
+                  widget.themeProvider.setTheme(mode);
+                },
               );
             },
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _SectionLabel(text: l10n?.backupRestore ?? 'Backup & Restore'),
-          _SettingsTile(
-            icon: Icons.upload_file,
-            label: l10n?.exportData ?? 'Export Data',
-            onTap: _exportData,
-          ),
-          _SettingsTile(
-            icon: Icons.download,
-            label: l10n?.importData ?? 'Import Data',
-            onTap: _importData,
-          ),
-          _SettingsTile(
-            icon: Icons.delete_forever,
-            label: 'Clear All Data',
-            iconColor: AppColors.error,
-            labelColor: AppColors.error,
-            onTap: _confirmClearAll,
           ),
           const SizedBox(height: AppSpacing.lg),
           const _SectionLabel(text: 'AI'),
@@ -298,17 +254,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
             listenable: AiSettings.instance,
             builder: (context, _) {
               final ai = AiSettings.instance;
-              return _SettingsTile(
-                icon: Icons.vpn_key_outlined,
-                label: ai.isConfigured
-                    ? 'AI connected: ${ai.provider?.name ?? ''}'
-                    : 'Add your API key',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AiSetupScreen()),
-                ),
+              return _Group(
+                isDark: isDark,
+                children: [
+                  _SettingsTile(
+                    icon: PhosphorRegular.key,
+                    label: ai.isConfigured
+                        ? 'AI connected: ${ai.provider?.name ?? ''}'
+                        : 'Add your API key',
+                    subtitle: ai.isConfigured
+                        ? (ai.model ?? '')
+                        : 'Needed for plant scans and chat',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AiSetupScreen()),
+                    ),
+                  ),
+                ],
               );
             },
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          _SectionLabel(text: l10n?.backupRestore ?? 'Backup & Restore'),
+          _Group(
+            isDark: isDark,
+            children: [
+              _SettingsTile(
+                icon: PhosphorRegular.uploadSimple,
+                label: l10n?.exportData ?? 'Export Data',
+                onTap: _exportData,
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.downloadSimple,
+                label: l10n?.importData ?? 'Import Data',
+                onTap: _importData,
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.trash,
+                label: 'Clear All Data',
+                danger: true,
+                onTap: _confirmClearAll,
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.lg),
           _SectionLabel(text: l10n?.proFeatures ?? 'Remove Ads'),
@@ -316,23 +303,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
             listenable: widget.iapService,
             builder: (context, _) {
               if (widget.iapService.value) {
-                return _SettingsTile(
-                  icon: Icons.check_circle,
-                  iconColor: AppColors.success,
-                  label: l10n?.adFree ?? 'Ad-free experience — active',
+                return _Group(
+                  isDark: isDark,
+                  children: [
+                    _SettingsTile(
+                      icon: PhosphorFill.checkCircle,
+                      success: true,
+                      label: l10n?.adFree ?? 'Ad-free experience — active',
+                    ),
+                  ],
                 );
               }
-              return Column(
+              return _Group(
+                isDark: isDark,
                 children: [
                   _SettingsTile(
-                    icon: Icons.block,
+                    icon: PhosphorRegular.prohibit,
                     label: widget.iapService.removeAdsPrice != null
                         ? '${l10n?.adFree ?? 'Remove Ads'} — ${widget.iapService.removeAdsPrice}'
                         : (l10n?.adFree ?? 'Remove Ads'),
                     onTap: _purchaseRemoveAds,
                   ),
                   _SettingsTile(
-                    icon: Icons.restore,
+                    icon: PhosphorRegular.arrowClockwise,
                     label: l10n?.restorePurchases ?? 'Restore Purchases',
                     onTap: _restorePurchases,
                   ),
@@ -342,24 +335,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           _SectionLabel(text: l10n?.about ?? 'About'),
-          _SettingsTile(
-            icon: Icons.info_outline,
-            label: l10n?.version ?? 'Version',
-            trailing: Text(
-              _version,
-              style: AppTypography.footnote
-                  .copyWith(color: AppColors.textTertiary),
-            ),
-          ),
-          _SettingsTile(
-            icon: Icons.privacy_tip_outlined,
-            label: l10n?.privacyPolicy ?? 'Privacy Policy',
-            onTap: () {},
-          ),
-          _SettingsTile(
-            icon: Icons.description_outlined,
-            label: l10n?.termsOfService ?? 'Terms of Service',
-            onTap: () {},
+          _Group(
+            isDark: isDark,
+            children: [
+              _SettingsTile(
+                icon: PhosphorRegular.info,
+                label: l10n?.version ?? 'Version',
+                trailing: Text(
+                  _version,
+                  style: AppTypography.footnote.copyWith(
+                    color: isDark
+                        ? AppColors.textTertiaryDark
+                        : AppColors.textTertiary,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -373,15 +364,138 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.sm, top: AppSpacing.sm),
+      padding: const EdgeInsets.only(
+        bottom: AppSpacing.sm, top: AppSpacing.sm, left: 4,
+      ),
       child: Text(
         text.toUpperCase(),
         style: AppTypography.caption.copyWith(
-          color: AppColors.textTertiary,
-          fontWeight: FontWeight.w600,
-          letterSpacing: 0.5,
+          color: isDark ? AppColors.textTertiaryDark : AppColors.textTertiary,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1.0,
         ),
+      ),
+    );
+  }
+}
+
+/// A rounded card holding rows separated by hairlines.
+class _Group extends StatelessWidget {
+  final bool isDark;
+  final List<Widget> children;
+  const _Group({required this.isDark, required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    final line = isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle;
+    final rows = <Widget>[];
+    for (var i = 0; i < children.length; i++) {
+      rows.add(children[i]);
+      if (i < children.length - 1) {
+        rows.add(Divider(height: 1, thickness: 1, indent: 56, color: line));
+      }
+    }
+    return Container(
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(color: line),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(children: rows),
+    );
+  }
+}
+
+class _ThemeSelector extends StatelessWidget {
+  final ThemeMode value;
+  final bool isDark;
+  final (String, String, String) labels;
+  final ValueChanged<ThemeMode> onChanged;
+
+  const _ThemeSelector({
+    required this.value,
+    required this.isDark,
+    required this.labels,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    final items = [
+      (ThemeMode.system, labels.$1, PhosphorRegular.slidersHorizontal),
+      (ThemeMode.light, labels.$2, PhosphorRegular.sun),
+      (ThemeMode.dark, labels.$3, PhosphorRegular.moon),
+    ];
+    return Container(
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgTertiary,
+        borderRadius: BorderRadius.circular(AppRadii.pill),
+      ),
+      child: Row(
+        children: [
+          for (final (mode, label, icon) in items)
+            Expanded(
+              child: Semantics(
+                button: true,
+                selected: value == mode,
+                label: '$label theme',
+                child: Material(
+                  color: value == mode
+                      ? (isDark ? AppColors.bgTertiaryDark : AppColors.bgSecondary)
+                      : Colors.transparent,
+                  shape: StadiumBorder(
+                    side: BorderSide(
+                      color: value == mode
+                          ? (isDark
+                              ? AppColors.borderSubtleDark
+                              : AppColors.borderSubtle)
+                          : Colors.transparent,
+                    ),
+                  ),
+                  child: InkWell(
+                    customBorder: const StadiumBorder(),
+                    onTap: () => onChanged(mode),
+                    child: SizedBox(
+                      height: 44,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            icon,
+                            size: 18,
+                            color: value == mode
+                                ? accent
+                                : (isDark
+                                    ? AppColors.textSecondaryDark
+                                    : AppColors.textSecondary),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            label,
+                            style: AppTypography.callout.copyWith(
+                              color: value == mode
+                                  ? accent
+                                  : (isDark
+                                      ? AppColors.textSecondaryDark
+                                      : AppColors.textSecondary),
+                              fontWeight: value == mode
+                                  ? FontWeight.w700
+                                  : FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -390,16 +504,18 @@ class _SectionLabel extends StatelessWidget {
 class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final String label;
-  final Color? iconColor;
-  final Color? labelColor;
+  final String? subtitle;
+  final bool danger;
+  final bool success;
   final Widget? trailing;
   final VoidCallback? onTap;
 
   const _SettingsTile({
     required this.icon,
     required this.label,
-    this.iconColor,
-    this.labelColor,
+    this.subtitle,
+    this.danger = false,
+    this.success = false,
     this.trailing,
     this.onTap,
   });
@@ -407,45 +523,58 @@ class _SettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final tertiary = isDark ? AppColors.textTertiaryDark : AppColors.textTertiary;
+    final err = isDark ? AppColors.errorDark : AppColors.error;
+    final ok = isDark ? AppColors.successDark : AppColors.success;
+    final iconColor = danger ? err : (success ? ok : sub);
+
     return Semantics(
       label: label,
       button: onTap != null,
-      child: Material(
-      color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
-      borderRadius: BorderRadius.circular(AppRadii.md),
       child: InkWell(
-        borderRadius: BorderRadius.circular(AppRadii.md),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
+            vertical: 14,
           ),
           child: Row(
             children: [
-              Icon(icon, color: iconColor ?? AppColors.textTertiary, size: 22),
+              Icon(icon, color: iconColor, size: 22),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Text(
-                  label,
-                  style: AppTypography.body.copyWith(
-                    color: labelColor ??
-                        (isDark
-                            ? AppColors.textPrimaryDark
-                            : AppColors.textPrimary),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: AppTypography.body.copyWith(
+                        color: danger ? err : ink,
+                      ),
+                    ),
+                    if (subtitle != null && subtitle!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          subtitle!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.footnote.copyWith(color: sub),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               trailing ??
                   (onTap != null
-                      ? const Icon(Icons.chevron_right,
-                          color: AppColors.textTertiary)
+                      ? Icon(PhosphorBold.caretRight, size: 16, color: tertiary)
                       : const SizedBox.shrink()),
             ],
           ),
         ),
       ),
-    ),
     );
   }
 }
