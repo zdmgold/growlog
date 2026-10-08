@@ -4,6 +4,7 @@ import '../models/room_model.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
 import 'skeleton_loader.dart';
 
 class RoomCard extends StatelessWidget {
@@ -44,7 +45,6 @@ class RoomCard extends StatelessWidget {
               color: isDark
                   ? AppColors.borderSubtleDark
                   : AppColors.borderSubtle,
-              width: 0.5,
             ),
           ),
           child: Column(
@@ -62,9 +62,11 @@ class RoomCard extends StatelessWidget {
                               : AppColors.bgTertiary,
                           child: Center(
                             child: Icon(
-                              Icons.meeting_room,
-                              color: AppColors.textTertiary,
-                              size: 32,
+                              PhosphorRegular.house,
+                              color: isDark
+                                  ? AppColors.textTertiaryDark
+                                  : AppColors.textTertiary,
+                              size: 34,
                             ),
                           ),
                         )
@@ -81,10 +83,11 @@ class RoomCard extends StatelessWidget {
                   children: [
                     Text(
                       room.name,
-                      style: AppTypography.title2.copyWith(
+                      style: AppTypography.title1.copyWith(
                         color: isDark
                             ? AppColors.textPrimaryDark
                             : AppColors.textPrimary,
+                        fontSize: 18,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -93,7 +96,9 @@ class RoomCard extends StatelessWidget {
                     Text(
                       '${plants.length} ${plants.length == 1 ? 'plant' : 'plants'}',
                       style: AppTypography.footnote.copyWith(
-                        color: AppColors.textTertiary,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ],

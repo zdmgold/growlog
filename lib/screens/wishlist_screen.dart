@@ -5,16 +5,12 @@ import 'package:uuid/uuid.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
+import '../utils/date_formatter.dart';
+import '../utils/phosphor_icons.dart';
 
-/// NEW (Phase 5 cont., File 33). Fresh generation — nothing to recover
-/// from the source transcript. Reachable from home_screen.dart's
-/// bottom-nav "Wishlist" tab (index 3).
-///
-/// Uses `plantProvider.toggleWishlist()` (verified real method on
-/// PlantProvider) to move an item from wishlist to garden.
+/// Plants you want. "Move to garden" turns a wish into a plant.
 class WishlistScreen extends StatelessWidget {
   final PlantProvider plantProvider;
-
   final bool embedded;
 
   const WishlistScreen({
@@ -28,7 +24,7 @@ class WishlistScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -40,35 +36,41 @@ class WishlistScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
             color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
-            borderRadius:
-                const BorderRadius.vertical(top: Radius.circular(AppRadii.xl)),
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(AppRadii.xl),
+            ),
           ),
           child: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 36,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.textTertiary.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(AppRadii.pill),
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: AppColors.textTertiary.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(AppRadii.pill),
+                    ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.lg),
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  'Add to wishlist',
+                  style: AppTypography.title1.copyWith(
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: controller,
                   autofocus: true,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
-                    hintText: l10n?.plantNameLabel ?? 'Plant name *',
-                    filled: true,
-                    fillColor: isDark
-                        ? AppColors.bgTertiaryDark
-                        : AppColors.bgTertiary,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      borderSide: BorderSide.none,
-                    ),
+                    labelText: l10n?.plantNameLabel ?? 'Plant name *',
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -92,18 +94,7 @@ class WishlistScreen extends StatelessWidget {
                       );
                       Navigator.pop(sheetContext);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.accent,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadii.md),
-                      ),
-                    ),
-                    child: Text(
-                      l10n?.save ?? 'Save',
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.w600),
-                    ),
+                    child: Text(l10n?.save ?? 'Save'),
                   ),
                 ),
               ],
@@ -117,6 +108,9 @@ class WishlistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
     final l10n = AppLocalizations.of(context);
 
     return ListenableBuilder(
@@ -125,95 +119,134 @@ class WishlistScreen extends StatelessWidget {
         final wishlist = plantProvider.wishlist;
 
         return Scaffold(
-          backgroundColor:
-              isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-          appBar: embedded ? null : AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color:
-                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Text(
-              l10n?.wishlistTitle ?? 'Wishlist',
-              style: AppTypography.title1.copyWith(
-                color:
-                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-              ),
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => _showAddSheet(context),
-              ),
-            ],
+          backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
+          appBar: embedded
+              ? null
+              : AppBar(
+                  automaticallyImplyLeading: false,
+                  leading: IconButton(
+                    tooltip: 'Back',
+                    icon: Icon(PhosphorBold.arrowLeft, color: ink),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  title: Text(l10n?.wishlistTitle ?? 'Wishlist'),
+                ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => _showAddSheet(context),
+            backgroundColor: accent,
+            foregroundColor: isDark ? AppColors.bgPrimaryDark : Colors.white,
+            icon: const Icon(PhosphorBold.plus, size: 20),
+            label: const Text('Add wish'),
           ),
           body: wishlist.isEmpty
               ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.favorite_border,
-                          size: 48, color: AppColors.textTertiary),
-                      const SizedBox(height: AppSpacing.md),
-                      Text(
-                        l10n?.noWishlistItems ?? 'No wishlist items',
-                        style: AppTypography.body
-                            .copyWith(color: AppColors.textTertiary),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.xl),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            color: accent.withOpacity(0.14),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(PhosphorFill.heart, size: 30, color: accent),
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          l10n?.noWishlistItems ?? 'No wishlist items',
+                          style: AppTypography.title1.copyWith(color: ink),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Keep a list of plants you would like to grow.',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.body.copyWith(color: sub),
+                        ),
+                      ],
+                    ),
                   ),
                 )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
+              : ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 112,
+                  ),
                   itemCount: wishlist.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
                   itemBuilder: (context, index) {
                     final plant = wishlist[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                      child: Material(
+                    return Container(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      decoration: BoxDecoration(
                         color: isDark
                             ? AppColors.bgSecondaryDark
                             : AppColors.bgSecondary,
                         borderRadius: BorderRadius.circular(AppRadii.lg),
-                        child: Padding(
-                          padding: const EdgeInsets.all(AppSpacing.md),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 24,
-                                backgroundColor:
-                                    AppColors.accent.withOpacity(0.1),
-                                child: const Icon(Icons.favorite,
-                                    color: AppColors.accent),
-                              ),
-                              const SizedBox(width: AppSpacing.md),
-                              Expanded(
-                                child: Text(
+                        border: Border.all(
+                          color: isDark
+                              ? AppColors.borderSubtleDark
+                              : AppColors.borderSubtle,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 46,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: accent.withOpacity(0.14),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(PhosphorFill.heart, size: 22, color: accent),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
                                   plant.name,
-                                  style: AppTypography.title2.copyWith(
-                                    color: isDark
-                                        ? AppColors.textPrimaryDark
-                                        : AppColors.textPrimary,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.title1.copyWith(
+                                    color: ink,
+                                    fontSize: 18,
                                   ),
                                 ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  HapticFeedback.mediumImpact();
-                                  plantProvider.toggleWishlist(plant.id);
-                                },
-                                child:
-                                    Text(l10n?.moveToGarden ?? 'Move to Garden'),
-                              ),
-                            ],
+                                Text(
+                                  'Wished ${DateFormatter.relative(plant.createdAt).toLowerCase()}',
+                                  style: AppTypography.caption.copyWith(color: sub),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                          TextButton(
+                            onPressed: () {
+                              HapticFeedback.mediumImpact();
+                              plantProvider.toggleWishlist(plant.id);
+                            },
+                            child: Text(l10n?.moveToGarden ?? 'Move to Garden'),
+                          ),
+                          IconButton(
+                            tooltip: 'Remove ${plant.name}',
+                            icon: Icon(PhosphorRegular.trash, size: 20, color: sub),
+                            onPressed: () {
+                              HapticFeedback.mediumImpact();
+                              plantProvider.deletePlant(plant.id);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${plant.name} removed'),
+                                  action: SnackBarAction(
+                                    label: 'Undo',
+                                    onPressed: () => plantProvider.restorePlant(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     );
                   },

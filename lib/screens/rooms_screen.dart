@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../models/room_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/constants.dart';
+import '../utils/phosphor_icons.dart';
 import '../widgets/room_card.dart';
 
 /// NEW (Phase 5 cont., File 31). Fresh generation — nothing to recover
@@ -15,10 +16,14 @@ class RoomsScreen extends StatelessWidget {
 
   final bool embedded;
 
+  /// Called when a room card is tapped, with the room id.
+  final ValueChanged<String>? onOpenRoom;
+
   const RoomsScreen({
     super.key,
     required this.plantProvider,
     this.embedded = false,
+    this.onOpenRoom,
   });
 
   void _showAddRoomSheet(BuildContext context, {Room? existing}) {
@@ -54,19 +59,24 @@ class RoomsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    existing == null ? 'New room' : 'Edit room',
+                    style: AppTypography.title1.copyWith(
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: controller,
                   autofocus: true,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
-                    hintText: l10n?.roomNameLabel ?? 'Room name',
-                    filled: true,
-                    fillColor: isDark
-                        ? AppColors.bgTertiaryDark
-                        : AppColors.bgTertiary,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(AppRadii.md),
-                      borderSide: BorderSide.none,
-                    ),
+                    labelText: l10n?.roomNameLabel ?? 'Room name',
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -98,18 +108,7 @@ class RoomsScreen extends StatelessWidget {
                       }
                       Navigator.pop(sheetContext);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.accent,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadii.md),
-                      ),
-                    ),
-                    child: Text(
-                      l10n?.save ?? 'Save',
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.w600),
-                    ),
+                    child: Text(l10n?.save ?? 'Save'),
                   ),
                 ),
               ],
@@ -161,42 +160,77 @@ class RoomsScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor:
               isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-          appBar: embedded ? null : AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color:
-                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            title: Text(
-              l10n?.roomsTitle ?? 'Rooms',
-              style: AppTypography.title1.copyWith(
-                color:
-                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-              ),
-            ),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => _showAddRoomSheet(context),
-              ),
-            ],
+          appBar: embedded
+              ? null
+              : AppBar(
+                  automaticallyImplyLeading: false,
+                  leading: IconButton(
+                    tooltip: 'Back',
+                    icon: Icon(
+                      PhosphorBold.arrowLeft,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimary,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  title: Text(l10n?.roomsTitle ?? 'Rooms'),
+                ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => _showAddRoomSheet(context),
+            backgroundColor: isDark ? AppColors.accentLight : AppColors.accent,
+            foregroundColor: isDark ? AppColors.bgPrimaryDark : Colors.white,
+            icon: const Icon(PhosphorBold.plus, size: 20),
+            label: const Text('Add room'),
           ),
           body: rooms.isEmpty
               ? Center(
-                  child: Text(
-                    l10n?.roomsTitle ?? 'Rooms',
-                    style: AppTypography.body
-                        .copyWith(color: AppColors.textTertiary),
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.xl),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: BoxDecoration(
+                            color: (isDark ? AppColors.accentLight : AppColors.accent)
+                                .withOpacity(0.14),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            PhosphorFill.house,
+                            size: 30,
+                            color: isDark ? AppColors.accentLight : AppColors.accent,
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          'No rooms yet',
+                          style: AppTypography.title1.copyWith(
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimary,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Group plants by where they live, like Kitchen or Balcony.',
+                          textAlign: TextAlign.center,
+                          style: AppTypography.body.copyWith(
+                            color: isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               : GridView.builder(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, 112,
+                  ),
                   gridDelegate:
                       const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -224,7 +258,7 @@ class RoomsScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               ListTile(
-                                leading: const Icon(Icons.edit),
+                                leading: const Icon(PhosphorRegular.pencilSimple),
                                 title: Text(l10n?.edit ?? 'Edit'),
                                 onTap: () {
                                   Navigator.pop(context);
@@ -232,7 +266,7 @@ class RoomsScreen extends StatelessWidget {
                                 },
                               ),
                               ListTile(
-                                leading: const Icon(Icons.delete,
+                                leading: const Icon(PhosphorRegular.trash,
                                     color: AppColors.error),
                                 title: Text(
                                   l10n?.delete ?? 'Delete',
@@ -263,7 +297,7 @@ class RoomsScreen extends StatelessWidget {
                           room: room,
                           plants: roomPlants,
                           plantProvider: plantProvider,
-                          onTap: () {},
+                          onTap: () => onOpenRoom?.call(room.id),
                         ),
                       ),
                     );

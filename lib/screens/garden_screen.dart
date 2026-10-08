@@ -134,7 +134,14 @@ class _GardenScreenState extends State<GardenScreen>
         children: [
           _plantsTab(isDark),
           WishlistScreen(plantProvider: widget.plantProvider, embedded: true),
-          RoomsScreen(plantProvider: widget.plantProvider, embedded: true),
+          RoomsScreen(
+            plantProvider: widget.plantProvider,
+            embedded: true,
+            onOpenRoom: (id) {
+              setState(() => _room = id);
+              _tabs.animateTo(0);
+            },
+          ),
         ],
       ),
     );
