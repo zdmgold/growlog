@@ -61,3 +61,65 @@ jobs:
 
       - name: Fail the job if any check failed
         run: test "$(cat /tmp/status 2>/dev/null || echo 1)" = "0"
+
+  # Runs only when started by hand (Actions tab or API), because macOS runners
+  # are slower and cost more. Compiles the iOS app without signing and never
+  # builds or uploads an IPA. The report goes to the ci-report-ios branch.
+  ios:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+          cache: true
+
+      - name: iOS compile check
+        shell: bash
+        run: |
+          R=/tmp/ios-report.txt
+          : > $R
+          FAIL=0
+          step() {
+            local name="$1"; shift
+            { echo ""; echo "##### $name"; } >> $R
+            "$@" > /tmp/step.log 2>&1
+            local rc=$?
+            tail -n 40 /tmp/step.log | cut -c1-300 >> $R
+            echo "exit=$rc" >> $R
+            if [ $rc -ne 0 ]; then FAIL=1; fi
+          }
+          { echo "commit: $GITHUB_SHA"; flutter --version | head -3; sw_vers; xcodebuild -version; } >> $R 2>&1
+          step "pub get" flutter pub get
+          step "gen-l10n" flutter gen-l10n
+          step "generate ios project" flutter create --platforms=ios .
+          { echo ""; echo "##### ios folder"; ls ios | head -20; grep -n "IPHONEOS_DEPLOYMENT_TARGET" ios/Runner.xcodeproj/project.pbxproj | head -2; } >> $R 2>&1
+          flutter build ios --no-codesign --debug > /tmp/build.log 2>&1
+          RC=$?
+          { echo ""; echo "##### flutter build ios (no codesign, debug)"; grep -E "error:|Error |Could not|FAILED|Unsupported|incompatible|deployment target|Xcode build done|Built " /tmp/build.log | cut -c1-300 | head -40; tail -n 25 /tmp/build.log | cut -c1-300; echo "exit=$RC"; } >> $R
+          if [ $RC -ne 0 ]; then FAIL=1; fi
+          { echo ""; echo "##### result"; if [ $FAIL -eq 0 ]; then echo "IOS CHECK PASSED"; else echo "IOS CHECK FAILED"; fi; } >> $R
+          echo $FAIL > /tmp/ios-status
+          cat $R
+
+      - name: Publish iOS report
+        if: always()
+        run: |
+          set -e
+          [ -f /tmp/ios-report.txt ] || echo "no report produced" > /tmp/ios-report.txt
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-ios
+          git rm -rf . -q || true
+          cp /tmp/ios-report.txt report.txt
+          git add report.txt
+          git commit -q -m "ios compile-check report for ${{ github.sha }}"
+          git push -f origin ci-report-ios
+
+      - name: Fail if the iOS check failed
+        run: test "$(cat /tmp/ios-status 2>/dev/null || echo 1)" = "0"

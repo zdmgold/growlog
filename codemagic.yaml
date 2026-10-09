@@ -21,6 +21,9 @@ workflows:
       - name: Generate localizations
         script: |
           flutter gen-l10n
+      - name: Generate the iOS project files
+        script: |
+          flutter create --platforms=ios .
       - name: Install CocoaPods
         script: |
           cd ios

@@ -25,20 +25,21 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
-	<!-- add_plant_screen.dart's _takePhoto() calls the camera
-	     directly. Specific to the real feature, not a generic
-	     placeholder, per store-review requirements. -->
+	<!-- The in-app camera scans plants and takes photos for plant records. -->
 	<key>NSCameraUsageDescription</key>
-	<string>GrowLog uses your camera to take progress photos of your plants, stored locally on your device.</string>
+	<string>GrowLog uses your camera to scan your plants and take photos for your plant records.</string>
 
-	<!-- add_plant_screen.dart's _pickPhoto() reads from the photo
-	     library to attach an existing photo to a plant. -->
+	<!-- Choosing an existing photo of a plant to scan or keep in its record. -->
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>GrowLog accesses your photo library so you can choose an existing photo of your plant to track its growth.</string>
+	<string>GrowLog accesses your photo library so you can choose an existing photo of a plant to scan or keep in its record.</string>
 
-	<!-- Required because AdMob (google_mobile_ads) is active —
-	     App Tracking Transparency prompt, reviewers check for this
-	     specifically per Apple's ATT policy. -->
+	<!-- The camera plugin's README asks for this key and App Store checks flag a
+	     missing purpose string. GrowLog never records audio. -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>GrowLog does not record audio. This is listed only because the camera component can reference the microphone.</string>
+
+	<!-- App Tracking Transparency: AdMob (google_mobile_ads) is active.
+	     NOTE: no code in the app shows the ATT prompt yet. -->
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This identifier will be used to deliver personalized ads to you.</string>
 

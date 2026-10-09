@@ -6,8 +6,7 @@ import '../services/admob_service.dart';
 ///
 /// Copied from the Peshat app (lib/widgets/banner_ad_widget.dart). Only
 /// changes: the Mobile Ads SDK is awaited before the first request, and
-/// non-Android builds skip the ad.
-const String _kBannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+/// unsupported platforms skip the ad, and the unit ID is chosen per platform.
 
 /// Fixed-standard-size bottom banner.
 ///
@@ -39,7 +38,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     await AdMobService.ready;
     if (!mounted || _isDisposed) return;
     final ad = BannerAd(
-      adUnitId: _kBannerAdUnitId,
+      adUnitId: AdMobService.bannerUnitId!,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(

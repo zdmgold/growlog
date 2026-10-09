@@ -14,10 +14,6 @@ import 'admob_service.dart';
 class InterstitialService {
   InterstitialService._();
 
-  /// Google's official sample Android interstitial ad unit. Replace before
-  /// release with your own unit ID.
-  static const String _testUnit = 'ca-app-pub-3940256099942544/1033173712';
-
   static const int minTasks = 3;
   static const Duration minGap = Duration(minutes: 5);
   static const int maxPerSession = 3;
@@ -71,7 +67,7 @@ class InterstitialService {
     _loading = true;
     await AdMobService.ready;
     await InterstitialAd.load(
-      adUnitId: _testUnit,
+      adUnitId: AdMobService.interstitialUnitId!,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {

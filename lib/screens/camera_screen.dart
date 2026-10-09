@@ -100,7 +100,7 @@ class _CameraScreenState extends State<CameraScreen>
         back,
         ResolutionPreset.high,
         enableAudio: false,
-        imageFormatGroup: ImageFormatGroup.jpeg,
+        imageFormatGroup: Platform.isAndroid ? ImageFormatGroup.jpeg : null,
       );
       await controller.initialize();
       await controller.setFlashMode(_flash);
