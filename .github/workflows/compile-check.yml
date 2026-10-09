@@ -31,6 +31,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Remove incomplete preinstalled NDK
+        run: |
+          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
+            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then
+              echo "removing incomplete NDK $d"
+              sudo rm -rf "$d"
+            fi
+          done
+
       - name: Run checks
         run: bash .github/scripts/compile_check.sh
 

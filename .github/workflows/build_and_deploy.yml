@@ -34,6 +34,15 @@ jobs:
       - name: Use the repo's Android app build script
         run: rm -f android/app/build.gradle.kts
 
+      - name: Remove incomplete preinstalled NDK
+        run: |
+          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
+            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then
+              echo "removing incomplete NDK $d"
+              sudo rm -rf "$d"
+            fi
+          done
+
       - name: Get Flutter packages
         run: flutter pub get
 
