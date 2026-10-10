@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -22,6 +23,7 @@ class ScanHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l = context.l10n;
     final colors = isDark
         ? const [Color(0xFF1B3126), Color(0xFF12221A)]
         : const [Color(0xFF2E7D4F), Color(0xFF1F3A2D)];
@@ -71,7 +73,7 @@ class ScanHeroCard extends StatelessWidget {
                       const Icon(PhosphorFill.leaf, size: 14, color: Colors.white),
                       const SizedBox(width: 6),
                       Text(
-                        'PLANT SCAN',
+                        l.heroBadge,
                         style: AppTypography.caption.copyWith(
                           color: Colors.white,
                           letterSpacing: 1.2,
@@ -83,14 +85,14 @@ class ScanHeroCard extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  'Scan a plant',
+                  l.scanAPlant,
                   style: AppTypography.display.copyWith(color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   hasPlants
-                      ? 'Point your camera to identify it, check its health and get care steps.'
-                      : 'Identify a plant, check its health and start its care plan.',
+                      ? l.heroSubWithPlants
+                      : l.heroSubNoPlants,
                   style: AppTypography.body.copyWith(
                     color: Colors.white.withOpacity(0.82),
                   ),
@@ -98,7 +100,7 @@ class ScanHeroCard extends StatelessWidget {
                 const SizedBox(height: AppSpacing.lg),
                 Semantics(
                   button: true,
-                  label: 'Open camera',
+                  label: l.openCamera,
                   child: Material(
                     color: AppColors.bgPrimary,
                     borderRadius: BorderRadius.circular(AppRadii.pill),
@@ -118,7 +120,7 @@ class ScanHeroCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              'Open camera',
+                              l.openCamera,
                               style: AppTypography.title2.copyWith(
                                 color: AppColors.forest,
                               ),
@@ -136,17 +138,17 @@ class ScanHeroCard extends StatelessWidget {
                   children: [
                     _Chip(
                       icon: PhosphorRegular.image,
-                      label: 'Gallery',
+                      label: l.gallery,
                       onTap: onGallery,
                     ),
                     _Chip(
                       icon: PhosphorRegular.clock,
-                      label: 'My scans',
+                      label: l.myScans,
                       onTap: onHistory,
                     ),
                     _Chip(
                       icon: PhosphorRegular.chatCircleDots,
-                      label: 'Ask Paul',
+                      label: l.askPaul,
                       onTap: onPaul,
                     ),
                   ],

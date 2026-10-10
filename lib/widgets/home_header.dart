@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:growlog/l10n/app_localizations.dart';
 import '../providers/theme_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -21,23 +23,23 @@ class HomeHeader extends StatelessWidget {
     required this.onSettings,
   });
 
-  String get _greeting {
+  String _greeting(AppLocalizations l) {
     final h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (h < 12) return l.greetingMorning;
+    if (h < 17) return l.greetingAfternoon;
+    return l.greetingEvening;
   }
 
-  String get _status {
-    if (plantCount == 0) return 'Scan or add a plant to begin your garden';
-    if (dueCount == 0) return 'Your garden is up to date';
-    if (dueCount == 1) return '1 plant needs care today';
-    return '$dueCount plants need care today';
+  String _status(AppLocalizations l) {
+    if (plantCount == 0) return l.statusEmptyGarden;
+    if (dueCount == 0) return l.statusUpToDate;
+    return l.statusDue(dueCount);
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l = context.l10n;
     final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
     final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
     final accent = isDark ? AppColors.accentLight : AppColors.accent;
@@ -68,14 +70,14 @@ class HomeHeader extends StatelessWidget {
               const Spacer(),
               _HeaderIcon(
                 icon: PhosphorRegular.translate,
-                label: 'Change language',
+                label: l.headerChangeLanguage,
                 isDark: isDark,
                 onTap: onLanguage,
               ),
               const SizedBox(width: AppSpacing.sm),
               _HeaderIcon(
                 icon: isDark ? PhosphorRegular.sun : PhosphorRegular.moon,
-                label: isDark ? 'Switch to light theme' : 'Switch to dark theme',
+                label: isDark ? l.headerToLight : l.headerToDark,
                 isDark: isDark,
                 onTap: () => themeProvider.setTheme(
                   isDark ? ThemeMode.light : ThemeMode.dark,
@@ -84,16 +86,16 @@ class HomeHeader extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               _HeaderIcon(
                 icon: PhosphorRegular.gearSix,
-                label: 'Settings',
+                label: l.settingsTitle,
                 isDark: isDark,
                 onTap: onSettings,
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
-          Text(_greeting, style: AppTypography.headline.copyWith(color: ink)),
+          Text(_greeting(l), style: AppTypography.headline.copyWith(color: ink)),
           const SizedBox(height: 4),
-          Text(_status, style: AppTypography.body.copyWith(color: sub)),
+          Text(_status(l), style: AppTypography.body.copyWith(color: sub)),
         ],
       ),
     );

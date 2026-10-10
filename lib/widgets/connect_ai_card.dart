@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/ai/ai_settings.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -24,7 +25,7 @@ class ConnectAiCard extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Semantics(
               button: true,
-              label: 'AI connection settings',
+              label: context.l10n.aiConnectionSettings,
               child: Material(
                 color: accent.withOpacity(0.12),
                 shape: const StadiumBorder(),
@@ -42,7 +43,7 @@ class ConnectAiCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         Flexible(
                           child: Text(
-                            'AI connected · ${s.provider?.name ?? ''}',
+                            context.l10n.aiConnectedTo(s.provider?.name ?? ''),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.caption.copyWith(
@@ -88,12 +89,12 @@ class ConnectAiCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Add your API key',
+                          context.l10n.addYourApiKey,
                           style: AppTypography.title2.copyWith(color: ink),
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Needed for plant scans and chat',
+                          context.l10n.neededForScansChat,
                           style: AppTypography.footnote.copyWith(color: sub),
                         ),
                       ],

@@ -12,6 +12,7 @@ import '../services/ai/ai_client.dart';
 import '../services/interstitial_service.dart';
 import '../services/scan_service.dart';
 import '../services/scan_store.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/image_prep.dart';
 import '../utils/phosphor_icons.dart';
@@ -572,7 +573,7 @@ class _ScanScreenState extends State<ScanScreen>
                         ),
                         const SizedBox(width: AppSpacing.md),
                         Builder(builder: (context) {
-                          final st = scanHealthStyle(r.health, isDark);
+                          final st = scanHealthStyle(r.health, isDark, context.l10n);
                           return HealthRing(color: st.color, icon: st.icon);
                         }),
                       ],
@@ -676,7 +677,7 @@ class _IssueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final st = scanHealthStyle(record.health, isDark);
+    final st = scanHealthStyle(record.health, isDark, context.l10n);
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(

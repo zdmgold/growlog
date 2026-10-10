@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -19,6 +20,7 @@ class AppDock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l = context.l10n;
     return Container(
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
@@ -33,14 +35,14 @@ class AppDock extends StatelessWidget {
           child: Row(
             children: [
               _Item(
-                label: 'Home',
+                label: l.navHome,
                 icon: PhosphorRegular.house,
                 activeIcon: PhosphorFill.house,
                 selected: index == 0,
                 onTap: () => onTab(0),
               ),
               _Item(
-                label: 'Garden',
+                label: l.navGarden,
                 icon: PhosphorRegular.plant,
                 activeIcon: PhosphorFill.plant,
                 selected: index == 1,
@@ -48,14 +50,14 @@ class AppDock extends StatelessWidget {
               ),
               Expanded(child: Center(child: _ScanButton(onTap: onScan))),
               _Item(
-                label: 'Schedule',
+                label: l.navSchedule,
                 icon: PhosphorRegular.calendarCheck,
                 activeIcon: PhosphorFill.calendarCheck,
                 selected: index == 2,
                 onTap: () => onTab(2),
               ),
               _Item(
-                label: 'Scans',
+                label: l.scansTab,
                 icon: PhosphorRegular.clock,
                 activeIcon: PhosphorFill.clock,
                 selected: index == 3,
@@ -129,7 +131,7 @@ class _ScanButton extends StatelessWidget {
     final bg = isDark ? AppColors.accentLight : AppColors.accent;
     return Semantics(
       button: true,
-      label: 'Scan a plant',
+      label: context.l10n.scanAPlant,
       child: Container(
         width: 58,
         height: 58,

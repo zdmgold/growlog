@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
 import '../services/scan_store.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/scan_widgets.dart';
@@ -17,16 +18,16 @@ class ScansScreen extends StatelessWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete this scan?'),
-        content: Text('${s.commonName} will be removed from your history.'),
+        title: Text(ctx.l10n.deleteScanTitle),
+        content: Text(ctx.l10n.deleteScanMessage(s.commonName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Cancel'),
+            child: Text(ctx.l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Delete'),
+            child: Text(ctx.l10n.delete),
           ),
         ],
       ),
@@ -45,7 +46,7 @@ class ScansScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-      appBar: AppBar(title: const Text('My scans')),
+      appBar: AppBar(title: Text(context.l10n.myScans)),
       body: ListenableBuilder(
         listenable: ScanStore.instance,
         builder: (context, _) {
@@ -59,11 +60,11 @@ class ScansScreen extends StatelessWidget {
                   children: [
                     Icon(PhosphorRegular.leaf, size: 48, color: sub),
                     const SizedBox(height: AppSpacing.md),
-                    Text('No scans yet',
+                    Text(context.l10n.noScansTitle,
                         style: AppTypography.title1.copyWith(color: ink)),
                     const SizedBox(height: 4),
                     Text(
-                      'Scan a plant from the home screen and it will appear here.',
+                      context.l10n.noScansMessage,
                       textAlign: TextAlign.center,
                       style: AppTypography.body.copyWith(color: sub),
                     ),
@@ -141,7 +142,7 @@ class ScansScreen extends StatelessWidget {
                                   ScanHealthPill(health: s.health, compact: true),
                                   const SizedBox(width: 8),
                                   Text(
-                                    scanDateLabel(s.createdAt),
+                                    scanDateLabel(context, s.createdAt),
                                     style: AppTypography.caption.copyWith(color: sub),
                                   ),
                                 ],
@@ -150,7 +151,7 @@ class ScansScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          tooltip: 'Delete scan',
+                          tooltip: context.l10n.deleteScanTooltip,
                           icon: Icon(PhosphorRegular.trash, size: 20, color: sub),
                           onPressed: () => _confirmDelete(context, s),
                         ),

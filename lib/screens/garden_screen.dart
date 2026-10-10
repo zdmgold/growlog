@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/room_chips.dart';
@@ -77,7 +78,7 @@ class _GardenScreenState extends State<GardenScreen>
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
       appBar: AppBar(
-        title: const Text('Garden'),
+        title: Text(context.l10n.navGarden),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(58),
           child: Padding(
@@ -106,10 +107,10 @@ class _GardenScreenState extends State<GardenScreen>
                 unselectedLabelColor: sub,
                 labelStyle: AppTypography.callout.copyWith(fontWeight: FontWeight.w700),
                 unselectedLabelStyle: AppTypography.callout,
-                tabs: const [
-                  Tab(text: 'Plants'),
-                  Tab(text: 'Wishlist'),
-                  Tab(text: 'Rooms'),
+                tabs: [
+                  Tab(text: context.l10n.plantsTab),
+                  Tab(text: context.l10n.wishlistTitle),
+                  Tab(text: context.l10n.rooms),
                 ],
               ),
             ),
@@ -125,7 +126,7 @@ class _GardenScreenState extends State<GardenScreen>
             backgroundColor: accent,
             foregroundColor: isDark ? AppColors.bgPrimaryDark : Colors.white,
             icon: const Icon(PhosphorBold.plus, size: 20),
-            label: const Text('Add plant'),
+            label: Text(context.l10n.addPlant),
           );
         },
       ),
@@ -168,12 +169,12 @@ class _GardenScreenState extends State<GardenScreen>
                 controller: _search,
                 onChanged: (v) => setState(() => _query = v.trim()),
                 decoration: InputDecoration(
-                  hintText: 'Search plants',
+                  hintText: context.l10n.searchPlants,
                   prefixIcon: Icon(PhosphorRegular.magnifyingGlass, size: 20, color: sub),
                   suffixIcon: _query.isEmpty
                       ? null
                       : IconButton(
-                          tooltip: 'Clear search',
+                          tooltip: context.l10n.clearSearch,
                           icon: const Icon(PhosphorRegular.x, size: 18),
                           onPressed: () {
                             _search.clear();
@@ -200,14 +201,14 @@ class _GardenScreenState extends State<GardenScreen>
                             Icon(PhosphorRegular.plant, size: 48, color: sub),
                             const SizedBox(height: AppSpacing.md),
                             Text(
-                              all.isEmpty ? 'Your garden is empty' : 'No plants match',
+                              all.isEmpty ? context.l10n.gardenEmptyTitle : context.l10n.noPlantsMatch,
                               style: AppTypography.title1.copyWith(color: ink),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               all.isEmpty
-                                  ? 'Scan a plant or add one by hand.'
-                                  : 'Try another search or room.',
+                                  ? context.l10n.gardenEmptyMessage
+                                  : context.l10n.noPlantsMatchMessage,
                               textAlign: TextAlign.center,
                               style: AppTypography.body.copyWith(color: sub),
                             ),

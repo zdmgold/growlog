@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:growlog/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
+import '../l10n/l10n_ext.dart';
 import '../models/scan_record.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
@@ -7,25 +10,26 @@ import '../utils/phosphor_icons.dart';
 ({Color color, IconData icon, String label}) scanHealthStyle(
   ScanHealth h,
   bool isDark,
+  AppLocalizations l,
 ) {
   switch (h) {
     case ScanHealth.healthy:
       return (
         color: isDark ? AppColors.successDark : AppColors.success,
         icon: PhosphorFill.leaf,
-        label: 'Healthy',
+        label: l.healthHealthy,
       );
     case ScanHealth.watch:
       return (
         color: isDark ? AppColors.warningDark : AppColors.watchText,
         icon: PhosphorFill.warning,
-        label: 'Keep an eye on it',
+        label: l.healthWatch,
       );
     case ScanHealth.attention:
       return (
         color: isDark ? AppColors.errorDark : AppColors.attention,
         icon: PhosphorFill.firstAidKit,
-        label: 'Needs attention',
+        label: l.healthAttention,
       );
   }
 }
@@ -38,7 +42,7 @@ class ScanHealthPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final st = scanHealthStyle(health, isDark);
+    final st = scanHealthStyle(health, isDark, context.l10n);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: compact ? 8 : 12, vertical: compact ? 4 : 6),
       decoration: BoxDecoration(
@@ -86,17 +90,14 @@ class ScanThumb extends StatelessWidget {
   }
 }
 
-String scanDateLabel(DateTime d) {
+String scanDateLabel(BuildContext context, DateTime d) {
+  final l = context.l10n;
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final day = DateTime(d.year, d.month, d.day);
   final diff = today.difference(day).inDays;
-  if (diff == 0) return 'Today';
-  if (diff == 1) return 'Yesterday';
-  if (diff < 7) return '$diff days ago';
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-  ];
-  return '${months[d.month - 1]} ${d.day}';
+  if (diff == 0) return l.today;
+  if (diff == 1) return l.yesterday;
+  if (diff < 7) return l.daysAgo(diff);
+  return DateFormat.MMMd(Localizations.localeOf(context).toString()).format(d);
 }

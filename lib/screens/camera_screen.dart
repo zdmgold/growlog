@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -89,7 +90,7 @@ class _CameraScreenState extends State<CameraScreen>
     try {
       final cams = await availableCameras();
       if (cams.isEmpty) {
-        if (mounted) setState(() => _error = 'No camera was found on this device.');
+        if (mounted) setState(() => _error = context.l10n.cameraNoneFound);
         return;
       }
       final back = cams.firstWhere(
@@ -117,13 +118,13 @@ class _CameraScreenState extends State<CameraScreen>
       final denied = e.code.contains('Denied') || e.code.contains('Restricted');
       setState(() {
         _error = denied
-            ? 'Camera access is turned off. Allow it in your phone settings, or pick a photo instead.'
-            : 'The camera could not start. You can pick a photo instead.';
+            ? context.l10n.cameraDenied
+            : context.l10n.cameraStartFailed;
       });
     } catch (e) {
       debugPrint('CameraScreen._setup error: $e');
       if (mounted) {
-        setState(() => _error = 'The camera could not start. You can pick a photo instead.');
+        setState(() => _error = context.l10n.cameraStartFailed);
       }
     }
   }
@@ -159,7 +160,7 @@ class _CameraScreenState extends State<CameraScreen>
       if (mounted) {
         setState(() {
           _busy = false;
-          _error = 'The photo could not be taken. Please try again.';
+          _error = context.l10n.cameraCaptureFailed;
         });
       }
     } catch (e) {
@@ -264,14 +265,14 @@ class _CameraScreenState extends State<CameraScreen>
         children: [
           _RoundButton(
             icon: PhosphorRegular.x,
-            label: 'Close camera',
+            label: context.l10n.closeCamera,
             onTap: () => Navigator.pop(context),
           ),
           const Spacer(),
           if (_controller != null)
             _RoundButton(
               icon: _flashIcon,
-              label: 'Flash',
+              label: context.l10n.flashLabel,
               onTap: _cycleFlash,
             ),
         ],
@@ -290,8 +291,8 @@ class _CameraScreenState extends State<CameraScreen>
           color: Colors.black.withOpacity(0.45),
           borderRadius: BorderRadius.circular(AppRadii.pill),
         ),
-        child: const Text(
-          'Fill the frame with a leaf or the whole plant',
+        child: Text(
+          context.l10n.cameraHint,
           style: TextStyle(
             fontFamily: AppTypography.sans,
             fontSize: 13,
@@ -313,7 +314,7 @@ class _CameraScreenState extends State<CameraScreen>
         children: [
           _RoundButton(
             icon: PhosphorRegular.image,
-            label: 'Choose from gallery',
+            label: context.l10n.chooseFromGallery,
             onTap: _pickFromGallery,
           ),
           _Shutter(busy: _busy, onTap: _capture),
@@ -352,17 +353,17 @@ class _CameraScreenState extends State<CameraScreen>
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _pickFromGallery,
-                child: const Text('Choose from gallery'),
+                child: Text(context.l10n.chooseFromGallery),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextButton(
               onPressed: _useSystemCamera,
-              child: const Text('Use the phone camera app'),
+              child: Text(context.l10n.useSystemCamera),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(context.l10n.cancel),
             ),
           ],
         ),
@@ -416,7 +417,7 @@ class _Shutter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Take photo',
+      label: context.l10n.takePhoto,
       child: GestureDetector(
         onTap: busy ? null : onTap,
         child: Container(

@@ -531,5 +531,82 @@
   "twoPhotosRequired": "Add at least 2 photos to see growth timeline",
   "@twoPhotosRequired": {
     "description": "Snackbar when user tries to view timeline with insufficient photos"
-  }
+  },
+  "navHome": "Home",
+  "scansTab": "Scans",
+  "scanAPlant": "Scan a plant",
+  "greetingMorning": "Good morning",
+  "greetingAfternoon": "Good afternoon",
+  "greetingEvening": "Good evening",
+  "statusEmptyGarden": "Scan or add a plant to begin your garden",
+  "statusUpToDate": "Your garden is up to date",
+  "statusDue": "{count, plural, =1{1 plant needs care today} other{{count} plants need care today}}",
+  "@statusDue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "headerChangeLanguage": "Change language",
+  "headerToLight": "Switch to light theme",
+  "headerToDark": "Switch to dark theme",
+  "heroBadge": "PLANT SCAN",
+  "heroSubWithPlants": "Point your camera to identify it, check its health and get care steps.",
+  "heroSubNoPlants": "Identify a plant, check its health and start its care plan.",
+  "openCamera": "Open camera",
+  "gallery": "Gallery",
+  "myScans": "My scans",
+  "askPaul": "Ask Paul",
+  "aiConnectionSettings": "AI connection settings",
+  "aiConnectedTo": "AI connected · {provider}",
+  "@aiConnectedTo": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "addYourApiKey": "Add your API key",
+  "neededForScansChat": "Needed for plant scans and chat",
+  "healthHealthy": "Healthy",
+  "healthWatch": "Keep an eye on it",
+  "healthAttention": "Needs attention",
+  "scannedLabel": "{name}, scanned {date}",
+  "@scannedLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteScanTitle": "Delete this scan?",
+  "deleteScanMessage": "{name} will be removed from your history.",
+  "@deleteScanMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noScansTitle": "No scans yet",
+  "noScansMessage": "Scan a plant from the home screen and it will appear here.",
+  "deleteScanTooltip": "Delete scan",
+  "plantsTab": "Plants",
+  "clearSearch": "Clear search",
+  "gardenEmptyTitle": "Your garden is empty",
+  "gardenEmptyMessage": "Scan a plant or add one by hand.",
+  "noPlantsMatch": "No plants match",
+  "noPlantsMatchMessage": "Try another search or room.",
+  "cameraNoneFound": "No camera was found on this device.",
+  "cameraDenied": "Camera access is turned off. Allow it in your phone settings, or pick a photo instead.",
+  "cameraStartFailed": "The camera could not start. You can pick a photo instead.",
+  "cameraCaptureFailed": "The photo could not be taken. Please try again.",
+  "closeCamera": "Close camera",
+  "flashLabel": "Flash",
+  "cameraHint": "Fill the frame with a leaf or the whole plant",
+  "useSystemCamera": "Use the phone camera app"
 }

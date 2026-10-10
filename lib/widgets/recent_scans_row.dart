@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/scan_record.dart';
 import '../services/scan_store.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import 'scan_widgets.dart';
 
@@ -33,7 +34,7 @@ class RecentScansRow extends StatelessWidget {
                 width: 132,
                 child: Semantics(
                   button: true,
-                  label: '${s.commonName}, scanned ${scanDateLabel(s.createdAt)}',
+                  label: context.l10n.scannedLabel(s.commonName, scanDateLabel(context, s.createdAt)),
                   child: Material(
                     color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
                     borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -79,7 +80,7 @@ class RecentScansRow extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 2),
                                   Text(
-                                    scanDateLabel(s.createdAt),
+                                    scanDateLabel(context, s.createdAt),
                                     style: AppTypography.caption.copyWith(color: sub),
                                   ),
                                 ],

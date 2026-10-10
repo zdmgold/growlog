@@ -10,6 +10,7 @@ import '../providers/plant_provider.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/scan_store.dart';
 import '../utils/care_due.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
 import '../utils/phosphor_icons.dart';
@@ -811,7 +812,7 @@ class _DoctorCard extends StatelessWidget {
                                     ScanHealthPill(health: s.health, compact: true),
                                     const SizedBox(width: 8),
                                     Text(
-                                      scanDateLabel(s.createdAt),
+                                      scanDateLabel(context, s.createdAt),
                                       style: AppTypography.caption
                                           .copyWith(color: sub),
                                     ),
