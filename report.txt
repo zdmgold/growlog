@@ -1,0 +1,141 @@
+commit: e3bfdc1533fd95cbd698d16cbad61b8b4adbe3c3
+Flutter 3.47.6 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 5fc346839b (9 days ago) • 2026-09-30 15:02:49 -0700
+Engine • hash b8c8d3d8d5d0095127057f8a29ca8cc53da2167c (revision 692136cb65) (10 days ago) • 2026-09-30 00:56:59.000Z
+ProductName:		macOS
+ProductVersion:		26.6.2
+BuildVersion:		25G83
+Xcode 26.6
+Build version 17F113
+
+##### pub get
++ sqflite 2.4.4+1
++ sqflite_android 2.4.4
++ sqflite_common 2.5.13+1
++ sqflite_darwin 2.4.4
++ sqflite_platform_interface 2.4.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ stream_transform 2.1.2
++ string_scanner 1.4.1
++ synchronized 3.4.2
++ term_glyph 1.2.2
++ test_api 0.7.12 (0.7.15 available)
++ timezone 0.9.4 (0.11.1 available)
++ typed_data 1.4.0
++ universal_io 2.3.1
++ url_launcher 6.3.3
++ url_launcher_android 6.3.33
++ url_launcher_ios 6.4.2
++ url_launcher_linux 3.2.3
++ url_launcher_macos 3.2.6
++ url_launcher_platform_interface 2.3.2
++ url_launcher_web 2.4.3
++ url_launcher_windows 3.1.6
++ uuid 4.6.0
++ vector_math 2.4.3
++ vm_service 15.3.0
++ web 1.1.1
++ webview_flutter 4.14.1
++ webview_flutter_android 4.14.1
++ webview_flutter_platform_interface 2.15.1
++ webview_flutter_wkwebview 3.27.0
++ win32 5.15.0 (6.4.0 available)
++ xdg_directories 1.1.0
++ xml 7.1.0
++ yaml 3.1.4
+Changed 146 dependencies!
+1 package is discontinued.
+25 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Upgrading analysis_options.yaml to exclude build and platform directories.
+exit=0
+
+##### gen-l10n
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+exit=0
+
+##### generate ios project
+  ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png (created)
+  ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png (created)
+  ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png (created)
+  ios/Runner/Base.lproj/LaunchScreen.storyboard (created)
+  ios/Runner/Base.lproj/Main.storyboard (created)
+  ios/Runner/AppDelegate.swift (created)
+  ios/Runner/SceneDelegate.swift (created)
+  ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata (created)
+  ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist (created)
+  ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings (created)
+  ios/Runner.xcodeproj/project.pbxproj (created)
+  ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme (created)
+  ios/Flutter/Debug.xcconfig (created)
+  ios/Flutter/Release.xcconfig (created)
+  ios/Flutter/AppFrameworkInfo.plist (created)
+  ios/.gitignore (created)
+  growlog.iml (created)
+  README.md (created)
+  .idea/runConfigurations/main_dart.xml (created)
+  .idea/libraries/Dart_SDK.xml (created)
+  .idea/libraries/KotlinJavaRuntime.xml (created)
+  .idea/modules.xml (created)
+  .idea/workspace.xml (created)
+  test/widget_test.dart (created)
+Resolving dependencies...
+Downloading packages...
+Got dependencies.
+Wrote 47 files.
+
+All done!
+You can find general documentation for Flutter at: https://docs.flutter.dev/
+Detailed API documentation is available at: https://api.flutter.dev/
+If you prefer video documentation, consider: https://www.youtube.com/c/flutterdev
+
+In order to run your application, type:
+
+  $ flutter run
+
+Your application code is in ./lib/main.dart.
+
+exit=0
+
+##### ios folder
+ExportOptions.plist
+Flutter
+Podfile
+Runner
+Runner.xcodeproj
+Runner.xcworkspace
+RunnerTests
+363:				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+490:				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+
+##### flutter build ios (no codesign, debug)
+Xcode build done.                                           147.1s
+✓ Built build/ios/iphoneos/Runner.app
+Warning: Building for device with codesigning disabled. You will have to manually codesign before deploying to device.
+Xcode is fetching Swift Package Manager dependencies. This may take several minutes...
+  Fetching from https://github.com/zhangao0086/DKImagePickerController...     
+  Fetching from https://github.com/zhangao0086/DKCamera...      
+  Fetching from https://github.com/zhangao0086/DKPhotoGallery...     
+  Fetching from https://github.com/SDWebImage/SDWebImage...     
+  Fetching from https://github.com/kirualex/SwiftyGif.git...     
+  Fetching from https://github.com/TimOliver/TOCropViewController...     
+  Fetching from https://github.com/googleads/swift-package-manager-google-mobile-ads...     
+  Fetching from https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git...     
+Building com.zdmgold.growlog for device (ios)...
+To ensure your app continues to launch on upcoming iOS versions, UIScene lifecycle support will soon be required. Please see https://flutter.dev/to/uiscene-migration for the migration guide.
+
+The following plugins do not support Swift Package Manager for ios:
+  - flutter_local_notifications
+This will become an error in a future version of Flutter. Please contact the plugin maintainers to request Swift Package Manager adoption.
+Running pod install...                                           1,016ms
+Running Xcode build...                                          
+Xcode build done.                                           147.1s
+✓ Built build/ios/iphoneos/Runner.app
+exit=0
+
+##### result
+IOS CHECK PASSED
