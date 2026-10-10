@@ -1,0 +1,261 @@
+
+##### environment
+commit: 5b5107e9876818941d93ce35f91e346ae15b5b72
+Flutter 3.47.6 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 5fc346839b (10 days ago) • 2026-09-30 15:02:49 -0700
+Engine • hash b8c8d3d8d5d0095127057f8a29ca8cc53da2167c (revision 692136cb65) (11 days ago) • 2026-09-30 00:56:59.000Z
+Tools • Dart 3.13.5 • DevTools 2.60.0
+
+##### pub get
++ path_provider_linux 2.2.2
++ path_provider_platform_interface 2.1.3
++ path_provider_windows 2.3.0
++ petitparser 7.1.0
++ platform 3.2.0
++ plugin_platform_interface 2.1.8
++ posix 6.5.2
++ pub_semver 2.2.1
++ record_use 1.1.1
++ share_plus 10.1.4 (13.3.1 available)
++ share_plus_platform_interface 5.0.2 (7.2.0 available)
++ shared_preferences 2.5.6
++ shared_preferences_android 2.4.28
++ shared_preferences_foundation 2.5.7
++ shared_preferences_linux 2.4.1
++ shared_preferences_platform_interface 2.4.2
++ shared_preferences_web 2.4.3
++ shared_preferences_windows 2.4.1
++ sky_engine 0.0.0 from sdk flutter
++ source_span 1.10.2
++ sqflite 2.4.4+1
++ sqflite_android 2.4.4
++ sqflite_common 2.5.13+1
++ sqflite_darwin 2.4.4
++ sqflite_platform_interface 2.4.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ stream_transform 2.1.2
++ string_scanner 1.4.1
++ synchronized 3.4.2
++ term_glyph 1.2.2
++ test_api 0.7.12 (0.7.15 available)
++ timezone 0.9.4 (0.11.1 available)
++ typed_data 1.4.0
++ universal_io 2.3.1
++ url_launcher 6.3.3
++ url_launcher_android 6.3.33
++ url_launcher_ios 6.4.2
++ url_launcher_linux 3.2.3
++ url_launcher_macos 3.2.6
++ url_launcher_platform_interface 2.3.2
++ url_launcher_web 2.4.3
++ url_launcher_windows 3.1.6
++ uuid 4.6.0
++ vector_math 2.4.3
++ vm_service 15.3.0
++ web 1.1.1
++ webview_flutter 4.14.1
++ webview_flutter_android 4.14.1
++ webview_flutter_platform_interface 2.15.1
++ webview_flutter_wkwebview 3.27.0
++ win32 5.15.0 (6.4.0 available)
++ xdg_directories 1.1.0
++ xml 7.1.0
++ yaml 3.1.4
+Changed 146 dependencies!
+1 package is discontinued.
+25 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Upgrading analysis_options.yaml to exclude build and platform directories.
+exit=0
+
+##### gen-l10n
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+exit=0
+generated l10n files:
+lib/l10n/app_localizations.dart
+lib/l10n/app_localizations_ar.dart
+lib/l10n/app_localizations_de.dart
+lib/l10n/app_localizations_en.dart
+lib/l10n/app_localizations_es.dart
+lib/l10n/app_localizations_fr.dart
+lib/l10n/app_localizations_he.dart
+lib/l10n/app_localizations_hi.dart
+lib/l10n/app_localizations_ja.dart
+lib/l10n/app_localizations_ko.dart
+lib/l10n/app_localizations_pt.dart
+lib/l10n/app_localizations_zh.dart
+
+##### analyze (errors only, then summary)
+warnings: 6
+infos: 85
+   info • 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement • lib/widgets/skeleton_loader.dart:49:24 • deprecated_member_use
+
+91 issues found. (ran in 14.9s)
+exit=0
+
+##### unit tests
+
+::group::✅ Passing tests
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: every provider has a unique id and an https base URL
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: providerById finds a provider and returns null otherwise
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: parses a well-formed answer
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: tolerates markdown bold and "None" issues
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: groq prefers a vision model and drops audio models
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: a non-plant photo is flagged
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: cerebras prefers its documented multimodal models
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: clamps unrealistic watering intervals
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: mistral ranks pixtral and medium above embeddings
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: openrouter puts models with image input first
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: at most four candidates are returned
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: ScanRecord survives a database round trip
+✅ /home/runner/work/growlog/growlog/test/ai_rank_test.dart: AiException flags auth failures
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: care schedule starts from the day the plant was added
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: nothing before the third completed task
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: at most three per session
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: at least five minutes between ads
+::endgroup::
+
+🎉 17 tests passed.
+exit=0
+
+##### dart compile (flutter build bundle)
+exit=0
+
+##### android scaffold
+exit=0
+app
+build.gradle.kts
+gradle
+gradle.properties
+gradlew
+gradlew.bat
+growlog_android.iml
+local.properties
+settings.gradle.kts
+com
+
+##### android diagnostics (which build script and app id are used)
+-- android/app files:
+total 24
+drwxr-xr-x 3 runner runner 4096 Oct 10 20:16 .
+drwxr-xr-x 4 runner runner 4096 Oct 10 20:16 ..
+-rw-r--r-- 1 runner runner 2217 Oct 10 20:14 build.gradle
+-rw-r--r-- 1 runner runner 1764 Oct 10 20:16 build.gradle.kts
+-rw-r--r-- 1 runner runner  246 Oct 10 20:14 proguard-rules.pro
+drwxr-xr-x 5 runner runner 4096 Oct 10 20:16 src
+-- android/app/src files:
+android/app/src/debug/AndroidManifest.xml
+android/app/src/main/AndroidManifest.xml
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+android/app/src/main/kotlin/com/zdmgold/growlog/MainActivity.kt
+android/app/src/main/res/drawable-v21/launch_background.xml
+android/app/src/main/res/drawable/launch_background.xml
+android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+android/app/src/main/res/values-night/styles.xml
+android/app/src/main/res/values/styles.xml
+android/app/src/profile/AndroidManifest.xml
+-- build script settings:
+android/app/build.gradle:19:    namespace 'com.zdmgold.growlog'
+android/app/build.gradle:34:        applicationId "com.zdmgold.growlog"
+android/app/build.gradle:35:        minSdk 24
+android/app/build.gradle:42:    signingConfigs {
+android/app/build.gradle:57:                signingConfig signingConfigs.release
+android/app/build.gradle:59:                signingConfig signingConfigs.debug
+android/app/build.gradle:61:            minifyEnabled true
+android/app/build.gradle:63:            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+android/app/build.gradle:66:            signingConfig signingConfigs.debug
+android/app/build.gradle.kts:8:    namespace = "com.zdmgold.growlog"
+android/app/build.gradle.kts:19:        applicationId = "com.zdmgold.growlog"
+android/app/build.gradle.kts:22:        minSdk = flutter.minSdkVersion
+android/app/build.gradle.kts:36:            signingConfig = signingConfigs.getByName("debug")
+-- manifest activity + permissions:
+6:    <uses-permission android:name="android.permission.INTERNET" />
+12:    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13:    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+14:    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+18:    <uses-permission android:name="android.permission.CAMERA" />
+25:    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+26:    <uses-permission
+32:    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+43:            android:name="com.google.android.gms.ads.APPLICATION_ID"
+47:            android:name=".MainActivity"
+-- MainActivity:
+android/app/src/main/kotlin/com/zdmgold/growlog/MainActivity.kt
+package com.zdmgold.growlog
+
+import io.flutter.embedding.android.FlutterActivity
+
+-- settings.gradle.kts head:
+pluginManagement {
+    val flutterSdkPath =
+        run {
+            val properties = java.util.Properties()
+            file("local.properties").inputStream().use { properties.load(it) }
+            val flutterSdkPath = properties.getProperty("flutter.sdk")
+            require(flutterSdkPath != null) { "flutter.sdk not set in local.properties" }
+            flutterSdkPath
+        }
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0"
+    id("com.android.application") version "9.1.0" apply false
+    id("org.jetbrains.kotlin.android") version "2.4.0" apply false
+}
+
+include(":app")
+buildFile: /home/runner/work/growlog/growlog/android/app/build.gradle
+group: android
+name: app
+
+##### android kotlin + java compile (no APK)
+an issue against a plugin: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers#report-incompatible-kotlin-gradle-plugin-usage-to-plugin-authors
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+BUILD SUCCESSFUL in 2m 11s
+> Task :shared_preferences_android:bundleLibCompileToJarDebug
+> Task :url_launcher_android:bundleLibCompileToJarDebug
+> Task :app:compileDebugKotlin
+> Task :app:compileDebugJavaWithJavac
+
+[Incubating] Problems report is available at: file:///home/runner/work/growlog/growlog/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 2m 11s
+169 actionable tasks: 164 executed, 5 up-to-date
+exit=0
+
+##### android release shrink check (R8, no APK)
+BUILD SUCCESSFUL in 4m 38s
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4m 38s
+342 actionable tasks: 337 executed, 5 up-to-date
+exit=0
+
+##### result
+ALL CHECKS PASSED
