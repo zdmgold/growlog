@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import 'next_care_badge.dart';
 import 'plant_thumb.dart';
@@ -32,7 +33,7 @@ class SpecimenCard extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: '${plant.name}, open plant',
+      label: context.l10n.openPlantLabel(plant.name),
       child: Material(
         color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -82,7 +83,7 @@ class SpecimenCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        species.isEmpty ? 'Species not set' : species,
+                        species.isEmpty ? context.l10n.speciesNotSet : species,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.latin.copyWith(color: sub),

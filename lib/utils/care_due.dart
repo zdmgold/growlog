@@ -1,3 +1,4 @@
+import 'package:growlog/l10n/app_localizations.dart';
 import '../models/care_log_model.dart';
 import '../models/plant_model.dart';
 
@@ -38,13 +39,14 @@ class DueCare {
   bool get isOverdue => daysLate > 0;
   int get daysUntil => _day(due).difference(_day(DateTime.now())).inDays;
 
-  String get statusLabel => isOverdue ? 'Overdue ${daysLate}d' : 'Today';
+  String statusLabelOf(AppLocalizations l) =>
+      isOverdue ? l.overdueDays(daysLate) : l.today;
 
-  String get whenLabel {
+  String whenLabelOf(AppLocalizations l) {
     final n = daysUntil;
-    if (n <= 0) return 'today';
-    if (n == 1) return 'tomorrow';
-    return 'in $n days';
+    if (n <= 0) return l.today;
+    if (n == 1) return l.tomorrow;
+    return l.careDueInDays(n);
   }
 }
 

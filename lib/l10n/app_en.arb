@@ -608,5 +608,98 @@
   "closeCamera": "Close camera",
   "flashLabel": "Flash",
   "cameraHint": "Fill the frame with a leaf or the whole plant",
-  "useSystemCamera": "Use the phone camera app"
+  "useSystemCamera": "Use the phone camera app",
+  "todaysCare": "Today’s care",
+  "recentScans": "Recent scans",
+  "noPlantsFilter": "No plants match this filter.",
+  "plantDeletedSnack": "{name} deleted",
+  "@plantDeletedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "gardenCardsHint": "Plants you add appear here as specimen cards.",
+  "openPlant": "Open plant",
+  "plusMore": "+{count} more",
+  "@plusMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "markCareDoneFor": "Mark {careType} done for {plantName}",
+  "@markCareDoneFor": {
+    "placeholders": {
+      "careType": {
+        "type": "String"
+      },
+      "plantName": {
+        "type": "String"
+      }
+    }
+  },
+  "allCaughtUp": "All caught up",
+  "noCareScheduledYet": "No care scheduled yet",
+  "nextCareLine": "Next: {care} {plant} {when}",
+  "@nextCareLine": {
+    "placeholders": {
+      "care": {
+        "type": "String"
+      },
+      "plant": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "setupScheduleHint": "Open a plant and set a watering schedule to see tasks here.",
+  "dueNow": "Due now",
+  "dueNowCount": "Due now · {count}",
+  "@dueNowCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thisWeek": "This week",
+  "later": "Later",
+  "nothingComingUp": "Nothing coming up",
+  "scheduledCareHint": "Scheduled care for your plants will show here.",
+  "scanOrAddForSchedule": "Scan or add a plant to start its care schedule.",
+  "openPlantLabel": "{name}, open plant",
+  "@openPlantLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "overdueDays": "Overdue {count, plural, =1{1 day} other{{count} days}}",
+  "@overdueDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "speciesNotSet": "Species not set",
+  "roomsFilterLabel": "{name} filter",
+  "@roomsFilterLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotSaveRetry": "Could not save that. Please try again.",
+  "addApiKeyToScan": "Add your API key to scan plants.",
+  "languageTitle": "Language",
+  "phoneDefault": "Phone default",
+  "backLabel": "Back"
 }

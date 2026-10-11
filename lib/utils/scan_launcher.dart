@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import '../l10n/l10n_ext.dart';
 import '../providers/plant_provider.dart';
 import '../screens/ai_setup_screen.dart';
 import '../screens/camera_screen.dart';
@@ -15,7 +16,7 @@ class ScanLauncher {
   static bool _ensureAi(BuildContext context) {
     if (AiSettings.instance.isConfigured) return true;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Add your API key to scan plants.')),
+      SnackBar(content: Text(context.l10n.addApiKeyToScan)),
     );
     Navigator.push(
       context,

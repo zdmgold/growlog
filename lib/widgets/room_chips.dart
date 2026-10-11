@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 
 /// Horizontal room filter. `rooms` holds (id, name) pairs; null selects "All".
@@ -25,7 +26,7 @@ class RoomChips extends StatelessWidget {
           AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.md,
         ),
         children: [
-          _chip(context, 'All', selected == null, () => onSelect(null)),
+          _chip(context, context.l10n.all, selected == null, () => onSelect(null)),
           for (final (id, name) in rooms)
             _chip(context, name, selected == id, () => onSelect(id)),
         ],
@@ -51,7 +52,7 @@ class RoomChips extends StatelessWidget {
       child: Semantics(
         button: true,
         selected: active,
-        label: '$label rooms filter',
+        label: context.l10n.roomsFilterLabel(label),
         child: Material(
           color: bg,
           shape: StadiumBorder(

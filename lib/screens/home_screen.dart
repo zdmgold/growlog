@@ -9,6 +9,7 @@ import '../services/ai/ai_settings.dart';
 import '../services/scan_store.dart';
 import '../services/iap_service.dart';
 import '../utils/care_due.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../utils/scan_launcher.dart';
@@ -185,10 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (all.isNotEmpty) ...[
                     SliverToBoxAdapter(
                       child: _SectionTitle(
-                        title: "Today's care",
+                        title: context.l10n.todaysCare,
                         trailing: TextButton(
                           onPressed: () => widget.onGoToTab(2),
-                          child: const Text('See all'),
+                          child: Text(context.l10n.seeAll),
                         ),
                       ),
                     ),
@@ -211,10 +212,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Column(
                           children: [
                             _SectionTitle(
-                              title: 'Recent scans',
+                              title: context.l10n.recentScans,
                               trailing: TextButton(
                                 onPressed: () => widget.onGoToTab(3),
-                                child: const Text('See all'),
+                                child: Text(context.l10n.seeAll),
                               ),
                             ),
                             RecentScansRow(
@@ -232,11 +233,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: _SectionTitle(
-                      title: 'My garden',
+                      title: context.l10n.myGarden,
                       trailing: all.isEmpty
                           ? null
                           : IconButton(
-                              tooltip: 'Search plants',
+                              tooltip: context.l10n.searchPlants,
                               icon: Icon(PhosphorRegular.magnifyingGlass,
                                   size: 22, color: ink),
                               onPressed: _openSearch,
@@ -261,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? Padding(
                               padding: const EdgeInsets.all(AppSpacing.lg),
                               child: Text(
-                                'No plants match this filter.',
+                                context.l10n.noPlantsFilter,
                                 style: AppTypography.body.copyWith(color: sub),
                               ),
                             )
@@ -307,21 +308,30 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showPlantMenu(Plant plant) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (_) => _PlantMenuSheet(
+      builder: (sheetContext) => _PlantMenuSheet(
         plant: plant,
+        onOpen: () {
+          Navigator.pop(sheetContext);
+          _openPlant(plant);
+        },
+        onToggleDead: () {
+          HapticFeedback.lightImpact();
+          widget.plantProvider.toggleDead(plant.id);
+          Navigator.pop(sheetContext);
+        },
         onDelete: () {
           HapticFeedback.mediumImpact();
           widget.plantProvider.deletePlant(plant.id);
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${plant.name} deleted'),
+              content: Text(context.l10n.plantDeletedSnack(plant.name)),
               duration: const Duration(seconds: 4),
               action: SnackBarAction(
-                label: 'Undo',
+                label: context.l10n.undo,
                 onPressed: () => widget.plantProvider.restorePlant(),
               ),
             ),
@@ -395,12 +405,12 @@ class _EmptyGarden extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              'Your garden is empty',
+              context.l10n.gardenEmptyTitle,
               style: AppTypography.title1.copyWith(color: ink),
             ),
             const SizedBox(height: 4),
             Text(
-              'Plants you add appear here as specimen cards.',
+              context.l10n.gardenCardsHint,
               textAlign: TextAlign.center,
               style: AppTypography.footnote.copyWith(color: sub),
             ),
@@ -408,7 +418,7 @@ class _EmptyGarden extends StatelessWidget {
             TextButton.icon(
               onPressed: onAdd,
               icon: const Icon(PhosphorBold.plus, size: 18),
-              label: const Text('Add a plant'),
+              label: Text(context.l10n.addPlant),
             ),
           ],
         ),
@@ -459,7 +469,147 @@ class _SearchSheet extends StatelessWidget {
             autofocus: true,
             onChanged: onChanged,
             decoration: InputDecoration(
-              hintText: 'Search plants...',
+              hintText: context.l10n.searchPlants,
+              prefixIcon: const Icon(Icons.search),
+              filled: true,
+              fillColor: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppRadii.pill),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlantMenuSheet extends StatelessWidget {
+  final Plant plant;
+  final VoidCallback onOpen;
+  final VoidCallback onToggleDead;
+  final VoidCallback onDelete;
+
+  const _PlantMenuSheet({
+    required this.plant,
+    required this.onOpen,
+    required this.onToggleDead,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    final err = isDark ? AppColors.errorDark : AppColors.error;
+    final l = context.l10n;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(AppRadii.xl),
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: AppColors.textTertiary.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(AppRadii.pill),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            ListTile(
+              leading: Icon(PhosphorRegular.leaf, color: accent),
+              title: Text(l.openPlant),
+              onTap: onOpen,
+            ),
+            ListTile(
+              leading: Icon(PhosphorRegular.plant, color: accent),
+              title: Text(plant.isDead ? l.revivePlant : l.markAsDead),
+              onTap: onToggleDead,
+            ),
+            ListTile(
+              leading: Icon(PhosphorRegular.trash, color: err),
+              title: Text(l.delete, style: TextStyle(color: err)),
+              onTap: () {
+                Navigator.pop(context);
+                showDialog<void>(
+                  context: context,
+                  builder: (dialogContext) => AlertDialog(
+                    title: Text(l.deletePlantTitle),
+                    content: Text(l.deletePlantMessage(plant.name)),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(dialogContext),
+                        child: Text(l.cancel),
+                      ),
+                      TextButton(
+                        onPressed: onDelete,
+                        child: Text(l.delete, style: TextStyle(color: err)),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SearchSheet extends StatelessWidget {
+  final TextEditingController controller;
+  final ValueChanged<String> onChanged;
+
+  const _SearchSheet({
+    required this.controller,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      padding: EdgeInsets.only(
+        top: AppSpacing.lg,
+        left: AppSpacing.lg,
+        right: AppSpacing.lg,
+        bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.lg,
+      ),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(AppRadii.xl),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 36,
+            height: 4,
+            decoration: BoxDecoration(
+              color: AppColors.textTertiary.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(AppRadii.pill),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          TextField(
+            controller: controller,
+            autofocus: true,
+            onChanged: onChanged,
+            decoration: InputDecoration(
+              hintText: context.l10n.searchPlants,
               prefixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,

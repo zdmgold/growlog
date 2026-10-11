@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../providers/locale_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -70,9 +71,9 @@ class _LanguageSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Text('Language', style: AppTypography.title1.copyWith(color: ink)),
+                Text(context.l10n.languageTitle, style: AppTypography.title1.copyWith(color: ink)),
                 const SizedBox(height: AppSpacing.sm),
-                _row(context, ink, 'Phone default', current == null, () {
+                _row(context, ink, context.l10n.phoneDefault, current == null, () {
                   provider.setLocale(null);
                   Navigator.pop(context);
                 }),

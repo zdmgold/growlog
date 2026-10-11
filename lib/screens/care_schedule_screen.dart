@@ -4,6 +4,7 @@ import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/care_actions.dart';
 import '../utils/care_due.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/care_today_row.dart';
@@ -70,11 +71,11 @@ class _CareScheduleScreenState extends State<CareScheduleScreen>
             leading: widget.embedded
                 ? null
                 : IconButton(
-                    tooltip: 'Back',
+                    tooltip: context.l10n.backLabel,
                     icon: const Icon(PhosphorBold.arrowLeft),
                     onPressed: () => Navigator.pop(context),
                   ),
-            title: const Text('Schedule'),
+            title: Text(context.l10n.navSchedule),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(58),
               child: Padding(
@@ -108,9 +109,13 @@ class _CareScheduleScreenState extends State<CareScheduleScreen>
                     ),
                     unselectedLabelStyle: AppTypography.callout,
                     tabs: [
-                      Tab(text: due.isEmpty ? 'Due now' : 'Due now · ${due.length}'),
-                      const Tab(text: 'Upcoming'),
-                      const Tab(text: 'All'),
+                      Tab(
+                        text: due.isEmpty
+                            ? context.l10n.dueNow
+                            : context.l10n.dueNowCount(due.length),
+                      ),
+                      Tab(text: context.l10n.upcoming),
+                      Tab(text: context.l10n.all),
                     ],
                   ),
                 ),
@@ -205,10 +210,14 @@ class _DueNow extends StatelessWidget {
       final n = upcoming;
       return _Empty(
         icon: PhosphorFill.checkCircle,
-        title: 'All caught up',
+        title: context.l10n.allCaughtUp,
         text: n == null
-            ? 'Add a care schedule to a plant to see tasks here.'
-            : 'Next: ${n.type.label} ${n.plant.name} ${n.whenLabel}.',
+            ? context.l10n.setupScheduleHint
+            : context.l10n.nextCareLine(
+                context.careLabel(n.type),
+                n.plant.name,
+                n.whenLabelOf(context.l10n),
+              ),
       );
     }
     return ListView.separated(
@@ -244,20 +253,20 @@ class _Upcoming extends StatelessWidget {
     required this.onOpen,
   });
 
-  String _group(DueCare c) {
+  int _group(DueCare c) {
     final n = c.daysUntil;
-    if (n <= 1) return 'Tomorrow';
-    if (n <= 7) return 'This week';
-    return 'Later';
+    if (n <= 1) return 0;
+    if (n <= 7) return 1;
+    return 2;
   }
 
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return const _Empty(
+      return _Empty(
         icon: PhosphorRegular.calendarCheck,
-        title: 'Nothing coming up',
-        text: 'Scheduled care for your plants will show here.',
+        title: context.l10n.nothingComingUp,
+        text: context.l10n.scheduledCareHint,
       );
     }
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -265,14 +274,19 @@ class _Upcoming extends StatelessWidget {
     final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
 
     final rows = <Widget>[];
-    String? current;
+    final groupNames = [
+      context.l10n.tomorrow,
+      context.l10n.thisWeek,
+      context.l10n.later,
+    ];
+    int? current;
     for (final c in items.take(80)) {
       final g = _group(c);
       if (g != current) {
         current = g;
         rows.add(Padding(
           padding: const EdgeInsets.only(top: AppSpacing.md, bottom: AppSpacing.sm),
-          child: Text(g, style: AppTypography.title1.copyWith(color: ink, fontSize: 19)),
+          child: Text(groupNames[g], style: AppTypography.title1.copyWith(color: ink, fontSize: 19)),
         ));
       }
       rows.add(Padding(
@@ -318,7 +332,7 @@ class _Upcoming extends StatelessWidget {
                             Icon(careIcon(c.type), size: 14, color: c.type.color),
                             const SizedBox(width: 6),
                             Text(
-                              '${c.type.label} · ${c.whenLabel}',
+                              '${context.careLabel(c.type)} · ${c.whenLabelOf(context.l10n)}',
                               style: AppTypography.footnote.copyWith(color: sub),
                             ),
                           ],
@@ -358,10 +372,10 @@ class _AllPlants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (plants.isEmpty) {
-      return const _Empty(
+      return _Empty(
         icon: PhosphorRegular.plant,
-        title: 'No plants yet',
-        text: 'Scan or add a plant to start its care schedule.',
+        title: context.l10n.noPlantsYet,
+        text: context.l10n.scanOrAddForSchedule,
       );
     }
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -377,7 +391,7 @@ class _AllPlants extends StatelessWidget {
         final p = plants[i];
         return Semantics(
           button: true,
-          label: '${p.name}, open plant',
+          label: context.l10n.openPlantLabel(p.name),
           child: Material(
             color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
             borderRadius: BorderRadius.circular(AppRadii.lg),

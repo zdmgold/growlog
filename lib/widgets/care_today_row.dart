@@ -4,6 +4,7 @@ import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../utils/care_actions.dart';
 import '../utils/care_due.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import 'motion_widgets.dart';
@@ -160,7 +161,7 @@ class CareDueTile extends StatelessWidget {
                         const SizedBox(width: 6),
                         Flexible(
                           child: Text(
-                            '${item.type.label} · ${item.statusLabel}',
+                            '${context.careLabel(item.type)} · ${item.statusLabelOf(context.l10n)}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTypography.caption.copyWith(
@@ -190,7 +191,7 @@ class CareDueTile extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
-                          '+${item.others} more',
+                          context.l10n.plusMore(item.others),
                           style: AppTypography.caption.copyWith(color: sub),
                         ),
                       ),
@@ -200,7 +201,10 @@ class CareDueTile extends StatelessWidget {
               const SizedBox(width: AppSpacing.sm),
               DoneCheckButton(
                 type: item.type,
-                semanticLabel: 'Mark ${item.type.label} done for ${item.plant.name}',
+                semanticLabel: context.l10n.markCareDoneFor(
+                  context.careLabel(item.type),
+                  item.plant.name,
+                ),
                 background: isDark ? AppColors.accentLight : AppColors.accent,
                 foreground: isDark ? AppColors.bgPrimaryDark : Colors.white,
                 onDone: onDone,
@@ -251,14 +255,18 @@ class _CaughtUpTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  next != null ? 'All caught up' : 'No care scheduled yet',
+                  next != null ? context.l10n.allCaughtUp : context.l10n.noCareScheduledYet,
                   style: AppTypography.title1.copyWith(color: ink, fontSize: 19),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   next != null
-                      ? 'Next: ${next.type.label} ${next.plant.name} ${next.whenLabel}'
-                      : 'Open a plant and set a watering schedule to see tasks here.',
+                      ? context.l10n.nextCareLine(
+                          context.careLabel(next.type),
+                          next.plant.name,
+                          next.whenLabelOf(context.l10n),
+                        )
+                      : context.l10n.setupScheduleHint,
                   style: AppTypography.footnote.copyWith(color: sub),
                 ),
               ],
