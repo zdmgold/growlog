@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:growlog/l10n/app_localizations.dart';
 import 'constants.dart';
+import 'phosphor_icons.dart';
 
 /// Global navigator key so ErrorHandler can recover the app to its root
 /// route without needing a BuildContext of its own. Must be attached to
@@ -33,7 +34,7 @@ class ErrorHandler {
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.error_outline,
+                    const Icon(PhosphorRegular.warningCircle,
                         color: AppColors.error, size: 64),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
