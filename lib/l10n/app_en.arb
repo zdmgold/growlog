@@ -701,5 +701,171 @@
   "addApiKeyToScan": "Add your API key to scan plants.",
   "languageTitle": "Language",
   "phoneDefault": "Phone default",
-  "backLabel": "Back"
+  "backLabel": "Back",
+  "scanFailedGeneric": "Something went wrong while scanning. Please try again.",
+  "addedToGarden": "{name} added to your garden",
+  "@addedToGarden": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotSavePlant": "Could not save the plant. Please try again.",
+  "lookingClosely": "Looking closely…",
+  "scanDidNotFinish": "The scan did not finish",
+  "tryAgain": "Try again",
+  "checkMyApiKey": "Check my API key",
+  "notAPlantTitle": "That doesn’t look like a plant",
+  "notAPlantMessage": "Try again with a clear, close photo of a leaf or the whole plant.",
+  "confidenceHigh": "High confidence",
+  "confidenceMedium": "Medium confidence",
+  "confidenceLow": "Low confidence",
+  "whatToDo": "What to do",
+  "keepHealthy": "Keep it healthy",
+  "aiMayBeWrong": "AI guidance can be wrong. For a serious problem, check with a local nursery.",
+  "severityLabel": "Severity: {level}",
+  "@severityLabel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "severityNone": "None",
+  "severityLow": "Low",
+  "severityMedium": "Medium",
+  "severityHigh": "High",
+  "severityCritical": "Critical",
+  "suggestedCare": "Suggested care",
+  "suggestedCareHint": "Starting points from the AI. Adjust them once you know your plant.",
+  "everyNDays": "{count, plural, =1{every day} other{every {count} days}}",
+  "@everyNDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lightLabel": "Light",
+  "lightLow": "Low",
+  "lightMedium": "Medium",
+  "lightBrightIndirect": "Bright indirect",
+  "lightDirect": "Direct sun",
+  "savedToPlant": "Saved to {name}",
+  "@savedToPlant": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "inYourGardenOpen": "In your garden · Open",
+  "saving": "Saving…",
+  "saveToGarden": "Save to garden",
+  "moreOptions": "More options",
+  "addApiKeyToCheck": "Add your API key to check plant health.",
+  "photoAddedTo": "Photo added to {name}",
+  "@photoAddedTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "couldNotSavePhoto": "Could not save that photo. Please try again.",
+  "askPaulAboutPlant": "Ask Paul about this plant",
+  "editCareSchedule": "Edit care schedule",
+  "doctorCheckHealth": "Doctor: check health",
+  "addedOn": "Added: {date}",
+  "@addedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "careTitle": "Care",
+  "editScheduleAction": "Edit schedule",
+  "noScheduleYet": "No care schedule yet. Tap Edit schedule to add one.",
+  "logCareNow": "Log care now",
+  "growthTitle": "Growth",
+  "doctorTitle": "Doctor",
+  "notesTitle": "Notes",
+  "dueToday": "Due today",
+  "dueTomorrow": "Due tomorrow",
+  "markCareDone": "Mark {careType} done",
+  "@markCareDone": {
+    "placeholders": {
+      "careType": {
+        "type": "String"
+      }
+    }
+  },
+  "logCareType": "Log {careType}",
+  "@logCareType": {
+    "placeholders": {
+      "careType": {
+        "type": "String"
+      }
+    }
+  },
+  "doctorIntro": "Take a photo and check how {name} is doing. Each check is kept here.",
+  "@doctorIntro": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "checkHealth": "Check health",
+  "historyTitle": "History",
+  "lookingHealthy": "Looking healthy",
+  "scheduleSheetHint": "How many days between each kind of care. Reminders follow this.",
+  "addShort": "Add",
+  "fewerDaysFor": "Fewer days for {careType}",
+  "@fewerDaysFor": {
+    "placeholders": {
+      "careType": {
+        "type": "String"
+      }
+    }
+  },
+  "moreDaysFor": "More days for {careType}",
+  "@moreDaysFor": {
+    "placeholders": {
+      "careType": {
+        "type": "String"
+      }
+    }
+  },
+  "growthEmpty": "Add a photo now and another later to see how {name} grows. Tap Add photo.",
+  "@growthEmpty": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "photoFirst": "First",
+  "photoLatest": "Latest",
+  "photosCount": "{count} photos",
+  "@photosCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "photosSpan": "{count} photos over {days} days",
+  "@photosSpan": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -20,6 +20,7 @@ import '../widgets/care_today_row.dart' show careIcon;
 import '../widgets/motion_widgets.dart';
 import '../widgets/scan_widgets.dart';
 import '../widgets/skeleton_loader.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'ai_setup_screen.dart';
@@ -50,7 +51,7 @@ class PlantDetailScreen extends StatelessWidget {
             appBar: AppBar(),
             body: Center(
               child: Text(
-                'Plant not found',
+                context.l10n.plantNotFound,
                 style: AppTypography.body.copyWith(
                   color: isDark
                       ? AppColors.textTertiaryDark
@@ -76,14 +77,14 @@ class PlantDetailScreen extends StatelessWidget {
                 leadingWidth: 64,
                 leading: _RoundButton(
                   icon: PhosphorBold.arrowLeft,
-                  label: 'Back',
+                  label: context.l10n.backLabel,
                   isDark: isDark,
                   onTap: () => Navigator.pop(context),
                 ),
                 actions: [
                   _RoundButton(
                     icon: PhosphorBold.dotsThree,
-                    label: 'More options',
+                    label: context.l10n.moreOptions,
                     isDark: isDark,
                     onTap: () => _showOptions(context, plant),
                   ),
@@ -164,7 +165,11 @@ class PlantDetailScreen extends StatelessWidget {
     );
     plantProvider.addCareLog(plant.id, log);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${type.label} logged for ${plant.name}')),
+      SnackBar(
+        content: Text(
+          context.l10n.careLoggedSnackbar(context.careLabel(type), plant.name),
+        ),
+      ),
     );
   }
 
@@ -173,7 +178,7 @@ class PlantDetailScreen extends StatelessWidget {
   Future<void> _startDoctor(BuildContext context, Plant plant) async {
     if (!AiSettings.instance.isConfigured) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Add your API key to check plant health.')),
+        SnackBar(content: Text(context.l10n.addApiKeyToCheck)),
       );
       Navigator.push(
         context,
@@ -212,6 +217,7 @@ class PlantDetailScreen extends StatelessWidget {
     );
     if (result == null || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
     try {
       final bytes = await compute(prepareImageForAi, result.path);
       final dir = await getApplicationDocumentsDirectory();
@@ -229,13 +235,13 @@ class PlantDetailScreen extends StatelessWidget {
       );
       HapticFeedback.mediumImpact();
       messenger.showSnackBar(
-        SnackBar(content: Text('Photo added to ${plant.name}')),
+        SnackBar(content: Text(l.photoAddedTo(plant.name))),
       );
     } catch (e) {
       debugPrint('Add photo update error: $e');
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Could not save that photo. Please try again.'),
+        SnackBar(
+          content: Text(l.couldNotSavePhoto),
           backgroundColor: AppColors.error,
         ),
       );
@@ -276,7 +282,7 @@ class PlantDetailScreen extends StatelessWidget {
             children: [
               ListTile(
                 leading: Icon(PhosphorRegular.chatCircleDots, color: accent),
-                title: const Text('Ask Paul about this plant'),
+                title: Text(context.l10n.askPaulAboutPlant),
                 onTap: () {
                   Navigator.pop(sheetContext);
                   Navigator.push(
@@ -292,7 +298,7 @@ class PlantDetailScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(PhosphorRegular.calendarCheck, color: accent),
-                title: const Text('Edit care schedule'),
+                title: Text(context.l10n.editCareSchedule),
                 onTap: () {
                   Navigator.pop(sheetContext);
                   _showSchedule(context, plant);
@@ -300,7 +306,7 @@ class PlantDetailScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(PhosphorRegular.stethoscope, color: accent),
-                title: const Text('Doctor: check health'),
+                title: Text(context.l10n.doctorCheckHealth),
                 onTap: () {
                   Navigator.pop(sheetContext);
                   _startDoctor(context, plant);
@@ -308,7 +314,7 @@ class PlantDetailScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(PhosphorRegular.leaf),
-                title: Text(plant.isDead ? 'Revive plant' : 'Mark as dead'),
+                title: Text(plant.isDead ? context.l10n.revivePlant : context.l10n.markAsDead),
                 onTap: () {
                   HapticFeedback.lightImpact();
                   plantProvider.toggleDead(plant.id);
@@ -317,18 +323,18 @@ class PlantDetailScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(PhosphorRegular.trash, color: err),
-                title: Text('Delete', style: TextStyle(color: err)),
+                title: Text(context.l10n.delete, style: TextStyle(color: err)),
                 onTap: () {
                   Navigator.pop(sheetContext);
                   showDialog<void>(
                     context: context,
                     builder: (dialogContext) => AlertDialog(
-                      title: const Text('Delete plant?'),
-                      content: const Text('This cannot be undone.'),
+                      title: Text(context.l10n.deletePlantTitle),
+                      content: Text(context.l10n.deletePlantMessage(plant.name)),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(dialogContext),
-                          child: const Text('Cancel'),
+                          child: Text(context.l10n.cancel),
                         ),
                         TextButton(
                           onPressed: () {
@@ -337,7 +343,7 @@ class PlantDetailScreen extends StatelessWidget {
                             Navigator.pop(dialogContext);
                             Navigator.pop(context);
                           },
-                          child: Text('Delete', style: TextStyle(color: err)),
+                          child: Text(context.l10n.delete, style: TextStyle(color: err)),
                         ),
                       ],
                     ),
@@ -454,7 +460,7 @@ class _Body extends StatelessWidget {
                 children: [
                   if (scans.isNotEmpty) ScanHealthPill(health: scans.first.health),
                   Text(
-                    'Added ${DateFormatter.relative(plant.acquiredDate).toLowerCase()}',
+                    context.l10n.addedOn(scanDateLabel(context, plant.acquiredDate)),
                     style: AppTypography.footnote.copyWith(color: sub),
                   ),
                 ],
@@ -463,15 +469,15 @@ class _Body extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xl),
           _SectionHeader(
-            title: 'Care',
-            action: 'Edit schedule',
+            title: context.l10n.careTitle,
+            action: context.l10n.editScheduleAction,
             onAction: onEditSchedule,
           ),
           const SizedBox(height: AppSpacing.sm),
           if (scheduled.isEmpty)
             _EmptyNote(
               isDark: isDark,
-              text: 'No care schedule yet. Tap Edit schedule to add one.',
+              text: context.l10n.noScheduleYet,
             )
           else
             for (final t in scheduled)
@@ -485,7 +491,7 @@ class _Body extends StatelessWidget {
                 ),
               ),
           const SizedBox(height: AppSpacing.md),
-          Text('Log care now',
+          Text(context.l10n.logCareNow,
               style: AppTypography.caption.copyWith(color: sub)),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
@@ -498,14 +504,14 @@ class _Body extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xl),
           _SectionHeader(
-            title: 'Growth',
-            action: 'Add photo',
+            title: context.l10n.growthTitle,
+            action: context.l10n.addPhoto,
             onAction: onAddPhoto,
           ),
           const SizedBox(height: AppSpacing.sm),
           _GrowthSection(plant: plant, plantProvider: plantProvider, isDark: isDark),
           const SizedBox(height: AppSpacing.xl),
-          _SectionHeader(title: 'Doctor'),
+          _SectionHeader(title: context.l10n.doctorTitle),
           const SizedBox(height: AppSpacing.sm),
           _DoctorCard(
             plant: plant,
@@ -515,7 +521,7 @@ class _Body extends StatelessWidget {
           ),
           if (plant.notes != null && plant.notes!.trim().isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xl),
-            _SectionHeader(title: 'Notes'),
+            _SectionHeader(title: context.l10n.notesTitle),
             const SizedBox(height: AppSpacing.sm),
             Text(
               plant.notes!,
@@ -608,12 +614,12 @@ class _CareRow extends StatelessWidget {
     final due = DueCare(plant: plant, type: type, due: next);
     final overdue = due.isOverdue;
     final status = overdue
-        ? 'Overdue ${due.daysLate} days'
+        ? context.l10n.overdueDays(due.daysLate)
         : due.daysUntil <= 0
-            ? 'Due today'
+            ? context.l10n.dueToday
             : due.daysUntil == 1
-                ? 'Due tomorrow'
-                : 'In ${due.daysUntil} days';
+                ? context.l10n.dueTomorrow
+                : context.l10n.careDueInDays(due.daysUntil);
     final statusColor = overdue
         ? (isDark ? AppColors.errorDark : AppColors.attention)
         : due.daysUntil <= 0
@@ -646,11 +652,13 @@ class _CareRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(type.label,
+                Text(context.careLabel(type),
                     style: AppTypography.title2.copyWith(color: ink)),
                 const SizedBox(height: 2),
                 Text(
-                  freq == null ? status : '$status · every $freq days',
+                  freq == null
+                      ? status
+                      : '$status · ${context.l10n.everyNDays(freq)}',
                   style: AppTypography.footnote.copyWith(color: statusColor),
                 ),
               ],
@@ -659,7 +667,7 @@ class _CareRow extends StatelessWidget {
           DoneCheckButton(
             type: type,
             size: 44,
-            semanticLabel: 'Mark ${type.label} done',
+            semanticLabel: context.l10n.markCareDone(context.careLabel(type)),
             background: isDark ? AppColors.accentLight : AppColors.accent,
             foreground: isDark ? AppColors.bgPrimaryDark : Colors.white,
             onDone: onDone,
@@ -680,7 +688,7 @@ class _LogChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Log ${type.label}',
+      label: context.l10n.logCareType(context.careLabel(type)),
       child: Material(
         color: type.color.withOpacity(0.12),
         shape: const StadiumBorder(),
@@ -695,7 +703,7 @@ class _LogChip extends StatelessWidget {
                 Icon(careIcon(type), size: 18, color: type.color),
                 const SizedBox(width: 8),
                 Text(
-                  type.label,
+                  context.careLabel(type),
                   style: AppTypography.callout.copyWith(
                     color: isDark
                         ? AppColors.textPrimaryDark
@@ -751,7 +759,7 @@ class _DoctorCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Take a photo and check how ${plant.name} is doing. Each check is kept here.',
+                context.l10n.doctorIntro(plant.name),
                 style: AppTypography.footnote.copyWith(color: sub),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -761,12 +769,12 @@ class _DoctorCard extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: onDoctor,
                   icon: const Icon(PhosphorFill.camera, size: 20),
-                  label: const Text('Check health'),
+                  label: Text(context.l10n.checkHealth),
                 ),
               ),
               if (scans.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.lg),
-                Text('History', style: AppTypography.caption.copyWith(color: sub)),
+                Text(context.l10n.historyTitle, style: AppTypography.caption.copyWith(color: sub)),
                 const SizedBox(height: AppSpacing.sm),
                 for (final s in scans)
                   InkWell(
@@ -798,7 +806,7 @@ class _DoctorCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  s.hasIssue ? s.issue : 'Looking healthy',
+                                  s.hasIssue ? s.issue : context.l10n.lookingHealthy,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTypography.title2.copyWith(
@@ -887,11 +895,11 @@ class _ScheduleSheet extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.md),
-                Text('Care schedule',
+                Text(context.l10n.careSchedule,
                     style: AppTypography.title1.copyWith(color: ink)),
                 const SizedBox(height: 2),
                 Text(
-                  'How many days between each kind of care. Reminders follow this.',
+                  context.l10n.scheduleSheetHint,
                   style: AppTypography.footnote.copyWith(color: sub),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -954,15 +962,15 @@ class _ScheduleRow extends StatelessWidget {
           Icon(careIcon(type), size: 20, color: type.color),
           const SizedBox(width: AppSpacing.md),
           Expanded(
-            child: Text(type.label, style: AppTypography.title2.copyWith(color: ink)),
+            child: Text(context.careLabel(type), style: AppTypography.title2.copyWith(color: ink)),
           ),
           if (d == null)
             TextButton(
               onPressed: () => onChanged(_defaultDays[type]),
-              child: const Text('Add'),
+              child: Text(context.l10n.addShort),
             )
           else ...[
-            stepButton(PhosphorBold.caretLeft, 'Fewer days for ${type.label}', () {
+            stepButton(PhosphorBold.caretLeft, context.l10n.fewerDaysFor(context.careLabel(type)), () {
               if (d <= 1) {
                 onChanged(null);
               } else {
@@ -970,14 +978,14 @@ class _ScheduleRow extends StatelessWidget {
               }
             }),
             SizedBox(
-              width: 74,
+              width: 96,
               child: Text(
-                'every $d d',
+                context.l10n.everyNDays(d),
                 textAlign: TextAlign.center,
                 style: AppTypography.callout.copyWith(color: sub),
               ),
             ),
-            stepButton(PhosphorBold.caretRight, 'More days for ${type.label}', () {
+            stepButton(PhosphorBold.caretRight, context.l10n.moreDaysFor(context.careLabel(type)), () {
               if (d < 365) onChanged(d + 1);
             }),
           ],
@@ -988,12 +996,8 @@ class _ScheduleRow extends StatelessWidget {
 }
 
 
-String _shortDate(DateTime d) {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-  ];
-  return '${months[d.month - 1]} ${d.day}, ${d.year}';
+String _shortDate(BuildContext context, DateTime d) {
+  return DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(d);
 }
 
 /// Before and after of the oldest and newest photo, plus every photo by date.
@@ -1042,8 +1046,7 @@ class _GrowthSection extends StatelessWidget {
     if (photos.length < 2) {
       return _EmptyNote(
         isDark: isDark,
-        text: 'Add a photo now and another later to see how '
-            '${plant.name} grows. Tap Add photo.',
+        text: context.l10n.growthEmpty(plant.name),
       );
     }
 
@@ -1071,7 +1074,7 @@ class _GrowthSection extends StatelessWidget {
                     color: ink,
                     fontWeight: FontWeight.w600,
                   )),
-              Text(_shortDate(p.date),
+              Text(_shortDate(context, p.date),
                   style: AppTypography.caption.copyWith(color: sub)),
             ],
           ),
@@ -1094,16 +1097,16 @@ class _GrowthSection extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              half(first, 'First'),
+              half(first, context.l10n.photoFirst),
               const SizedBox(width: AppSpacing.md),
-              half(last, 'Latest'),
+              half(last, context.l10n.photoLatest),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
             days <= 0
-                ? '${photos.length} photos'
-                : '${photos.length} photos over $days ${days == 1 ? 'day' : 'days'}',
+                ? context.l10n.photosCount(photos.length)
+                : context.l10n.photosSpan(photos.length, days),
             style: AppTypography.footnote.copyWith(color: sub),
           ),
           if (photos.length > 2) ...[
@@ -1155,7 +1158,7 @@ class _PhotoViewer extends StatelessWidget {
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
         title: Text(
-          '$plantName · ${_shortDate(photo.date)}',
+          '$plantName · ${_shortDate(context, photo.date)}',
           style: AppTypography.callout.copyWith(color: Colors.white),
         ),
       ),

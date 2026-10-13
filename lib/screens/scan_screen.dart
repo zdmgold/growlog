@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
+import '../models/care_log_model.dart';
 import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
 import '../models/scan_record.dart';
@@ -101,6 +102,7 @@ class _ScanScreenState extends State<ScanScreen>
   }
 
   Future<void> _run() async {
+    final languageName = _languageName(context);
     setState(() {
       _phase = _Phase.analyzing;
       _error = null;
@@ -118,6 +120,7 @@ class _ScanScreenState extends State<ScanScreen>
         id: id,
         imagePath: stored,
         plantId: widget.plant?.id,
+        languageName: languageName,
       );
       if (rec.isPlant) {
         await ScanStore.instance.add(rec);
@@ -155,7 +158,7 @@ class _ScanScreenState extends State<ScanScreen>
       if (!mounted) return;
       setState(() {
         _phase = _Phase.error;
-        _error = 'Something went wrong while scanning. Please try again.';
+        _error = context.l10n.scanFailedGeneric;
       });
     }
   }
@@ -199,7 +202,7 @@ class _ScanScreenState extends State<ScanScreen>
         _unfurl = animate;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('${r.commonName} added to your garden')),
+        SnackBar(content: Text(context.l10n.addedToGarden(r.commonName))),
       );
       // Let the leaf finish before any full-screen ad.
       if (animate) await Future.delayed(const Duration(milliseconds: 750));
@@ -210,8 +213,8 @@ class _ScanScreenState extends State<ScanScreen>
       if (!mounted) return;
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Could not save the plant. Please try again.'),
+        SnackBar(
+          content: Text(context.l10n.couldNotSavePlant),
           backgroundColor: AppColors.error,
         ),
       );
@@ -279,7 +282,7 @@ class _ScanScreenState extends State<ScanScreen>
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Semantics(
           button: true,
-          label: 'Back',
+          label: context.l10n.backLabel,
           child: Material(
             color: Colors.black.withOpacity(0.45),
             shape: const CircleBorder(),
@@ -352,7 +355,7 @@ class _ScanScreenState extends State<ScanScreen>
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Looking closely…',
+                      context.l10n.lookingClosely,
                       style: AppTypography.callout.copyWith(color: Colors.white),
                     ),
                   ],
@@ -384,7 +387,7 @@ class _ScanScreenState extends State<ScanScreen>
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
-                  'The scan did not finish',
+                  context.l10n.scanDidNotFinish,
                   style: AppTypography.title1.copyWith(color: ink),
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -399,7 +402,7 @@ class _ScanScreenState extends State<ScanScreen>
                   height: 52,
                   child: ElevatedButton(
                     onPressed: _run,
-                    child: const Text('Try again'),
+                    child: Text(context.l10n.tryAgain),
                   ),
                 ),
                 if (_authError || (_error?.contains('API key') ?? false))
@@ -408,7 +411,7 @@ class _ScanScreenState extends State<ScanScreen>
                       context,
                       MaterialPageRoute(builder: (_) => const AiSetupScreen()),
                     ),
-                    child: const Text('Check my API key'),
+                    child: Text(context.l10n.checkMyApiKey),
                   ),
               ],
             ),
@@ -424,7 +427,7 @@ class _ScanScreenState extends State<ScanScreen>
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: IconButton(
-          tooltip: 'Back',
+          tooltip: context.l10n.backLabel,
           icon: Icon(
             PhosphorBold.arrowLeft,
             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
@@ -453,19 +456,19 @@ class _ScanScreenState extends State<ScanScreen>
                   Icon(PhosphorRegular.leaf, size: 52, color: sub),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
-                    "That doesn't look like a plant",
+                    context.l10n.notAPlantTitle,
                     style: AppTypography.title1.copyWith(color: ink),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Try again with a clear, close photo of a leaf or the whole plant.',
+                    context.l10n.notAPlantMessage,
                     textAlign: TextAlign.center,
                     style: AppTypography.body.copyWith(color: sub),
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Back'),
+                    child: Text(context.l10n.backLabel),
                   ),
                 ],
               ),
@@ -540,7 +543,7 @@ class _ScanScreenState extends State<ScanScreen>
                       children: [
                         ScanHealthPill(health: r.health),
                         _InfoChip(
-                          text: '${r.confidence} confidence',
+                          text: _confidenceText(context, r.confidence),
                           isDark: isDark,
                         ),
                       ],
@@ -592,7 +595,7 @@ class _ScanScreenState extends State<ScanScreen>
                     if (r.treatment.isNotEmpty && r.hasIssue) ...[
                       const SizedBox(height: AppSpacing.lg),
                       _StepsCard(
-                        title: 'What to do',
+                        title: context.l10n.whatToDo,
                         steps: r.treatment,
                         isDark: isDark,
                       ),
@@ -604,14 +607,14 @@ class _ScanScreenState extends State<ScanScreen>
                     if (r.prevention.isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.lg),
                       _StepsCard(
-                        title: 'Keep it healthy',
+                        title: context.l10n.keepHealthy,
                         steps: r.prevention,
                         isDark: isDark,
                       ),
                     ],
                     const SizedBox(height: AppSpacing.lg),
                     Text(
-                      'AI guidance can be wrong. For a serious problem, check with a local nursery.',
+                      context.l10n.aiMayBeWrong,
                       style: AppTypography.caption.copyWith(color: sub),
                     ),
                   ],
@@ -702,7 +705,7 @@ class _IssueCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  'Severity: ${record.severity}',
+                  context.l10n.severityLabel(_severityText(context, record.severity)),
                   style: AppTypography.footnote.copyWith(color: st.color),
                 ),
               ],
@@ -817,22 +820,23 @@ class _CareCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Suggested care',
+          Text(context.l10n.suggestedCare,
               style: AppTypography.title1.copyWith(color: ink, fontSize: 19)),
           const SizedBox(height: 2),
           Text(
-            'Starting points from the AI. Adjust them once you know your plant.',
+            context.l10n.suggestedCareHint,
             style: AppTypography.caption.copyWith(color: sub),
           ),
           const SizedBox(height: AppSpacing.md),
           if (record.waterDays != null)
-            row(PhosphorFill.drop, AppColors.water, 'Water',
-                'every ${record.waterDays} days'),
+            row(PhosphorFill.drop, AppColors.water, context.careLabel(CareType.water),
+                context.l10n.everyNDays(record.waterDays!)),
           if (record.fertilizeDays != null)
-            row(PhosphorFill.flask, AppColors.fertilize, 'Feed',
-                'every ${record.fertilizeDays} days'),
+            row(PhosphorFill.flask, AppColors.fertilize, context.careLabel(CareType.fertilize),
+                context.l10n.everyNDays(record.fertilizeDays!)),
           if (record.light != null)
-            row(PhosphorFill.sun, AppColors.watch, 'Light', record.light!),
+            row(PhosphorFill.sun, AppColors.watch, context.l10n.lightLabel,
+                _lightText(context, record.light!)),
         ],
       ),
     );
@@ -869,13 +873,13 @@ class _ActionBar extends StatelessWidget {
     if (doctorPlant != null) {
       primary = ElevatedButton(
         onPressed: onDone,
-        child: Text('Saved to ${doctorPlant!.name}'),
+        child: Text(context.l10n.savedToPlant(doctorPlant!.name)),
       );
     } else if (saved) {
       primary = ElevatedButton.icon(
         onPressed: onOpenPlant,
         icon: const Icon(PhosphorFill.checkCircle, size: 20),
-        label: const Text('In your garden · Open'),
+        label: Text(context.l10n.inYourGardenOpen),
       );
     } else {
       primary = ElevatedButton.icon(
@@ -887,7 +891,7 @@ class _ActionBar extends StatelessWidget {
                 child: CircularProgressIndicator(strokeWidth: 2.5),
               )
             : const Icon(PhosphorBold.plus, size: 20),
-        label: Text(saving ? 'Saving…' : 'Save to garden'),
+        label: Text(saving ? context.l10n.saving : context.l10n.saveToGarden),
       );
     }
 
@@ -912,7 +916,7 @@ class _ActionBar extends StatelessWidget {
           const SizedBox(width: AppSpacing.md),
           Semantics(
             button: true,
-            label: 'Ask Paul',
+            label: context.l10n.askPaul,
             child: Material(
               color: accent.withOpacity(0.14),
               shape: const CircleBorder(),
@@ -930,5 +934,63 @@ class _ActionBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+
+String _confidenceText(BuildContext c, String v) {
+  final l = c.l10n;
+  final s = v.toLowerCase();
+  if (s.startsWith('high')) return l.confidenceHigh;
+  if (s.startsWith('low')) return l.confidenceLow;
+  return l.confidenceMedium;
+}
+
+String _severityText(BuildContext c, String v) {
+  final l = c.l10n;
+  final s = v.toLowerCase();
+  if (s.startsWith('crit')) return l.severityCritical;
+  if (s.startsWith('high')) return l.severityHigh;
+  if (s.startsWith('med')) return l.severityMedium;
+  if (s.startsWith('low')) return l.severityLow;
+  if (s.startsWith('none')) return l.severityNone;
+  return v;
+}
+
+String _lightText(BuildContext c, String v) {
+  final l = c.l10n;
+  final s = v.toLowerCase();
+  if (s.contains('bright')) return l.lightBrightIndirect;
+  if (s.contains('direct')) return l.lightDirect;
+  if (s.contains('low')) return l.lightLow;
+  if (s.contains('medium')) return l.lightMedium;
+  return v;
+}
+
+/// The language name sent to the AI so its free text matches the app language.
+String _languageName(BuildContext c) {
+  switch (Localizations.localeOf(c).languageCode) {
+    case 'es':
+      return 'Spanish';
+    case 'fr':
+      return 'French';
+    case 'de':
+      return 'German';
+    case 'pt':
+      return 'Portuguese';
+    case 'ar':
+      return 'Arabic';
+    case 'hi':
+      return 'Hindi';
+    case 'ja':
+      return 'Japanese';
+    case 'ko':
+      return 'Korean';
+    case 'zh':
+      return 'Chinese';
+    case 'he':
+      return 'Hebrew';
+    default:
+      return 'English';
   }
 }

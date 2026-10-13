@@ -31,11 +31,21 @@ PREVENTION:
 2. [tip]
 ''';
 
+  /// The base prompt plus a language rule. Field names and the fixed-choice
+  /// values stay English so the answer can be parsed.
+  static String _promptFor(String languageName) => languageName == 'English'
+      ? _prompt
+      : '$_prompt\nWrite the values of SPECIES, SUMMARY, ISSUE and every '
+          'TREATMENT and PREVENTION item in $languageName. Keep the field '
+          'names and the values of IS_PLANT, CONFIDENCE, HEALTH, SEVERITY and '
+          'LIGHT exactly as shown above, in English.';
+
   static Future<ScanRecord> analyze(
     Uint8List jpegBytes, {
     required String id,
     required String imagePath,
     String? plantId,
+    String languageName = 'English',
   }) async {
     final settings = AiSettings.instance;
     final client = settings.client;
@@ -48,7 +58,7 @@ PREVENTION:
       );
     }
     final text = await client.complete(
-      messages: const [AiMessage('user', _prompt)],
+      messages: [AiMessage('user', _promptFor(languageName))],
       image: jpegBytes,
       maxTokens: 900,
     );
