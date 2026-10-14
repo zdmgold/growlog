@@ -25,3 +25,31 @@ extension L10nContext on BuildContext {
     }
   }
 }
+
+/// The app language as an English name, used to ask the AI to answer in it.
+String appLanguageName(BuildContext c) {
+  switch (Localizations.localeOf(c).languageCode) {
+    case 'es':
+      return 'Spanish';
+    case 'fr':
+      return 'French';
+    case 'de':
+      return 'German';
+    case 'pt':
+      return 'Portuguese';
+    case 'ar':
+      return 'Arabic';
+    case 'hi':
+      return 'Hindi';
+    case 'ja':
+      return 'Japanese';
+    case 'ko':
+      return 'Korean';
+    case 'zh':
+      return 'Chinese';
+    case 'he':
+      return 'Hebrew';
+    default:
+      return 'English';
+  }
+}

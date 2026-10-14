@@ -867,5 +867,144 @@
         "type": "int"
       }
     }
+  },
+  "openKeyPageFallback": "Open {url} in your browser.",
+  "@openKeyPageFallback": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "aiStarting": "Starting…",
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "connectAiTitle": "Connect AI",
+  "aiSetupIntro": "Scanning and chat use an AI provider you choose. Paste your key and tap Connect.",
+  "aiPrivacyNote": "Your key is stored encrypted on this phone. It is sent only to the provider you pick, never to us. When you scan, your photo goes to that provider too, under their terms.",
+  "switchProvider": "Switch provider",
+  "chooseProvider": "Choose a provider",
+  "pasteYourKey": "Paste your {provider} key",
+  "@pasteYourKey": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "hideKey": "Hide key",
+  "showKey": "Show key",
+  "pasteAction": "Paste",
+  "getAKey": "Get a key",
+  "connectAction": "Connect",
+  "connectedToProvider": "Connected to {provider}",
+  "@connectedToProvider": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "modelLabel": "Model",
+  "modelNamed": "Model: {model}",
+  "@modelNamed": {
+    "placeholders": {
+      "model": {
+        "type": "String"
+      }
+    }
+  },
+  "noVisionWarning": "This model could chat but could not read photos, so scanning is off. Pick another model above or switch provider.",
+  "removeKey": "Remove key",
+  "connectedLabel": "Connected",
+  "hintPayAsYouGo": "Pay as you go",
+  "hintFreeTier": "Free tier available",
+  "hintCheckPricing": "Check pricing",
+  "hintSomeFree": "Some free models",
+  "couldNotOpen": "Could not open {url}",
+  "@couldNotOpen": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "invalidBackupFile": "Invalid backup file",
+  "backupImported": "Backup imported",
+  "purchaseFailedRetry": "Purchase failed. Please try again.",
+  "purchasesRestoredMsg": "Purchases restored",
+  "noPreviousPurchases": "No previous purchases found",
+  "settingsAiConnected": "AI connected: {provider}",
+  "@settingsAiConnected": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "clearAllData": "Clear All Data",
+  "websiteLabel": "Website",
+  "helpSupport": "Help & Support",
+  "contactUs": "Contact us",
+  "paulStarter1": "How often should I water it?",
+  "paulStarter2": "Why are the leaves turning yellow?",
+  "paulStarter3": "Does it need more light?",
+  "paulStarter4": "When should I repot it?",
+  "paulGreetingPlant": "You are looking at **{name}**. What would you like to know?",
+  "@paulGreetingPlant": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "paulGreeting": "I am Paul. Ask me about watering, light, pests, or anything that looks wrong with a plant.",
+  "notConnected": "Not connected",
+  "clearChat": "Clear chat",
+  "paulNeedsConnection": "Chat needs an AI connection. Add your API key to talk to Paul.",
+  "connectAiToChat": "Connect AI to chat",
+  "sendLabel": "Send",
+  "addToWishlist": "Add to wishlist",
+  "addWish": "Add wish",
+  "wishlistEmptyMessage": "Keep a list of plants you would like to grow.",
+  "wishedOn": "Wished: {date}",
+  "@wishedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "removeNamed": "Remove {name}",
+  "@removeNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "plantRemovedSnack": "{name} removed",
+  "@plantRemovedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "speciesExample": "For example: Monstera deliciosa",
+  "addPlantCareHint": "Switch on the care this plant needs. Reminders start from today.",
+  "photoPickerHint": "Take a photo or pick one from your gallery",
+  "addAPhoto": "Add a photo",
+  "changePhoto": "Change photo",
+  "noRoomsTitle": "No rooms yet",
+  "roomsEmptyMessage": "Group plants by where they live, like Kitchen or Balcony.",
+  "newRoom": "New room",
+  "editRoom": "Edit room",
+  "plantCountLabel": "{count, plural, =1{1 plant} other{{count} plants}}",
+  "@plantCountLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

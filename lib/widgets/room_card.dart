@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/room_model.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import 'skeleton_loader.dart';
@@ -33,7 +34,7 @@ class RoomCard extends StatelessWidget {
         .toList();
 
     return Semantics(
-      label: '${room.name}, ${plants.length} plants',
+      label: context.l10n.roomCardAccessibility(room.name, plants.length),
       button: true,
       child: GestureDetector(
         onTap: onTap,
@@ -94,7 +95,7 @@ class RoomCard extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      '${plants.length} ${plants.length == 1 ? 'plant' : 'plants'}',
+                      context.l10n.plantCountLabel(plants.length),
                       style: AppTypography.footnote.copyWith(
                         color: isDark
                             ? AppColors.textSecondaryDark

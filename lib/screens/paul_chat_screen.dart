@@ -5,6 +5,7 @@ import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/paul_ai_service.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import 'ai_setup_screen.dart';
@@ -30,19 +31,23 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
   final _messages = <ChatMessage>[];
   bool _isTyping = false;
 
-  static const _starters = [
-    'How often should I water it?',
-    'Why are the leaves turning yellow?',
-    'Does it need more light?',
-    'When should I repot it?',
-  ];
+  bool _greeted = false;
 
   @override
   void initState() {
     super.initState();
     _aiService.setPlantsContext(widget.plantProvider.activePlants);
     if (widget.plant != null) _aiService.setFocusedPlant(widget.plant!);
-    _addPaulMessage(_greeting());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_greeted) {
+      _greeted = true;
+      _aiService.languageName = appLanguageName(context);
+      _messages.add(ChatMessage(role: 'model', text: _greeting()));
+    }
   }
 
   @override
@@ -54,8 +59,8 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
 
   String _greeting() {
     return widget.plant != null
-        ? 'You are looking at **${widget.plant!.name}**. What would you like to know?'
-        : 'I am Paul. Ask me about watering, light, pests, or anything that looks wrong with a plant.';
+        ? context.l10n.paulGreetingPlant(widget.plant!.name)
+        : context.l10n.paulGreeting;
   }
 
   void _addPaulMessage(String text) {
@@ -128,7 +133,7 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             leading: IconButton(
-              tooltip: 'Back',
+              tooltip: context.l10n.backLabel,
               icon: Icon(PhosphorBold.arrowLeft, color: ink),
               onPressed: () => Navigator.pop(context),
             ),
@@ -145,8 +150,8 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
                           style: AppTypography.title1.copyWith(color: ink, fontSize: 20)),
                       Text(
                         ready
-                            ? (ai.provider?.name ?? 'Connected')
-                            : 'Not connected',
+                            ? (ai.provider?.name ?? context.l10n.connectedLabel)
+                            : context.l10n.notConnected,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTypography.caption.copyWith(color: sub),
@@ -158,7 +163,7 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
             ),
             actions: [
               IconButton(
-                tooltip: 'Clear chat',
+                tooltip: context.l10n.clearChat,
                 icon: Icon(PhosphorRegular.trash, color: ink),
                 onPressed: _clear,
               ),
@@ -180,7 +185,12 @@ class _PaulChatScreenState extends State<PaulChatScreen> {
                       if (ready && _messages.length == 1 && !_isTyping) {
                         return _Starters(
                           isDark: isDark,
-                          items: _starters,
+                          items: [
+                            context.l10n.paulStarter1,
+                            context.l10n.paulStarter2,
+                            context.l10n.paulStarter3,
+                            context.l10n.paulStarter4,
+                          ],
                           onPick: _send,
                         );
                       }
@@ -250,7 +260,7 @@ class _ConnectBanner extends StatelessWidget {
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Text(
-                    'Chat needs an AI connection. Add your API key to talk to Paul.',
+                    context.l10n.paulNeedsConnection,
                     style: AppTypography.footnote.copyWith(
                       color: isDark
                           ? AppColors.textPrimaryDark
@@ -487,7 +497,7 @@ class _InputBar extends StatelessWidget {
               minLines: 1,
               maxLines: 4,
               decoration: InputDecoration(
-                hintText: enabled ? 'Ask Paul' : 'Connect AI to chat',
+                hintText: enabled ? context.l10n.askPaul : context.l10n.connectAiToChat,
                 filled: true,
                 fillColor: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,
                 border: OutlineInputBorder(
@@ -505,7 +515,7 @@ class _InputBar extends StatelessWidget {
           const SizedBox(width: AppSpacing.sm),
           Semantics(
             button: true,
-            label: 'Send',
+            label: context.l10n.sendLabel,
             child: Material(
               color: enabled ? accent : accent.withOpacity(0.35),
               shape: const CircleBorder(),

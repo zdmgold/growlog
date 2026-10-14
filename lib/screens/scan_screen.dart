@@ -102,7 +102,7 @@ class _ScanScreenState extends State<ScanScreen>
   }
 
   Future<void> _run() async {
-    final languageName = _languageName(context);
+    final languageName = appLanguageName(context);
     setState(() {
       _phase = _Phase.analyzing;
       _error = null;
@@ -965,32 +965,4 @@ String _lightText(BuildContext c, String v) {
   if (s.contains('low')) return l.lightLow;
   if (s.contains('medium')) return l.lightMedium;
   return v;
-}
-
-/// The language name sent to the AI so its free text matches the app language.
-String _languageName(BuildContext c) {
-  switch (Localizations.localeOf(c).languageCode) {
-    case 'es':
-      return 'Spanish';
-    case 'fr':
-      return 'French';
-    case 'de':
-      return 'German';
-    case 'pt':
-      return 'Portuguese';
-    case 'ar':
-      return 'Arabic';
-    case 'hi':
-      return 'Hindi';
-    case 'ja':
-      return 'Japanese';
-    case 'ko':
-      return 'Korean';
-    case 'zh':
-      return 'Chinese';
-    case 'he':
-      return 'Hebrew';
-    default:
-      return 'English';
-  }
 }

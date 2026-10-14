@@ -9,6 +9,7 @@ import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../services/interstitial_service.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/ad_slot.dart';
@@ -146,7 +147,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       debugPrint('AddPlantScreen._save error: $e');
       if (mounted) {
         setState(() => _saving = false);
-        _showError('Could not save the plant. Please try again.');
+        _showError(context.l10n.couldNotSavePlant);
       }
     }
   }
@@ -188,7 +189,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          tooltip: 'Back',
+          tooltip: context.l10n.backLabel,
           icon: Icon(PhosphorBold.arrowLeft, color: ink),
           onPressed: () => Navigator.pop(context),
         ),
@@ -215,7 +216,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             textCapitalization: TextCapitalization.sentences,
             decoration: InputDecoration(
               labelText: l10n?.speciesLabel ?? 'Species (optional)',
-              helperText: 'For example: Monstera deliciosa',
+              helperText: context.l10n.speciesExample,
             ),
           ),
           if (rooms.isNotEmpty) ...[
@@ -240,7 +241,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
           ),
           const SizedBox(height: 2),
           Text(
-            'Switch on the care this plant needs. Reminders start from today.',
+            context.l10n.addPlantCareHint,
             style: AppTypography.footnote.copyWith(color: sub),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -307,7 +308,9 @@ class _PhotoPicker extends StatelessWidget {
 
     return Semantics(
       button: true,
-      label: photoFile == null ? 'Add a photo' : 'Change photo',
+      label: photoFile == null
+          ? context.l10n.addAPhoto
+          : context.l10n.changePhoto,
       child: Material(
         color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
         borderRadius: BorderRadius.circular(AppRadii.xl),
@@ -366,7 +369,7 @@ class _PhotoPicker extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Take a photo or pick one from your gallery',
+                        context.l10n.photoPickerHint,
                         style: AppTypography.footnote.copyWith(color: sub),
                       ),
                     ],

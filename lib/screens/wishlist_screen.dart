@@ -4,8 +4,10 @@ import 'package:growlog/l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
+import '../widgets/scan_widgets.dart';
 import '../utils/phosphor_icons.dart';
 
 /// Plants you want. "Move to garden" turns a wish into a plant.
@@ -57,7 +59,7 @@ class WishlistScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 Text(
-                  'Add to wishlist',
+                  context.l10n.addToWishlist,
                   style: AppTypography.title1.copyWith(
                     color: isDark
                         ? AppColors.textPrimaryDark
@@ -125,7 +127,7 @@ class WishlistScreen extends StatelessWidget {
               : AppBar(
                   automaticallyImplyLeading: false,
                   leading: IconButton(
-                    tooltip: 'Back',
+                    tooltip: context.l10n.backLabel,
                     icon: Icon(PhosphorBold.arrowLeft, color: ink),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -136,7 +138,7 @@ class WishlistScreen extends StatelessWidget {
             backgroundColor: accent,
             foregroundColor: isDark ? AppColors.bgPrimaryDark : Colors.white,
             icon: const Icon(PhosphorBold.plus, size: 20),
-            label: const Text('Add wish'),
+            label: Text(context.l10n.addWish),
           ),
           body: wishlist.isEmpty
               ? Center(
@@ -161,7 +163,7 @@ class WishlistScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Keep a list of plants you would like to grow.',
+                          context.l10n.wishlistEmptyMessage,
                           textAlign: TextAlign.center,
                           style: AppTypography.body.copyWith(color: sub),
                         ),
@@ -216,7 +218,7 @@ class WishlistScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Wished ${DateFormatter.relative(plant.createdAt).toLowerCase()}',
+                                  context.l10n.wishedOn(scanDateLabel(context, plant.createdAt)),
                                   style: AppTypography.caption.copyWith(color: sub),
                                 ),
                               ],
@@ -230,16 +232,16 @@ class WishlistScreen extends StatelessWidget {
                             child: Text(l10n?.moveToGarden ?? 'Move to Garden'),
                           ),
                           IconButton(
-                            tooltip: 'Remove ${plant.name}',
+                            tooltip: context.l10n.removeNamed(plant.name),
                             icon: Icon(PhosphorRegular.trash, size: 20, color: sub),
                             onPressed: () {
                               HapticFeedback.mediumImpact();
                               plantProvider.deletePlant(plant.id);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('${plant.name} removed'),
+                                  content: Text(context.l10n.plantRemovedSnack(plant.name)),
                                   action: SnackBarAction(
-                                    label: 'Undo',
+                                    label: context.l10n.undo,
                                     onPressed: () => plantProvider.restorePlant(),
                                   ),
                                 ),

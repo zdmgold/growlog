@@ -4,6 +4,7 @@ import 'package:growlog/l10n/app_localizations.dart';
 import 'package:uuid/uuid.dart';
 import '../models/room_model.dart';
 import '../providers/plant_provider.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/room_card.dart';
@@ -62,7 +63,7 @@ class RoomsScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    existing == null ? 'New room' : 'Edit room',
+                    existing == null ? context.l10n.newRoom : context.l10n.editRoom,
                     style: AppTypography.title1.copyWith(
                       color: isDark
                           ? AppColors.textPrimaryDark
@@ -165,7 +166,7 @@ class RoomsScreen extends StatelessWidget {
               : AppBar(
                   automaticallyImplyLeading: false,
                   leading: IconButton(
-                    tooltip: 'Back',
+                    tooltip: context.l10n.backLabel,
                     icon: Icon(
                       PhosphorBold.arrowLeft,
                       color: isDark
@@ -181,7 +182,7 @@ class RoomsScreen extends StatelessWidget {
             backgroundColor: isDark ? AppColors.accentLight : AppColors.accent,
             foregroundColor: isDark ? AppColors.bgPrimaryDark : Colors.white,
             icon: const Icon(PhosphorBold.plus, size: 20),
-            label: const Text('Add room'),
+            label: Text(context.l10n.addRoom),
           ),
           body: rooms.isEmpty
               ? Center(
@@ -206,7 +207,7 @@ class RoomsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
-                          'No rooms yet',
+                          context.l10n.noRoomsTitle,
                           style: AppTypography.title1.copyWith(
                             color: isDark
                                 ? AppColors.textPrimaryDark
@@ -215,7 +216,7 @@ class RoomsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Group plants by where they live, like Kitchen or Balcony.',
+                          context.l10n.roomsEmptyMessage,
                           textAlign: TextAlign.center,
                           style: AppTypography.body.copyWith(
                             color: isDark

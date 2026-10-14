@@ -13,6 +13,9 @@ class PaulAIService {
   List<Plant> _plants = [];
   Plant? _focusedPlant;
 
+  /// The app language, so replies match it. Set by the chat screen.
+  String languageName = 'English';
+
   void setPlantsContext(List<Plant> plants) => _plants = plants;
   void setFocusedPlant(Plant plant) => _focusedPlant = plant;
   void clearMemory() => _memory.clear();
@@ -67,7 +70,9 @@ class PaulAIService {
     _memory.add(ChatMessage(role: 'user', text: userMessage));
     try {
       final reply = await client.complete(
-        system: _buildSystemPrompt(),
+        system: languageName == 'English'
+            ? _buildSystemPrompt()
+            : '${_buildSystemPrompt()}\nAlways reply in $languageName.',
         messages: [
           for (final m in _memory)
             AiMessage(m.role == 'user' ? 'user' : 'assistant', m.text),

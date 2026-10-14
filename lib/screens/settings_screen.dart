@@ -14,6 +14,7 @@ import '../providers/plant_provider.dart';
 import '../providers/theme_provider.dart';
 import '../services/export_service.dart';
 import '../services/iap_service.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -53,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
     if (!ok && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Could not open ${uri.toString()}')),
+        SnackBar(content: Text(context.l10n.couldNotOpen(uri.toString()))),
       );
     }
   }
@@ -127,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Backup imported')),
+          SnackBar(content: Text(context.l10n.backupImported)),
         );
       }
     } catch (e) {
@@ -194,7 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Purchase failed. Please try again.'),
+            content: Text(context.l10n.purchaseFailedRetry),
             backgroundColor: AppColors.error,
           ),
         );
@@ -210,8 +211,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(widget.iapService.value
-                ? 'Purchases restored'
-                : 'No previous purchases found'),
+                ? context.l10n.purchasesRestoredMsg
+                : context.l10n.noPreviousPurchases),
           ),
         );
       }
@@ -232,7 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-          tooltip: 'Back',
+          tooltip: context.l10n.backLabel,
           icon: Icon(PhosphorBold.arrowLeft, color: ink),
           onPressed: () => Navigator.pop(context),
         ),
@@ -274,11 +275,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   _SettingsTile(
                     icon: PhosphorRegular.key,
                     label: ai.isConfigured
-                        ? 'AI connected: ${ai.provider?.name ?? ''}'
-                        : 'Add your API key',
+                        ? context.l10n.settingsAiConnected(ai.provider?.name ?? '')
+                        : context.l10n.addYourApiKey,
                     subtitle: ai.isConfigured
                         ? (ai.model ?? '')
-                        : 'Needed for plant scans and chat',
+                        : context.l10n.neededForScansChat,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => const AiSetupScreen()),
@@ -305,7 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               _SettingsTile(
                 icon: PhosphorRegular.trash,
-                label: 'Clear All Data',
+                label: context.l10n.clearAllData,
                 danger: true,
                 onTap: _confirmClearAll,
               ),
@@ -354,12 +355,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               _SettingsTile(
                 icon: PhosphorRegular.globe,
-                label: 'Website',
+                label: context.l10n.websiteLabel,
                 onTap: () => _open(Uri.parse(_site)),
               ),
               _SettingsTile(
                 icon: PhosphorRegular.question,
-                label: 'Help & Support',
+                label: context.l10n.helpSupport,
                 onTap: () => _open(Uri.parse('$_site/support')),
               ),
               _SettingsTile(
@@ -369,7 +370,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               _SettingsTile(
                 icon: PhosphorRegular.chatCircleDots,
-                label: 'Contact us',
+                label: context.l10n.contactUs,
                 subtitle: _email,
                 onTap: () => _open(
                   Uri(

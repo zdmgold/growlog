@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../services/ai/ai_client.dart';
 import '../services/ai/ai_providers.dart';
 import '../services/ai/ai_settings.dart';
+import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 
@@ -52,7 +53,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
     );
     if (!ok && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Open ${p.keyUrl} in your browser.')),
+        SnackBar(content: Text(context.l10n.openKeyPageFallback(p.keyUrl))),
       );
     }
   }
@@ -65,7 +66,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
     setState(() {
       _busy = true;
       _error = null;
-      _status = 'Starting…';
+      _status = context.l10n.aiStarting;
     });
     try {
       await _settings.connect(
@@ -93,7 +94,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
       setState(() {
         _busy = false;
         _status = '';
-        _error = 'Something went wrong. Please try again.';
+        _error = context.l10n.somethingWentWrong;
       });
     }
   }
@@ -115,7 +116,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.bgPrimaryDark : AppColors.bgPrimary,
-      appBar: AppBar(title: const Text('Connect AI')),
+      appBar: AppBar(title: Text(context.l10n.connectAiTitle)),
       body: ListenableBuilder(
         listenable: _settings,
         builder: (context, _) {
@@ -125,8 +126,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
             ),
             children: [
               Text(
-                'Scanning and chat use an AI provider you choose. Paste your key '
-                'and tap Connect.',
+                context.l10n.aiSetupIntro,
                 style: AppTypography.body.copyWith(color: sub),
               ),
               const SizedBox(height: AppSpacing.md),
@@ -134,9 +134,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
                 isDark: isDark,
                 icon: PhosphorFill.lockKey,
                 text:
-                    'Your key is stored encrypted on this phone. It is sent only '
-                    'to the provider you pick, never to us. When you scan, your '
-                    'photo goes to that provider too, under their terms.',
+                    context.l10n.aiPrivacyNote,
               ),
               if (_settings.isConfigured) ...[
                 const SizedBox(height: AppSpacing.md),
@@ -148,7 +146,9 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
               ],
               const SizedBox(height: AppSpacing.lg),
               Text(
-                _settings.isConfigured ? 'Switch provider' : 'Choose a provider',
+                _settings.isConfigured
+                    ? context.l10n.switchProvider
+                    : context.l10n.chooseProvider,
                 style: AppTypography.title1.copyWith(color: ink),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -190,17 +190,17 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
           textInputAction: TextInputAction.done,
           onSubmitted: (_) => _connect(),
           decoration: InputDecoration(
-            hintText: 'Paste your ${p.name} key',
+            hintText: context.l10n.pasteYourKey(p.name),
             suffixIcon: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  tooltip: _showKey ? 'Hide key' : 'Show key',
+                  tooltip: _showKey ? context.l10n.hideKey : context.l10n.showKey,
                   icon: Icon(_showKey ? PhosphorRegular.eyeSlash : PhosphorRegular.eye),
                   onPressed: () => setState(() => _showKey = !_showKey),
                 ),
                 IconButton(
-                  tooltip: 'Paste',
+                  tooltip: context.l10n.pasteAction,
                   icon: const Icon(PhosphorRegular.clipboard),
                   onPressed: _paste,
                 ),
@@ -214,10 +214,10 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
             TextButton.icon(
               onPressed: () => _openKeyPage(p),
               icon: const Icon(PhosphorRegular.arrowSquareOut, size: 18),
-              label: const Text('Get a key'),
+              label: Text(context.l10n.getAKey),
             ),
             const Spacer(),
-            Text(p.hint, style: AppTypography.caption.copyWith(color: sub)),
+            Text(_hintText(context, p.hint), style: AppTypography.caption.copyWith(color: sub)),
           ],
         ),
         if (_error != null)
@@ -259,7 +259,7 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
                     children: [
                       const Icon(PhosphorBold.plugsConnected, size: 20),
                       const SizedBox(width: 8),
-                      const Text('Connect'),
+                      Text(context.l10n.connectAction),
                     ],
                   ),
           ),
@@ -339,7 +339,7 @@ class _ConnectedCard extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Connected to ${settings.provider?.name ?? ''}',
+                  context.l10n.connectedToProvider(settings.provider?.name ?? ''),
                   style: AppTypography.title2.copyWith(color: ink),
                 ),
               ),
@@ -350,7 +350,7 @@ class _ConnectedCard extends StatelessWidget {
             DropdownButtonFormField<String>(
               value: settings.model,
               isExpanded: true,
-              decoration: const InputDecoration(labelText: 'Model'),
+              decoration: InputDecoration(labelText: context.l10n.modelLabel),
               items: [
                 for (final m in models)
                   DropdownMenuItem(value: m, child: Text(m, overflow: TextOverflow.ellipsis)),
@@ -360,13 +360,12 @@ class _ConnectedCard extends StatelessWidget {
               },
             )
           else
-            Text('Model: ${settings.model}',
+            Text(context.l10n.modelNamed(settings.model ?? ''),
                 style: AppTypography.footnote.copyWith(color: sub)),
           const SizedBox(height: AppSpacing.sm),
           if (!settings.supportsVision)
             Text(
-              'This model could chat but could not read photos, so scanning is '
-              'off. Pick another model above or switch provider.',
+              context.l10n.noVisionWarning,
               style: AppTypography.footnote.copyWith(
                 color: isDark ? AppColors.warningDark : AppColors.watchText,
               ),
@@ -375,7 +374,7 @@ class _ConnectedCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: TextButton(
               onPressed: onDisconnect,
-              child: const Text('Remove key'),
+              child: Text(context.l10n.removeKey),
             ),
           ),
         ],
@@ -443,7 +442,7 @@ class _ProviderTile extends StatelessWidget {
                     ),
                   ),
                   if (connected)
-                    Text('Connected',
+                    Text(context.l10n.connectedLabel,
                         style: AppTypography.caption.copyWith(color: accent)),
                 ],
               ),
@@ -453,5 +452,22 @@ class _ProviderTile extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+
+String _hintText(BuildContext c, String hint) {
+  final l = c.l10n;
+  switch (hint) {
+    case 'Pay as you go':
+      return l.hintPayAsYouGo;
+    case 'Free tier available':
+      return l.hintFreeTier;
+    case 'Check pricing':
+      return l.hintCheckPricing;
+    case 'Some free models':
+      return l.hintSomeFree;
+    default:
+      return hint;
   }
 }
