@@ -34,7 +34,7 @@ class RoomCard extends StatelessWidget {
         .toList();
 
     return Semantics(
-      label: context.l10n.roomCardAccessibility(room.name, plants.length),
+      label: context.l10n.roomCardAccessibility(plants.length, room.name),
       button: true,
       child: GestureDetector(
         onTap: onTap,

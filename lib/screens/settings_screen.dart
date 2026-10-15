@@ -194,7 +194,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       debugPrint('SettingsScreen._purchaseRemoveAds error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(context.l10n.purchaseFailedRetry),
             backgroundColor: AppColors.error,
           ),
