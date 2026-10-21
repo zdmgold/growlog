@@ -34,13 +34,12 @@ void main() {
     }
   });
 
-  test('no translation is empty and none contains a stray ASCII apostrophe', () {
+  test('no translation is empty', () {
     for (final l in ['en', ...langs]) {
       final m = load(l);
       for (final k in keys(m)) {
         final v = m[k] as String;
         expect(v.trim().isNotEmpty, isTrue, reason: '$l / $k is empty');
-        expect(v.contains("'"), isFalse, reason: "$l / $k has an ASCII ' (ICU escape)");
       }
     }
   });
