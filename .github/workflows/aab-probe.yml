@@ -1,0 +1,61 @@
+name: AAB Probe
+on:
+  push:
+    branches: [ci-aab-probe]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: flutter create --platforms=android .
+      - run: rm -f android/app/build.gradle.kts
+      - name: Remove incomplete preinstalled NDK
+        run: |
+          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
+            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then sudo rm -rf "$d"; fi
+          done
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - name: Build AAB and keep the error
+        run: |
+          set +e
+          flutter build appbundle --release --obfuscate --split-debug-info=build/symbols > /tmp/aab.log 2>&1
+          echo "exit=$?" > /tmp/exit.txt
+          {
+            cat /tmp/exit.txt
+            echo "--- flutter.compileSdkVersion check:"
+            grep -rn "compileSdk" android/app/build.gradle | head -3
+            echo "--- What went wrong:"
+            grep -n -B2 -A22 "What went wrong" /tmp/aab.log | head -90
+            echo "--- dependency lines:"
+            grep -n "requires libraries and applications\|compileSdk\|Dependency '" /tmp/aab.log | cut -c1-260 | head -30
+            echo "--- tail:"
+            tail -n 12 /tmp/aab.log | cut -c1-260
+          } > /tmp/report.txt
+          cat /tmp/report.txt
+      - name: Publish report
+        if: always()
+        run: |
+          set -e
+          [ -f /tmp/report.txt ] || echo "no report" > /tmp/report.txt
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-aab
+          git rm -rf . -q || true
+          cp /tmp/report.txt report.txt
+          git add report.txt
+          git commit -q -m "aab probe"
+          git push -f origin ci-report-aab
