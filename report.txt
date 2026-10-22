@@ -1,0 +1,46 @@
+exit=1
+--- flutter.compileSdkVersion check:
+20:    compileSdk flutter.compileSdkVersion
+--- What went wrong:
+127-FAILURE: Build failed with an exception.
+128-
+129:* What went wrong:
+130-Execution failed for task ':file_picker:checkReleaseAarMetadata'.
+131-> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+132-   > An issue was found when checking AAR metadata:
+133-
+134-       1.  Dependency ':flutter_plugin_android_lifecycle' requires libraries and applications that
+135-           depend on it to compile against version 36 or later of the
+136-           Android APIs.
+137-
+138-           :file_picker is currently compiled against android-34.
+139-
+140-           Recommended action: Update this project to use a newer compileSdk
+141-           of at least 36, for example 36.
+142-
+143-           Note that updating a library or application's compileSdk (which
+144-           allows newer APIs to be used) can be done separately from updating
+145-           targetSdk (which opts the app in to new runtime behavior) and
+146-           minSdk (which determines which devices the app can be installed
+147-           on).
+148-
+149-* Try:
+150-> Run with --stacktrace option to get the stack trace.
+151-> Run with --info or --debug option to get more log output.
+--- dependency lines:
+134:       1.  Dependency ':flutter_plugin_android_lifecycle' requires libraries and applications that
+140:           Recommended action: Update this project to use a newer compileSdk
+143:           Note that updating a library or application's compileSdk (which
+--- tail:
+           minSdk (which determines which devices the app can be installed
+           on).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 7m 27s
+Running Gradle task 'bundleRelease'...                            448.2s
+Gradle task bundleRelease failed with exit code 1
