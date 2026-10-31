@@ -2,35 +2,35 @@ Monstera deliciosa
 Monstera adansonii
 Epipremnum aureum
 Philodendron hederaceum
-Philodendron bipinnatifidum
+Philodendron bipinnatifidum|Thaumatophyllum bipinnatifidum|Philodendron selloum
 Philodendron erubescens
 Syngonium podophyllum
 Spathiphyllum wallisii
 Zamioculcas zamiifolia
-Aglaonema commutatum
+Aglaonema commutatum|Aglaonema
 Dieffenbachia seguine
 Anthurium andraeanum
-Alocasia amazonica
+Alocasia amazonica|Alocasia × mortfontanensis|Alocasia 'Amazonica'
 Alocasia zebrina
 Colocasia esculenta
 Scindapsus pictus
-Rhaphidophora tetrasperma
+Rhaphidophora tetrasperma|Rhaphidophora tetrasperma 'Minima'
 Caladium bicolor
-Calathea orbifolia
-Calathea lancifolia
-Calathea makoyana
+Calathea orbifolia|Goeppertia orbifolia
+Calathea lancifolia|Goeppertia insignis|Calathea insignis
+Calathea makoyana|Goeppertia makoyana
 Maranta leuconeura
 Stromanthe thalia
 Ctenanthe
 Dracaena trifasciata
 Dracaena fragrans
-Dracaena marginata
+Dracaena marginata|Dracaena marginata 'Tricolor'|Dracaena marginata 'Colorama'
 Dracaena reflexa
 Chlorophytum comosum
 Asparagus setaceus
 Aspidistra elatior
-Beaucarnea recurvata
-Yucca elephantipes
+Beaucarnea recurvata|Nolina recurvata
+Yucca elephantipes|Yucca gigantea
 Ficus lyrata
 Ficus elastica
 Ficus benjamina
@@ -38,18 +38,18 @@ Ficus microcarpa
 Ficus pumila
 Hedera helix
 Schefflera arboricola
-Schefflera actinophylla
+Schefflera actinophylla|Heptapleurum actinophyllum|Schefflera actinophylla 'Amate'
 Fatsia japonica
 Aloe vera
 Crassula ovata
 Echeveria elegans
-Haworthia fasciata
+Haworthia fasciata|Haworthiopsis attenuata|Haworthiopsis fasciata
 Sedum morganianum
-Senecio rowleyanus
+Senecio rowleyanus|Curio rowleyanus
 Kalanchoe blossfeldiana
 Kalanchoe daigremontiana
 Opuntia microdasys
-Echinocactus grusonii
+Echinocactus grusonii|Kroenleinia grusonii
 Mammillaria
 Lithops
 Euphorbia trigona
@@ -63,14 +63,14 @@ Platycerium bifurcatum
 Adiantum
 Asplenium nidus
 Davallia
-Chamaedorea elegans
+Chamaedorea elegans|Chamaedorea elegans 'Bella'
 Dypsis lutescens
 Howea forsteriana
 Rhapis excelsa
 Phoenix roebelenii
-Phalaenopsis
-Saintpaulia ionantha
-Begonia rex
+Phalaenopsis|Phalaenopsis hybrids|Phalaenopsis (hybrids)
+Saintpaulia ionantha|Streptocarpus ionanthus|Saintpaulia
+Begonia rex|Begonia rex-cultorum|Begonia Rex Cultorum Group
 Begonia maculata
 Cyclamen persicum
 Hibiscus rosa-sinensis
@@ -84,7 +84,7 @@ Streptocarpus
 Strelitzia reginae
 Pilea peperomioides
 Peperomia obtusifolia
-Peperomia argyreia
+Peperomia argyreia|Peperomia argyreia 'Watermelon'
 Tradescantia zebrina
 Tradescantia spathacea
 Fittonia albivenis
@@ -94,12 +94,12 @@ Coleus scutellarioides
 Codiaeum variegatum
 Cordyline fruticosa
 Pachira aquatica
-Cissus rhombifolia
+Cissus rhombifolia|Cissus alata
 Plectranthus
 Radermachera
 Ocimum basilicum
 Mentha spicata
-Rosmarinus officinalis
+Rosmarinus officinalis|Salvia rosmarinus
 Lavandula angustifolia
 Thymus vulgaris
 Petroselinum crispum
