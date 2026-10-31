@@ -30,7 +30,7 @@ jobs:
           - {model: dino, subset: all}
           - {model: clip, subset: all}
           - {model: bioclip, subset: core20}
-          - {model: bioclip2, subset: core8}
+          - {model: bioclip2, subset: core20}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -46,8 +46,35 @@ jobs:
           name: emb-${{ matrix.model }}
           path: emb/emb-${{ matrix.model }}.npz
           retention-days: 2
+  export:
+    needs: fetch
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {model: bioclip, full: "fp32,int8"}
+          - {model: bioclip2, full: "int8"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dataset
+      - run: tar -xf data.tar
+      - run: |
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install open_clip_torch pillow numpy onnx onnxruntime onnxscript onnxconverter-common
+      - run: mkdir -p exp/${{ matrix.model }} && python bakeoff/export_onnx.py ${{ matrix.model }} data exp/${{ matrix.model }} "${{ matrix.full }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: exp-${{ matrix.model }}
+          path: exp/${{ matrix.model }}
+          retention-days: 7
+          compression-level: 0
   evaluate:
-    needs: [fetch, embed]
+    needs: [fetch, embed, export]
     if: always() && needs.fetch.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -62,8 +89,21 @@ jobs:
           pattern: emb-*
           path: embdl
           merge-multiple: true
+      - uses: actions/download-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          pattern: exp-*
+          path: expdl
       - run: pip install numpy scikit-learn
-      - run: mkdir -p emb && cp embdl/*.npz emb/ && ls -la emb && python bakeoff/evaluate.py data emb report.md
+      - run: |
+          mkdir -p emb
+          cp embdl/*.npz emb/
+          cp expdl/*/emb-*.npz emb/ 2>/dev/null || true
+          ls -la emb
+          python bakeoff/evaluate.py data emb report.md
+          for f in expdl/*/export_report.json; do [ -f "$f" ] && { echo; echo "## Export report: $f"; echo '```'; cat "$f"; echo '```'; } >> report.md; done || true
+          ls -la expdl/*/ >> report.md 2>/dev/null || true
       - name: Publish report
         if: always()
         run: |

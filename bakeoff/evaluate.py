@@ -172,7 +172,7 @@ for universe in ("core20", "all"):
         else:
             configs += [(c, pol, k) for c in ("proto", "lr") for pol in ("perm", "all") for k in (10, 20, None)]
         for clf, pol, k in configs:
-            if universe == "all" and nm in ("bioclip", "bioclip2") and clf != "zeroshot":
+            if clf != "zeroshot" and ("_" in nm or (universe == "all" and nm in ("bioclip", "bioclip2"))):
                 continue
             r = run(nm, universe, test, train, pol, k, clf)
             if not r:
