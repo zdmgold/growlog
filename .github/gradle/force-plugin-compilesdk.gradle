@@ -1,0 +1,16 @@
+// CI-only Gradle init script. Installed into ~/.gradle/init.d by the workflows.
+// Some Flutter plugins (for example file_picker) are compiled against an older
+// Android SDK than their own dependencies now require, which fails the release
+// build in checkReleaseAarMetadata. This raises every Android library plugin to
+// compileSdk 36 if it is lower. It never lowers a value and never touches :app.
+allprojects {
+    afterEvaluate { p ->
+        if (p.plugins.hasPlugin('com.android.library')) {
+            def cur = p.android.compileSdk
+            if (cur == null || cur < 36) {
+                println "FORCED compileSdk 36 on ${p.name} (was ${cur})"
+                p.android.compileSdk = 36
+            }
+        }
+    }
+}
