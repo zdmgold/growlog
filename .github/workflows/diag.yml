@@ -1,0 +1,22 @@
+name: Diag
+on:
+  push:
+    branches: [ci-diag]
+permissions:
+  contents: write
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      - run: python bakeoff/diag.py 2>&1 | tee diag.txt
+      - name: Publish
+        if: always()
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-diag; git rm -rf . -q || true
+          cp "$GITHUB_WORKSPACE/diag.txt" diag.txt; git add diag.txt; git commit -q -m diag; git push -f origin ci-report-diag
