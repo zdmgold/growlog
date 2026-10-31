@@ -1,0 +1,67 @@
+name: Plugin Probe
+on:
+  push:
+    branches: [ci-plugin]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg: [onnxruntime, flutter_onnxruntime, onnxruntime_v2]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: flutter create --platforms=android .
+      - run: rm -f android/app/build.gradle.kts
+      - name: Remove incomplete preinstalled NDK
+        run: |
+          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
+            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then sudo rm -rf "$d"; fi
+          done
+      - name: Install Gradle init script
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cp .github/gradle/force-plugin-compilesdk.gradle ~/.gradle/init.d/
+      - name: Probe
+        run: |
+          set +e
+          R=/tmp/report.txt; echo "pkg=${{ matrix.pkg }}" > $R
+          curl -s "https://pub.dev/api/packages/${{ matrix.pkg }}" | python3 -c "
+          import sys,json
+          try:
+              d=json.load(sys.stdin); l=d['latest']; p=l['pubspec']
+              print('latest',l['version'],'published',l.get('published'),'sdk',p.get('environment'),'repo',p.get('repository') or p.get('homepage'))
+              print('description:',(p.get('description') or '')[:160])
+          except Exception as e: print('pub.dev lookup failed',e)" >> $R
+          flutter pub add ${{ matrix.pkg }} >> $R 2>&1; echo "pub_add_exit=$?" >> $R
+          flutter pub get >> /tmp/pg.log 2>&1; echo "pub_get_exit=$?" >> $R
+          D=$(ls -d ~/.pub-cache/hosted/pub.dev/${{ matrix.pkg }}-* 2>/dev/null | head -1)
+          echo "pkg dir: $D" >> $R
+          head -4 "$D/LICENSE" 2>/dev/null >> $R
+          grep -n -i "minSdk\|minSdkVersion\|compileSdk\|onnxruntime-android\|onnxruntime-mobile\|ndk" -r "$D/android/build.gradle" 2>/dev/null | head >> $R
+          ls "$D/ios" 2>/dev/null | head -5 >> $R
+          flutter gen-l10n > /dev/null 2>&1
+          flutter analyze --no-fatal-infos 2>&1 | grep -E " error " | head -5 >> $R
+          flutter build apk --debug > /tmp/b.log 2>&1; echo "debug_build_exit=$?" >> $R
+          grep -n -A8 "What went wrong" /tmp/b.log | cut -c1-220 | head -20 >> $R
+          tail -3 /tmp/b.log | cut -c1-200 >> $R
+          cat $R
+      - name: Publish
+        if: always()
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-plugin-${{ matrix.pkg }}; git rm -rf . -q || true
+          cp /tmp/report.txt report.txt; git add report.txt; git commit -q -m probe; git push -f origin ci-report-plugin-${{ matrix.pkg }}
