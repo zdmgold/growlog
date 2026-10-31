@@ -40,13 +40,14 @@ tap "Change language" && shot 06_language && adb shell input keyevent 4 && sleep
 tap "Settings" && shot 07_settings && adb shell input keyevent 4 && sleep 2
 tap "Add your API key" "Connect AI" && shot 08_connect_ai && adb shell input keyevent 4 && sleep 2
 tap "Open camera" "Scan a plant" && sleep 6 && shot 09_camera && adb shell input keyevent 4 && sleep 2
-tap "Garden" && tap "Add Plant" "Add new plant" && shot 10_add_plant && adb shell input keyevent 4 && sleep 2
+tap "Garden" && tap "Add Plant" "Add new plant" && shot 10_add_plant && tap "Add Photo" && sleep 6 && shot 11_in_app_camera && adb shell input keyevent 4 && sleep 2 && adb shell input keyevent 4 && sleep 2
+tap "Open camera" "Scan a plant"; shot 12_scan_without_key
 
 PID=$(adb shell pidof "$PKG" | tr -d '\r'); say "process alive: ${PID:-NO}"
 adb shell dumpsys meminfo "$PKG" 2>/dev/null | grep -E "TOTAL PSS|TOTAL:|Java Heap|Native Heap|Graphics" | head -6 > "$OUT/meminfo.txt"; cat "$OUT/meminfo.txt" | tee -a "$LOG"
 adb logcat -d > "$OUT/logcat_full.txt" 2>&1
-grep -E "FATAL EXCEPTION|AndroidRuntime|Unhandled Exception|RenderFlex overflowed|EXCEPTION CAUGHT|E/flutter" "$OUT/logcat_full.txt" | head -40 > "$OUT/errors.txt"
+grep -E "FATAL EXCEPTION|Unhandled Exception|RenderFlex overflowed|EXCEPTION CAUGHT|E/flutter|ANR in com.zdmgold" "$OUT/logcat_full.txt" | head -40 > "$OUT/errors.txt"
 say "error lines: $(wc -l < "$OUT/errors.txt")"
-grep -i -E "Ads|GADMobile|AdMob|MobileAds" "$OUT/logcat_full.txt" | head -25 > "$OUT/ads.txt"; say "ads log lines: $(wc -l < "$OUT/ads.txt")"
+grep -E "com.google.android.gms.ads|GoogleMobileAds|MobileAdsInitProvider|Ads\\(|AdMob" "$OUT/logcat_full.txt" | grep -v "AdsDynamite\|AdsFdr\|adservices" | head -25 > "$OUT/ads.txt"; say "ads log lines: $(wc -l < "$OUT/ads.txt")"
 grep -E "flutter" "$OUT/logcat_full.txt" | tail -60 > "$OUT/flutter_tail.txt"
 exit 0
