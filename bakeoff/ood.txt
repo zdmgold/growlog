@@ -1,0 +1,28 @@
+plant|Taraxacum officinale
+plant|Bellis perennis
+plant|Quercus robur
+plant|Rosa canina
+plant|Trifolium repens
+plant|Fagus sylvatica
+plant|Acer platanoides
+plant|Urtica dioica
+plant|Pinus sylvestris
+plant|Betula pendula
+plant|Zea mays
+plant|Triticum aestivum
+plant|Solanum lycopersicum
+plant|Malus domestica
+plant|Nymphaea alba
+plant|Papaver rhoeas
+plant|Digitalis purpurea
+plant|Calluna vulgaris
+plant|Ranunculus acris
+plant|Equisetum arvense
+other|Felis catus
+other|Sofas
+other|Bookcases
+other|Living rooms
+other|Kitchens
+other|Automobiles
+other|Smartphones
+other|Pizza

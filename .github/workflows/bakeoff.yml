@@ -1,0 +1,83 @@
+name: Bakeoff
+on:
+  push:
+    branches: [ci-bakeoff]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests
+      - run: python bakeoff/fetch_commons.py data
+      - run: tar -cf data.tar data
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dataset
+          path: data.tar
+          retention-days: 2
+          compression-level: 0
+  embed:
+    needs: fetch
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {model: dino, subset: all}
+          - {model: clip, subset: all}
+          - {model: bioclip, subset: core20}
+          - {model: bioclip2, subset: core8}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dataset
+      - run: tar -xf data.tar
+      - run: |
+          pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+          pip install open_clip_torch transformers pillow numpy
+      - run: mkdir -p emb && python bakeoff/embed.py ${{ matrix.model }} data emb/emb-${{ matrix.model }}.npz ${{ matrix.subset }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: emb-${{ matrix.model }}
+          path: emb/emb-${{ matrix.model }}.npz
+          retention-days: 2
+  evaluate:
+    needs: [fetch, embed]
+    if: always() && needs.fetch.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dataset
+      - run: tar -xf data.tar
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: emb-*
+          path: embdl
+          merge-multiple: true
+      - run: pip install numpy scikit-learn
+      - run: mkdir -p emb && cp embdl/*.npz emb/ && ls -la emb && python bakeoff/evaluate.py data emb report.md
+      - name: Publish report
+        if: always()
+        run: |
+          set -e
+          [ -f report.md ] || echo "no report produced" > report.md
+          cp data/fetch_stats.json fetch_stats.json 2>/dev/null || true
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-bakeoff
+          git rm -rf . -q || true
+          cp "$GITHUB_WORKSPACE/report.md" report.md
+          [ -f "$GITHUB_WORKSPACE/fetch_stats.json" ] && cp "$GITHUB_WORKSPACE/fetch_stats.json" fetch_stats.json || true
+          git add -A
+          git commit -q -m "bakeoff report"
+          git push -f origin ci-report-bakeoff
