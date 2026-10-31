@@ -69,28 +69,46 @@ def members(cat_title, cmtype, cap):
     return out[:cap]
 
 
+def _has_content(title):
+    d = api({"action": "query", "titles": title, "prop": "categoryinfo"})
+    pg = (d or {}).get("query", {}).get("pages", [])
+    if not pg or pg[0].get("missing"):
+        return False
+    ci = pg[0].get("categoryinfo", {})
+    return ci.get("files", 0) + ci.get("subcats", 0) > 0
+
+
 def resolve_category(name):
     t = f"Category:{name}"
-    d = api({"action": "query", "titles": t, "prop": "categoryinfo"})
-    pg = (d or {}).get("query", {}).get("pages", [])
-    if pg and not pg[0].get("missing") and pg[0].get("categoryinfo", {}).get("size", 0) > 0:
+    if _has_content(t):
         return t
-    d = api({"action": "query", "list": "search", "srsearch": name, "srnamespace": "14", "srlimit": "5"})
+    d = api({"action": "query", "list": "search", "srsearch": name, "srnamespace": "14", "srlimit": "6"})
     first = name.split()[0].lower()
     for h in (d or {}).get("query", {}).get("search", []):
-        if first in h["title"].lower():
+        if first in h["title"].lower() and _has_content(h["title"]):
             return h["title"]
     return None
 
 
 def category_files(name, cap=600):
+    """Breadth-first walk (depth 3) over a category and its useful subcategories."""
     cat = resolve_category(name)
     if not cat:
         return None, []
-    files = members(cat, "file", cap)
-    subs = [s for s in members(cat, "subcat", 40) if not EXCL_CAT.search(s)][:10]
-    for s in subs:
-        files += members(s, "file", 200)
+    files, seen_cats, frontier = [], {cat}, [cat]
+    for depth in range(3):
+        nxt = []
+        for c in frontier:
+            files += members(c, "file", cap if depth == 0 else 300)
+            if len(files) >= cap * 2:
+                break
+            subs = [x for x in members(c, "subcat", 60) if x not in seen_cats and not EXCL_CAT.search(x)]
+            for x in subs[:25 if depth == 0 else 12]:
+                seen_cats.add(x)
+                nxt.append(x)
+        frontier = nxt
+        if len(files) >= cap * 2 or not frontier:
+            break
     seen, uniq = set(), []
     for f in files:
         if f not in seen and not EXCL_FILE.search(f):
@@ -147,17 +165,25 @@ def usable(recs):
     return keep
 
 
-def collect_species(name, rng):
-    cat, files = category_files(name)
-    if not cat:
+def collect_species(line, rng):
+    names = [x.strip() for x in line.split("|") if x.strip()]
+    name = names[0]
+    cats, files = [], []
+    for n in names:
+        cat, f = category_files(n)
+        if cat and f:
+            cats.append(cat)
+            files += f
+    if not cats:
         return {"species": name, "category": None, "raw_files": 0}, []
+    files = list(dict.fromkeys(files))
     recs = usable(info(files))
     rng.shuffle(recs)
     perm = [r for r in recs if r["lic"] == "perm"][:PER_LIC]
     sa = [r for r in recs if r["lic"] == "sa"][:PER_LIC]
     kept = perm + sa
     rng.shuffle(kept)
-    return {"species": name, "category": cat, "raw_files": len(files), "usable": len(recs),
+    return {"species": name, "category": "; ".join(cats), "raw_files": len(files), "usable": len(recs),
             "perm": len(perm), "sa": len(sa)}, kept
 
 
@@ -187,12 +213,13 @@ def download(entry):
 
 def main():
     os.makedirs(os.path.join(OUT, "images"), exist_ok=True)
-    species = [l.strip() for l in open("bakeoff/species.txt") if l.strip()]
+    lines = [l.strip() for l in open("bakeoff/species.txt") if l.strip()]
+    species = [l.split("|")[0] for l in lines]
     ood = [l.strip().split("|", 1) for l in open("bakeoff/ood.txt") if l.strip()]
     stats, entries = [], []
     t0 = time.time()
     with cf.ThreadPoolExecutor(3) as ex:
-        futs = {ex.submit(collect_species, s, random.Random(i)): ("species", s) for i, s in enumerate(species)}
+        futs = {ex.submit(collect_species, ln, random.Random(i)): ("species", ln.split("|")[0]) for i, ln in enumerate(lines)}
         futs.update({ex.submit(collect_ood, k, n, random.Random(1000 + i)): ("ood_" + k, n) for i, (k, n) in enumerate(ood)})
         res = {}
         for f in cf.as_completed(futs):
