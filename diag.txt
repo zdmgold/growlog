@@ -1,0 +1,16 @@
+Philodendron bipinnatifidum -> {'category': 'Category:Philodendron; Category:Thaumatophyllum bipinnatifidum', 'raw_files': 588, 'usable': 548, 'perm': 40, 'sa': 40}
+Alocasia amazonica -> {'category': 'Category:Alocasia × mortfontanensis; Category:Alocasia × mortfontanensis; Category:Alocasia × mortfontanensis', 'raw_files': 16, 'usable': 16, 'perm': 3, 'sa': 13}
+Rhaphidophora tetrasperma -> {'category': 'Category:Rhaphidophora tetrasperma', 'raw_files': 6, 'usable': 6, 'perm': 1, 'sa': 5}
+Calathea orbifolia -> {'category': 'Category:Calathea; Category:Goeppertia orbifolia', 'raw_files': 209, 'usable': 208, 'perm': 40, 'sa': 40}
+Calathea lancifolia -> {'category': 'Category:Calathea; Category:Goeppertia insignis; Category:Calathea', 'raw_files': 222, 'usable': 221, 'perm': 40, 'sa': 40}
+Calathea makoyana -> {'category': 'Category:Calathea; Category:Goeppertia makoyana', 'raw_files': 239, 'usable': 237, 'perm': 40, 'sa': 40}
+Dracaena marginata -> {'category': "Category:Dracaena marginata 'Tricolor'; Category:Dracaena marginata 'Tricolor'", 'raw_files': 19, 'usable': 19, 'perm': 3, 'sa': 16}
+Yucca elephantipes -> {'category': 'Category:Yucca gigantea; Category:Yucca gigantea', 'raw_files': 131, 'usable': 131, 'perm': 38, 'sa': 40}
+Schefflera actinophylla -> {'category': 'Category:Schefflera; Category:Heptapleurum actinophyllum', 'raw_files': 669, 'usable': 599, 'perm': 40, 'sa': 40}
+Haworthia fasciata -> {'category': 'Category:Haworthia; Category:Haworthiopsis attenuata; Category:Haworthiopsis fasciata', 'raw_files': 507, 'usable': 466, 'perm': 40, 'sa': 40}
+Senecio rowleyanus -> {'category': 'Category:Senecio; Category:Curio rowleyanus', 'raw_files': 637, 'usable': 555, 'perm': 40, 'sa': 40}
+Echinocactus grusonii -> {'category': 'Category:Echinocactus; Category:Kroenleinia grusonii', 'raw_files': 892, 'usable': 846, 'perm': 40, 'sa': 40}
+Phalaenopsis -> {'category': "Category:Phalaenopsis; Category:Phalaenopsis 'Cassandra'; Category:Phalaenopsis 'Cassandra'", 'raw_files': 1213, 'usable': 1078, 'perm': 40, 'sa': 40}
+Saintpaulia ionantha -> {'category': "Category:Saintpaulia 'Funambule'; Category:Streptocarpus ionanthus; Category:Saintpaulia 'Funambule'", 'raw_files': 175, 'usable': 134, 'perm': 26, 'sa': 40}
+Cissus rhombifolia -> {'category': 'Category:Cissus alata; Category:Cissus alata', 'raw_files': 38, 'usable': 36, 'perm': 8, 'sa': 28}
+Rosmarinus officinalis -> {'category': "Category:Rosmarinus officinalis 'Tuscan Blue'; Category:Salvia rosmarinus", 'raw_files': 122, 'usable': 118, 'perm': 16, 'sa': 40}
