@@ -1,0 +1,52 @@
+install: Success
+cold start (debug build): WaitTime: 10973 
+shot 01_home 313221B
+labels on home: GrowLog | Change language | Switch to dark theme | Settings | Good morning | Scan or add a plant to begin your garden | PLANT SCAN | Scan a plant | Identify a plant, check its health and start its care plan. | Open camera&#10;Open camera | Gallery&#10;Gallery | My scans&#10;My scans | Ask Paul&#10;Ask Paul | Add your API key&#10;Needed for plant scans and chat | My Garden | Home&#10;Home | Garden&#10;Garden | Schedule&#10;Schedule | Scans&#10;Scans
+tapped (324,2016)
+shot 02_garden 174388B
+tapped (756,2016)
+shot 03_schedule 156584B
+tapped (972,2016)
+shot 04_scans 146738B
+tapped (108,2016)
+shot 05_home_again 349259B
+tapped (699,225)
+shot 06_language 123471B
+tapped (962,225)
+shot 07_settings 174981B
+tapped (540,1690)
+shot 08_connect_ai 188718B
+tapped (540,1128)
+shot 09_camera 188718B
+tapped (324,2016)
+tapped (862,1804)
+shot 10_add_plant 186263B
+tapped (540,585)
+shot 11_in_app_camera 68288B
+tapped (540,2017)
+shot 12_scan_without_key 201174B
+== reminder test ==
+      android.permission.SCHEDULE_EXACT_ALARM
+      android.permission.SCHEDULE_EXACT_ALARM: granted=false
+[denied] appops exact alarm: No operations. Default mode: default 
+tapped (324,2016)
+tapped (862,1804)
+shot 13_denied_form 155768B
+NOT FOUND: Save Plant
+[denied] alarms for app: 0
+[denied] reminder error lines: 0
+[granted] appops exact alarm: SCHEDULE_EXACT_ALARM: allow 
+tapped (324,2016)
+tapped (862,1804)
+shot 13_granted_form 156286B
+NOT FOUND: Save Plant
+[granted] alarms for app: 0
+[granted] reminder error lines: 0
+process alive: 7306
+  Native Heap    55662    55632        4       20    56884    87824    58904    25670
+           Java Heap:    17896                          33080
+         Native Heap:    55632                          56884
+            Graphics:        0                              0
+           TOTAL PSS:   456724            TOTAL RSS:   577064       TOTAL SWAP PSS:      169
+error lines: 0
+ads log lines: 0

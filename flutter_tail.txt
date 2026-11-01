@@ -1,0 +1,6 @@
+11-01 10:17:35.567  7306  7328 D FlutterJNI: Beginning load of flutter...
+11-01 10:17:35.588  7306  7328 D FlutterJNI: flutter (null) was loaded normally!
+11-01 10:17:35.743  7306  7331 I flutter : [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+11-01 10:17:35.756  7306  7337 I flutter : The Dart VM service is listening on http://127.0.0.1:41261/rr9Sz0ES0Io=/
+11-01 10:17:39.791  7306  7306 I flutter : IAP not available on this device
+11-01 10:18:09.745  7306  7306 D InputMethodManager: showSoftInput() view=io.flutter.embedding.android.FlutterView{c6cfa54 VFE...... .F....ID 0,0-1080,2337 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
