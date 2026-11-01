@@ -1,0 +1,38 @@
+install: Success
+cold start (debug build): WaitTime: 10801 
+shot 01_home 295656B
+labels on home: Pixel Launcher isn't responding | Close app | Wait
+NOT FOUND: Garden
+NOT FOUND: Schedule
+NOT FOUND: Scans
+NOT FOUND: Home
+NOT FOUND: Change language
+NOT FOUND: Settings
+NOT FOUND: Add your API key Connect AI
+NOT FOUND: Open camera Scan a plant
+NOT FOUND: Garden
+NOT FOUND: Open camera Scan a plant
+shot 12_scan_without_key 295091B
+== reminder test ==
+      android.permission.SCHEDULE_EXACT_ALARM
+      android.permission.SCHEDULE_EXACT_ALARM: granted=false
+[denied] appops exact alarm: No operations. Default mode: default 
+NOT FOUND: Garden
+shot 13_denied_form 278190B
+NOT FOUND: Save Plant
+[denied] alarms for app: 0
+[denied] reminder error lines: 0
+[granted] appops exact alarm: SCHEDULE_EXACT_ALARM: allow 
+NOT FOUND: Garden
+shot 13_granted_form 278334B
+NOT FOUND: Save Plant
+[granted] alarms for app: 0
+[granted] reminder error lines: 0
+process alive: 6931
+  Native Heap    48136    48088       32       19    49328    67276    52296    11330
+           Java Heap:    14924                          29640
+         Native Heap:    48088                          49328
+            Graphics:        0                              0
+           TOTAL PSS:   433613            TOTAL RSS:   550496       TOTAL SWAP PSS:      177
+error lines: 0
+ads log lines: 0
