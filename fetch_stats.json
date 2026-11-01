@@ -1,0 +1,1035 @@
+{
+ "entries_requested": 7777,
+ "downloaded": 7777,
+ "per_species": [
+  {
+   "species": "Monstera deliciosa",
+   "category": "Category:Monstera deliciosa",
+   "raw_files": 322,
+   "usable": 279,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Monstera adansonii",
+   "category": "Category:Monstera adansonii",
+   "raw_files": 113,
+   "usable": 73,
+   "perm": 40,
+   "sa": 18
+  },
+  {
+   "species": "Epipremnum aureum",
+   "category": "Category:Epipremnum aureum",
+   "raw_files": 277,
+   "usable": 273,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Philodendron hederaceum",
+   "category": "Category:Philodendron hederaceum",
+   "raw_files": 62,
+   "usable": 62,
+   "perm": 25,
+   "sa": 37
+  },
+  {
+   "species": "Philodendron bipinnatifidum",
+   "category": "Category:Philodendron; Category:Thaumatophyllum bipinnatifidum",
+   "raw_files": 590,
+   "usable": 590,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Philodendron erubescens",
+   "category": "Category:Philodendron erubescens",
+   "raw_files": 71,
+   "usable": 71,
+   "perm": 10,
+   "sa": 40
+  },
+  {
+   "species": "Syngonium podophyllum",
+   "category": "Category:Syngonium podophyllum",
+   "raw_files": 112,
+   "usable": 111,
+   "perm": 30,
+   "sa": 40
+  },
+  {
+   "species": "Spathiphyllum wallisii",
+   "category": "Category:Spathiphyllum wallisii",
+   "raw_files": 70,
+   "usable": 69,
+   "perm": 17,
+   "sa": 40
+  },
+  {
+   "species": "Zamioculcas zamiifolia",
+   "category": "Category:Zamioculcas zamiifolia",
+   "raw_files": 112,
+   "usable": 109,
+   "perm": 34,
+   "sa": 40
+  },
+  {
+   "species": "Aglaonema commutatum",
+   "category": "Category:Aglaonema commutatum; Category:Aglaonema",
+   "raw_files": 254,
+   "usable": 252,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Dieffenbachia seguine",
+   "category": "Category:Dieffenbachia seguine",
+   "raw_files": 76,
+   "usable": 36,
+   "perm": 19,
+   "sa": 17
+  },
+  {
+   "species": "Anthurium andraeanum",
+   "category": "Category:Anthurium andraeanum",
+   "raw_files": 266,
+   "usable": 264,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Alocasia amazonica",
+   "category": "Category:Alocasia \u00d7 mortfontanensis; Category:Alocasia \u00d7 mortfontanensis",
+   "raw_files": 16,
+   "usable": 16,
+   "perm": 3,
+   "sa": 13
+  },
+  {
+   "species": "Alocasia zebrina",
+   "category": "Category:Alocasia zebrina",
+   "raw_files": 21,
+   "usable": 21,
+   "perm": 10,
+   "sa": 11
+  },
+  {
+   "species": "Colocasia esculenta",
+   "category": "Category:Colocasia esculenta",
+   "raw_files": 940,
+   "usable": 886,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Scindapsus pictus",
+   "category": "Category:Scindapsus pictus",
+   "raw_files": 32,
+   "usable": 32,
+   "perm": 15,
+   "sa": 17
+  },
+  {
+   "species": "Rhaphidophora tetrasperma",
+   "category": "Category:Rhaphidophora tetrasperma",
+   "raw_files": 6,
+   "usable": 6,
+   "perm": 1,
+   "sa": 5
+  },
+  {
+   "species": "Caladium bicolor",
+   "category": "Category:Caladium bicolor",
+   "raw_files": 145,
+   "usable": 137,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Calathea orbifolia",
+   "category": "Category:Calathea; Category:Goeppertia orbifolia",
+   "raw_files": 32,
+   "usable": 31,
+   "perm": 17,
+   "sa": 14
+  },
+  {
+   "species": "Calathea lancifolia",
+   "category": "Category:Calathea; Category:Goeppertia insignis; Category:Calathea",
+   "raw_files": 222,
+   "usable": 221,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Calathea makoyana",
+   "category": "Category:Calathea; Category:Goeppertia makoyana",
+   "raw_files": 208,
+   "usable": 206,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Maranta leuconeura",
+   "category": "Category:Maranta leuconeura",
+   "raw_files": 138,
+   "usable": 136,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Stromanthe thalia",
+   "category": "Category:Stromanthe thalia",
+   "raw_files": 50,
+   "usable": 50,
+   "perm": 11,
+   "sa": 39
+  },
+  {
+   "species": "Ctenanthe",
+   "category": null,
+   "raw_files": 0
+  },
+  {
+   "species": "Dracaena trifasciata",
+   "category": "Category:Dracaena trifasciata",
+   "raw_files": 374,
+   "usable": 328,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Dracaena fragrans",
+   "category": "Category:Dracaena fragrans",
+   "raw_files": 241,
+   "usable": 237,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Dracaena marginata",
+   "category": "Category:Dracaena marginata 'Tricolor'",
+   "raw_files": 19,
+   "usable": 19,
+   "perm": 3,
+   "sa": 16
+  },
+  {
+   "species": "Dracaena reflexa",
+   "category": "Category:Dracaena reflexa",
+   "raw_files": 344,
+   "usable": 304,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Chlorophytum comosum",
+   "category": "Category:Chlorophytum comosum",
+   "raw_files": 252,
+   "usable": 250,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Asparagus setaceus",
+   "category": "Category:Asparagus setaceus",
+   "raw_files": 55,
+   "usable": 53,
+   "perm": 26,
+   "sa": 27
+  },
+  {
+   "species": "Aspidistra elatior",
+   "category": "Category:Aspidistra elatior",
+   "raw_files": 49,
+   "usable": 48,
+   "perm": 16,
+   "sa": 32
+  },
+  {
+   "species": "Beaucarnea recurvata",
+   "category": "Category:Beaucarnea recurvata",
+   "raw_files": 44,
+   "usable": 44,
+   "perm": 39,
+   "sa": 5
+  },
+  {
+   "species": "Yucca elephantipes",
+   "category": "Category:Yucca gigantea; Category:Yucca gigantea",
+   "raw_files": 131,
+   "usable": 131,
+   "perm": 38,
+   "sa": 40
+  },
+  {
+   "species": "Ficus lyrata",
+   "category": "Category:Ficus lyrata",
+   "raw_files": 126,
+   "usable": 125,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Ficus elastica",
+   "category": "Category:Ficus elastica",
+   "raw_files": 439,
+   "usable": 395,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Ficus benjamina",
+   "category": "Category:Ficus benjamina",
+   "raw_files": 528,
+   "usable": 525,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Ficus microcarpa",
+   "category": "Category:Ficus microcarpa",
+   "raw_files": 833,
+   "usable": 750,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Ficus pumila",
+   "category": "Category:Ficus pumila",
+   "raw_files": 257,
+   "usable": 216,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Hedera helix",
+   "category": "Category:Hedera helix",
+   "raw_files": 1305,
+   "usable": 1135,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Schefflera arboricola",
+   "category": "Category:Schefflera arboricola",
+   "raw_files": 197,
+   "usable": 197,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Schefflera actinophylla",
+   "category": "Category:Schefflera; Category:Heptapleurum actinophyllum",
+   "raw_files": 685,
+   "usable": 684,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Fatsia japonica",
+   "category": "Category:Fatsia japonica",
+   "raw_files": 166,
+   "usable": 160,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Aloe vera",
+   "category": "Category:Aloe vera",
+   "raw_files": 729,
+   "usable": 673,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Crassula ovata",
+   "category": "Category:Crassula ovata",
+   "raw_files": 382,
+   "usable": 377,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Echeveria elegans",
+   "category": "Category:Echeveria elegans",
+   "raw_files": 70,
+   "usable": 70,
+   "perm": 15,
+   "sa": 40
+  },
+  {
+   "species": "Haworthia fasciata",
+   "category": "Category:Haworthia; Category:Haworthiopsis attenuata; Category:Haworthiopsis fasciata",
+   "raw_files": 504,
+   "usable": 463,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Sedum morganianum",
+   "category": "Category:Sedum morganianum",
+   "raw_files": 62,
+   "usable": 62,
+   "perm": 16,
+   "sa": 40
+  },
+  {
+   "species": "Senecio rowleyanus",
+   "category": "Category:Senecio",
+   "raw_files": 689,
+   "usable": 646,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Kalanchoe blossfeldiana",
+   "category": "Category:Kalanchoe blossfeldiana",
+   "raw_files": 255,
+   "usable": 254,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Kalanchoe daigremontiana",
+   "category": "Category:Kalanchoe daigremontiana",
+   "raw_files": 76,
+   "usable": 38,
+   "perm": 6,
+   "sa": 32
+  },
+  {
+   "species": "Opuntia microdasys",
+   "category": "Category:Opuntia microdasys",
+   "raw_files": 151,
+   "usable": 150,
+   "perm": 36,
+   "sa": 40
+  },
+  {
+   "species": "Echinocactus grusonii",
+   "category": "Category:Kroenleinia grusonii",
+   "raw_files": 642,
+   "usable": 599,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Mammillaria",
+   "category": "Category:Mammillaria",
+   "raw_files": 713,
+   "usable": 622,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Lithops",
+   "category": "Category:Lithops",
+   "raw_files": 200,
+   "usable": 200,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Euphorbia trigona",
+   "category": "Category:Euphorbia trigona",
+   "raw_files": 79,
+   "usable": 39,
+   "perm": 5,
+   "sa": 34
+  },
+  {
+   "species": "Euphorbia milii",
+   "category": "Category:Euphorbia milii",
+   "raw_files": 741,
+   "usable": 660,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Gasteria",
+   "category": "Category:Gasteria",
+   "raw_files": 339,
+   "usable": 318,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Schlumbergera truncata",
+   "category": "Category:Schlumbergera truncata",
+   "raw_files": 105,
+   "usable": 105,
+   "perm": 28,
+   "sa": 40
+  },
+  {
+   "species": "Rhipsalis",
+   "category": "Category:Rhipsalis",
+   "raw_files": 237,
+   "usable": 195,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Hoya carnosa",
+   "category": "Category:Hoya carnosa",
+   "raw_files": 144,
+   "usable": 143,
+   "perm": 29,
+   "sa": 40
+  },
+  {
+   "species": "Nephrolepis exaltata",
+   "category": "Category:Nephrolepis exaltata",
+   "raw_files": 137,
+   "usable": 134,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Platycerium bifurcatum",
+   "category": "Category:Platycerium bifurcatum",
+   "raw_files": 156,
+   "usable": 119,
+   "perm": 25,
+   "sa": 40
+  },
+  {
+   "species": "Adiantum",
+   "category": "Category:Adiantum",
+   "raw_files": 467,
+   "usable": 417,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Asplenium nidus",
+   "category": "Category:Asplenium nidus",
+   "raw_files": 225,
+   "usable": 223,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Davallia",
+   "category": "Category:Davallia",
+   "raw_files": 182,
+   "usable": 181,
+   "perm": 34,
+   "sa": 40
+  },
+  {
+   "species": "Chamaedorea elegans",
+   "category": "Category:Chamaedorea elegans",
+   "raw_files": 72,
+   "usable": 72,
+   "perm": 17,
+   "sa": 40
+  },
+  {
+   "species": "Dypsis lutescens",
+   "category": "Category:Dypsis lutescens",
+   "raw_files": 232,
+   "usable": 232,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Howea forsteriana",
+   "category": "Category:Howea forsteriana",
+   "raw_files": 69,
+   "usable": 68,
+   "perm": 27,
+   "sa": 40
+  },
+  {
+   "species": "Rhapis excelsa",
+   "category": "Category:Rhapis excelsa",
+   "raw_files": 140,
+   "usable": 139,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Phoenix roebelenii",
+   "category": "Category:Phoenix roebelenii",
+   "raw_files": 170,
+   "usable": 167,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Phalaenopsis",
+   "category": "Category:Phalaenopsis; Category:Phalaenopsis 'Cassandra'; Category:Phalaenopsis 'Cassandra'",
+   "raw_files": 1194,
+   "usable": 1152,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Saintpaulia ionantha",
+   "category": "Category:Saintpaulia 'Funambule'; Category:Streptocarpus ionanthus; Category:Saintpaulia 'Funambule'",
+   "raw_files": 174,
+   "usable": 133,
+   "perm": 27,
+   "sa": 40
+  },
+  {
+   "species": "Begonia rex",
+   "category": "Category:Begonia rex; Category:Begonia Rex Cultorum Group; Category:Begonia Rex Cultorum Group",
+   "raw_files": 115,
+   "usable": 73,
+   "perm": 29,
+   "sa": 40
+  },
+  {
+   "species": "Begonia maculata",
+   "category": "Category:Begonia maculata",
+   "raw_files": 42,
+   "usable": 42,
+   "perm": 6,
+   "sa": 36
+  },
+  {
+   "species": "Cyclamen persicum",
+   "category": "Category:Cyclamen persicum",
+   "raw_files": 388,
+   "usable": 342,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Hibiscus rosa-sinensis",
+   "category": "Category:Hibiscus rosa-sinensis",
+   "raw_files": 1263,
+   "usable": 1212,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Pelargonium",
+   "category": "Category:Pelargonium",
+   "raw_files": 1224,
+   "usable": 1169,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Gardenia jasminoides",
+   "category": "Category:Gardenia jasminoides",
+   "raw_files": 230,
+   "usable": 227,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Jasminum polyanthum",
+   "category": "Category:Jasminum polyanthum",
+   "raw_files": 68,
+   "usable": 67,
+   "perm": 24,
+   "sa": 40
+  },
+  {
+   "species": "Clivia miniata",
+   "category": "Category:Clivia miniata",
+   "raw_files": 290,
+   "usable": 283,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Hydrangea macrophylla",
+   "category": "Category:Hydrangea macrophylla",
+   "raw_files": 1067,
+   "usable": 1022,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Impatiens walleriana",
+   "category": "Category:Impatiens walleriana",
+   "raw_files": 341,
+   "usable": 297,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Streptocarpus",
+   "category": "Category:Streptocarpus",
+   "raw_files": 551,
+   "usable": 306,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Strelitzia reginae",
+   "category": "Category:Strelitzia reginae",
+   "raw_files": 446,
+   "usable": 402,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Pilea peperomioides",
+   "category": "Category:Pilea peperomioides",
+   "raw_files": 37,
+   "usable": 37,
+   "perm": 8,
+   "sa": 29
+  },
+  {
+   "species": "Peperomia obtusifolia",
+   "category": "Category:Peperomia obtusifolia",
+   "raw_files": 73,
+   "usable": 72,
+   "perm": 17,
+   "sa": 40
+  },
+  {
+   "species": "Peperomia argyreia",
+   "category": "Category:Peperomia argyreia; Category:Peperomia argyreia",
+   "raw_files": 32,
+   "usable": 32,
+   "perm": 7,
+   "sa": 25
+  },
+  {
+   "species": "Tradescantia zebrina",
+   "category": "Category:Tradescantia zebrina",
+   "raw_files": 141,
+   "usable": 139,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Tradescantia spathacea",
+   "category": "Category:Tradescantia spathacea",
+   "raw_files": 163,
+   "usable": 163,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Fittonia albivenis",
+   "category": "Category:Fittonia albivenis",
+   "raw_files": 123,
+   "usable": 122,
+   "perm": 27,
+   "sa": 40
+  },
+  {
+   "species": "Hypoestes phyllostachya",
+   "category": "Category:Hypoestes phyllostachya",
+   "raw_files": 121,
+   "usable": 121,
+   "perm": 26,
+   "sa": 40
+  },
+  {
+   "species": "Oxalis triangularis",
+   "category": "Category:Oxalis triangularis",
+   "raw_files": 155,
+   "usable": 118,
+   "perm": 39,
+   "sa": 40
+  },
+  {
+   "species": "Coleus scutellarioides",
+   "category": "Category:Coleus scutellarioides",
+   "raw_files": 563,
+   "usable": 562,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Codiaeum variegatum",
+   "category": "Category:Codiaeum variegatum",
+   "raw_files": 750,
+   "usable": 741,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Cordyline fruticosa",
+   "category": "Category:Cordyline fruticosa",
+   "raw_files": 756,
+   "usable": 716,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Pachira aquatica",
+   "category": "Category:Pachira aquatica",
+   "raw_files": 155,
+   "usable": 149,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Cissus rhombifolia",
+   "category": "Category:Cissus alata; Category:Cissus alata",
+   "raw_files": 38,
+   "usable": 36,
+   "perm": 8,
+   "sa": 28
+  },
+  {
+   "species": "Plectranthus",
+   "category": "Category:Plectranthus",
+   "raw_files": 371,
+   "usable": 368,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Radermachera",
+   "category": "Category:Radermachera",
+   "raw_files": 95,
+   "usable": 95,
+   "perm": 36,
+   "sa": 40
+  },
+  {
+   "species": "Ocimum basilicum",
+   "category": "Category:Ocimum basilicum",
+   "raw_files": 759,
+   "usable": 700,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Mentha spicata",
+   "category": "Category:Mentha spicata",
+   "raw_files": 238,
+   "usable": 197,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Rosmarinus officinalis",
+   "category": "Category:Rosmarinus officinalis 'Tuscan Blue'; Category:Salvia rosmarinus",
+   "raw_files": 619,
+   "usable": 553,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Lavandula angustifolia",
+   "category": "Category:Lavandula angustifolia",
+   "raw_files": 436,
+   "usable": 395,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Thymus vulgaris",
+   "category": "Category:Thymus vulgaris",
+   "raw_files": 243,
+   "usable": 196,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Petroselinum crispum",
+   "category": "Category:Petroselinum crispum",
+   "raw_files": 357,
+   "usable": 293,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Salvia officinalis",
+   "category": "Category:Salvia officinalis",
+   "raw_files": 341,
+   "usable": 336,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Origanum vulgare",
+   "category": "Category:Origanum vulgare",
+   "raw_files": 684,
+   "usable": 642,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Cymbopogon citratus",
+   "category": "Category:Cymbopogon citratus",
+   "raw_files": 202,
+   "usable": 199,
+   "perm": 40,
+   "sa": 40
+  },
+  {
+   "species": "Taraxacum officinale",
+   "category": "Category:Taraxacum officinale",
+   "kind": "plant",
+   "usable": 159
+  },
+  {
+   "species": "Bellis perennis",
+   "category": "Category:Bellis perennis",
+   "kind": "plant",
+   "usable": 153
+  },
+  {
+   "species": "Quercus robur",
+   "category": "Category:Quercus robur",
+   "kind": "plant",
+   "usable": 199
+  },
+  {
+   "species": "Rosa canina",
+   "category": "Category:Rosa canina",
+   "kind": "plant",
+   "usable": 193
+  },
+  {
+   "species": "Trifolium repens",
+   "category": "Category:Trifolium repens",
+   "kind": "plant",
+   "usable": 155
+  },
+  {
+   "species": "Fagus sylvatica",
+   "category": "Category:Fagus sylvatica",
+   "kind": "plant",
+   "usable": 197
+  },
+  {
+   "species": "Acer platanoides",
+   "category": "Category:Acer platanoides",
+   "kind": "plant",
+   "usable": 197
+  },
+  {
+   "species": "Urtica dioica",
+   "category": "Category:Urtica dioica",
+   "kind": "plant",
+   "usable": 160
+  },
+  {
+   "species": "Pinus sylvestris",
+   "category": "Category:Pinus sylvestris",
+   "kind": "plant",
+   "usable": 197
+  },
+  {
+   "species": "Betula pendula",
+   "category": "Category:Betula pendula",
+   "kind": "plant",
+   "usable": 196
+  },
+  {
+   "species": "Zea mays",
+   "category": "Category:Zea mays",
+   "kind": "plant",
+   "usable": 186
+  },
+  {
+   "species": "Triticum aestivum",
+   "category": "Category:Triticum aestivum",
+   "kind": "plant",
+   "usable": 186
+  },
+  {
+   "species": "Solanum lycopersicum",
+   "category": "Category:Solanum lycopersicum",
+   "kind": "plant",
+   "usable": 184
+  },
+  {
+   "species": "Malus domestica",
+   "category": "Category:Malus domestica",
+   "kind": "plant",
+   "usable": 197
+  },
+  {
+   "species": "Nymphaea alba",
+   "category": "Category:Nymphaea alba",
+   "kind": "plant",
+   "usable": 159
+  },
+  {
+   "species": "Papaver rhoeas",
+   "category": "Category:Papaver rhoeas",
+   "kind": "plant",
+   "usable": 156
+  },
+  {
+   "species": "Digitalis purpurea",
+   "category": "Category:Digitalis purpurea",
+   "kind": "plant",
+   "usable": 160
+  },
+  {
+   "species": "Calluna vulgaris",
+   "category": "Category:Calluna vulgaris",
+   "kind": "plant",
+   "usable": 155
+  },
+  {
+   "species": "Ranunculus acris",
+   "category": "Category:Ranunculus acris",
+   "kind": "plant",
+   "usable": 200
+  },
+  {
+   "species": "Equisetum arvense",
+   "category": "Category:Equisetum arvense",
+   "kind": "plant",
+   "usable": 158
+  },
+  {
+   "species": "Felis catus",
+   "category": "Category:Felis silvestris catus",
+   "kind": "other",
+   "usable": 185
+  },
+  {
+   "species": "Sofas",
+   "category": "Category:Social sofas",
+   "kind": "other",
+   "usable": 160
+  },
+  {
+   "species": "Bookcases",
+   "category": "Category:Bookcases",
+   "kind": "other",
+   "usable": 190
+  },
+  {
+   "species": "Living rooms",
+   "category": "Category:Living rooms",
+   "kind": "other",
+   "usable": 190
+  },
+  {
+   "species": "Kitchens",
+   "category": "Category:Kitchens",
+   "kind": "other",
+   "usable": 187
+  },
+  {
+   "species": "Automobiles",
+   "category": "Category:Automobiles",
+   "kind": "other",
+   "usable": 197
+  },
+  {
+   "species": "Smartphones",
+   "category": "Category:Smartphones",
+   "kind": "other",
+   "usable": 189
+  },
+  {
+   "species": "Pizza",
+   "category": "Category:Pizza Pizza",
+   "kind": "other",
+   "usable": 49
+  }
+ ]
+}
