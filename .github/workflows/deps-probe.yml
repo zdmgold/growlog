@@ -1,0 +1,27 @@
+name: Deps Probe
+on:
+  push:
+    branches: [ci-deps]
+permissions:
+  contents: write
+jobs:
+  deps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+      - run: flutter pub add flutter_onnxruntime connectivity_plus crypto
+      - run: git diff pubspec.yaml > pubspec.diff; cat pubspec.diff
+      - name: Publish
+        if: always()
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-deps; git rm -rf . -q || true
+          cp "$GITHUB_WORKSPACE/pubspec.diff" "$GITHUB_WORKSPACE/pubspec.yaml" "$GITHUB_WORKSPACE/pubspec.lock" .
+          git add -A; git commit -q -m deps; git push -f origin ci-report-deps
