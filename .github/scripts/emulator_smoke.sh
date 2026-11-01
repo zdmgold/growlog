@@ -54,11 +54,14 @@ reminder_case(){ # reminder_case NAME TAG
   tap "Garden" && tap "Add Plant" && sleep 2
   adb shell input tap 540 1005; sleep 1; adb shell input text "$1"; sleep 1; adb shell input keyevent 4; sleep 1
   shot "13_${2}_form"
-  adb shell input swipe 540 1700 540 500 400; sleep 1
-  tap "Save Plant" && sleep 7 && shot "14_${2}_after_save"
+  for i in 1 2 3 4 5 6; do
+    adb shell input swipe 540 1800 540 600 500; sleep 1; dump cur
+    python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Save Plant" >/dev/null 2>&1 && break
+  done
+  tap "Save Plant" && sleep 8 && shot "14_${2}_after_save"
   say "[$2] alarms for app: $(adb shell dumpsys alarm 2>/dev/null | grep -c "$PKG")"
   adb shell dumpsys alarm 2>/dev/null | grep -B1 -A3 "$PKG" | head -24 > "$OUT/alarms_$2.txt"
-  adb logcat -d | grep -E "PlatformException|exact_alarms|Unhandled Exception|MethodChannel#dexterous|FlutterLocalNotifications|E flutter" | cut -c1-320 | head -20 > "$OUT/reminder_errors_$2.txt"
+  adb logcat -d | grep -E "PlatformException|exact_alarms|Unhandled Exception|MethodChannel#dexterous|FlutterLocalNotifications|NotificationService|E flutter" | cut -c1-320 | head -20 > "$OUT/reminder_errors_$2.txt"
   say "[$2] reminder error lines: $(wc -l < "$OUT/reminder_errors_$2.txt")"
 }
 adb shell dumpsys package "$PKG" 2>/dev/null | grep -E "SCHEDULE_EXACT_ALARM" | head -2 | tee -a "$LOG"
