@@ -59,7 +59,7 @@ jobs:
           git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
           cd /tmp/rep
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan ci-report-emu; git rm -rf . -q || true
+          git checkout --orphan ci-report-emu-${{ github.ref_name }}; git rm -rf . -q || true
           cp /tmp/emu/*.png /tmp/emu/*.txt /tmp/emu/*.xml . 2>/dev/null || true
           rm -f logcat_full.txt
-          git add -A; git commit -q -m "emulator smoke" || true; git push -f origin ci-report-emu
+          git add -A; git commit -q -m "emulator smoke" || true; git push -f origin ci-report-emu-${{ github.ref_name }}
