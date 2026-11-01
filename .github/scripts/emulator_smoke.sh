@@ -43,10 +43,28 @@ tap "Open camera" "Scan a plant" && sleep 6 && shot 09_camera && adb shell input
 tap "Garden" && tap "Add Plant" "Add new plant" && shot 10_add_plant && tap "Add Photo" && sleep 6 && shot 11_in_app_camera && adb shell input keyevent 4 && sleep 2 && adb shell input keyevent 4 && sleep 2
 tap "Open camera" "Scan a plant"; shot 12_scan_without_key
 
+
+# ---- reminder test: add a plant by hand, then check whether an alarm/notification was really scheduled ----
+say "== reminder test =="
+adb shell am force-stop "$PKG"; sleep 2
+adb logcat -c
+adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 14
+adb shell dumpsys package "$PKG" 2>/dev/null | grep -E "SCHEDULE_EXACT_ALARM|USE_EXACT_ALARM|POST_NOTIFICATIONS" | head -6 | tee -a "$LOG"
+say "appops exact alarm: $(adb shell appops get "$PKG" SCHEDULE_EXACT_ALARM 2>&1 | tr '\n' ' ')"
+tap "Garden" && tap "Add Plant" && sleep 2
+tap "Plant name" && adb shell input text "Fern" && sleep 1 && adb shell input keyevent 4 && sleep 1
+shot 13_form_filled
+adb shell input swipe 540 1700 540 500 400; sleep 1
+tap "Save Plant" && sleep 6 && shot 14_after_save
+say "alarms for app: $(adb shell dumpsys alarm 2>/dev/null | grep -c "$PKG")"
+adb shell dumpsys alarm 2>/dev/null | grep -B1 -A4 "$PKG" | head -30 > "$OUT/alarms.txt"
+adb shell dumpsys notification 2>/dev/null | grep -i -A3 "growlog_care" | head -12 > "$OUT/notif_channel.txt"
+adb logcat -d | grep -E "PlatformException|exact_alarms|Unhandled Exception|MethodChannel#dexterous|FlutterLocalNotifications" | cut -c1-300 | head -30 > "$OUT/reminder_errors.txt"
+say "reminder errors: $(wc -l < "$OUT/reminder_errors.txt")"
 PID=$(adb shell pidof "$PKG" | tr -d '\r'); say "process alive: ${PID:-NO}"
 adb shell dumpsys meminfo "$PKG" 2>/dev/null | grep -E "TOTAL PSS|TOTAL:|Java Heap|Native Heap|Graphics" | head -6 > "$OUT/meminfo.txt"; cat "$OUT/meminfo.txt" | tee -a "$LOG"
 adb logcat -d > "$OUT/logcat_full.txt" 2>&1
-grep -E "FATAL EXCEPTION|Unhandled Exception|RenderFlex overflowed|EXCEPTION CAUGHT|E/flutter|ANR in com.zdmgold" "$OUT/logcat_full.txt" | head -40 > "$OUT/errors.txt"
+grep -E " E (flutter|MethodChannel|AndroidRuntime)|FATAL EXCEPTION|Unhandled Exception|RenderFlex overflowed|EXCEPTION CAUGHT|ANR in com.zdmgold|PlatformException" "$OUT/logcat_full.txt" | grep -v "uiautomator\|Launcher" | cut -c1-260 | head -40 > "$OUT/errors.txt"
 say "error lines: $(wc -l < "$OUT/errors.txt")"
 grep -E "com.google.android.gms.ads|GoogleMobileAds|MobileAdsInitProvider|Ads\\(|AdMob" "$OUT/logcat_full.txt" | grep -v "AdsDynamite\|AdsFdr\|adservices" | head -25 > "$OUT/ads.txt"; say "ads log lines: $(wc -l < "$OUT/ads.txt")"
 grep -E "flutter" "$OUT/logcat_full.txt" | tail -60 > "$OUT/flutter_tail.txt"
