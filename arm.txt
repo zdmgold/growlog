@@ -1,0 +1,80 @@
+# ARM benchmark (GitHub ubuntu-24.04-arm runner)
+
+[0;93m2026-11-01 09:49:17.477409598 [W:onnxruntime:Default, device_discovery.cc:95 GetPciBusId] Skipping pci_bus_id for PCI path at "/sys/devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/5620e0c7-8062-4dce-aeb7-520c7ef76171" because filename "5620e0c7-8062-4dce-aeb7-520c7ef76171" did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+[m
+{
+ "model": "bioclip2_image_int8.onnx",
+ "size_MB": 308.6,
+ "machine": "aarch64",
+ "ort": "1.31.1",
+ "lscpu": [
+  "CPU(s):                                  4",
+  "Model name:                              Neoverse-N2"
+ ],
+ "has_dotprod": true,
+ "has_i8mm": true,
+ "runs": [
+  {
+   "threads": 1,
+   "load_s": 0.91,
+   "median_ms": 853,
+   "p90_ms": 856,
+   "peak_rss_after_load_MB": 587,
+   "peak_rss_after_runs_MB": 609
+  },
+  {
+   "threads": 2,
+   "load_s": 0.79,
+   "median_ms": 443,
+   "p90_ms": 444,
+   "peak_rss_after_load_MB": 609,
+   "peak_rss_after_runs_MB": 609
+  },
+  {
+   "threads": 4,
+   "load_s": 0.82,
+   "median_ms": 234,
+   "p90_ms": 236,
+   "peak_rss_after_load_MB": 609,
+   "peak_rss_after_runs_MB": 609
+  }
+ ]
+}
+[0;93m2026-11-01 09:49:55.452966144 [W:onnxruntime:Default, device_discovery.cc:95 GetPciBusId] Skipping pci_bus_id for PCI path at "/sys/devices/LNXSYSTM:00/LNXSYBUS:00/ACPI0004:00/MSFT1000:00/5620e0c7-8062-4dce-aeb7-520c7ef76171" because filename "5620e0c7-8062-4dce-aeb7-520c7ef76171" did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+[m
+{
+ "model": "bioclip_image_int8.onnx",
+ "size_MB": 89.3,
+ "machine": "aarch64",
+ "ort": "1.31.1",
+ "lscpu": [
+  "CPU(s):                                  4",
+  "Model name:                              Neoverse-N2"
+ ],
+ "has_dotprod": true,
+ "has_i8mm": true,
+ "runs": [
+  {
+   "threads": 1,
+   "load_s": 0.3,
+   "median_ms": 203,
+   "p90_ms": 204,
+   "peak_rss_after_load_MB": 214,
+   "peak_rss_after_runs_MB": 225
+  },
+  {
+   "threads": 2,
+   "load_s": 0.26,
+   "median_ms": 108,
+   "p90_ms": 108,
+   "peak_rss_after_load_MB": 225,
+   "peak_rss_after_runs_MB": 225
+  },
+  {
+   "threads": 4,
+   "load_s": 0.26,
+   "median_ms": 58,
+   "p90_ms": 61,
+   "peak_rss_after_load_MB": 225,
+   "peak_rss_after_runs_MB": 225
+  }
+ ]
+}
