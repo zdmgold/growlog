@@ -11,6 +11,7 @@ import 'services/notification_service.dart';
 import 'services/admob_service.dart';
 import 'widgets/ad_slot.dart';
 import 'services/ai/ai_settings.dart';
+import 'services/offline/offline_model_service.dart';
 import 'services/interstitial_service.dart';
 import 'services/scan_store.dart';
 import 'services/iap_service.dart';
@@ -24,6 +25,7 @@ void main() async {
 
   await NotificationService.initialize();
   await AiSettings.instance.load();
+  await OfflineModelService.instance.load();
   await ScanStore.instance.load();
   unawaited(InterstitialService.preload());
   AdMobService.initialize();
