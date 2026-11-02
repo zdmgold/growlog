@@ -1,4 +1,6 @@
 import '../services/ai/ai_settings.dart';
+import '../services/offline/offline_model_service.dart';
+import '../widgets/identifier_gate_sheet.dart';
 import '../widgets/ad_slot.dart';
 import 'ai_setup_screen.dart';
 import 'package:flutter/material.dart';
@@ -266,12 +268,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: AppSpacing.lg),
           const _SectionLabel(text: 'AI'),
           ListenableBuilder(
-            listenable: AiSettings.instance,
+            listenable: Listenable.merge([AiSettings.instance, OfflineModelService.instance]),
             builder: (context, _) {
               final ai = AiSettings.instance;
+              final off = OfflineModelService.instance;
               return _Group(
                 isDark: isDark,
                 children: [
+                  _SettingsTile(
+                    icon: PhosphorRegular.downloadSimple,
+                    label: 'Offline model',
+                    subtitle: off.isInstalled
+                        ? 'Installed. Identifies plants without internet. Tap to remove.'
+                        : off.isDownloading
+                            ? 'Downloading… ${(off.progress * 100).clamp(0, 100).toStringAsFixed(0)}%'
+                            : off.isWaitingForWifi
+                                ? 'Waiting for Wi-Fi'
+                                : 'Download to identify plants without internet (about 309 MB)',
+                    onTap: () async {
+                      if (off.isInstalled) {
+                        final remove = await showDialog<bool>(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text('Remove the offline model?'),
+                            content: const Text(
+                                'You can download it again later. Your plants and photos are not affected.'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx, true),
+                                child: const Text('Remove'),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (remove == true) await off.remove();
+                      } else {
+                        await showIdentifierGate(context);
+                      }
+                    },
+                  ),
                   _SettingsTile(
                     icon: PhosphorRegular.key,
                     label: ai.isConfigured
