@@ -45,6 +45,59 @@ try:
     print('screen text:',' | '.join(dict.fromkeys(x for x in v if x.strip()))[:700])
 except Exception as e: print('no dump',e)
 PY
+
+# ---- real plant photos through the Gallery picker ----
+pick_first_thumb(){ python3 - "$1" <<'PYX'
+import re, sys
+import xml.etree.ElementTree as ET
+best = None
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    rid = n.get("resource-id", "")
+    desc = (n.get("content-desc") or "")
+    if "icon_thumbnail" in rid or desc.lower().startswith("photo"):
+        b = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds", ""))
+        if b:
+            l, t, r, bt = map(int, b.groups())
+            if r > l and bt > t and (best is None or (t, l) < best[0]):
+                best = ((t, l), ((l + r) // 2, (t + bt) // 2))
+if best:
+    print(best[1][0], best[1][1])
+else:
+    sys.exit(1)
+PYX
+}
+i=0
+for f in $(ls /tmp/photos/*.jpg 2>/dev/null | sort); do
+  base=$(basename "$f" .jpg); say "== photo $base =="
+  adb push "$f" "/sdcard/Pictures/$base.jpg" >/dev/null 2>&1
+  adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file:///sdcard/Pictures/$base.jpg" >/dev/null 2>&1; sleep 3
+  adb shell am force-stop "$PKG"; sleep 2
+  adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 14
+  tap "Gallery" || { i=$((i+1)); continue; }
+  sleep 5; shot "p${i}_picker"; dump
+  XY=$(pick_first_thumb "$OUT/cur.xml") || XY="200 900"
+  set -- $XY; adb shell input tap "$1" "$2"; say "picked thumbnail at ($1,$2)"
+  T2=$(date +%s); R2="timeout"
+  for k in $(seq 1 45); do
+    sleep 4; dump
+    if grep -q "Save to garden" "$OUT/cur.xml"; then R2="guesses shown"; break; fi
+    if grep -q "not sure what this is" "$OUT/cur.xml"; then R2="not sure"; break; fi
+    if grep -q "Something went wrong" "$OUT/cur.xml"; then R2="error screen"; break; fi
+  done
+  say "photo $base -> $R2 after $(( $(date +%s) - T2 ))s"
+  shot "p${i}_result"
+  python3 - <<'PYX' | tee -a "$LOG"
+import re
+try:
+    s=open('/tmp/emu/cur.xml',encoding='utf8').read()
+    v=re.findall(r'(?:text|content-desc)="([^"]+)"',s)
+    print('  screen:',' | '.join(dict.fromkeys(x for x in v if x.strip()))[:420])
+except Exception as e: print('  no dump',e)
+PYX
+  adb shell input keyevent 4; sleep 2
+  i=$((i+1))
+done
+
 adb shell dumpsys meminfo "$PKG" 2>/dev/null | grep -E "TOTAL PSS|TOTAL RSS|Native Heap" | head -4 | tee -a "$LOG"
 adb logcat -d > "$OUT/logcat_full.txt" 2>&1
 grep -E " E (flutter|MethodChannel|AndroidRuntime|OrtJNI|onnx)|FATAL EXCEPTION|Unhandled Exception|PlatformException|OfflineModel|OfflineIdentify" "$OUT/logcat_full.txt" | cut -c1-300 | head -40 > "$OUT/errors.txt"

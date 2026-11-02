@@ -39,6 +39,34 @@ jobs:
       - run: flutter pub get
       - run: flutter gen-l10n
       - run: flutter build apk --debug
+      - name: Download real plant photos for the test
+        run: |
+          pip install requests
+          python3 - <<'EOF'
+          import requests, re, os, random
+          H = {"User-Agent": "GrowLogEmuTest/0.1 (https://github.com/zdmgold/growlog; evaluation only)"}
+          API = "https://commons.wikimedia.org/w/api.php"
+          os.makedirs("/tmp/photos", exist_ok=True)
+          want = ["Monstera deliciosa", "Aloe vera", "Epipremnum aureum", "Zamioculcas zamiifolia", "Ficus lyrata"]
+          for i, name in enumerate(want):
+              try:
+                  m = requests.get(API, params={"action":"query","list":"categorymembers","cmtitle":"Category:"+name,"cmtype":"file","cmlimit":"60","format":"json"}, headers=H, timeout=40).json()["query"]["categorymembers"]
+                  titles = [x["title"] for x in m if x["title"].lower().endswith((".jpg", ".jpeg"))][:40]
+                  d = requests.get(API, params={"action":"query","titles":"|".join(titles),"prop":"imageinfo","iiprop":"url|size|extmetadata","iiurlwidth":"1000","format":"json"}, headers=H, timeout=40).json()["query"]["pages"]
+                  done = False
+                  for pg in d.values():
+                      ii = (pg.get("imageinfo") or [{}])[0]
+                      lic = (ii.get("extmetadata", {}).get("LicenseShortName", {}) or {}).get("value", "")
+                      if ii.get("thumburl") and min(ii.get("width", 0), ii.get("height", 0)) >= 700 and re.match(r"(CC0|Public domain|CC BY)", lic):
+                          r = requests.get(ii["thumburl"], headers=H, timeout=60)
+                          if r.status_code == 200:
+                              open("/tmp/photos/%d_%s.jpg" % (i, name.replace(" ", "_")), "wb").write(r.content)
+                              print("got", name, lic, len(r.content)); done = True; break
+                  if not done: print("no photo for", name)
+              except Exception as e:
+                  print("failed", name, e)
+          EOF
+          ls -la /tmp/photos
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
