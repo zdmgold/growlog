@@ -24,6 +24,8 @@ workflows:
       - name: Generate the iOS project files
         script: |
           flutter create --platforms=ios .
+          # The offline model runtime needs iOS 16 or later.
+          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 15.0/IPHONEOS_DEPLOYMENT_TARGET = 16.0/g' ios/Runner.xcodeproj/project.pbxproj
       - name: Install CocoaPods
         script: |
           cd ios
