@@ -85,6 +85,7 @@ jobs:
       - name: iOS compile check
         shell: bash
         run: |
+          set +e
           R=/tmp/ios-report.txt
           : > $R
           FAIL=0
