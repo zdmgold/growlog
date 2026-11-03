@@ -70,19 +70,19 @@ class ConnectAiCard extends StatelessWidget {
           );
         }
         if (off.isInstalled) {
-          return pill('Offline model ready', 'Offline model ready', null);
+          return pill(context.l10n.offReady, context.l10n.offReady, null);
         }
         final busy = off.isBusy;
         final title = off.isDownloading
-            ? 'Downloading offline model'
+            ? context.l10n.offDownloadingCard
             : off.isWaitingForWifi
-                ? 'Waiting for Wi-Fi'
-                : 'Set up plant identification';
+                ? context.l10n.offWaitingWifi
+                : context.l10n.offSetupTitle;
         final subtitle = off.isDownloading
-            ? '${(off.progress * 100).clamp(0, 100).toStringAsFixed(0)}%  ·  tap to see progress'
+            ? context.l10n.offTapProgress((off.progress * 100).clamp(0, 100).toStringAsFixed(0))
             : off.isWaitingForWifi
-                ? 'It will start when you connect to Wi-Fi'
-                : 'Download the offline model or connect your own AI key';
+                ? context.l10n.offWaitingWifiSub
+                : context.l10n.offSetupSub;
         return Material(
           color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
           borderRadius: BorderRadius.circular(AppRadii.lg),
