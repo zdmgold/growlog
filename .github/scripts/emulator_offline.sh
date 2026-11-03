@@ -54,7 +54,7 @@ best = None
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     rid = n.get("resource-id", "")
     desc = (n.get("content-desc") or "")
-    if "icon_thumbnail" in rid or desc.lower().startswith("photo"):
+    if "icon_thumbnail" in rid or desc.lower().startswith("photo taken"):
         b = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds", ""))
         if b:
             l, t, r, bt = map(int, b.groups())
@@ -74,7 +74,7 @@ for f in $(ls /tmp/photos/*.jpg 2>/dev/null | sort); do
   adb shell am force-stop "$PKG"; sleep 2
   adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 14
   tap "Gallery" || { i=$((i+1)); continue; }
-  sleep 5; shot "p${i}_picker"; dump
+  sleep 5; shot "photo_${base}_picker"; dump
   XY=$(pick_first_thumb "$OUT/cur.xml") || XY="200 900"
   set -- $XY; adb shell input tap "$1" "$2"; say "picked thumbnail at ($1,$2)"
   T2=$(date +%s); R2="timeout"
@@ -85,7 +85,7 @@ for f in $(ls /tmp/photos/*.jpg 2>/dev/null | sort); do
     if grep -q "Something went wrong" "$OUT/cur.xml"; then R2="error screen"; break; fi
   done
   say "photo $base -> $R2 after $(( $(date +%s) - T2 ))s"
-  shot "p${i}_result"
+  shot "photo_${base}_result"
   python3 - <<'PYX' | tee -a "$LOG"
 import re
 try:
