@@ -7,7 +7,7 @@ APK=build/app/outputs/flutter-apk/app-debug.apk
 LOG="$OUT/steps.txt"; : > "$LOG"
 say(){ echo "$*" | tee -a "$LOG"; }
 shot(){ adb exec-out screencap -p > "$OUT/$1.png"; say "shot $1"; }
-dump(){ for i in 1 2 3; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && break; sleep 2; done; adb pull /sdcard/ui.xml "$OUT/cur.xml" >/dev/null 2>&1; }
+dump(){ for t in 1 2 3 4 5 6; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; adb pull /sdcard/ui.xml "$OUT/cur.xml" >/dev/null 2>&1; [ "$(grep -o '<node' "$OUT/cur.xml" 2>/dev/null | wc -l)" -ge 5 ] && break; sleep 3; done; }
 tap(){ dump; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "$@") || { say "NOT FOUND: $*"; return 1; }; set -- $XY; adb shell input tap "$1" "$2"; say "tapped ($1,$2)"; sleep 3; return 0; }
 
 adb install -r -g "$APK" >"$OUT/install.txt" 2>&1; say "install: $(tail -1 "$OUT/install.txt")"
@@ -75,7 +75,7 @@ for f in $(ls /tmp/photos/*.jpg 2>/dev/null | sort); do
   adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 14
   tap "Gallery" || { i=$((i+1)); continue; }
   sleep 5; shot "photo_${base}_picker"; dump
-  XY=$(pick_first_thumb "$OUT/cur.xml") || XY="200 900"
+  XY=$(pick_first_thumb "$OUT/cur.xml") || XY="180 1580"
   set -- $XY; adb shell input tap "$1" "$2"; say "picked thumbnail at ($1,$2)"
   T2=$(date +%s); R2="timeout"
   for k in $(seq 1 45); do
