@@ -41,7 +41,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   IdentifyResult? _result;
   String? _selected;
   bool _saving = false;
-  String? _error;
+  bool _failed = false;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   Future<void> _run() async {
     setState(() {
       _phase = _Phase.analyzing;
-      _error = null;
+      _failed = false;
     });
     try {
       final r = await OfflineModelService.instance.identify(widget.imagePath);
@@ -70,7 +70,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       if (!mounted) return;
       setState(() {
         _phase = _Phase.error;
-        _error = 'Could not identify this photo on the phone. Try again with a clearer photo.';
+        _failed = true;
       });
     }
   }
@@ -159,7 +159,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(PhosphorRegular.arrowLeft, color: ink),
                   ),
-                  Text('Identify', style: AppTypography.title1.copyWith(color: ink)),
+                  Text(context.l10n.offIdentify, style: AppTypography.title1.copyWith(color: ink)),
                 ],
               ),
             ),
@@ -201,28 +201,29 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
         const Center(child: CircularProgressIndicator(color: AppColors.accent)),
         const SizedBox(height: AppSpacing.md),
         Center(
-          child: Text('Identifying on this phone…',
+          child: Text(context.l10n.offIdentifying,
               style: AppTypography.headline.copyWith(color: ink)),
         ),
         const SizedBox(height: AppSpacing.xs),
         Center(
-          child: Text('No internet needed. This can take a few seconds.',
+          child: Text(context.l10n.offNoInternetNeeded,
               textAlign: TextAlign.center,
               style: AppTypography.footnote.copyWith(color: sub)),
         ),
       ];
 
   List<Widget> _errorView(Color ink, Color sub, bool hasKey) => [
-        Text('Something went wrong',
+        Text(context.l10n.offWentWrong,
             style: AppTypography.title1.copyWith(color: ink)),
         const SizedBox(height: AppSpacing.xs),
-        Text(_error ?? '', style: AppTypography.callout.copyWith(color: sub)),
+        Text(context.l10n.offIdentifyError,
+            style: AppTypography.callout.copyWith(color: sub)),
         const SizedBox(height: AppSpacing.md),
-        FilledButton(onPressed: _run, child: const Text('Try again')),
+        FilledButton(onPressed: _run, child: Text(context.l10n.tryAgain)),
         if (hasKey) ...[
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(
-              onPressed: _secondOpinion, child: const Text('Ask the AI instead')),
+              onPressed: _secondOpinion, child: Text(context.l10n.offAskAiInstead)),
         ],
       ];
 
@@ -230,36 +231,36 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
     final r = _result!;
     if (!r.accepted || r.guesses.isEmpty) {
       return [
-        Text("I'm not sure what this is",
+        Text(context.l10n.offNotSure,
             style: AppTypography.title1.copyWith(color: ink)),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          "It doesn't look like a plant I know yet. Try a closer photo of a leaf or the whole plant in good light.",
+          context.l10n.offNotSureHint,
           style: AppTypography.callout.copyWith(color: sub),
         ),
         const SizedBox(height: AppSpacing.md),
         FilledButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Take another photo')),
+            child: Text(context.l10n.offTakeAnother)),
         if (hasKey) ...[
           const SizedBox(height: AppSpacing.sm),
           OutlinedButton(
               onPressed: _secondOpinion,
-              child: const Text('Second opinion with AI')),
+              child: Text(context.l10n.offSecondOpinion)),
         ],
       ];
     }
     final top = r.guesses.take(3).toList();
     return [
       Text(
-        r.confident ? 'Looks like this' : 'Which one is it?',
+        r.confident ? context.l10n.offLooksLikeThis : context.l10n.offWhichOne,
         style: AppTypography.title1.copyWith(color: ink),
       ),
       const SizedBox(height: AppSpacing.xs),
       Text(
         r.confident
-            ? 'Identified on this phone. Pick another if it is not right.'
-            : 'These are the closest matches. Tap the right one.',
+            ? context.l10n.offConfidentSub
+            : context.l10n.offPickSub,
         style: AppTypography.callout.copyWith(color: sub),
       ),
       const SizedBox(height: AppSpacing.md),
@@ -274,13 +275,13 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       ],
       const SizedBox(height: AppSpacing.xs),
       Text(
-        "Health isn't checked offline. After saving, use Doctor on the plant with an AI key for a health check.",
+        context.l10n.offHealthNote,
         style: AppTypography.footnote.copyWith(color: sub),
       ),
       const SizedBox(height: AppSpacing.md),
       FilledButton(
         onPressed: (_selected == null || _saving) ? null : _save,
-        child: Text(_saving ? 'Saving…' : 'Save to garden'),
+        child: Text(_saving ? context.l10n.saving : context.l10n.saveToGarden),
       ),
       if (hasKey) ...[
         const SizedBox(height: AppSpacing.sm),
@@ -347,7 +348,7 @@ class _GuessTile extends StatelessWidget {
                 ),
               ),
               Text(
-                likely ? 'Likely · $pct%' : '$pct%',
+                likely ? context.l10n.offLikely(pct) : '$pct%',
                 style: AppTypography.caption.copyWith(color: sub),
               ),
             ],

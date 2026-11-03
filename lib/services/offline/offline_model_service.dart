@@ -27,6 +27,14 @@ class _Cancelled implements Exception {
   const _Cancelled();
 }
 
+/// Why a download stopped. The screens turn this into text in the app's language.
+enum OfflineErrorKind { noInternet, timeout, server, incomplete, damaged, generic }
+
+class _KindException implements Exception {
+  final OfflineErrorKind kind;
+  const _KindException(this.kind);
+}
+
 /// Downloads, verifies and runs the offline plant-identification model.
 ///
 /// The pack is hosted in a public repository so it keeps working after the main
@@ -47,7 +55,7 @@ class OfflineModelService extends ChangeNotifier {
   double _progress = 0;
   int _bytesDone = 0;
   int _bytesTotal = 0;
-  String? _error;
+  OfflineErrorKind? _errorKind;
   ModelManifest? _manifest;
   bool _cancelRequested = false;
   Completer<bool>? _wifiWait;
@@ -59,7 +67,7 @@ class OfflineModelService extends ChangeNotifier {
   double get progress => _progress;
   int get bytesDone => _bytesDone;
   int get bytesTotal => _bytesTotal;
-  String? get error => _error;
+  OfflineErrorKind? get errorKind => _errorKind;
   bool get isInstalled => _state == OfflineModelState.installed;
   bool get isDownloading => _state == OfflineModelState.downloading;
   bool get isWaitingForWifi => _state == OfflineModelState.waitingForWifi;
@@ -138,7 +146,7 @@ class OfflineModelService extends ChangeNotifier {
   Future<void> download({required bool allowMobileData}) async {
     if (isBusy || isInstalled) return;
     _cancelRequested = false;
-    _error = null;
+    _errorKind = null;
     _progress = 0;
     _bytesDone = 0;
     _bytesTotal = 0;
@@ -178,18 +186,19 @@ class OfflineModelService extends ChangeNotifier {
       _set(OfflineModelState.notInstalled);
     } catch (e) {
       debugPrint('OfflineModelService.download error: $e');
-      _error = _friendly(e);
+      _errorKind = _kindOf(e);
       _set(OfflineModelState.failed);
     }
   }
 
-  String _friendly(Object e) {
+  OfflineErrorKind _kindOf(Object e) {
+    if (e is _KindException) return e.kind;
     if (e is SocketException || e is HandshakeException) {
-      return 'No internet connection. Check it and try again.';
+      return OfflineErrorKind.noInternet;
     }
-    if (e is TimeoutException) return 'The connection timed out. Try again.';
-    if (e is HttpException) return e.message;
-    return 'The download did not finish. Try again.';
+    if (e is TimeoutException) return OfflineErrorKind.timeout;
+    if (e is HttpException) return OfflineErrorKind.server;
+    return OfflineErrorKind.generic;
   }
 
   /// GET that follows redirects by hand so a Range header survives them.
@@ -203,20 +212,20 @@ class OfflineModelService extends ChangeNotifier {
       if (res.statusCode >= 300 && res.statusCode < 400) {
         final loc = res.headers.value(HttpHeaders.locationHeader);
         await res.drain<void>();
-        if (loc == null) throw const HttpException('Bad redirect from server.');
+        if (loc == null) throw const _KindException(OfflineErrorKind.server);
         u = u.resolve(loc);
         continue;
       }
       return res;
     }
-    throw const HttpException('Too many redirects.');
+    throw const _KindException(OfflineErrorKind.server);
   }
 
   Future<String> _fetchText(HttpClient c, Uri uri) async {
     final res = await _get(c, uri);
     if (res.statusCode != 200) {
       await res.drain<void>();
-      throw HttpException('Server answered ${res.statusCode}.');
+      throw const _KindException(OfflineErrorKind.server);
     }
     return utf8.decode(await res.fold<List<int>>([], (a, b) => a..addAll(b)));
   }
@@ -264,16 +273,16 @@ class OfflineModelService extends ChangeNotifier {
       } else {
         await res.drain<void>();
         if (res.statusCode != 416) {
-          throw HttpException('Server answered ${res.statusCode}.');
+          throw const _KindException(OfflineErrorKind.server);
         }
       }
     }
     if (await part.length() != f.bytes) {
-      throw const HttpException('The download was cut short. Try again.');
+      throw const _KindException(OfflineErrorKind.incomplete);
     }
     if (await _sha(part) != f.sha256) {
       await part.delete();
-      throw const HttpException('The downloaded file was damaged. Try again.');
+      throw const _KindException(OfflineErrorKind.damaged);
     }
     await part.rename(target.path);
     _bytesDone = before + f.bytes;
