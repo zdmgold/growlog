@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import '../services/ai/ai_settings.dart';
+import '../services/offline/offline_model_service.dart';
 import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
+import 'identifier_gate_sheet.dart';
 
-/// Home card: asks for a key until one is set, then shows a slim status pill.
+/// Home card: asks the person to set up plant identification (offline model or an AI
+/// key) until one is ready, then shows a slim status pill.
 class ConnectAiCard extends StatelessWidget {
+  /// Opens the AI key settings (used by the pill when a key is connected).
   final VoidCallback onTap;
   const ConnectAiCard({super.key, required this.onTap});
 
@@ -16,56 +20,75 @@ class ConnectAiCard extends StatelessWidget {
     final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
     final accent = isDark ? AppColors.accentLight : AppColors.accent;
 
-    return ListenableBuilder(
-      listenable: AiSettings.instance,
-      builder: (context, _) {
-        final s = AiSettings.instance;
-        if (s.isConfigured) {
-          return Align(
-            alignment: Alignment.centerLeft,
-            child: Semantics(
-              button: true,
-              label: context.l10n.aiConnectionSettings,
-              child: Material(
-                color: accent.withOpacity(0.12),
-                shape: const StadiumBorder(),
-                child: InkWell(
-                  customBorder: const StadiumBorder(),
-                  onTap: onTap,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14, vertical: 9,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(PhosphorFill.checkCircle, size: 16, color: accent),
-                        const SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            context.l10n.aiConnectedTo(s.provider?.name ?? ''),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppTypography.caption.copyWith(
-                              color: accent,
-                              fontWeight: FontWeight.w600,
-                            ),
+    Widget pill(String label, String semantics, VoidCallback? tap) => Align(
+          alignment: Alignment.centerLeft,
+          child: Semantics(
+            button: tap != null,
+            label: semantics,
+            child: Material(
+              color: accent.withOpacity(0.12),
+              shape: const StadiumBorder(),
+              child: InkWell(
+                customBorder: const StadiumBorder(),
+                onTap: tap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(PhosphorFill.checkCircle, size: 16, color: accent),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypography.caption.copyWith(
+                            color: accent,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
+          ),
+        );
+
+    return ListenableBuilder(
+      listenable: Listenable.merge([AiSettings.instance, OfflineModelService.instance]),
+      builder: (context, _) {
+        final s = AiSettings.instance;
+        final off = OfflineModelService.instance;
+        if (s.isConfigured) {
+          return pill(
+            context.l10n.aiConnectedTo(s.provider?.name ?? ''),
+            context.l10n.aiConnectionSettings,
+            onTap,
           );
         }
+        if (off.isInstalled) {
+          return pill('Offline model ready', 'Offline model ready', null);
+        }
+        final busy = off.isBusy;
+        final title = off.isDownloading
+            ? 'Downloading offline model'
+            : off.isWaitingForWifi
+                ? 'Waiting for Wi-Fi'
+                : 'Set up plant identification';
+        final subtitle = off.isDownloading
+            ? '${(off.progress * 100).clamp(0, 100).toStringAsFixed(0)}%  ·  tap to see progress'
+            : off.isWaitingForWifi
+                ? 'It will start when you connect to Wi-Fi'
+                : 'Download the offline model or connect your own AI key';
         return Material(
           color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
           borderRadius: BorderRadius.circular(AppRadii.lg),
           child: InkWell(
             borderRadius: BorderRadius.circular(AppRadii.lg),
-            onTap: onTap,
+            onTap: () => showIdentifierGate(context),
             child: Ink(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
@@ -81,22 +104,27 @@ class ConnectAiCard extends StatelessWidget {
                       color: accent.withOpacity(0.14),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(PhosphorFill.key, size: 22, color: accent),
+                    child: busy
+                        ? Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: accent,
+                              value: off.isDownloading && off.bytesTotal > 0
+                                  ? off.progress
+                                  : null,
+                            ),
+                          )
+                        : Icon(PhosphorFill.leaf, size: 22, color: accent),
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          context.l10n.addYourApiKey,
-                          style: AppTypography.title2.copyWith(color: ink),
-                        ),
+                        Text(title, style: AppTypography.title2.copyWith(color: ink)),
                         const SizedBox(height: 2),
-                        Text(
-                          context.l10n.neededForScansChat,
-                          style: AppTypography.footnote.copyWith(color: sub),
-                        ),
+                        Text(subtitle, style: AppTypography.footnote.copyWith(color: sub)),
                       ],
                     ),
                   ),
