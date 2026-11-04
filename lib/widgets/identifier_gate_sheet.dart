@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../l10n/l10n_ext.dart';
 import '../screens/ai_setup_screen.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/offline/offline_model_service.dart';
@@ -50,6 +51,24 @@ class _GateSheetState extends State<_GateSheet> {
   void _start(bool mobileData) {
     HapticFeedback.selectionClick();
     _svc.download(allowMobileData: mobileData);
+  }
+
+  String _errorText() {
+    final l = context.l10n;
+    switch (_svc.errorKind) {
+      case OfflineErrorKind.noInternet:
+        return l.offErrNoInternet;
+      case OfflineErrorKind.timeout:
+        return l.offErrTimeout;
+      case OfflineErrorKind.server:
+        return l.offErrServer;
+      case OfflineErrorKind.incomplete:
+        return l.offErrIncomplete;
+      case OfflineErrorKind.damaged:
+        return l.offErrDamaged;
+      default:
+        return l.offFailedGeneric;
+    }
   }
 
   static String _mb(int bytes) => (bytes / 1000000).toStringAsFixed(0);
@@ -108,52 +127,50 @@ class _GateSheetState extends State<_GateSheet> {
   }
 
   List<Widget> _choice(Color ink, Color sub, bool isDark) => [
-        Text('Identify plants', style: AppTypography.title1.copyWith(color: ink)),
+        Text(context.l10n.offIdentifyTitle, style: AppTypography.title1.copyWith(color: ink)),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          'Choose how GrowLog should recognise your plants.',
+          context.l10n.offIdentifyChoose,
           style: AppTypography.callout.copyWith(color: sub),
         ),
         const SizedBox(height: AppSpacing.md),
         _OptionTile(
           icon: PhosphorRegular.downloadSimple,
-          title: 'Use the offline model',
-          subtitle:
-              'One-time download, about 309 MB. Works without internet and keeps your photos on this phone.',
+          title: context.l10n.offUseModel,
+          subtitle: context.l10n.offUseModelSub,
           primary: true,
           onTap: () => setState(() => _step = _Step.network),
         ),
         const SizedBox(height: AppSpacing.sm),
         _OptionTile(
           icon: PhosphorRegular.key,
-          title: 'Use my own AI key',
-          subtitle:
-              'Connect Anthropic, OpenAI, Google Gemini and more. Photos go to the provider you pick.',
+          title: context.l10n.offUseKey,
+          subtitle: context.l10n.offUseKeySub,
           onTap: _useKey,
         ),
       ];
 
   List<Widget> _network(Color ink, Color sub, bool isDark) => [
-        Text('Download the offline model',
+        Text(context.l10n.offDownloadTitle,
             style: AppTypography.title1.copyWith(color: ink)),
         const SizedBox(height: AppSpacing.xs),
         Text(
-          'About 309 MB. How should it download?',
+          context.l10n.offDownloadHow,
           style: AppTypography.callout.copyWith(color: sub),
         ),
         const SizedBox(height: AppSpacing.md),
         _OptionTile(
           icon: PhosphorRegular.globe,
-          title: 'Wi-Fi only',
-          subtitle: 'Recommended. Starts as soon as you are on Wi-Fi.',
+          title: context.l10n.offWifiOnly,
+          subtitle: context.l10n.offWifiOnlySub,
           primary: true,
           onTap: () => _start(false),
         ),
         const SizedBox(height: AppSpacing.sm),
         _OptionTile(
           icon: PhosphorRegular.lightning,
-          title: 'Use mobile data',
-          subtitle: 'Starts now. This may use part of your data plan.',
+          title: context.l10n.offMobileData,
+          subtitle: context.l10n.offMobileDataSub,
           onTap: () => _start(true),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -161,7 +178,7 @@ class _GateSheetState extends State<_GateSheet> {
           alignment: Alignment.centerLeft,
           child: TextButton(
             onPressed: () => setState(() => _step = _Step.choice),
-            child: const Text('Back'),
+            child: Text(context.l10n.offBack),
           ),
         ),
       ];
@@ -173,18 +190,18 @@ class _GateSheetState extends State<_GateSheet> {
     return [
       Text(
         failed
-            ? 'Download stopped'
+            ? context.l10n.offStopped
             : waiting
-                ? 'Waiting for Wi-Fi'
-                : 'Downloading the offline model',
+                ? context.l10n.offWaitingWifi
+                : context.l10n.offDownloading,
         style: AppTypography.title1.copyWith(color: ink),
       ),
       const SizedBox(height: AppSpacing.sm),
       if (failed)
-        Text(_svc.error ?? 'The download did not finish.',
+        Text(_errorText(),
             style: AppTypography.callout.copyWith(color: AppColors.error))
       else if (waiting)
-        Text('It will start by itself when this phone connects to Wi-Fi.',
+        Text(context.l10n.offWaitingWifiSub,
             style: AppTypography.callout.copyWith(color: sub))
       else ...[
         ClipRRect(
@@ -200,8 +217,9 @@ class _GateSheetState extends State<_GateSheet> {
         const SizedBox(height: AppSpacing.sm),
         Text(
           _svc.bytesTotal == 0
-              ? 'Starting…'
-              : '${_mb(_svc.bytesDone)} MB of ${_mb(_svc.bytesTotal)} MB  ·  $pct%',
+              ? context.l10n.offStarting
+              : context.l10n.offProgress(
+                  _mb(_svc.bytesDone), _mb(_svc.bytesTotal), pct),
           style: AppTypography.callout.copyWith(color: sub),
         ),
       ],
@@ -212,14 +230,14 @@ class _GateSheetState extends State<_GateSheet> {
             Expanded(
               child: FilledButton(
                 onPressed: () => setState(() => _step = _Step.network),
-                child: const Text('Try again'),
+                child: Text(context.l10n.tryAgain),
               ),
             )
           else
             Expanded(
               child: OutlinedButton(
                 onPressed: _svc.cancel,
-                child: const Text('Cancel'),
+                child: Text(context.l10n.cancel),
               ),
             ),
         ],
@@ -227,7 +245,7 @@ class _GateSheetState extends State<_GateSheet> {
       if (!failed) ...[
         const SizedBox(height: AppSpacing.xs),
         Text(
-          'You can close this and keep using the app. The download continues.',
+          context.l10n.offKeepUsing,
           style: AppTypography.caption.copyWith(color: sub),
         ),
       ],

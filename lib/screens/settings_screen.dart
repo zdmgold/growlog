@@ -277,30 +277,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   _SettingsTile(
                     icon: PhosphorRegular.downloadSimple,
-                    label: 'Offline model',
+                    label: context.l10n.offModelLabel,
                     subtitle: off.isInstalled
-                        ? 'Installed. Identifies plants without internet. Tap to remove.'
+                        ? context.l10n.offSettingsInstalled
                         : off.isDownloading
-                            ? 'Downloading… ${(off.progress * 100).clamp(0, 100).toStringAsFixed(0)}%'
+                            ? context.l10n.offSettingsDownloading((off.progress * 100).clamp(0, 100).toStringAsFixed(0))
                             : off.isWaitingForWifi
-                                ? 'Waiting for Wi-Fi'
-                                : 'Download to identify plants without internet (about 309 MB)',
+                                ? context.l10n.offWaitingWifi
+                                : context.l10n.offSettingsNotInstalled,
                     onTap: () async {
                       if (off.isInstalled) {
                         final remove = await showDialog<bool>(
                           context: context,
                           builder: (ctx) => AlertDialog(
-                            title: const Text('Remove the offline model?'),
-                            content: const Text(
-                                'You can download it again later. Your plants and photos are not affected.'),
+                            title: Text(context.l10n.offRemoveTitle),
+                            content: Text(context.l10n.offRemoveBody),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(ctx, false),
-                                child: const Text('Cancel'),
+                                child: Text(context.l10n.cancel),
                               ),
                               TextButton(
                                 onPressed: () => Navigator.pop(ctx, true),
-                                child: const Text('Remove'),
+                                child: Text(context.l10n.offRemove),
                               ),
                             ],
                           ),

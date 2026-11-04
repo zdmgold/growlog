@@ -1006,5 +1006,115 @@
         "type": "int"
       }
     }
-  }
+  },
+  "offIdentifyTitle": "Identify plants",
+  "offIdentifyChoose": "Choose how GrowLog should recognise your plants.",
+  "offUseModel": "Use the offline model",
+  "offUseModelSub": "One-time download, about 309 MB. Works without internet and keeps your photos on this phone.",
+  "offUseKey": "Use my own AI key",
+  "offUseKeySub": "Connect Anthropic, OpenAI, Google Gemini and more. Photos go to the provider you pick.",
+  "offDownloadTitle": "Download the offline model",
+  "offDownloadHow": "About 309 MB. How should it download?",
+  "offWifiOnly": "Wi-Fi only",
+  "offWifiOnlySub": "Recommended. Starts as soon as you are on Wi-Fi.",
+  "offMobileData": "Use mobile data",
+  "offMobileDataSub": "Starts now. This may use part of your data plan.",
+  "offBack": "Back",
+  "offStopped": "Download stopped",
+  "offWaitingWifi": "Waiting for Wi-Fi",
+  "offWaitingWifiSub": "It will start by itself when this phone connects to Wi-Fi.",
+  "offDownloading": "Downloading the offline model",
+  "offStarting": "Starting…",
+  "offProgress": "{done} MB of {total} MB · {pct}%",
+  "@offProgress": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      },
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "offKeepUsing": "You can close this and keep using the app. The download continues.",
+  "offErrNoInternet": "No internet connection. Check it and try again.",
+  "offErrTimeout": "The connection timed out. Try again.",
+  "offErrServer": "The server could not be reached properly. Try again later.",
+  "offErrIncomplete": "The download was cut short. Try again.",
+  "offErrDamaged": "The downloaded file was damaged. Try again.",
+  "offFailedGeneric": "The download did not finish.",
+  "offIdentify": "Identify",
+  "offIdentifying": "Identifying on this phone…",
+  "offNoInternetNeeded": "No internet needed. This can take a few seconds.",
+  "offWentWrong": "Something went wrong",
+  "offIdentifyError": "Could not identify this photo on the phone. Try again with a clearer photo.",
+  "offAskAiInstead": "Ask the AI instead",
+  "offNotSure": "I'm not sure what this is",
+  "offNotSureHint": "It doesn't look like a plant I know yet. Try a closer photo of a leaf or the whole plant in good light.",
+  "offTakeAnother": "Take another photo",
+  "offSecondOpinion": "Second opinion with AI",
+  "offLooksLikeThis": "Looks like this",
+  "offWhichOne": "Which one is it?",
+  "offConfidentSub": "Identified on this phone. Pick another if it is not right.",
+  "offPickSub": "These are the closest matches. Tap the right one.",
+  "offHealthNote": "Health isn't checked offline. After saving, use Doctor on the plant with an AI key for a health check.",
+  "offLikely": "Likely · {pct}%",
+  "@offLikely": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "offSetupTitle": "Set up plant identification",
+  "offSetupSub": "Download the offline model or connect your own AI key",
+  "offDownloadingCard": "Downloading offline model",
+  "offTapProgress": "{pct}% · tap to see progress",
+  "@offTapProgress": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "offReady": "Offline model ready",
+  "offModelLabel": "Offline model",
+  "offSettingsInstalled": "Installed. Identifies plants without internet. Tap to remove.",
+  "offSettingsDownloading": "Downloading… {pct}%",
+  "@offSettingsDownloading": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "offSettingsNotInstalled": "Download to identify plants without internet (about 309 MB)",
+  "offRemoveTitle": "Remove the offline model?",
+  "offRemoveBody": "You can download it again later. Your plants and photos are not affected.",
+  "offRemove": "Remove",
+  "offCareTitle": "Care starting points",
+  "offCareWater": "Water about every {days} days",
+  "@offCareWater": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "offCareFeed": "Feed about every {days} days",
+  "@offCareFeed": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "offCareNote": "General guidance. You can change it on the plant page.",
+  "offLightBrightIndirect": "Bright, indirect light",
+  "offLightMedium": "Medium light",
+  "offLightLow": "Low light is fine",
+  "offLightDirect": "Bright light with some direct sun"
 }
