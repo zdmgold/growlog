@@ -94,7 +94,23 @@ try:
     print('  screen:',' | '.join(dict.fromkeys(x for x in v if x.strip()))[:420])
 except Exception as e: print('  no dump',e)
 PYX
-  adb shell input keyevent 4; sleep 2
+  SAVED=0
+  if echo "$base" | grep -q "Aloe" && grep -q "Save to garden" "$OUT/cur.xml"; then
+    say "== save test: tapping Save to garden =="
+    tap "Save to garden" && sleep 9 && shot "photo_${base}_after_save"; SAVED=1
+    say "alarms mentioning the app after save: $(adb shell dumpsys alarm 2>/dev/null | grep -c "$PKG")"
+    adb shell dumpsys alarm 2>/dev/null | grep -B1 -A3 "$PKG" | head -24 > "$OUT/alarms_after_offline_save.txt"
+    tap "Garden" && sleep 3 && shot "garden_after_save"
+    python3 - <<'PYX' | tee -a "$LOG"
+import re
+try:
+    s=open('/tmp/emu/cur.xml',encoding='utf8').read()
+    v=re.findall(r'(?:text|content-desc)="([^"]+)"',s)
+    print('  garden screen:',' | '.join(dict.fromkeys(x for x in v if x.strip()))[:420])
+except Exception as e: print('  no dump',e)
+PYX
+  fi
+  [ "$SAVED" = "0" ] && adb shell input keyevent 4; sleep 2
   i=$((i+1))
 done
 
