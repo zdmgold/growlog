@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "インターネットなしで植物を識別するにはダウンロード（約309MB）",
   "offRemoveTitle": "オフラインモデルを削除しますか？",
   "offRemoveBody": "後でもう一度ダウンロードできます。植物と写真には影響しません。",
-  "offRemove": "削除"
+  "offRemove": "削除",
+  "offCareTitle": "お手入れの目安",
+  "offCareWater": "約{days}日ごとに水やり",
+  "offCareFeed": "約{days}日ごとに肥料",
+  "offCareNote": "一般的な目安です。植物のページで変更できます。",
+  "offLightBrightIndirect": "明るい間接光",
+  "offLightMedium": "中程度の明るさ",
+  "offLightLow": "暗めでも育ちます",
+  "offLightDirect": "明るい場所で、少し直射日光も"
 }

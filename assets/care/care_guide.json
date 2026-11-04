@@ -1,0 +1,755 @@
+{
+ "version": 1,
+ "note": "General starting points for typical indoor conditions. Adjust to your light, pot, season and climate.",
+ "plants": [
+  {
+   "species": "Adiantum",
+   "common": "Maidenhair fern",
+   "light": "medium",
+   "waterDays": 3,
+   "feedDays": 30
+  },
+  {
+   "species": "Aglaonema commutatum",
+   "common": "Chinese evergreen",
+   "light": "medium",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Alocasia amazonica",
+   "common": "Elephant ear (Amazonica)",
+   "light": "bright_indirect",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Alocasia zebrina",
+   "common": "Zebra elephant ear",
+   "light": "bright_indirect",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Aloe vera",
+   "common": "Aloe vera",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Anthurium andraeanum",
+   "common": "Flamingo flower",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Asparagus setaceus",
+   "common": "Asparagus fern",
+   "light": "medium",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Aspidistra elatior",
+   "common": "Cast-iron plant",
+   "light": "low",
+   "waterDays": 10,
+   "feedDays": 60
+  },
+  {
+   "species": "Asplenium nidus",
+   "common": "Bird's nest fern",
+   "light": "medium",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Beaucarnea recurvata",
+   "common": "Ponytail palm",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Begonia maculata",
+   "common": "Polka dot begonia",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Begonia rex",
+   "common": "Rex begonia",
+   "light": "medium",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Caladium bicolor",
+   "common": "Caladium",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Calathea lancifolia",
+   "common": "Rattlesnake plant",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Calathea makoyana",
+   "common": "Peacock plant",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Calathea orbifolia",
+   "common": "Round-leaf calathea",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Chamaedorea elegans",
+   "common": "Parlor palm",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Chlorophytum comosum",
+   "common": "Spider plant",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Cissus rhombifolia",
+   "common": "Grape ivy",
+   "light": "medium",
+   "waterDays": 8,
+   "feedDays": 30
+  },
+  {
+   "species": "Clivia miniata",
+   "common": "Natal lily",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Codiaeum variegatum",
+   "common": "Croton",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Coleus scutellarioides",
+   "common": "Coleus",
+   "light": "bright_indirect",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Colocasia esculenta",
+   "common": "Taro",
+   "light": "bright_indirect",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Cordyline fruticosa",
+   "common": "Ti plant",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Crassula ovata",
+   "common": "Jade plant",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Cyclamen persicum",
+   "common": "Cyclamen",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Cymbopogon citratus",
+   "common": "Lemongrass",
+   "light": "direct",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Davallia",
+   "common": "Rabbit's foot fern",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Dieffenbachia seguine",
+   "common": "Dumb cane",
+   "light": "medium",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Dracaena fragrans",
+   "common": "Corn plant",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Dracaena marginata",
+   "common": "Dragon tree",
+   "light": "bright_indirect",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Dracaena reflexa",
+   "common": "Song of India",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Dracaena trifasciata",
+   "common": "Snake plant",
+   "light": "low",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Dypsis lutescens",
+   "common": "Areca palm",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Echeveria elegans",
+   "common": "Mexican snowball",
+   "light": "direct",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Echinocactus grusonii",
+   "common": "Golden barrel cactus",
+   "light": "direct",
+   "waterDays": 21,
+   "feedDays": 60
+  },
+  {
+   "species": "Epipremnum aureum",
+   "common": "Pothos",
+   "light": "medium",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Euphorbia milii",
+   "common": "Crown of thorns",
+   "light": "direct",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Euphorbia trigona",
+   "common": "African milk tree",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Fatsia japonica",
+   "common": "Japanese aralia",
+   "light": "medium",
+   "waterDays": 6,
+   "feedDays": 45
+  },
+  {
+   "species": "Ficus benjamina",
+   "common": "Weeping fig",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Ficus elastica",
+   "common": "Rubber plant",
+   "light": "bright_indirect",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Ficus lyrata",
+   "common": "Fiddle-leaf fig",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Ficus microcarpa",
+   "common": "Chinese banyan",
+   "light": "bright_indirect",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Ficus pumila",
+   "common": "Creeping fig",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Fittonia albivenis",
+   "common": "Nerve plant",
+   "light": "medium",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Gardenia jasminoides",
+   "common": "Gardenia",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Gasteria",
+   "common": "Ox-tongue",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Haworthia fasciata",
+   "common": "Zebra haworthia",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Hedera helix",
+   "common": "English ivy",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Hibiscus rosa-sinensis",
+   "common": "Chinese hibiscus",
+   "light": "direct",
+   "waterDays": 4,
+   "feedDays": 21
+  },
+  {
+   "species": "Howea forsteriana",
+   "common": "Kentia palm",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Hoya carnosa",
+   "common": "Wax plant",
+   "light": "bright_indirect",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Hydrangea macrophylla",
+   "common": "Bigleaf hydrangea",
+   "light": "bright_indirect",
+   "waterDays": 3,
+   "feedDays": 30
+  },
+  {
+   "species": "Hypoestes phyllostachya",
+   "common": "Polka dot plant",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Impatiens walleriana",
+   "common": "Busy Lizzie",
+   "light": "medium",
+   "waterDays": 4,
+   "feedDays": 21
+  },
+  {
+   "species": "Jasminum polyanthum",
+   "common": "Pink jasmine",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Kalanchoe blossfeldiana",
+   "common": "Flaming Katy",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 45
+  },
+  {
+   "species": "Kalanchoe daigremontiana",
+   "common": "Mother of thousands",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Lavandula angustifolia",
+   "common": "Lavender",
+   "light": "direct",
+   "waterDays": 10,
+   "feedDays": 60
+  },
+  {
+   "species": "Lithops",
+   "common": "Living stones",
+   "light": "direct",
+   "waterDays": 21,
+   "feedDays": 0
+  },
+  {
+   "species": "Mammillaria",
+   "common": "Pincushion cactus",
+   "light": "direct",
+   "waterDays": 21,
+   "feedDays": 60
+  },
+  {
+   "species": "Maranta leuconeura",
+   "common": "Prayer plant",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Mentha spicata",
+   "common": "Spearmint",
+   "light": "bright_indirect",
+   "waterDays": 3,
+   "feedDays": 30
+  },
+  {
+   "species": "Monstera adansonii",
+   "common": "Swiss cheese vine",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Monstera deliciosa",
+   "common": "Swiss cheese plant",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Nephrolepis exaltata",
+   "common": "Boston fern",
+   "light": "medium",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Ocimum basilicum",
+   "common": "Basil",
+   "light": "direct",
+   "waterDays": 3,
+   "feedDays": 30
+  },
+  {
+   "species": "Opuntia microdasys",
+   "common": "Bunny ears cactus",
+   "light": "direct",
+   "waterDays": 21,
+   "feedDays": 60
+  },
+  {
+   "species": "Origanum vulgare",
+   "common": "Oregano",
+   "light": "direct",
+   "waterDays": 6,
+   "feedDays": 45
+  },
+  {
+   "species": "Oxalis triangularis",
+   "common": "Purple shamrock",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Pachira aquatica",
+   "common": "Money tree",
+   "light": "bright_indirect",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Pelargonium",
+   "common": "Geranium",
+   "light": "direct",
+   "waterDays": 7,
+   "feedDays": 21
+  },
+  {
+   "species": "Peperomia argyreia",
+   "common": "Watermelon peperomia",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Peperomia obtusifolia",
+   "common": "Baby rubber plant",
+   "light": "medium",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Petroselinum crispum",
+   "common": "Parsley",
+   "light": "bright_indirect",
+   "waterDays": 4,
+   "feedDays": 30
+  },
+  {
+   "species": "Phalaenopsis",
+   "common": "Moth orchid",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 14
+  },
+  {
+   "species": "Philodendron bipinnatifidum",
+   "common": "Tree philodendron",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Philodendron erubescens",
+   "common": "Blushing philodendron",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Philodendron hederaceum",
+   "common": "Heartleaf philodendron",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Phoenix roebelenii",
+   "common": "Pygmy date palm",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Pilea peperomioides",
+   "common": "Chinese money plant",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Platycerium bifurcatum",
+   "common": "Staghorn fern",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Plectranthus",
+   "common": "Swedish ivy",
+   "light": "bright_indirect",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Radermachera",
+   "common": "China doll",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Rhaphidophora tetrasperma",
+   "common": "Mini monstera",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Rhapis excelsa",
+   "common": "Lady palm",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Rhipsalis",
+   "common": "Mistletoe cactus",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 60
+  },
+  {
+   "species": "Rosmarinus officinalis",
+   "common": "Rosemary",
+   "light": "direct",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Saintpaulia ionantha",
+   "common": "African violet",
+   "light": "bright_indirect",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Salvia officinalis",
+   "common": "Common sage",
+   "light": "direct",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Schefflera actinophylla",
+   "common": "Umbrella tree",
+   "light": "bright_indirect",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Schefflera arboricola",
+   "common": "Dwarf umbrella tree",
+   "light": "bright_indirect",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Schlumbergera truncata",
+   "common": "Christmas cactus",
+   "light": "bright_indirect",
+   "waterDays": 10,
+   "feedDays": 45
+  },
+  {
+   "species": "Scindapsus pictus",
+   "common": "Satin pothos",
+   "light": "medium",
+   "waterDays": 8,
+   "feedDays": 45
+  },
+  {
+   "species": "Sedum morganianum",
+   "common": "Burro's tail",
+   "light": "direct",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Senecio rowleyanus",
+   "common": "String of pearls",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Spathiphyllum wallisii",
+   "common": "Peace lily",
+   "light": "medium",
+   "waterDays": 6,
+   "feedDays": 45
+  },
+  {
+   "species": "Strelitzia reginae",
+   "common": "Bird of paradise",
+   "light": "direct",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Streptocarpus",
+   "common": "Cape primrose",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 30
+  },
+  {
+   "species": "Stromanthe thalia",
+   "common": "Triostar",
+   "light": "medium",
+   "waterDays": 5,
+   "feedDays": 30
+  },
+  {
+   "species": "Syngonium podophyllum",
+   "common": "Arrowhead plant",
+   "light": "medium",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Thymus vulgaris",
+   "common": "Thyme",
+   "light": "direct",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Tradescantia spathacea",
+   "common": "Moses-in-the-cradle",
+   "light": "bright_indirect",
+   "waterDays": 7,
+   "feedDays": 45
+  },
+  {
+   "species": "Tradescantia zebrina",
+   "common": "Inch plant",
+   "light": "bright_indirect",
+   "waterDays": 6,
+   "feedDays": 30
+  },
+  {
+   "species": "Yucca elephantipes",
+   "common": "Spineless yucca",
+   "light": "bright_indirect",
+   "waterDays": 14,
+   "feedDays": 60
+  },
+  {
+   "species": "Zamioculcas zamiifolia",
+   "common": "ZZ plant",
+   "light": "medium",
+   "waterDays": 14,
+   "feedDays": 60
+  }
+ ]
+}

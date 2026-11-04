@@ -1094,5 +1094,27 @@
   "offSettingsNotInstalled": "Download to identify plants without internet (about 309 MB)",
   "offRemoveTitle": "Remove the offline model?",
   "offRemoveBody": "You can download it again later. Your plants and photos are not affected.",
-  "offRemove": "Remove"
+  "offRemove": "Remove",
+  "offCareTitle": "Care starting points",
+  "offCareWater": "Water about every {days} days",
+  "@offCareWater": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "offCareFeed": "Feed about every {days} days",
+  "@offCareFeed": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "offCareNote": "General guidance. You can change it on the plant page.",
+  "offLightBrightIndirect": "Bright, indirect light",
+  "offLightMedium": "Medium light",
+  "offLightLow": "Low light is fine",
+  "offLightDirect": "Bright light with some direct sun"
 }

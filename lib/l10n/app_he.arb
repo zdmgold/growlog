@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "הורידו כדי לזהות צמחים בלי אינטרנט (כ-309 MB)",
   "offRemoveTitle": "להסיר את המודל הלא מקוון?",
   "offRemoveBody": "אפשר להוריד אותו שוב מאוחר יותר. הצמחים והתמונות שלכם לא יושפעו.",
-  "offRemove": "הסרה"
+  "offRemove": "הסרה",
+  "offCareTitle": "נקודות פתיחה לטיפול",
+  "offCareWater": "להשקות בערך כל {days} ימים",
+  "offCareFeed": "לדשן בערך כל {days} ימים",
+  "offCareNote": "הנחיה כללית. אפשר לשנות אותה בעמוד הצמח.",
+  "offLightBrightIndirect": "אור בהיר עקיף",
+  "offLightMedium": "אור בינוני",
+  "offLightLow": "מסתדר עם אור חלש",
+  "offLightDirect": "אור בהיר עם קצת שמש ישירה"
 }

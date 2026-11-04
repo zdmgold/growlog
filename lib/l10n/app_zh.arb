@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "下载后可无需联网识别植物（约 309 MB）",
   "offRemoveTitle": "移除离线模型？",
   "offRemoveBody": "你可以之后重新下载。你的植物和照片不受影响。",
-  "offRemove": "移除"
+  "offRemove": "移除",
+  "offCareTitle": "养护起点",
+  "offCareWater": "大约每 {days} 天浇一次水",
+  "offCareFeed": "大约每 {days} 天施一次肥",
+  "offCareNote": "通用建议。你可以在植物页面修改。",
+  "offLightBrightIndirect": "明亮的散射光",
+  "offLightMedium": "中等光照",
+  "offLightLow": "耐阴，弱光也可",
+  "offLightDirect": "明亮光照，可接受部分直射阳光"
 }

@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "نزّله للتعرّف على النباتات بدون إنترنت (حوالي 309 ميغابايت)",
   "offRemoveTitle": "إزالة النموذج دون اتصال؟",
   "offRemoveBody": "يمكنك تنزيله مرة أخرى لاحقًا. لا تتأثر نباتاتك وصورك.",
-  "offRemove": "إزالة"
+  "offRemove": "إزالة",
+  "offCareTitle": "نقاط بداية للعناية",
+  "offCareWater": "اسقِ تقريبًا كل {days} أيام",
+  "offCareFeed": "سمّد تقريبًا كل {days} أيام",
+  "offCareNote": "إرشادات عامة. يمكنك تغييرها من صفحة النبتة.",
+  "offLightBrightIndirect": "ضوء ساطع غير مباشر",
+  "offLightMedium": "ضوء متوسط",
+  "offLightLow": "يتحمّل الإضاءة الخافتة",
+  "offLightDirect": "ضوء ساطع مع بعض أشعة الشمس المباشرة"
 }

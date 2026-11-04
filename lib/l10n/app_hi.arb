@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "बिना इंटरनेट पौधे पहचानने के लिए डाउनलोड करें (लगभग 309 MB)",
   "offRemoveTitle": "ऑफ़लाइन मॉडल हटाएँ?",
   "offRemoveBody": "आप इसे बाद में फिर डाउनलोड कर सकते हैं। आपके पौधे और फ़ोटो प्रभावित नहीं होंगे।",
-  "offRemove": "हटाएँ"
+  "offRemove": "हटाएँ",
+  "offCareTitle": "देखभाल की शुरुआती सलाह",
+  "offCareWater": "लगभग हर {days} दिन में पानी दें",
+  "offCareFeed": "लगभग हर {days} दिन में खाद दें",
+  "offCareNote": "सामान्य सलाह। आप इसे पौधे के पेज पर बदल सकते हैं।",
+  "offLightBrightIndirect": "तेज़, अप्रत्यक्ष रोशनी",
+  "offLightMedium": "मध्यम रोशनी",
+  "offLightLow": "कम रोशनी भी चलती है",
+  "offLightDirect": "तेज़ रोशनी और थोड़ी सीधी धूप"
 }

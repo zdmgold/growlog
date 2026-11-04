@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "Descárgalo para identificar plantas sin internet (unos 309 MB)",
   "offRemoveTitle": "¿Quitar el modelo sin conexión?",
   "offRemoveBody": "Puedes descargarlo de nuevo más tarde. Tus plantas y fotos no se ven afectadas.",
-  "offRemove": "Quitar"
+  "offRemove": "Quitar",
+  "offCareTitle": "Punto de partida para los cuidados",
+  "offCareWater": "Riega cada {days} días aproximadamente",
+  "offCareFeed": "Abona cada {days} días aproximadamente",
+  "offCareNote": "Guía general. Puedes cambiarla en la página de la planta.",
+  "offLightBrightIndirect": "Luz brillante e indirecta",
+  "offLightMedium": "Luz media",
+  "offLightLow": "Tolera poca luz",
+  "offLightDirect": "Luz brillante con algo de sol directo"
 }

@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "인터넷 없이 식물을 식별하려면 내려받기 (약 309MB)",
   "offRemoveTitle": "오프라인 모델을 삭제할까요?",
   "offRemoveBody": "나중에 다시 내려받을 수 있습니다. 식물과 사진은 영향을 받지 않습니다.",
-  "offRemove": "삭제"
+  "offRemove": "삭제",
+  "offCareTitle": "관리 시작 기준",
+  "offCareWater": "약 {days}일마다 물 주기",
+  "offCareFeed": "약 {days}일마다 비료 주기",
+  "offCareNote": "일반적인 안내입니다. 식물 페이지에서 바꿀 수 있습니다.",
+  "offLightBrightIndirect": "밝은 간접광",
+  "offLightMedium": "보통 밝기",
+  "offLightLow": "약한 빛도 괜찮음",
+  "offLightDirect": "밝은 빛과 약간의 직사광선"
 }

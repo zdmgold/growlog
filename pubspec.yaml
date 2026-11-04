@@ -49,6 +49,7 @@ flutter:
   generate: true
   assets:
     - assets/images/
+    - assets/care/
 
   fonts:
     - family: Fraunces

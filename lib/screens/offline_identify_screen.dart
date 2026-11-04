@@ -10,6 +10,7 @@ import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/interstitial_service.dart';
+import '../services/offline/care_guide.dart';
 import '../services/offline/identify_math.dart';
 import '../services/offline/offline_model_service.dart';
 import '../utils/constants.dart';
@@ -50,6 +51,8 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   }
 
   Future<void> _run() async {
+    await CareGuide.instance.load();
+    if (!mounted) return;
     setState(() {
       _phase = _Phase.analyzing;
       _failed = false;
@@ -86,13 +89,17 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       await File(widget.imagePath).copy(photoPath);
       final plantId = const Uuid().v4();
       final now = DateTime.now();
+      final care = CareGuide.instance.lookup(name);
+      final displayName = care?.common ?? name;
       await widget.plantProvider.addPlant(
         Plant(
           id: plantId,
-          name: name,
+          name: displayName,
           species: name,
           acquiredDate: now,
           createdAt: now,
+          waterFrequencyDays: care?.waterDays,
+          fertilizeFrequencyDays: care?.feedDays,
           photos: [
             PhotoEntry(
               id: const Uuid().v4(),
@@ -106,7 +113,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       );
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.addedToGarden(name))),
+        SnackBar(content: Text(context.l10n.addedToGarden(displayName))),
       );
       // Interstitial point 1: saving to the garden is a finished task.
       await InterstitialService.afterTask(count: true);
@@ -267,12 +274,15 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       for (var i = 0; i < top.length; i++) ...[
         _GuessTile(
           guess: top[i],
+          care: CareGuide.instance.lookup(top[i].species),
           selected: _selected == top[i].species,
           likely: i == 0 && r.confident,
           onTap: () => setState(() => _selected = top[i].species),
         ),
         const SizedBox(height: AppSpacing.sm),
       ],
+      if (_selected != null && CareGuide.instance.lookup(_selected!) != null)
+        _CareCard(entry: CareGuide.instance.lookup(_selected!)!),
       const SizedBox(height: AppSpacing.xs),
       Text(
         context.l10n.offHealthNote,
@@ -295,12 +305,14 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
 
 class _GuessTile extends StatelessWidget {
   final SpeciesGuess guess;
+  final CareEntry? care;
   final bool selected;
   final bool likely;
   final VoidCallback onTap;
 
   const _GuessTile({
     required this.guess,
+    required this.care,
     required this.selected,
     required this.likely,
     required this.onTap,
@@ -337,14 +349,28 @@ class _GuessTile extends StatelessWidget {
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Text(
-                  guess.species,
-                  style: TextStyle(
-                    fontFamily: AppTypography.serif,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 18,
-                    color: ink,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (care != null)
+                      Text(
+                        care!.common,
+                        style: TextStyle(
+                          fontFamily: AppTypography.serif,
+                          fontSize: 18,
+                          color: ink,
+                        ),
+                      ),
+                    Text(
+                      guess.species,
+                      style: TextStyle(
+                        fontFamily: AppTypography.serif,
+                        fontStyle: FontStyle.italic,
+                        fontSize: care != null ? 14 : 18,
+                        color: care != null ? sub : ink,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Text(
@@ -354,6 +380,69 @@ class _GuessTile extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CareCard extends StatelessWidget {
+  final CareEntry entry;
+  const _CareCard({required this.entry});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final l = context.l10n;
+    String light() {
+      switch (entry.light) {
+        case CareLight.brightIndirect:
+          return l.offLightBrightIndirect;
+        case CareLight.medium:
+          return l.offLightMedium;
+        case CareLight.low:
+          return l.offLightLow;
+        case CareLight.direct:
+          return l.offLightDirect;
+      }
+    }
+
+    Widget row(IconData icon, String text) => Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: Row(
+            children: [
+              Icon(icon, size: 18, color: AppColors.accent),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Text(text,
+                    style: AppTypography.callout.copyWith(color: ink)),
+              ),
+            ],
+          ),
+        );
+
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: AppSpacing.xs),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(
+            color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l.offCareTitle, style: AppTypography.headline.copyWith(color: ink)),
+          row(PhosphorRegular.drop, l.offCareWater('${entry.waterDays}')),
+          if (entry.feedDays != null)
+            row(PhosphorRegular.flask, l.offCareFeed('${entry.feedDays}')),
+          row(PhosphorRegular.sun, light()),
+          const SizedBox(height: 8),
+          Text(l.offCareNote, style: AppTypography.footnote.copyWith(color: sub)),
+        ],
       ),
     );
   }

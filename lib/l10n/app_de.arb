@@ -387,5 +387,13 @@
   "offSettingsNotInstalled": "Herunterladen, um Pflanzen ohne Internet zu erkennen (etwa 309 MB)",
   "offRemoveTitle": "Offline-Modell entfernen?",
   "offRemoveBody": "Du kannst es später erneut herunterladen. Deine Pflanzen und Fotos sind nicht betroffen.",
-  "offRemove": "Entfernen"
+  "offRemove": "Entfernen",
+  "offCareTitle": "Pflege-Startwerte",
+  "offCareWater": "Etwa alle {days} Tage gießen",
+  "offCareFeed": "Etwa alle {days} Tage düngen",
+  "offCareNote": "Allgemeine Hinweise. Du kannst sie auf der Pflanzenseite ändern.",
+  "offLightBrightIndirect": "Helles, indirektes Licht",
+  "offLightMedium": "Mittleres Licht",
+  "offLightLow": "Wenig Licht ist in Ordnung",
+  "offLightDirect": "Helles Licht mit etwas direkter Sonne"
 }
