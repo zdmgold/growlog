@@ -81,7 +81,7 @@ for f in $(ls /tmp/photos/*.jpg 2>/dev/null | sort); do
   T2=$(date +%s); R2="timeout"
   for k in $(seq 1 45); do
     sleep 4; dump
-    if grep -q "Save to garden" "$OUT/cur.xml"; then R2="guesses shown"; break; fi
+    if grep -q -E "Save to garden|Looks like this|Which one is it" "$OUT/cur.xml"; then R2="guesses shown"; break; fi
     if grep -q "not sure what this is" "$OUT/cur.xml"; then R2="not sure"; break; fi
     if grep -q "Something went wrong" "$OUT/cur.xml"; then R2="error screen"; break; fi
   done
@@ -96,8 +96,12 @@ try:
 except Exception as e: print('  no dump',e)
 PYX
   SAVED=0
-  if echo "$base" | grep -q "Aloe" && grep -q "Save to garden" "$OUT/cur.xml"; then
-    say "== save test: tapping Save to garden =="
+  if echo "$base" | grep -q "Aloe"; then
+    say "== save test: scrolling to Save to garden =="
+    for k in 1 2 3 4; do
+      adb shell input swipe 540 1900 540 700 500; sleep 1; dump
+      python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Save to garden" >/dev/null 2>&1 && break
+    done
     tap "Save to garden" && sleep 9 && shot "photo_${base}_after_save"; SAVED=1
     say "alarms mentioning the app after save: $(adb shell dumpsys alarm 2>/dev/null | grep -c "$PKG")"
     adb shell dumpsys alarm 2>/dev/null | grep -B1 -A3 "$PKG" | head -24 > "$OUT/alarms_after_offline_save.txt"
