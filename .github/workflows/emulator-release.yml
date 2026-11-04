@@ -20,7 +20,7 @@ jobs:
         with:
           name: growlog-android-apk
           path: apk
-          run-id: 41711338067
+          run-id: 41798192726
           github-token: ${{ github.token }}
       - run: ls -la apk
       - name: Download real plant photos for the test
@@ -65,7 +65,7 @@ jobs:
           profile: pixel_6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated -camera-front emulated
-          script: APK_PATH=apk/app-release.apk bash .github/scripts/emulator_offline.sh
+          script: APK_PATH=apk/app-x86_64-release.apk bash .github/scripts/emulator_offline.sh
       - name: Publish screenshots and logs
         if: always()
         run: |
