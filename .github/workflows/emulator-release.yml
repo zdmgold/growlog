@@ -1,11 +1,11 @@
-name: Emulator Offline
+name: Emulator Release
 
 # Manual only. Builds a debug APK inside the runner, runs it on an Android emulator, takes screenshots and logs.
 # The APK is never uploaded. Screenshots and logs go to the ci-report-emu branch.
 on:
   workflow_dispatch:
   push:
-    branches: [ci-emulator-offline]
+    branches: [ci-emulator-release]
 
 permissions:
   contents: write
@@ -16,29 +16,13 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
+      - uses: actions/download-artifact@v4
         with:
-          flutter-version: '3.47.6'
-          channel: 'stable'
-          cache: true
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - run: flutter create --platforms=android .
-      - run: rm -f android/app/build.gradle.kts
-      - name: Remove incomplete preinstalled NDK
-        run: |
-          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
-            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then sudo rm -rf "$d"; fi
-          done
-      - name: Install Gradle init script (plugin compileSdk 36)
-        run: |
-          mkdir -p ~/.gradle/init.d
-          cp .github/gradle/force-plugin-compilesdk.gradle ~/.gradle/init.d/
-      - run: flutter pub get
-      - run: flutter gen-l10n
-      - run: flutter build apk --debug
+          name: growlog-android-apk
+          path: apk
+          run-id: 41711338067
+          github-token: ${{ github.token }}
+      - run: ls -la apk
       - name: Download real plant photos for the test
         run: |
           pip install requests
@@ -81,7 +65,7 @@ jobs:
           profile: pixel_6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated -camera-front emulated
-          script: bash .github/scripts/emulator_offline.sh
+          script: APK_PATH=apk/app-release.apk bash .github/scripts/emulator_offline.sh
       - name: Publish screenshots and logs
         if: always()
         run: |
