@@ -3,13 +3,14 @@
 set -u
 PKG=com.zdmgold.growlog
 OUT=/tmp/emu; mkdir -p "$OUT"
-APK=build/app/outputs/flutter-apk/app-debug.apk
+APK="${APK_PATH:-build/app/outputs/flutter-apk/app-debug.apk}"
 LOG="$OUT/steps.txt"; : > "$LOG"
 say(){ echo "$*" | tee -a "$LOG"; }
 shot(){ adb exec-out screencap -p > "$OUT/$1.png"; say "shot $1"; }
 dump(){ for t in 1 2 3 4 5 6; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1; adb pull /sdcard/ui.xml "$OUT/cur.xml" >/dev/null 2>&1; [ "$(grep -o '<node' "$OUT/cur.xml" 2>/dev/null | wc -l)" -ge 5 ] && break; sleep 3; done; }
 tap(){ dump; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "$@") || { say "NOT FOUND: $*"; return 1; }; set -- $XY; adb shell input tap "$1" "$2"; say "tapped ($1,$2)"; sleep 3; return 0; }
 
+adb root >/dev/null 2>&1; sleep 3
 adb install -r -g "$APK" >"$OUT/install.txt" 2>&1; say "install: $(tail -1 "$OUT/install.txt")"
 adb shell pm grant "$PKG" android.permission.POST_NOTIFICATIONS 2>/dev/null
 adb logcat -c
@@ -20,11 +21,11 @@ tap "Use the offline model"; shot 03_network_choice
 tap "Use mobile data"; sleep 6; shot 04_downloading
 T0=$(date +%s)
 for i in $(seq 1 120); do
-  if adb shell run-as "$PKG" ls files/offline_model_v1/installed.json >/dev/null 2>&1; then say "model installed after $(( $(date +%s) - T0 ))s"; break; fi
+  if adb shell "ls /data/data/$PKG/files/offline_model_v1/installed.json" >/dev/null 2>&1 || adb shell run-as "$PKG" ls files/offline_model_v1/installed.json >/dev/null 2>&1; then say "model installed after $(( $(date +%s) - T0 ))s"; break; fi
   if [ $((i % 6)) -eq 0 ]; then dump; say "progress: $(grep -o '[0-9]* MB of [0-9]* MB[^"]*' "$OUT/cur.xml" | head -1)"; fi
   sleep 10
 done
-adb shell run-as "$PKG" ls -la files/offline_model_v1 2>&1 | tee -a "$LOG"
+(adb shell "ls -la /data/data/$PKG/files/offline_model_v1" 2>&1 || adb shell run-as "$PKG" ls -la files/offline_model_v1 2>&1) | tee -a "$LOG"
 sleep 6; shot 05_after_download
 # in-app camera should be open now: press the shutter (bottom centre)
 T1=$(date +%s); adb shell input tap 540 2162; sleep 4; shot 06_analyzing
