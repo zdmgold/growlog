@@ -1,0 +1,17 @@
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: Failed to handle method call
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.res.Resources android.content.Context.getResources()' on a null object reference
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin.isValidDrawableResource(FlutterLocalNotificationsPlugin.java:1257)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin.initialize(FlutterLocalNotificationsPlugin.java:1653)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at com.dexterous.flutterlocalnotifications.FlutterLocalNotificationsPlugin.onMethodCall(FlutterLocalNotificationsPlugin.java:1422)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at io.flutter.plugin.common.MethodChannel$IncomingMethodCallHandler.onMessage(MethodChannel.java:267)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at io.flutter.embedding.engine.dart.DartMessenger.invokeHandler(DartMessenger.java:286)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at io.flutter.embedding.engine.dart.DartMessenger.lambda$dispatchMessageToQueue$0$io-flutter-embedding-engine-dart-DartMessenger(DartMessenger.java:313)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at io.flutter.embedding.engine.dart.DartMessenger$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at android.os.Handler.handleCallback(Handler.java:958)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at android.os.Looper.loopOnce(Looper.java:205)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at android.os.Looper.loop(Looper.java:294)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at android.app.ActivityThread.main(ActivityThread.java:8177)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at java.lang.reflect.Method.invoke(Native Method)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+11-04 07:28:37.224  3926  3926 E MethodChannel#dexterous.com/flutter/local_notifications: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)

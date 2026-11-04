@@ -1,0 +1,50 @@
+install: Success
+shot 01_home
+NOT FOUND: Open camera Scan a plant
+shot 02_gate
+NOT FOUND: Use the offline model
+shot 03_network_choice
+NOT FOUND: Use mobile data
+shot 04_downloading
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+progress: 
+total 16
+drwx------ 2 u0_a192 u0_a192 4096 2026-11-04 07:28 .
+drwxrwx--x 3 u0_a192 u0_a192 4096 2026-11-04 07:28 ..
+shot 05_after_download
+shot 06_analyzing
+result: timeout after 361s (emulator CPU, debug build)
+shot 07_result
+screen text: Pixel Launcher isn't responding | Close app | Wait
+== photo 0_Monstera_deliciosa ==
+NOT FOUND: Gallery
+== photo 1_Aloe_vera ==
+NOT FOUND: Gallery
+== photo 2_Epipremnum_aureum ==
+NOT FOUND: Gallery
+== photo 3_Zamioculcas_zamiifolia ==
+NOT FOUND: Gallery
+== photo 4_Ficus_lyrata ==
+NOT FOUND: Gallery
+  Native Heap    53105    53036       36       48    54248    74420    58530    11604
+         Native Heap:    53036                          54248
+           TOTAL PSS:   448266            TOTAL RSS:   564508       TOTAL SWAP PSS:      392
+error lines: 17
