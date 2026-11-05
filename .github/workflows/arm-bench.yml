@@ -1,0 +1,39 @@
+name: ARM Bench
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  bench:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: exp-bioclip2
+          path: exp2
+          run-id: 41249885017
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: exp-bioclip
+          path: exp1
+          run-id: 41249885017
+          github-token: ${{ github.token }}
+      - run: pip install onnxruntime numpy
+      - name: Benchmark
+        run: |
+          set +e
+          ( echo "# ARM benchmark (GitHub ubuntu-24.04-arm runner)"; echo
+            for m in exp2/bioclip2_image_int8.onnx exp1/bioclip_image_int8.onnx; do python bakeoff/bench_ort.py $m 1,2,4 2>&1 | tail -60; done
+          ) | tee /tmp/arm.txt
+      - name: Publish
+        if: always()
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-arm; git rm -rf . -q || true
+          cp /tmp/arm.txt arm.txt; git add arm.txt; git commit -q -m arm; git push -f origin ci-report-arm

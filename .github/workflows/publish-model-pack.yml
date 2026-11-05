@@ -1,0 +1,57 @@
+name: Publish Model Pack
+# Builds the offline identification pack from the bake-off artifacts and publishes it to the public
+# zdmgold/growlog-models repo (release v1). Manual or on the ci-pack branch.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: exp-bioclip2
+          path: exp2
+          run-id: 41249885017
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: dataset
+          path: ds
+          run-id: 41249885017
+          github-token: ${{ github.token }}
+      - run: |
+          tar -xf ds/data.tar data/manifest.json
+          ls -la exp2
+          pip install numpy
+          python bakeoff/make_pack.py exp2 data/manifest.json pack "https://github.com/zdmgold/growlog-models/releases/download/v1"
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.MODELS_PAT }}
+        run: |
+          set -e
+          cat > NOTICE.md <<'EOF'
+          # GrowLog offline model pack
+
+          `bioclip2_image_int8.onnx` is the image encoder of **BioCLIP 2** (Imageomics Institute), converted to ONNX and
+          int8-quantised. BioCLIP 2 is released under the MIT license: https://huggingface.co/imageomics/bioclip-2
+
+          `text_embeddings_fp16.bin` holds precomputed text embeddings (one per species name in `species.json`).
+          `model_manifest.json` lists file sizes and SHA-256 checksums used by the app to verify downloads.
+          EOF
+          gh release view v1 --repo zdmgold/growlog-models >/dev/null 2>&1 && gh release delete v1 --repo zdmgold/growlog-models --yes --cleanup-tag || true
+          gh release create v1 pack/* NOTICE.md --repo zdmgold/growlog-models --title "Offline model pack v1" --notes "BioCLIP 2 image encoder (int8 ONNX) for the GrowLog app. See NOTICE.md."
+          gh release view v1 --repo zdmgold/growlog-models --json assets --jq '.assets[] | "\(.name) \(.size)"'
+      - name: Publish pack summary
+        if: always()
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-pack; git rm -rf . -q || true
+          cp "$GITHUB_WORKSPACE/pack/model_manifest.json" manifest.json 2>/dev/null || echo "no manifest" > manifest.json
+          git add -A; git commit -q -m pack; git push -f origin ci-report-pack
