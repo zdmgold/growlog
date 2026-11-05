@@ -9,6 +9,7 @@ import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
 import '../providers/plant_provider.dart';
 import '../services/interstitial_service.dart';
+import '../services/offline/care_guide.dart';
 import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
@@ -57,6 +58,53 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
   String? _selectedRoomId;
   File? _photoFile;
   bool _saving = false;
+
+  /// Text of whichever of the two name fields was edited last. It drives the
+  /// care-guide suggestions under the species field.
+  String _query = '';
+  bool _applying = false;
+
+  /// A nickname in the name field often matches nothing, so the "no match"
+  /// message is only shown for the species field.
+  bool _fromSpecies = false;
+
+  @override
+  void initState() {
+    super.initState();
+    CareGuide.instance.load().then((_) {
+      if (mounted) setState(() {});
+    });
+    _nameController.addListener(() => _onTyped(_nameController.text, false));
+    _speciesController
+        .addListener(() => _onTyped(_speciesController.text, true));
+  }
+
+  void _onTyped(String text, bool fromSpecies) {
+    if (_applying || (text == _query && fromSpecies == _fromSpecies)) return;
+    setState(() {
+      _query = text;
+      _fromSpecies = fromSpecies;
+    });
+  }
+
+  /// Fills the species, the name (if empty) and the care schedule from the guide.
+  void _applySpecies(CareEntry e) {
+    _applying = true;
+    _speciesController.text = e.species;
+    if (_nameController.text.trim().isEmpty) _nameController.text = e.common;
+    _days[CareType.water]!.text = '${e.waterDays}';
+    _on[CareType.water] = true;
+    final feed = e.feedDays;
+    if (feed != null) _days[CareType.fertilize]!.text = '$feed';
+    _on[CareType.fertilize] = feed != null;
+    _applying = false;
+    FocusScope.of(context).unfocus();
+    HapticFeedback.selectionClick();
+    setState(() => _query = '');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.speciesGuideFilled)),
+    );
+  }
 
   @override
   void dispose() {
@@ -218,6 +266,13 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
               labelText: l10n?.speciesLabel ?? 'Species (optional)',
               helperText: context.l10n.speciesExample,
             ),
+          ),
+          _SpeciesSuggestions(
+            matches: CareGuide.instance.search(_query),
+            query: _query,
+            showEmpty: _fromSpecies,
+            isDark: isDark,
+            onPick: _applySpecies,
           ),
           if (rooms.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.md),
@@ -464,6 +519,85 @@ class _CareRow extends StatelessWidget {
           ],
           Switch(value: enabled, onChanged: onToggle),
         ],
+      ),
+    );
+  }
+}
+
+/// Care-guide matches under the species field. Tapping one fills the form.
+class _SpeciesSuggestions extends StatelessWidget {
+  final List<CareEntry> matches;
+  final String query;
+  final bool showEmpty;
+  final bool isDark;
+  final ValueChanged<CareEntry> onPick;
+
+  const _SpeciesSuggestions({
+    required this.matches,
+    required this.query,
+    required this.showEmpty,
+    required this.isDark,
+    required this.onPick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
+    final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    if (query.trim().length < 2) return const SizedBox.shrink();
+    if (matches.isEmpty && !showEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Container(
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
+          borderRadius: BorderRadius.circular(AppRadii.lg),
+          border: Border.all(
+            color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle,
+          ),
+        ),
+        child: matches.isEmpty
+            ? Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Text(context.l10n.noSpeciesMatch,
+                    style: AppTypography.footnote.copyWith(color: sub)),
+              )
+            : Column(
+                children: [
+                  for (final e in matches)
+                    InkWell(
+                      borderRadius: BorderRadius.circular(AppRadii.lg),
+                      onTap: () => onPick(e),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(minHeight: 56),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.md, vertical: 8),
+                          child: Row(
+                            children: [
+                              Icon(PhosphorFill.leaf, size: 20, color: accent),
+                              const SizedBox(width: AppSpacing.md),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(e.common,
+                                        style: AppTypography.callout
+                                            .copyWith(color: ink)),
+                                    Text(e.species,
+                                        style: AppTypography.latin
+                                            .copyWith(color: sub)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
       ),
     );
   }

@@ -1116,5 +1116,35 @@
   "offLightBrightIndirect": "Bright, indirect light",
   "offLightMedium": "Medium light",
   "offLightLow": "Low light is fine",
-  "offLightDirect": "Bright light with some direct sun"
+  "offLightDirect": "Bright light with some direct sun",
+  "symptomCheckerTitle": "Symptom checker",
+  "symptomCheckerIntro": "Answer a few questions to find out what may be wrong. No photo, key or internet needed.",
+  "symptomForPlant": "Checking {name}",
+  "@symptomForPlant": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "symptomStepWhere": "Where is the problem?",
+  "symptomStepWhat": "What do you see?",
+  "symptomStepPattern": "How does it look?",
+  "symptomStepContext": "What is going on around the plant?",
+  "symptomPickHint": "Choose all that apply.",
+  "symptomNext": "Next",
+  "symptomSeeResults": "See results",
+  "symptomResultsTitle": "Likely causes",
+  "symptomNothingFound": "I could not narrow this down. Go back and add more details, or scan a photo with an AI key.",
+  "symptomMostLikely": "Most likely",
+  "symptomPossible": "Possible",
+  "symptomLessLikely": "Less likely",
+  "symptomCheckFirst": "Check first",
+  "symptomWhatToDo": "What to do",
+  "symptomPrevention": "Prevention",
+  "symptomWhenToWorry": "When to worry",
+  "symptomStartOver": "Start over",
+  "symptomDisclaimer": "General guidance only. Look closely at your plant, and get expert help if it gets worse.",
+  "noSpeciesMatch": "No match in the care guide. You can still type your own.",
+  "speciesGuideFilled": "Care schedule filled in from the guide."
 }

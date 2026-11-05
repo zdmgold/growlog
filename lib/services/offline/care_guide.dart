@@ -76,4 +76,27 @@ class CareGuide {
   }
 
   CareEntry? lookup(String species) => _byName?[species];
+
+  /// Species whose common or Latin name matches the typed text, best first.
+  List<CareEntry> search(String query, {int limit = 5}) =>
+      searchIn(_byName?.values ?? const [], query, limit: limit);
+
+  /// Names that start with the text rank above names that merely contain it.
+  /// Needs at least two characters so one stray letter does not list everything.
+  static List<CareEntry> searchIn(Iterable<CareEntry> entries, String query,
+      {int limit = 5}) {
+    final q = query.trim().toLowerCase();
+    if (q.length < 2) return const [];
+    final starts = <CareEntry>[];
+    final contains = <CareEntry>[];
+    for (final e in entries) {
+      final names = [e.common.toLowerCase(), e.species.toLowerCase()];
+      if (names.any((n) => n.startsWith(q) || n.split(' ').any((w) => w.startsWith(q)))) {
+        starts.add(e);
+      } else if (names.any((n) => n.contains(q))) {
+        contains.add(e);
+      }
+    }
+    return [...starts, ...contains].take(limit).toList();
+  }
 }

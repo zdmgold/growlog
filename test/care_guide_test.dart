@@ -28,4 +28,16 @@ void main() {
   test('lithops are not fed on a schedule', () {
     expect(entries['Lithops']!.feedDays, isNull);
   });
+
+  test('species search finds common and Latin names, best matches first', () {
+    final all = entries.values;
+    expect(CareGuide.searchIn(all, 'monstera').first.species,
+        startsWith('Monstera'));
+    expect(CareGuide.searchIn(all, 'aloe').map((e) => e.species),
+        contains('Aloe vera'));
+    expect(CareGuide.searchIn(all, 'a'), isEmpty);
+    expect(CareGuide.searchIn(all, 'zzzzqq'), isEmpty);
+    expect(CareGuide.searchIn(all, 'e').length, 0);
+    expect(CareGuide.searchIn(all, 'ficus', limit: 3).length, 3);
+  });
 }

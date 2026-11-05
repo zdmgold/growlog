@@ -1,0 +1,1180 @@
+{
+ "version": 1,
+ "note": "General houseplant guidance authored for GrowLog. Needs human review before release.",
+ "groups": {
+  "part": [
+   {
+    "id": "leaves",
+    "label": "Leaves"
+   },
+   {
+    "id": "stems",
+    "label": "Stems"
+   },
+   {
+    "id": "roots_soil",
+    "label": "Roots or soil"
+   },
+   {
+    "id": "whole",
+    "label": "Whole plant"
+   },
+   {
+    "id": "flowers",
+    "label": "Flowers"
+   }
+  ],
+  "symptom": [
+   {
+    "id": "yellowing",
+    "label": "Yellowing leaves"
+   },
+   {
+    "id": "brown_tips",
+    "label": "Brown tips or edges"
+   },
+   {
+    "id": "brown_spots",
+    "label": "Brown spots"
+   },
+   {
+    "id": "black_spots",
+    "label": "Black spots"
+   },
+   {
+    "id": "wilting",
+    "label": "Wilting or drooping"
+   },
+   {
+    "id": "white_powder",
+    "label": "White powdery coating"
+   },
+   {
+    "id": "white_fluff",
+    "label": "White cotton-like fluff"
+   },
+   {
+    "id": "sticky",
+    "label": "Sticky residue"
+   },
+   {
+    "id": "black_film",
+    "label": "Black film that wipes off"
+   },
+   {
+    "id": "webbing",
+    "label": "Fine webbing"
+   },
+   {
+    "id": "insects",
+    "label": "Visible insects"
+   },
+   {
+    "id": "tiny_flies",
+    "label": "Tiny flies"
+   },
+   {
+    "id": "holes",
+    "label": "Holes or chewed leaves"
+   },
+   {
+    "id": "leggy",
+    "label": "Long, stretched growth"
+   },
+   {
+    "id": "curling",
+    "label": "Curling or distorted leaves"
+   },
+   {
+    "id": "mushy_base",
+    "label": "Mushy or soft base"
+   },
+   {
+    "id": "no_growth",
+    "label": "No new growth"
+   },
+   {
+    "id": "bleached",
+    "label": "Pale or bleached patches"
+   },
+   {
+    "id": "pale_new",
+    "label": "Small or pale new leaves"
+   },
+   {
+    "id": "leaf_drop",
+    "label": "Leaves dropping"
+   },
+   {
+    "id": "bumps",
+    "label": "Blister-like bumps under leaves"
+   },
+   {
+    "id": "brown_bumps",
+    "label": "Hard brown bumps on stems or leaves"
+   },
+   {
+    "id": "stippling",
+    "label": "Tiny pale dots on leaves"
+   },
+   {
+    "id": "crust",
+    "label": "White or grey crust on soil or pot"
+   },
+   {
+    "id": "grey_fuzz",
+    "label": "Grey fuzzy mould"
+   },
+   {
+    "id": "rust_spots",
+    "label": "Orange or rusty powdery spots"
+   }
+  ],
+  "pattern": [
+   {
+    "id": "age_old",
+    "label": "Older leaves first"
+   },
+   {
+    "id": "age_new",
+    "label": "New leaves first"
+   },
+   {
+    "id": "loc_edges",
+    "label": "Along the edges"
+   },
+   {
+    "id": "loc_between_veins",
+    "label": "Between green veins"
+   },
+   {
+    "id": "loc_patchy",
+    "label": "Patchy, in spots"
+   },
+   {
+    "id": "loc_even",
+    "label": "Even across the plant"
+   }
+  ],
+  "context": [
+   {
+    "id": "wet_soil",
+    "label": "Soil stays wet for days"
+   },
+   {
+    "id": "dry_soil",
+    "label": "Soil is bone dry for long periods"
+   },
+   {
+    "id": "irregular_water",
+    "label": "Watering is irregular"
+   },
+   {
+    "id": "no_drainage",
+    "label": "Pot has no drainage hole"
+   },
+   {
+    "id": "hard_soil",
+    "label": "Soil is hard or water runs straight through"
+   },
+   {
+    "id": "rootbound",
+    "label": "Roots circle the pot or poke out the holes"
+   },
+   {
+    "id": "low_light",
+    "label": "Low light spot"
+   },
+   {
+    "id": "strong_sun",
+    "label": "Strong direct sun"
+   },
+   {
+    "id": "hot_spot",
+    "label": "Near a heater or very hot spot"
+   },
+   {
+    "id": "cold_or_draft",
+    "label": "Cold window or draft"
+   },
+   {
+    "id": "dry_air",
+    "label": "Very dry air"
+   },
+   {
+    "id": "humid_stagnant",
+    "label": "Humid with little air movement"
+   },
+   {
+    "id": "tap_water",
+    "label": "Hard or chlorinated tap water"
+   },
+   {
+    "id": "long_unfed",
+    "label": "Not fed for six months or more"
+   },
+   {
+    "id": "heavy_feed",
+    "label": "Fed heavily or often"
+   },
+   {
+    "id": "just_moved",
+    "label": "Moved to a new spot recently"
+   },
+   {
+    "id": "just_repotted",
+    "label": "Repotted recently"
+   },
+   {
+    "id": "just_bought",
+    "label": "Bought recently"
+   },
+   {
+    "id": "winter",
+    "label": "Winter or cool season"
+   },
+   {
+    "id": "flowers_done",
+    "label": "Plant just finished flowering"
+   },
+   {
+    "id": "nearby_infested",
+    "label": "A nearby plant has pests"
+   },
+   {
+    "id": "otherwise_healthy",
+    "label": "Otherwise growing well"
+   }
+  ]
+ },
+ "problems": [
+  {
+   "id": "overwatering",
+   "name": "Overwatering",
+   "cat": "water",
+   "sev": "med",
+   "what": "The soil stays wet so roots cannot get enough air.",
+   "check": "Push a finger 3 to 5 cm into the soil. If it is still wet, wait before watering.",
+   "steps": [
+    "Stop watering until the top few centimetres are dry.",
+    "Make sure water can drain out of the pot and empty the saucer.",
+    "If the soil is soggy all through, move the plant to a bright spot with airflow so it dries faster."
+   ],
+   "prevent": "Water only when the top of the soil is dry to the touch, and use a pot with a drainage hole.",
+   "worry": "If the base turns soft or smells bad, treat it as root rot.",
+   "match": {
+    "yellowing": 3,
+    "wilting": 2,
+    "leaf_drop": 2,
+    "mushy_base": 1,
+    "black_spots": 1,
+    "tiny_flies": 1,
+    "age_old": 1,
+    "loc_even": 1,
+    "wet_soil": 3,
+    "no_drainage": 2,
+    "low_light": 1,
+    "winter": 1
+   }
+  },
+  {
+   "id": "underwatering",
+   "name": "Underwatering",
+   "cat": "water",
+   "sev": "med",
+   "what": "The plant is not getting enough water for its needs.",
+   "check": "Lift the pot: a light pot and dry soil far down mean it is thirsty.",
+   "steps": [
+    "Water slowly until it drains from the bottom, then empty the saucer.",
+    "If the soil has shrunk from the pot edge, bottom-water the pot for 20 to 30 minutes.",
+    "Check again in a few days and set a regular rhythm."
+   ],
+   "prevent": "Check the soil on a schedule and water thoroughly rather than with small sips.",
+   "worry": "If leaves stay crisp after a few weeks of regular watering, the roots may be damaged.",
+   "match": {
+    "wilting": 3,
+    "brown_tips": 2,
+    "curling": 2,
+    "yellowing": 1,
+    "leaf_drop": 1,
+    "dry_soil": 3,
+    "irregular_water": 1,
+    "hot_spot": 1,
+    "dry_air": 1,
+    "age_old": 1
+   }
+  },
+  {
+   "id": "inconsistent_watering",
+   "name": "Inconsistent watering",
+   "cat": "water",
+   "sev": "low",
+   "what": "Swings between too wet and too dry stress the roots.",
+   "check": "Think back: has the soil gone from soaked to bone dry more than once?",
+   "steps": [
+    "Pick a simple routine: check the soil on the same day each week.",
+    "Water thoroughly each time, then let the top dry before the next watering.",
+    "Trim badly damaged leaves once the routine is steady."
+   ],
+   "prevent": "Use a soil check, not the calendar alone.",
+   "worry": "If new leaves keep coming in damaged after a steady routine, look at light and roots.",
+   "match": {
+    "brown_tips": 1,
+    "brown_spots": 1,
+    "yellowing": 1,
+    "leaf_drop": 1,
+    "wilting": 1,
+    "irregular_water": 3,
+    "loc_patchy": 1
+   }
+  },
+  {
+   "id": "root_rot",
+   "name": "Root rot",
+   "cat": "water",
+   "sev": "high",
+   "what": "Roots stay wet, die back and turn soft, so the plant cannot drink.",
+   "check": "Slide the plant out of its pot. Healthy roots are firm and pale. Rotten roots are brown or black, mushy and smell sour.",
+   "steps": [
+    "Remove the plant and cut away all soft, dark roots with clean scissors.",
+    "Repot in fresh, free-draining mix in a clean pot with drainage holes.",
+    "Water lightly afterwards and keep it in bright, indirect light."
+   ],
+   "prevent": "Use a well-draining mix and never leave the pot standing in water.",
+   "worry": "If more than half the roots are gone or the stem base is mushy, the plant may not recover. Take cuttings from healthy stems if you can.",
+   "match": {
+    "wilting": 3,
+    "mushy_base": 3,
+    "yellowing": 2,
+    "leaf_drop": 1,
+    "no_growth": 1,
+    "tiny_flies": 1,
+    "roots_soil": 1,
+    "wet_soil": 3,
+    "no_drainage": 2
+   }
+  },
+  {
+   "id": "edema",
+   "name": "Edema (water blisters)",
+   "cat": "water",
+   "sev": "low",
+   "what": "Roots take up more water than leaves can release, so cells swell into small bumps.",
+   "check": "Look under the leaves for small blister-like bumps that may turn brown and corky.",
+   "steps": [
+    "Water less often and let the soil dry a bit more between waterings.",
+    "Give the plant more light and airflow.",
+    "Do not remove leaves unless they are fully damaged. Existing bumps will not heal."
+   ],
+   "prevent": "Avoid watering when the air is cool and humid, and keep the plant in good light.",
+   "worry": "If you see bumps plus soft stems or leaves, check the roots for rot.",
+   "match": {
+    "bumps": 4,
+    "brown_spots": 1,
+    "wet_soil": 2,
+    "low_light": 1,
+    "cold_or_draft": 1,
+    "winter": 1,
+    "age_old": 1
+   }
+  },
+  {
+   "id": "tap_water_burn",
+   "name": "Tap-water mineral or chlorine burn",
+   "cat": "water",
+   "sev": "low",
+   "what": "Salts or chlorine in tap water build up and scorch leaf tips.",
+   "check": "Check for white crust on the soil or pot rim and brown, dry tips.",
+   "steps": [
+    "Let tap water sit out overnight before using it, or use rainwater or filtered water.",
+    "Flush the soil with plenty of water every few months so salts drain out.",
+    "Trim brown tips with clean scissors if you like. They will not turn green again."
+   ],
+   "prevent": "Use soft water where you can, and flush the pot occasionally.",
+   "worry": "If damage keeps spreading, check humidity and feeding too.",
+   "match": {
+    "brown_tips": 3,
+    "crust": 2,
+    "tap_water": 3,
+    "loc_edges": 2
+   }
+  },
+  {
+   "id": "low_humidity",
+   "name": "Low humidity",
+   "cat": "water",
+   "sev": "low",
+   "what": "Dry air pulls moisture from leaf edges faster than the plant can replace it.",
+   "check": "Brown, crispy tips on several leaves, especially in winter with heating, point to dry air.",
+   "steps": [
+    "Move the plant away from heaters, vents and drafts.",
+    "Group plants together or use a humidifier.",
+    "Keep watering steady. Misting helps very little and can cause leaf spots."
+   ],
+   "prevent": "Keep humidity-loving plants away from radiators and air conditioners.",
+   "worry": "If the whole plant crisps despite steady care, check for pests such as spider mites.",
+   "match": {
+    "brown_tips": 3,
+    "curling": 2,
+    "loc_edges": 2,
+    "dry_air": 3,
+    "winter": 1
+   }
+  },
+  {
+   "id": "too_little_light",
+   "name": "Too little light",
+   "cat": "light",
+   "sev": "low",
+   "what": "The plant is stretching and slowing down because it is not getting enough light.",
+   "check": "Compare new growth with older growth. Long gaps between leaves and small, pale new leaves point to low light.",
+   "steps": [
+    "Move the plant to a brighter spot, ideally near a window with indirect light.",
+    "Rotate the pot every week or two for even growth.",
+    "Cut back long, bare stems to encourage fuller growth in spring."
+   ],
+   "prevent": "Match the plant to the light in your room, or add a grow light.",
+   "worry": "If the plant keeps declining in a bright spot, look at watering and roots.",
+   "match": {
+    "leggy": 3,
+    "pale_new": 2,
+    "no_growth": 1,
+    "yellowing": 1,
+    "leaf_drop": 1,
+    "low_light": 3,
+    "age_old": 1
+   }
+  },
+  {
+   "id": "too_much_light",
+   "name": "Too much direct light (sunburn)",
+   "cat": "light",
+   "sev": "med",
+   "what": "Strong sun scorches leaf tissue and leaves pale or brown patches.",
+   "check": "The damage sits on the side facing the window, and it is crisp or bleached.",
+   "steps": [
+    "Move the plant back from the window or filter the light with a sheer curtain.",
+    "Do not cut healthy leaves. Trim only badly burned ones.",
+    "Raise light slowly if you want to move it into more sun."
+   ],
+   "prevent": "Introduce more light gradually over a week or two.",
+   "worry": "If new leaves also burn, the spot is too intense and the plant should move.",
+   "match": {
+    "bleached": 3,
+    "brown_spots": 1,
+    "curling": 1,
+    "wilting": 1,
+    "strong_sun": 3,
+    "loc_patchy": 1,
+    "hot_spot": 1
+   }
+  },
+  {
+   "id": "light_change",
+   "name": "Sudden light change",
+   "cat": "light",
+   "sev": "low",
+   "what": "A move to a very different spot makes plants drop or yellow leaves while they adjust.",
+   "check": "Did the plant recently move to a different room, window or season of light?",
+   "steps": [
+    "Keep it in its new spot and avoid moving it again for a few weeks.",
+    "Keep watering steady.",
+    "Expect some leaf loss while it adjusts."
+   ],
+   "prevent": "Move plants gradually when you can.",
+   "worry": "If decline continues after four to six weeks, check the other causes.",
+   "match": {
+    "leaf_drop": 2,
+    "yellowing": 1,
+    "wilting": 1,
+    "just_moved": 3
+   }
+  },
+  {
+   "id": "cold_draft",
+   "name": "Cold or draft damage",
+   "cat": "temperature",
+   "sev": "med",
+   "what": "Cold air makes leaf cells collapse, leaving dark, wet-looking patches.",
+   "check": "Check if the plant sits against a cold window, near a door, or in a draft.",
+   "steps": [
+    "Move it away from cold glass and drafts.",
+    "Keep it above about 12 to 15 °C unless it is a cool-loving plant.",
+    "Trim badly damaged leaves."
+   ],
+   "prevent": "Keep tropical houseplants warm and away from open windows in cold weather.",
+   "worry": "If the stem turns soft or black, treat it as stem rot.",
+   "match": {
+    "leaf_drop": 2,
+    "black_spots": 1,
+    "wilting": 1,
+    "brown_spots": 1,
+    "curling": 1,
+    "cold_or_draft": 3,
+    "winter": 1
+   }
+  },
+  {
+   "id": "heat_stress",
+   "name": "Heat stress",
+   "cat": "temperature",
+   "sev": "med",
+   "what": "High temperatures dry the plant out and cause drooping and scorching.",
+   "check": "Check whether the plant sits near a heater, radiator or hot windowsill.",
+   "steps": [
+    "Move it to a cooler, shaded spot.",
+    "Check the soil and water if dry.",
+    "Keep it away from hot vents."
+   ],
+   "prevent": "Avoid very hot spots and give plants some breathing room from windows in summer.",
+   "worry": "If leaves stay crisp after moving, check for pests and roots.",
+   "match": {
+    "wilting": 2,
+    "curling": 1,
+    "brown_tips": 1,
+    "bleached": 1,
+    "hot_spot": 3,
+    "dry_soil": 1,
+    "dry_air": 1
+   }
+  },
+  {
+   "id": "nitrogen_deficiency",
+   "name": "Nitrogen shortage",
+   "cat": "nutrition",
+   "sev": "low",
+   "what": "The plant is short of nitrogen, so older leaves pale as it moves nutrients to new growth.",
+   "check": "Look for older leaves yellowing evenly, with slow growth and a long time since feeding.",
+   "steps": [
+    "Feed with a balanced houseplant fertiliser at half the label strength.",
+    "Feed only during the growing season, usually spring and summer.",
+    "Do not feed a dry or stressed plant. Water first."
+   ],
+   "prevent": "Feed on a regular schedule during growth, at a gentle dose.",
+   "worry": "If yellowing continues after a couple of feeds, check roots, light and watering.",
+   "match": {
+    "yellowing": 3,
+    "age_old": 2,
+    "no_growth": 2,
+    "long_unfed": 3,
+    "loc_even": 2
+   }
+  },
+  {
+   "id": "magnesium_deficiency",
+   "name": "Magnesium shortage",
+   "cat": "nutrition",
+   "sev": "low",
+   "what": "Older leaves yellow between the veins while the veins stay green.",
+   "check": "Check older leaves for green veins with yellow between them.",
+   "steps": [
+    "Feed with a balanced fertiliser that includes micronutrients, at half strength.",
+    "Check that watering and drainage are normal. Roots in poor shape cannot take up nutrients.",
+    "Do not add Epsom salt unless you know magnesium is the problem."
+   ],
+   "prevent": "Use a complete fertiliser during the growing season.",
+   "worry": "If it spreads to many leaves quickly, check roots and watering.",
+   "match": {
+    "yellowing": 2,
+    "loc_between_veins": 3,
+    "age_old": 2,
+    "long_unfed": 1
+   }
+  },
+  {
+   "id": "iron_deficiency",
+   "name": "Iron shortage",
+   "cat": "nutrition",
+   "sev": "low",
+   "what": "New leaves turn yellow between green veins because iron is not available to the plant.",
+   "check": "Check new leaves for yellow tissue with green veins.",
+   "steps": [
+    "Use a fertiliser with chelated iron at the label dose.",
+    "Make sure the soil is not waterlogged, because wet roots block iron uptake.",
+    "Use softer water if your tap water is very hard."
+   ],
+   "prevent": "Avoid overwatering and very hard water.",
+   "worry": "If new leaves stay yellow after correcting watering and feeding, check roots.",
+   "match": {
+    "yellowing": 2,
+    "loc_between_veins": 3,
+    "age_new": 3,
+    "pale_new": 1,
+    "tap_water": 1
+   }
+  },
+  {
+   "id": "fertiliser_burn",
+   "name": "Fertiliser burn",
+   "cat": "nutrition",
+   "sev": "med",
+   "what": "Too much fertiliser leaves salts that burn roots and leaf edges.",
+   "check": "Look for a white crust on the soil and brown, crisp edges soon after feeding.",
+   "steps": [
+    "Flush the pot with plenty of water, letting it drain fully, three or four times.",
+    "Stop feeding for at least two months.",
+    "Remove the top crust of soil and replace with fresh mix if heavy."
+   ],
+   "prevent": "Feed at half strength, only in the growing season, and only into moist soil.",
+   "worry": "If roots look dark and mushy after flushing, check for root damage.",
+   "match": {
+    "brown_tips": 2,
+    "crust": 3,
+    "heavy_feed": 3,
+    "wilting": 1,
+    "loc_edges": 2,
+    "brown_spots": 1,
+    "leaf_drop": 1
+   }
+  },
+  {
+   "id": "rootbound",
+   "name": "Root-bound plant",
+   "cat": "pot_soil",
+   "sev": "low",
+   "what": "Roots have filled the pot and cannot take up enough water or nutrients.",
+   "check": "Slide the plant out of the pot. A dense mat of roots circling the outside means it is root-bound.",
+   "steps": [
+    "Repot into a pot one size larger (2 to 5 cm wider) with fresh potting mix.",
+    "Loosen the outer roots gently before repotting.",
+    "Water well afterwards and keep out of strong sun for a week."
+   ],
+   "prevent": "Repot every year or two in spring, depending on growth.",
+   "worry": "If the plant is in poor shape after repotting, check roots for rot.",
+   "match": {
+    "wilting": 2,
+    "no_growth": 2,
+    "rootbound": 3,
+    "dry_soil": 1,
+    "yellowing": 1,
+    "roots_soil": 1
+   }
+  },
+  {
+   "id": "compacted_soil",
+   "name": "Compacted soil",
+   "cat": "pot_soil",
+   "sev": "low",
+   "what": "Old or heavy soil packs down, so water pools or runs straight past the roots.",
+   "check": "Water the plant and watch. If water pools on top or rushes out the bottom, the soil is compacted.",
+   "steps": [
+    "Gently loosen the top of the soil with a chopstick.",
+    "Repot into fresh, airy potting mix with perlite or bark.",
+    "Water slowly in stages so it can soak in."
+   ],
+   "prevent": "Refresh the mix every year or two.",
+   "worry": "If the plant keeps wilting after repotting, check the roots.",
+   "match": {
+    "wilting": 1,
+    "no_growth": 1,
+    "hard_soil": 3,
+    "irregular_water": 1,
+    "rootbound": 1
+   }
+  },
+  {
+   "id": "poor_drainage",
+   "name": "Poor drainage",
+   "cat": "pot_soil",
+   "sev": "med",
+   "what": "Water cannot leave the pot, so roots sit in water.",
+   "check": "Check that the pot has drainage holes and the saucer is empty.",
+   "steps": [
+    "Move the plant into a pot with drainage holes, or keep it in a nursery pot inside a decorative one.",
+    "Use a free-draining mix.",
+    "Empty any water from the saucer after watering."
+   ],
+   "prevent": "Always use a pot with drainage holes.",
+   "worry": "If the soil smells bad or the base is soft, check for root rot.",
+   "match": {
+    "wet_soil": 3,
+    "no_drainage": 3,
+    "yellowing": 2,
+    "wilting": 1,
+    "mushy_base": 1,
+    "tiny_flies": 1
+   }
+  },
+  {
+   "id": "mineral_crust",
+   "name": "Mineral crust on soil",
+   "cat": "pot_soil",
+   "sev": "low",
+   "what": "Salts from water and fertiliser build up as a white or grey crust.",
+   "check": "Look for a hard white or grey crust on the soil or around the pot rim.",
+   "steps": [
+    "Scrape off the crust and replace the top 2 cm of soil.",
+    "Flush the pot with water until it runs clear.",
+    "Use softer water if you can."
+   ],
+   "prevent": "Flush occasionally and avoid overfeeding.",
+   "worry": "If leaf tips keep browning, repot into fresh mix.",
+   "match": {
+    "crust": 4,
+    "brown_tips": 1,
+    "tap_water": 2,
+    "heavy_feed": 1
+   }
+  },
+  {
+   "id": "spider_mites",
+   "name": "Spider mites",
+   "cat": "pests",
+   "sev": "high",
+   "what": "Tiny mites suck sap, leaving pale dots and fine webbing.",
+   "check": "Hold a sheet of white paper under a leaf and tap. Tiny moving specks or webbing mean mites.",
+   "steps": [
+    "Isolate the plant from others.",
+    "Wipe leaves, front and back, with a damp cloth, or rinse the plant in the shower.",
+    "Spray with a mild soap solution (a few drops of mild liquid soap in a litre of water), test on one leaf first, and repeat every 5 to 7 days for a few weeks.",
+    "Raise humidity, since mites thrive in dry air."
+   ],
+   "prevent": "Check leaf undersides regularly and avoid very dry air.",
+   "worry": "If webbing spreads or leaves yellow and drop quickly, keep treating and keep the plant isolated.",
+   "match": {
+    "webbing": 4,
+    "stippling": 3,
+    "yellowing": 1,
+    "insects": 1,
+    "dry_air": 2,
+    "hot_spot": 1,
+    "curling": 1
+   }
+  },
+  {
+   "id": "mealybugs",
+   "name": "Mealybugs",
+   "cat": "pests",
+   "sev": "high",
+   "what": "Small, soft insects covered in white fluff feed on sap, usually in leaf joints.",
+   "check": "Look in leaf joints and on stems for white cottony clusters.",
+   "steps": [
+    "Isolate the plant.",
+    "Dab each bug with a cotton bud dipped in rubbing alcohol (test on one leaf first).",
+    "Wipe the plant with a mild soap solution and repeat weekly for several weeks."
+   ],
+   "prevent": "Inspect new plants before bringing them near others.",
+   "worry": "If they spread to the roots (white fluff in the soil), repot and treat the soil.",
+   "match": {
+    "white_fluff": 4,
+    "sticky": 2,
+    "insects": 2,
+    "yellowing": 1,
+    "no_growth": 1,
+    "nearby_infested": 1
+   }
+  },
+  {
+   "id": "scale",
+   "name": "Scale insects",
+   "cat": "pests",
+   "sev": "high",
+   "what": "Small, hard bumps on stems and leaves feed on sap and leave sticky residue.",
+   "check": "Look for brown or tan bumps along stems or leaf veins that you can scrape off with a fingernail.",
+   "steps": [
+    "Isolate the plant.",
+    "Scrape or wipe off scales with a cotton bud dipped in rubbing alcohol.",
+    "Wipe the plant with a mild soap solution and repeat weekly for a few weeks."
+   ],
+   "prevent": "Check stems and leaf undersides when you buy or repot.",
+   "worry": "If the plant keeps declining, repeat treatment for longer and keep it isolated.",
+   "match": {
+    "brown_bumps": 4,
+    "sticky": 3,
+    "insects": 2,
+    "yellowing": 1,
+    "leaf_drop": 1,
+    "black_film": 1,
+    "nearby_infested": 1
+   }
+  },
+  {
+   "id": "fungus_gnats",
+   "name": "Fungus gnats",
+   "cat": "pests",
+   "sev": "low",
+   "what": "Tiny dark flies lay eggs in constantly damp soil.",
+   "check": "Notice small dark flies around the soil, especially after watering.",
+   "steps": [
+    "Let the top 3 to 5 cm of soil dry out between waterings.",
+    "Use yellow sticky traps to catch adults.",
+    "Top the soil with a thin layer of sand or grit."
+   ],
+   "prevent": "Avoid keeping soil constantly wet.",
+   "worry": "If plants wilt too, check roots for rot.",
+   "match": {
+    "tiny_flies": 4,
+    "wet_soil": 3,
+    "roots_soil": 1,
+    "yellowing": 1
+   }
+  },
+  {
+   "id": "thrips",
+   "name": "Thrips",
+   "cat": "pests",
+   "sev": "med",
+   "what": "Slender, tiny insects scrape leaves and leave silvery streaks and distorted growth.",
+   "check": "Tap a leaf over white paper. Thrips look like tiny dark slivers that move.",
+   "steps": [
+    "Isolate the plant.",
+    "Wipe leaves and spray with a mild soap solution.",
+    "Repeat every 5 to 7 days for several weeks."
+   ],
+   "prevent": "Inspect new plants and flowers before bringing them in.",
+   "worry": "If new growth stays distorted after several weeks, keep treating.",
+   "match": {
+    "stippling": 2,
+    "insects": 2,
+    "curling": 2,
+    "bleached": 1,
+    "brown_spots": 1,
+    "loc_patchy": 1,
+    "age_new": 1
+   }
+  },
+  {
+   "id": "aphids",
+   "name": "Aphids",
+   "cat": "pests",
+   "sev": "med",
+   "what": "Soft insects cluster on new growth and suck sap.",
+   "check": "Look at soft new shoots and buds for small green, black or brown clusters.",
+   "steps": [
+    "Rinse the plant or wipe off aphids.",
+    "Spray with a mild soap solution.",
+    "Repeat every few days until they are gone."
+   ],
+   "prevent": "Check soft new growth regularly.",
+   "worry": "If they return quickly, isolate and keep treating.",
+   "match": {
+    "sticky": 3,
+    "insects": 3,
+    "curling": 2,
+    "age_new": 2,
+    "black_film": 1
+   }
+  },
+  {
+   "id": "whiteflies",
+   "name": "Whiteflies",
+   "cat": "pests",
+   "sev": "med",
+   "what": "Tiny white flyers rise up when the plant is disturbed.",
+   "check": "Shake the plant gently. A cloud of tiny white flies points to whiteflies.",
+   "steps": [
+    "Isolate the plant.",
+    "Use yellow sticky traps for adults.",
+    "Wipe the leaf undersides and spray with a mild soap solution every 5 to 7 days."
+   ],
+   "prevent": "Check leaf undersides regularly.",
+   "worry": "If the infestation persists, repeat treatments for several weeks.",
+   "match": {
+    "insects": 3,
+    "tiny_flies": 2,
+    "sticky": 2,
+    "yellowing": 1,
+    "black_film": 1
+   }
+  },
+  {
+   "id": "chewing_pests",
+   "name": "Chewing pests (caterpillars, slugs, beetles)",
+   "cat": "pests",
+   "sev": "med",
+   "what": "Larger pests chew holes or ragged edges into leaves.",
+   "check": "Look under leaves and in the soil, ideally in the evening, for caterpillars, slugs, snails or beetles. Slime trails are a clue.",
+   "steps": [
+    "Pick pests off by hand and move them away from the plant.",
+    "Check nearby plants, especially ones outdoors or recently brought in.",
+    "Remove badly damaged leaves."
+   ],
+   "prevent": "Check plants you move outdoors, and inspect them before bringing them back in.",
+   "worry": "If damage continues after you have removed the pests you can see, check again after dark.",
+   "match": {
+    "holes": 4,
+    "insects": 2,
+    "loc_patchy": 1,
+    "nearby_infested": 1
+   }
+  },
+  {
+   "id": "powdery_mildew",
+   "name": "Powdery mildew",
+   "cat": "disease",
+   "sev": "med",
+   "what": "A fungus forms a white powdery coating on leaves.",
+   "check": "The powder can be wiped off and appears on the upper leaf surface.",
+   "steps": [
+    "Isolate the plant.",
+    "Remove badly affected leaves.",
+    "Improve airflow and keep leaves dry.",
+    "Spray with a mix of 1 teaspoon baking soda in a litre of water (test on one leaf), or use a product labelled for powdery mildew."
+   ],
+   "prevent": "Give plants space and avoid wetting the leaves.",
+   "worry": "If it keeps returning, treat the plant longer and reduce humidity.",
+   "match": {
+    "white_powder": 4,
+    "humid_stagnant": 2,
+    "leaves": 1,
+    "loc_patchy": 1
+   }
+  },
+  {
+   "id": "fungal_leaf_spot",
+   "name": "Fungal leaf spot",
+   "cat": "disease",
+   "sev": "med",
+   "what": "Fungi cause brown or black spots, often with a darker ring or yellow halo.",
+   "check": "Check whether spots have clear edges or a yellow halo and appear after wet leaves.",
+   "steps": [
+    "Remove badly spotted leaves.",
+    "Avoid wetting the leaves and improve airflow.",
+    "Do not water in the evening."
+   ],
+   "prevent": "Water at the soil, not the leaves.",
+   "worry": "If spots spread to new leaves quickly, keep treating and isolate the plant.",
+   "match": {
+    "brown_spots": 3,
+    "black_spots": 2,
+    "loc_patchy": 2,
+    "humid_stagnant": 2,
+    "yellowing": 1
+   }
+  },
+  {
+   "id": "bacterial_leaf_spot",
+   "name": "Bacterial leaf spot",
+   "cat": "disease",
+   "sev": "med",
+   "what": "Water-soaked, angular spots with yellow halos are a sign of bacterial infection.",
+   "check": "Look for spots that look wet or greasy and are limited by the veins.",
+   "steps": [
+    "Remove affected leaves and throw them away, not in compost.",
+    "Keep leaves dry and wash your hands and tools afterwards.",
+    "Isolate the plant."
+   ],
+   "prevent": "Water at the soil and avoid splashing.",
+   "worry": "If it spreads fast, consider discarding the plant to protect others.",
+   "match": {
+    "black_spots": 3,
+    "brown_spots": 2,
+    "yellowing": 1,
+    "humid_stagnant": 1,
+    "loc_patchy": 1
+   }
+  },
+  {
+   "id": "grey_mould",
+   "name": "Grey mould (botrytis)",
+   "cat": "disease",
+   "sev": "med",
+   "what": "A grey, fuzzy mould grows on dead or damaged tissue in damp, still air.",
+   "check": "Look for grey fuzz on flowers, dead leaves or stems.",
+   "steps": [
+    "Remove affected parts and discard them.",
+    "Increase airflow and reduce humidity.",
+    "Remove dead leaves and flowers regularly."
+   ],
+   "prevent": "Clear dead material and give the plant air.",
+   "worry": "If it spreads onto healthy stems, isolate the plant.",
+   "match": {
+    "grey_fuzz": 4,
+    "humid_stagnant": 2,
+    "flowers": 1,
+    "wilting": 1
+   }
+  },
+  {
+   "id": "rust",
+   "name": "Rust",
+   "cat": "disease",
+   "sev": "med",
+   "what": "A fungus causes orange or rust-coloured powdery spots, often under leaves.",
+   "check": "Rub a spot lightly. Orange powder on your finger suggests rust.",
+   "steps": [
+    "Remove affected leaves.",
+    "Keep leaves dry and improve airflow.",
+    "Isolate the plant."
+   ],
+   "prevent": "Water at the soil and keep leaves dry.",
+   "worry": "If it keeps spreading, keep treating and isolate the plant.",
+   "match": {
+    "rust_spots": 4,
+    "yellowing": 1,
+    "humid_stagnant": 1
+   }
+  },
+  {
+   "id": "anthracnose",
+   "name": "Anthracnose",
+   "cat": "disease",
+   "sev": "med",
+   "what": "A fungal disease causing dark, sunken spots and dry browning from the tips and edges.",
+   "check": "Look for dark, slightly sunken spots with a margin, and browning that spreads from the edges.",
+   "steps": [
+    "Remove affected leaves.",
+    "Keep leaves dry and improve airflow.",
+    "Do not crowd plants."
+   ],
+   "prevent": "Avoid wetting the leaves and give plants space.",
+   "worry": "If it spreads, isolate the plant.",
+   "match": {
+    "brown_spots": 2,
+    "brown_tips": 1,
+    "black_spots": 1,
+    "loc_edges": 1,
+    "humid_stagnant": 1
+   }
+  },
+  {
+   "id": "stem_rot",
+   "name": "Stem rot",
+   "cat": "disease",
+   "sev": "high",
+   "what": "The base or stem turns soft and dark, often from wet, cold conditions.",
+   "check": "Gently press the base of the stem. If it is soft, mushy or black, it is rotting.",
+   "steps": [
+    "Cut above the rot into healthy green tissue with clean scissors.",
+    "Root healthy cuttings in water or fresh mix if you can.",
+    "Discard the rotten parts and clean the pot before reuse."
+   ],
+   "prevent": "Do not overwater and avoid cold, wet conditions.",
+   "worry": "If rot reaches the main stem, the plant may not survive. Save cuttings.",
+   "match": {
+    "mushy_base": 3,
+    "wilting": 2,
+    "stems": 1,
+    "wet_soil": 2,
+    "black_spots": 1,
+    "cold_or_draft": 1
+   }
+  },
+  {
+   "id": "sooty_mould",
+   "name": "Sooty mould",
+   "cat": "disease",
+   "sev": "low",
+   "what": "A black film grows on sticky honeydew left by sap-sucking insects.",
+   "check": "Wipe a leaf with a damp cloth. If the black film wipes off and the leaf is sticky, it is sooty mould.",
+   "steps": [
+    "Wipe the film off with a damp cloth.",
+    "Look for the pests that made the honeydew, such as aphids, scale or mealybugs, and treat them.",
+    "Keep the leaves clean."
+   ],
+   "prevent": "Treat the pests first. The mould follows them.",
+   "worry": "If the film returns, there are still pests present.",
+   "match": {
+    "black_film": 4,
+    "sticky": 2,
+    "insects": 1,
+    "nearby_infested": 1
+   }
+  },
+  {
+   "id": "old_leaf_drop",
+   "name": "Normal older leaf drop",
+   "cat": "normal",
+   "sev": "low",
+   "what": "Plants shed their oldest leaves over time.",
+   "check": "Is it only a leaf or two at the bottom, while the rest of the plant looks healthy?",
+   "steps": [
+    "No action is needed. Remove fallen leaves to keep things tidy.",
+    "Keep your normal care routine."
+   ],
+   "prevent": "Nothing to prevent. This is part of growth.",
+   "worry": "If many leaves drop at once, check watering and light.",
+   "match": {
+    "leaf_drop": 2,
+    "age_old": 2,
+    "yellowing": 1,
+    "otherwise_healthy": 3
+   }
+  },
+  {
+   "id": "dormancy",
+   "name": "Winter dormancy",
+   "cat": "normal",
+   "sev": "low",
+   "what": "Many plants slow or pause growth when days are short and cool.",
+   "check": "Is it winter, and is the plant otherwise healthy?",
+   "steps": [
+    "Water less often and pause feeding.",
+    "Keep the plant in its brightest spot.",
+    "Resume normal care in spring."
+   ],
+   "prevent": "Reduce watering and feeding in the cool season.",
+   "worry": "If leaves yellow or soften, check for overwatering.",
+   "match": {
+    "no_growth": 3,
+    "winter": 3,
+    "leaf_drop": 1,
+    "otherwise_healthy": 2
+   }
+  },
+  {
+   "id": "repot_shock",
+   "name": "Repotting shock",
+   "cat": "normal",
+   "sev": "low",
+   "what": "Disturbed roots need a few weeks to recover, so leaves can droop or drop.",
+   "check": "Was the plant repotted in the last month?",
+   "steps": [
+    "Keep the soil lightly moist, not wet.",
+    "Keep the plant out of direct sun for a couple of weeks.",
+    "Do not feed for about a month."
+   ],
+   "prevent": "Handle roots gently and repot in the growing season.",
+   "worry": "If it keeps declining after six weeks, check roots for rot.",
+   "match": {
+    "wilting": 2,
+    "leaf_drop": 2,
+    "yellowing": 1,
+    "just_repotted": 4
+   }
+  },
+  {
+   "id": "settling_in",
+   "name": "Settling in after purchase",
+   "cat": "normal",
+   "sev": "low",
+   "what": "A new home means different light, humidity and temperature, so plants often drop or yellow a few leaves.",
+   "check": "Was the plant bought or moved in the last few weeks?",
+   "steps": [
+    "Place it in a stable spot with suitable light and leave it.",
+    "Water only when the soil is dry.",
+    "Avoid repotting or feeding for a few weeks."
+   ],
+   "prevent": "Give new plants a stable spot and a few weeks to adjust.",
+   "worry": "If decline continues past a month, check for pests and watering.",
+   "match": {
+    "leaf_drop": 2,
+    "yellowing": 1,
+    "wilting": 1,
+    "just_bought": 4,
+    "just_moved": 1
+   }
+  },
+  {
+   "id": "flower_fade",
+   "name": "Natural flower fade",
+   "cat": "normal",
+   "sev": "low",
+   "what": "Flowers wither and brown as they finish, which is natural.",
+   "check": "Did the plant recently finish flowering?",
+   "steps": [
+    "Remove spent flowers and flower stalks.",
+    "Keep your normal care routine.",
+    "Some plants rest briefly after flowering."
+   ],
+   "prevent": "Nothing to prevent.",
+   "worry": "If leaves also yellow or drop, check watering and light.",
+   "match": {
+    "wilting": 1,
+    "brown_spots": 1,
+    "flowers": 3,
+    "flowers_done": 4
+   }
+  }
+ ]
+}

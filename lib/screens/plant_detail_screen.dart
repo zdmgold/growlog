@@ -15,6 +15,7 @@ import '../utils/constants.dart';
 import '../utils/date_formatter.dart';
 import '../utils/phosphor_icons.dart';
 import '../utils/image_prep.dart';
+import '../widgets/symptom_entry_card.dart';
 import '../widgets/ad_slot.dart';
 import '../widgets/care_today_row.dart' show careIcon;
 import '../widgets/motion_widgets.dart';
@@ -772,6 +773,8 @@ class _DoctorCard extends StatelessWidget {
                   label: Text(context.l10n.checkHealth),
                 ),
               ),
+              const SizedBox(height: AppSpacing.sm),
+              SymptomEntryCard(plantName: plant.name),
               if (scans.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.lg),
                 Text(context.l10n.historyTitle, style: AppTypography.caption.copyWith(color: sub)),

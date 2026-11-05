@@ -7,6 +7,7 @@ import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/scan_widgets.dart';
+import '../widgets/symptom_entry_card.dart';
 import 'scan_screen.dart';
 
 /// Every saved scan, newest first.
@@ -68,6 +69,8 @@ class ScansScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: AppTypography.body.copyWith(color: sub),
                     ),
+                    const SizedBox(height: AppSpacing.xl),
+                    const SymptomEntryCard(),
                   ],
                 ),
               ),
@@ -77,10 +80,11 @@ class ScansScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.xxl,
             ),
-            itemCount: scans.length,
+            itemCount: scans.length + 1,
             separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
             itemBuilder: (context, i) {
-              final s = scans[i];
+              if (i == 0) return const SymptomEntryCard();
+              final s = scans[i - 1];
               return Material(
                 color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
                 borderRadius: BorderRadius.circular(AppRadii.lg),
