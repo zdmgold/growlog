@@ -61,14 +61,14 @@ jobs:
       - name: Set up release signing
         if: ${{ github.event.inputs.build_type == 'release' }}
         env:
-          KS_B64: ${{ secrets.GROWLOG_KEYSTORE_BASE64 }}
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
           if [ -z "$KS_B64" ]; then echo "No keystore secret; release will be debug-signed"; exit 0; fi
           echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
           echo "GROWLOG_KEYSTORE_PATH=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
-          echo "GROWLOG_KEYSTORE_PASSWORD=${{ secrets.GROWLOG_KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
-          echo "GROWLOG_KEY_ALIAS=${{ secrets.GROWLOG_KEY_ALIAS }}" >> "$GITHUB_ENV"
-          echo "GROWLOG_KEY_PASSWORD=${{ secrets.GROWLOG_KEY_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "GROWLOG_KEYSTORE_PASSWORD=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "GROWLOG_KEY_ALIAS=${{ secrets.ANDROID_KEY_ALIAS }}" >> "$GITHUB_ENV"
+          echo "GROWLOG_KEY_PASSWORD=${{ secrets.ANDROID_KEY_PASSWORD }}" >> "$GITHUB_ENV"
 
       - name: Build App Bundle (for Play Store submission)
         if: ${{ github.event.inputs.build_type == 'release' }}
@@ -89,7 +89,7 @@ jobs:
       - name: Verify release signature
         if: ${{ github.event.inputs.build_type == 'release' }}
         run: |
-          EXPECTED="f0e4d7a51aaa98a3c92366fe938213bce2cd9cfa3f219b902f11a5bf4bf60f9e"
+          EXPECTED="6f7f9a245c488f6de465310a1e6df2740bbfe2fc0c01d584c3da3b4c525dbf91"
           APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
           fail=0
           for f in build/app/outputs/flutter-apk/*-release.apk; do
