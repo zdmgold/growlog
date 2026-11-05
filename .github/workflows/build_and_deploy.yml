@@ -89,12 +89,20 @@ jobs:
       - name: Verify release signature
         if: ${{ github.event.inputs.build_type == 'release' }}
         run: |
-          EXPECTED="F0:E4:D7:A5:1A:AA:98:A3:C9:23:66:FE:93:82:13:BC:E2:CD:9C:FA:3F:21:9B:90:2F:11:A5:BF:4B:F6:0F:9E"
-          for f in build/app/outputs/bundle/release/*.aab build/app/outputs/flutter-apk/*-release.apk; do
-            got=$(keytool -printcert -jarfile "$f" | grep "SHA256:" | head -1 | sed 's/.*SHA256: //')
+          EXPECTED="f0e4d7a51aaa98a3c92366fe938213bce2cd9cfa3f219b902f11a5bf4bf60f9e"
+          APKSIGNER=$(ls -d "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          fail=0
+          for f in build/app/outputs/flutter-apk/*-release.apk; do
+            got=$("$APKSIGNER" verify --print-certs "$f" | grep "SHA-256 digest" | head -1 | sed 's/.*: //')
             echo "$f -> $got"
-            [ "$got" = "$EXPECTED" ] || { echo "SIGNATURE MISMATCH for $f"; exit 1; }
+            [ "$got" = "$EXPECTED" ] || fail=1
           done
+          for f in build/app/outputs/bundle/release/*.aab; do
+            got=$(keytool -printcert -jarfile "$f" | grep "SHA256:" | head -1 | sed 's/.*SHA256: //' | tr -d ':' | tr 'A-F' 'a-f')
+            echo "$f -> $got"
+            [ "$got" = "$EXPECTED" ] || fail=1
+          done
+          [ $fail = 0 ] || { echo "SIGNATURE MISMATCH"; exit 1; }
 
       - name: Upload AAB
         if: ${{ github.event.inputs.build_type == 'release' }}
