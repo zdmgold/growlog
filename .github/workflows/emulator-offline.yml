@@ -37,7 +37,7 @@ jobs:
           cp .github/gradle/force-plugin-compilesdk.gradle ~/.gradle/init.d/
       - run: flutter pub get
       - run: flutter gen-l10n
-      - run: flutter build apk --debug
+      - run: flutter build apk --release --target-platform android-x64
       - name: Download real plant photos for the test
         run: |
           pip install requests
@@ -80,7 +80,7 @@ jobs:
           profile: pixel_6
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back emulated -camera-front emulated
-          script: bash .github/scripts/emulator_offline.sh
+          script: APK_PATH=build/app/outputs/flutter-apk/app-release.apk bash .github/scripts/emulator_offline.sh
       - name: Publish screenshots and logs
         if: always()
         run: |
