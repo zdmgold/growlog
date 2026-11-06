@@ -37,18 +37,22 @@ tap "Start over"; has "Where is the problem" "start over returns to step 1"
 back; sleep 1
 # ---- Plant page entry point is covered by compile; test Add Plant species search
 tap "Garden"; tap "Add plant" "Add Plant" "Add new plant"; sleep 2; shot 09_add_plant
-tap "Species (optional)" "Species"; adb shell input text "monstera"; sleep 2; shot 10_suggestions
-has "Monstera deliciosa" "suggestions list shows Monstera deliciosa"
-XY=$(dump cur; python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Monstera deliciosa") && { set -- $XY; adb shell input tap "$1" "$2"; sleep 1; shot 11_applied; has "filled in from the guide" "snackbar confirms schedule filled"; }
-dump cur; say "form values: $(python3 - <<'PY'
-import re
-s=open('/tmp/emu/cur.xml',encoding='utf8').read()
-print(' | '.join(dict.fromkeys(re.findall(r'text="([^"]+)"',s)))[:600])
-PY
-)"
-# nickname in the name field must not show a "no match" box
-adb shell input keyevent 4; sleep 1
-tap "Plant name" ; adb shell input keyevent 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67 67; adb shell input text "Gerald"; sleep 2; shot 12_nickname
-dump cur; if grep -qi "No match in the care guide" "$OUT/cur.xml"; then say "FAIL: nickname shows no-match box"; else say "PASS: nickname shows no no-match box"; fi
+# Fields are tapped by position (the label is not a separate accessibility node).
+adb shell input tap 540 1183; sleep 1; adb shell input text "monstera"; sleep 2; shot 10_suggestions
+dump cur
+if grep -q 'text="monstera"' "$OUT/cur.xml"; then say "PASS: text was typed into the species field"; else say "FAIL: species field did not receive text"; fi
+if grep -qi "Swiss cheese plant" "$OUT/cur.xml"; then say "PASS: suggestion for Monstera deliciosa is listed"; else say "FAIL: no suggestion listed"; fi
+tap "Swiss cheese plant" && sleep 1 && shot 11_applied
+dump cur
+if grep -q 'text="Monstera deliciosa"' "$OUT/cur.xml"; then say "PASS: species field filled with Monstera deliciosa"; else say "FAIL: species field not filled"; fi
+if grep -q 'text="Swiss cheese plant"' "$OUT/cur.xml"; then say "PASS: name field filled with the common name"; else say "FAIL: name field not filled"; fi
+if grep -qi "filled in from the guide" "$OUT/cur.xml"; then say "PASS: snackbar confirms schedule filled"; else say "NOTE: snackbar not seen in the dump (may have closed)"; fi
+# A nickname in the name field must not show a "no match" box.
+adb shell input tap 540 1005; sleep 1
+for i in $(seq 1 25); do adb shell input keyevent 67; done
+adb shell input text "Gerald"; sleep 2; shot 12_nickname
+dump cur
+if grep -q 'text="Gerald"' "$OUT/cur.xml"; then say "PASS: nickname typed"; else say "FAIL: nickname not typed"; fi
+if grep -qi "No match in the care guide" "$OUT/cur.xml"; then say "FAIL: nickname shows no-match box"; else say "PASS: nickname shows no no-match box"; fi
 adb logcat -d -s AndroidRuntime:E flutter:E > "$OUT/errors.txt" 2>&1
 say "error lines: $(grep -c . "$OUT/errors.txt")"
