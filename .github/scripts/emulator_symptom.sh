@@ -31,8 +31,10 @@ tap "See results"; sleep 2; shot 08_results
 has "Overwatering" "overwatering is ranked"
 has "Most likely" "top result is labelled"
 has "Check first" "top result is expanded"
+for i in 1 2 3; do adb shell input swipe 540 1900 540 500 300; sleep 1; done
+shot 08b_results_bottom
 tap "Start over"; has "Where is the problem" "start over returns to step 1"
-back; back
+back; sleep 1
 # ---- Plant page entry point is covered by compile; test Add Plant species search
 tap "Garden"; tap "Add plant" "Add Plant" "Add new plant"; sleep 2; shot 09_add_plant
 tap "Species (optional)" "Species"; adb shell input text "monstera"; sleep 2; shot 10_suggestions
