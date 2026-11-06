@@ -1,0 +1,46 @@
+install: Success
+tapped (972,2016)
+shot 01_scans
+tapped (540,1329)
+shot 02_step1_where
+PASS: step 1 shows
+tapped (174,771)
+tapped (540,2227)
+shot 03_step2_what
+PASS: step 2 shows
+tapped (266,582)
+tapped (620,876)
+shot 04_step2_selected
+tapped (540,2227)
+shot 05_step3_pattern
+PASS: step 3 shows
+tapped (271,582)
+tapped (540,2227)
+shot 06_step4_context
+PASS: step 4 shows
+tapped (324,582)
+tapped (345,1023)
+shot 07_step4_selected
+tapped (540,2227)
+shot 08_results
+PASS: overwatering is ranked
+PASS: top result is labelled
+PASS: top result is expanded
+shot 08b_results_bottom
+tapped (540,2145)
+PASS: start over returns to step 1
+tapped (324,2016)
+tapped (862,1804)
+shot 09_add_plant
+shot 10_suggestions
+PASS: text was typed into the species field
+PASS: suggestion for Monstera deliciosa is listed
+tapped (540,1498)
+shot 11_applied
+PASS: species field filled with Monstera deliciosa
+PASS: name field filled with the common name
+NOTE: snackbar not seen in the dump (may have closed)
+shot 12_nickname
+PASS: nickname typed
+PASS: nickname shows no no-match box
+error lines: 0
