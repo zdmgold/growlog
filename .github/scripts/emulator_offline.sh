@@ -119,6 +119,17 @@ PYX
   i=$((i+1))
 done
 
+# ---- Scans history: offline results must be listed, and reopen without the model
+say "== scans history check =="
+adb shell am force-stop "$PKG"; sleep 2; adb shell am start -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 14
+tap "Scans" && sleep 2 && shot scans_list
+dump
+N=$(grep -o "On this phone" "$OUT/cur.xml" | wc -l)
+if [ "$N" -ge 1 ]; then say "PASS: $N offline scan(s) listed with the On this phone tag"; else say "FAIL: no offline scans listed"; fi
+if tap "On this phone"; then
+  sleep 4; shot scans_reopen; dump
+  if grep -q -E "Save to garden|In your garden|Looks like this|Which one is it" "$OUT/cur.xml"; then say "PASS: saved offline scan reopened with its guesses"; else say "FAIL: reopened scan shows no result"; fi
+fi
 adb shell dumpsys meminfo "$PKG" 2>/dev/null | grep -E "TOTAL PSS|TOTAL RSS|Native Heap" | head -4 | tee -a "$LOG"
 adb logcat -d > "$OUT/logcat_full.txt" 2>&1
 grep -E " E (flutter|MethodChannel|AndroidRuntime|OrtJNI|onnx)|FATAL EXCEPTION|Unhandled Exception|PlatformException|OfflineModel|OfflineIdentify" "$OUT/logcat_full.txt" | cut -c1-300 | head -40 > "$OUT/errors.txt"
