@@ -7,12 +7,14 @@ import 'package:uuid/uuid.dart';
 import '../l10n/l10n_ext.dart';
 import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
+import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/interstitial_service.dart';
 import '../services/offline/care_guide.dart';
 import '../services/offline/identify_math.dart';
 import '../services/offline/offline_model_service.dart';
+import '../services/scan_store.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/ad_slot.dart';
@@ -27,10 +29,15 @@ class OfflineIdentifyScreen extends StatefulWidget {
   final PlantProvider plantProvider;
   final String imagePath;
 
+  /// Set when reopening a saved offline scan from the Scans history. The
+  /// stored guesses are shown, so the model does not run again.
+  final ScanRecord? record;
+
   const OfflineIdentifyScreen({
     super.key,
     required this.plantProvider,
     required this.imagePath,
+    this.record,
   });
 
   @override
@@ -43,11 +50,72 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   String? _selected;
   bool _saving = false;
   bool _failed = false;
+  String? _recordId;
 
   @override
   void initState() {
     super.initState();
-    _run();
+    final rec = widget.record;
+    if (rec != null) {
+      _openSaved(rec);
+    } else {
+      _run();
+    }
+  }
+
+  /// Rebuilds the result from a saved scan.
+  Future<void> _openSaved(ScanRecord rec) async {
+    await CareGuide.instance.load();
+    final guesses = <SpeciesGuess>[];
+    for (final line in rec.candidates) {
+      final p = line.split('|');
+      if (p.length < 3) continue;
+      guesses.add(SpeciesGuess(
+          p[0], double.tryParse(p[1]) ?? 0, double.tryParse(p[2]) ?? 0));
+    }
+    if (!mounted) return;
+    setState(() {
+      _recordId = rec.id;
+      _result = IdentifyResult(
+        guesses: guesses,
+        accepted: guesses.isNotEmpty,
+        confident: rec.confidence == 'High',
+      );
+      _selected = rec.confidence == 'High' && guesses.isNotEmpty
+          ? guesses.first.species
+          : null;
+      _phase = _Phase.done;
+    });
+  }
+
+  /// Keeps an accepted result in the Scans history, with its own copy of the
+  /// photo so it survives the camera's temporary file being cleared.
+  Future<void> _remember(IdentifyResult r) async {
+    if (!r.accepted || r.guesses.isEmpty) return;
+    try {
+      final id = const Uuid().v4();
+      final dir = await getApplicationDocumentsDirectory();
+      final stored = '${dir.path}/scan_$id.jpg';
+      await File(widget.imagePath).copy(stored);
+      final top = r.guesses.first;
+      final care = CareGuide.instance.lookup(top.species);
+      await ScanStore.instance.add(ScanRecord(
+        id: id,
+        imagePath: stored,
+        createdAt: DateTime.now(),
+        commonName: care?.common ?? top.species,
+        latinName: top.species,
+        confidence: r.confident ? 'High' : 'Medium',
+        source: 'device',
+        candidates: [
+          for (final g in r.guesses.take(3))
+            '${g.species}|${g.probability}|${g.cosine}',
+        ],
+      ));
+      _recordId = id;
+    } catch (e) {
+      debugPrint('OfflineIdentifyScreen._remember error: $e');
+    }
   }
 
   Future<void> _run() async {
@@ -59,6 +127,8 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
     });
     try {
       final r = await OfflineModelService.instance.identify(widget.imagePath);
+      if (!mounted) return;
+      await _remember(r);
       if (!mounted) return;
       setState(() {
         _result = r;
@@ -111,6 +181,8 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
           ],
         ),
       );
+      final rid = _recordId;
+      if (rid != null) await ScanStore.instance.markSaved(rid, plantId);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.addedToGarden(displayName))),
@@ -297,7 +369,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
         const SizedBox(height: AppSpacing.sm),
         OutlinedButton(
             onPressed: _secondOpinion,
-            child: const Text('Second opinion with AI')),
+            child: Text(context.l10n.offSecondOpinion)),
       ],
     ];
   }

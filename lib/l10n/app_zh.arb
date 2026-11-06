@@ -418,5 +418,6 @@
   "symptomStartOver": "重新开始",
   "symptomDisclaimer": "仅为一般性指导。请仔细观察植物，情况恶化时请寻求专家帮助。",
   "noSpeciesMatch": "养护指南中没有匹配项。你仍然可以自己输入。",
-  "speciesGuideFilled": "已根据指南填好养护计划。"
+  "speciesGuideFilled": "已根据指南填好养护计划。",
+  "scanOnDevice": "在本机上"
 }

@@ -1146,5 +1146,6 @@
   "symptomStartOver": "Start over",
   "symptomDisclaimer": "General guidance only. Look closely at your plant, and get expert help if it gets worse.",
   "noSpeciesMatch": "No match in the care guide. You can still type your own.",
-  "speciesGuideFilled": "Care schedule filled in from the guide."
+  "speciesGuideFilled": "Care schedule filled in from the guide.",
+  "scanOnDevice": "On this phone"
 }

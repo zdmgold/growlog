@@ -418,5 +418,6 @@
   "symptomStartOver": "Neu starten",
   "symptomDisclaimer": "Nur allgemeine Hinweise. Sieh dir deine Pflanze genau an und hol Expertenrat, wenn es schlimmer wird.",
   "noSpeciesMatch": "Kein Treffer im Pflegeleitfaden. Du kannst trotzdem selbst etwas eingeben.",
-  "speciesGuideFilled": "Pflegeplan aus dem Leitfaden übernommen."
+  "speciesGuideFilled": "Pflegeplan aus dem Leitfaden übernommen.",
+  "scanOnDevice": "Auf diesem Handy"
 }

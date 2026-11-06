@@ -7,6 +7,7 @@ import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
 import '../widgets/scan_widgets.dart';
+import 'offline_identify_screen.dart';
 import '../widgets/symptom_entry_card.dart';
 import 'scan_screen.dart';
 
@@ -93,10 +94,16 @@ class ScansScreen extends StatelessWidget {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => ScanScreen(
-                        plantProvider: plantProvider,
-                        record: s,
-                      ),
+                      builder: (_) => s.isOnDevice
+                          ? OfflineIdentifyScreen(
+                              plantProvider: plantProvider,
+                              imagePath: s.imagePath,
+                              record: s,
+                            )
+                          : ScanScreen(
+                              plantProvider: plantProvider,
+                              record: s,
+                            ),
                     ),
                   ),
                   child: Ink(
@@ -143,7 +150,11 @@ class ScansScreen extends StatelessWidget {
                               const SizedBox(height: 6),
                               Row(
                                 children: [
-                                  ScanHealthPill(health: s.health, compact: true),
+                                  if (s.isOnDevice)
+                                    _OnDeviceChip(isDark: isDark)
+                                  else
+                                    ScanHealthPill(
+                                        health: s.health, compact: true),
                                   const SizedBox(width: 8),
                                   Text(
                                     scanDateLabel(context, s.createdAt),
@@ -167,6 +178,34 @@ class ScansScreen extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+}
+
+/// Marks a scan that was identified on this phone. Health is not checked there,
+/// so no health pill is shown.
+class _OnDeviceChip extends StatelessWidget {
+  final bool isDark;
+  const _OnDeviceChip({required this.isDark});
+
+  @override
+  Widget build(BuildContext context) {
+    final accent = isDark ? AppColors.accentLight : AppColors.accent;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: accent.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(AppRadii.pill),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(PhosphorFill.shieldCheck, size: 12, color: accent),
+          const SizedBox(width: 4),
+          Text(context.l10n.scanOnDevice,
+              style: AppTypography.caption.copyWith(color: accent)),
+        ],
       ),
     );
   }

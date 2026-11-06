@@ -418,5 +418,6 @@
   "symptomStartOver": "Recommencer",
   "symptomDisclaimer": "Conseils généraux uniquement. Observez bien votre plante et demandez l’avis d’un expert si cela empire.",
   "noSpeciesMatch": "Aucune correspondance dans le guide d’entretien. Vous pouvez saisir la vôtre.",
-  "speciesGuideFilled": "Calendrier d’entretien rempli depuis le guide."
+  "speciesGuideFilled": "Calendrier d’entretien rempli depuis le guide.",
+  "scanOnDevice": "Sur ce téléphone"
 }

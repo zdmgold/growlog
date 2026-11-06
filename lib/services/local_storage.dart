@@ -21,10 +21,8 @@ class LocalStorage {
 
     return openDatabase(
       path,
-      version: 2,
-      onUpgrade: (db, oldVersion, newVersion) async {
-        if (oldVersion < 2) await _createScansTable(db);
-      },
+      version: 3,
+      onUpgrade: (db, oldVersion, newVersion) => migrate(db, oldVersion),
       onCreate: (db, version) async {
         await _createScansTable(db);
         await db.execute('''
@@ -92,6 +90,24 @@ class LocalStorage {
     );
   }
 
+  /// Brings an older database up to the current version. Public so a test can
+  /// run it against a database created at an earlier version.
+  static Future<void> migrate(Database db, int oldVersion) async {
+    if (oldVersion < 2) await _createScansTable(db);
+    if (oldVersion < 3) {
+      // Offline scans: where a scan came from and its top guesses.
+      await _addColumn(db, 'scans', "source TEXT NOT NULL DEFAULT 'ai'");
+      await _addColumn(db, 'scans', 'candidates TEXT');
+    }
+  }
+
+  static Future<void> _addColumn(Database db, String table, String def) async {
+    final name = def.split(' ').first;
+    final cols = await db.rawQuery('PRAGMA table_info($table)');
+    if (cols.any((c) => c['name'] == name)) return;
+    await db.execute('ALTER TABLE $table ADD COLUMN $def');
+  }
+
   static Future<void> _createScansTable(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS scans(
@@ -112,7 +128,9 @@ class LocalStorage {
         waterDays INTEGER,
         fertilizeDays INTEGER,
         light TEXT,
-        savedPlantId TEXT
+        savedPlantId TEXT,
+        source TEXT NOT NULL DEFAULT 'ai',
+        candidates TEXT
       )
     ''');
   }

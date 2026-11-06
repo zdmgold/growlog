@@ -418,5 +418,6 @@
   "symptomStartOver": "התחל מחדש",
   "symptomDisclaimer": "הנחיה כללית בלבד. התבוננו היטב בצמח, ופנו למומחה אם המצב מחמיר.",
   "noSpeciesMatch": "אין התאמה במדריך הטיפול. אפשר עדיין להקליד בעצמכם.",
-  "speciesGuideFilled": "לוח הטיפול מולא מתוך המדריך."
+  "speciesGuideFilled": "לוח הטיפול מולא מתוך המדריך.",
+  "scanOnDevice": "בטלפון הזה"
 }

@@ -418,5 +418,6 @@
   "symptomStartOver": "Recomeçar",
   "symptomDisclaimer": "Apenas orientação geral. Observe bem sua planta e procure ajuda especializada se piorar.",
   "noSpeciesMatch": "Nenhuma correspondência no guia de cuidados. Você ainda pode digitar o seu.",
-  "speciesGuideFilled": "Cronograma de cuidados preenchido a partir do guia."
+  "speciesGuideFilled": "Cronograma de cuidados preenchido a partir do guia.",
+  "scanOnDevice": "Neste celular"
 }

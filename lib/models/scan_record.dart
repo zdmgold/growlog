@@ -22,6 +22,12 @@ class ScanRecord {
   final String? light;
   final String? savedPlantId;
 
+  /// 'ai' for a cloud scan, 'device' for the offline identifier.
+  final String source;
+
+  /// Offline top guesses as 'species|probability|cosine' lines, best first.
+  final List<String> candidates;
+
   const ScanRecord({
     required this.id,
     this.plantId,
@@ -41,9 +47,12 @@ class ScanRecord {
     this.fertilizeDays,
     this.light,
     this.savedPlantId,
+    this.source = 'ai',
+    this.candidates = const [],
   });
 
   bool get hasIssue => issue.trim().isNotEmpty;
+  bool get isOnDevice => source == 'device';
 
   ScanRecord copyWith({String? savedPlantId, String? imagePath}) {
     return ScanRecord(
@@ -65,6 +74,8 @@ class ScanRecord {
       fertilizeDays: fertilizeDays,
       light: light,
       savedPlantId: savedPlantId ?? this.savedPlantId,
+      source: source,
+      candidates: candidates,
     );
   }
 
@@ -87,6 +98,8 @@ class ScanRecord {
         'fertilizeDays': fertilizeDays,
         'light': light,
         'savedPlantId': savedPlantId,
+        'source': source,
+        'candidates': candidates.join('\n'),
       };
 
   static List<String> _lines(Object? v) {
@@ -117,6 +130,8 @@ class ScanRecord {
       fertilizeDays: m['fertilizeDays'] as int?,
       light: m['light'] as String?,
       savedPlantId: m['savedPlantId'] as String?,
+      source: m['source'] as String? ?? 'ai',
+      candidates: _lines(m['candidates']),
     );
   }
 }

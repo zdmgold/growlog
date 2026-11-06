@@ -418,5 +418,6 @@
   "symptomStartOver": "やり直す",
   "symptomDisclaimer": "一般的な目安です。植物をよく観察し、悪化する場合は専門家に相談してください。",
   "noSpeciesMatch": "お世話ガイドに一致するものがありません。自分で入力することもできます。",
-  "speciesGuideFilled": "ガイドからお世話スケジュールを入力しました。"
+  "speciesGuideFilled": "ガイドからお世話スケジュールを入力しました。",
+  "scanOnDevice": "この端末で"
 }

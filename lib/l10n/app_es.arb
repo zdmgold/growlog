@@ -418,5 +418,6 @@
   "symptomStartOver": "Empezar de nuevo",
   "symptomDisclaimer": "Solo orientación general. Observa bien tu planta y busca ayuda experta si empeora.",
   "noSpeciesMatch": "Sin coincidencias en la guía de cuidados. Aún puedes escribir la tuya.",
-  "speciesGuideFilled": "Calendario de cuidados rellenado desde la guía."
+  "speciesGuideFilled": "Calendario de cuidados rellenado desde la guía.",
+  "scanOnDevice": "En este teléfono"
 }
