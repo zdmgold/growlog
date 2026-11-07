@@ -132,6 +132,8 @@ void main() {
           {'yellowing', 'wet_soil', 'no_drainage'},
           {'webbing', 'stippling', 'dry_air'},
           {'white_powder', 'humid_stagnant'},
+          {'wilting', 'dry_soil', 'hot_spot'},
+          {'leaf_drop', 'just_moved'},
         ]) {
           expect(tr.rank(sel).map((d) => d.problem.id),
               english.rank(sel).map((d) => d.problem.id));

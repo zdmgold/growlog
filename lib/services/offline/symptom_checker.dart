@@ -156,7 +156,10 @@ class SymptomChecker {
   /// strongly enough, so the app says so instead of guessing.
   List<Diagnosis> rank(Set<String> selected) {
     final scored = <MapEntry<Problem, int>>[];
-    for (final p in problems) {
+    final order = <String, int>{};
+    for (var i = 0; i < problems.length; i++) {
+      final p = problems[i];
+      order[p.id] = i;
       var score = 0;
       for (final id in selected) {
         score += p.match[id] ?? 0;
@@ -168,7 +171,9 @@ class SymptomChecker {
       final c = b.value.compareTo(a.value);
       if (c != 0) return c;
       final s = _sev(b.key.severity).compareTo(_sev(a.key.severity));
-      return s != 0 ? s : a.key.name.compareTo(b.key.name);
+      // Ties keep the knowledge base's own order, never the translated name,
+      // so every language gives the same answer.
+      return s != 0 ? s : order[a.key.id]!.compareTo(order[b.key.id]!);
     });
     final top = scored.first.value;
     final out = <Diagnosis>[];
