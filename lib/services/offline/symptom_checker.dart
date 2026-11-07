@@ -74,32 +74,80 @@ class SymptomChecker {
   static const int minScore = 3;
   static const int maxResults = 3;
 
-  static SymptomChecker? _instance;
+  static final Map<String, SymptomChecker> _cache = {};
 
-  static Future<SymptomChecker> load() async {
-    final cached = _instance;
+  /// Loads the knowledge base in [lang]. English is the base. Another language
+  /// is an overlay file (assets/care/symptoms_<lang>.json) and any field it
+  /// does not translate falls back to English.
+  static Future<SymptomChecker> load({String lang = 'en'}) async {
+    final cached = _cache[lang];
     if (cached != null) return cached;
     final raw = await rootBundle.loadString('assets/care/symptoms.json');
-    return _instance = parse(raw);
+    String? overlay;
+    if (lang != 'en') {
+      try {
+        overlay = await rootBundle.loadString('assets/care/symptoms_$lang.json');
+      } catch (_) {
+        overlay = null; // language not translated yet
+      }
+    }
+    return _cache[lang] = parse(raw, overlay: overlay);
   }
 
   @visibleForTesting
-  static SymptomChecker parse(String raw) {
+  static SymptomChecker parse(String raw, {String? overlay}) {
     final j = jsonDecode(raw) as Map<String, dynamic>;
+    final o = overlay == null
+        ? const <String, dynamic>{}
+        : jsonDecode(overlay) as Map<String, dynamic>;
+    final labels = (o['labels'] as Map<String, dynamic>?) ?? const {};
+    final texts = (o['problems'] as Map<String, dynamic>?) ?? const {};
     final g = <String, List<SymptomOption>>{};
     for (final e in (j['groups'] as Map<String, dynamic>).entries) {
       g[e.key] = [
-        for (final o in e.value as List)
+        for (final opt in e.value as List)
           SymptomOption(
-            (o as Map<String, dynamic>)['id'] as String,
-            o['label'] as String,
+            (opt as Map<String, dynamic>)['id'] as String,
+            (labels[opt['id']] as String?)?.trim().isNotEmpty == true
+                ? labels[opt['id']] as String
+                : opt['label'] as String,
           ),
       ];
     }
     return SymptomChecker._(g, [
       for (final p in j['problems'] as List)
-        Problem.fromJson(p as Map<String, dynamic>),
+        _translated(
+          Problem.fromJson(p as Map<String, dynamic>),
+          texts[(p)['id']] as Map<String, dynamic>?,
+        ),
     ]);
+  }
+
+  static Problem _translated(Problem p, Map<String, dynamic>? t) {
+    if (t == null) return p;
+    String pick(String key, String base) {
+      final v = t[key];
+      return v is String && v.trim().isNotEmpty ? v : base;
+    }
+
+    final steps = t['steps'];
+    return Problem(
+      id: p.id,
+      name: pick('name', p.name),
+      category: p.category,
+      severity: p.severity,
+      what: pick('what', p.what),
+      check: pick('check', p.check),
+      // Steps are only replaced as a whole, so a half-translated list never shows.
+      steps: steps is List &&
+              steps.length == p.steps.length &&
+              steps.every((x) => x is String && x.trim().isNotEmpty)
+          ? [for (final x in steps) x as String]
+          : p.steps,
+      prevent: pick('prevent', p.prevent),
+      worry: pick('worry', p.worry),
+      match: p.match,
+    );
   }
 
   static int _sev(String s) => s == 'high' ? 2 : (s == 'med' ? 1 : 0);

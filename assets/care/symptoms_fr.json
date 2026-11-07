@@ -1,0 +1,558 @@
+{
+ "labels": {
+  "leaves": "Feuilles",
+  "stems": "Tiges",
+  "roots_soil": "Racines ou terreau",
+  "whole": "Toute la plante",
+  "flowers": "Fleurs",
+  "yellowing": "Feuilles jaunissantes",
+  "brown_tips": "Pointes ou bords bruns",
+  "brown_spots": "Taches brunes",
+  "black_spots": "Taches noires",
+  "wilting": "Flétrissement ou affaissement",
+  "white_powder": "Dépôt blanc poudreux",
+  "white_fluff": "Amas blancs cotonneux",
+  "sticky": "Résidu collant",
+  "black_film": "Film noir qui s’essuie",
+  "webbing": "Fines toiles",
+  "insects": "Insectes visibles",
+  "tiny_flies": "Minuscules mouches",
+  "holes": "Trous ou feuilles rongées",
+  "leggy": "Pousses longues et étirées",
+  "curling": "Feuilles enroulées ou déformées",
+  "mushy_base": "Base molle ou spongieuse",
+  "no_growth": "Aucune nouvelle pousse",
+  "bleached": "Zones pâles ou décolorées",
+  "pale_new": "Jeunes feuilles petites ou pâles",
+  "leaf_drop": "Chute des feuilles",
+  "bumps": "Boursouflures sous les feuilles",
+  "brown_bumps": "Bosses brunes dures sur tiges ou feuilles",
+  "stippling": "Minuscules points pâles sur les feuilles",
+  "crust": "Croûte blanche ou grise sur le terreau ou le pot",
+  "grey_fuzz": "Moisissure grise duveteuse",
+  "rust_spots": "Taches poudreuses orange ou rouille",
+  "age_old": "D’abord les vieilles feuilles",
+  "age_new": "D’abord les jeunes feuilles",
+  "loc_edges": "Sur les bords",
+  "loc_between_veins": "Entre les nervures vertes",
+  "loc_patchy": "Par plaques, en taches",
+  "loc_even": "Uniformément sur la plante",
+  "wet_soil": "Le terreau reste humide plusieurs jours",
+  "dry_soil": "Le terreau est sec comme de l’os pendant longtemps",
+  "irregular_water": "Arrosage irrégulier",
+  "no_drainage": "Le pot n’a pas de trou de drainage",
+  "hard_soil": "Terreau dur ou l’eau le traverse directement",
+  "rootbound": "Les racines tournent dans le pot ou sortent par les trous",
+  "low_light": "Endroit peu lumineux",
+  "strong_sun": "Plein soleil direct",
+  "hot_spot": "Près d’un radiateur ou endroit très chaud",
+  "cold_or_draft": "Fenêtre froide ou courant d’air",
+  "dry_air": "Air très sec",
+  "humid_stagnant": "Humide avec peu d’air qui circule",
+  "tap_water": "Eau du robinet calcaire ou chlorée",
+  "long_unfed": "Pas d’engrais depuis six mois ou plus",
+  "heavy_feed": "Engrais en grande quantité ou souvent",
+  "just_moved": "Déplacée récemment",
+  "just_repotted": "Rempotée récemment",
+  "just_bought": "Achetée récemment",
+  "winter": "Hiver ou saison fraîche",
+  "flowers_done": "Vient de finir de fleurir",
+  "nearby_infested": "Une plante voisine a des parasites",
+  "otherwise_healthy": "Pousse bien par ailleurs"
+ },
+ "problems": {
+  "overwatering": {
+   "name": "Excès d’arrosage",
+   "what": "Le terreau reste humide et les racines manquent d’air.",
+   "check": "Enfoncez un doigt de 3 à 5 cm dans le terreau. S’il est encore humide, attendez avant d’arroser.",
+   "steps": [
+    "Arrêtez d’arroser jusqu’à ce que les premiers centimètres soient secs.",
+    "Vérifiez que l’eau s’écoule du pot et videz la soucoupe.",
+    "Si le terreau est détrempé partout, placez la plante dans un endroit lumineux et aéré pour qu’il sèche plus vite."
+   ],
+   "prevent": "Arrosez seulement quand le dessus du terreau est sec au toucher et utilisez un pot percé.",
+   "worry": "Si la base devient molle ou sent mauvais, traitez-le comme une pourriture des racines."
+  },
+  "underwatering": {
+   "name": "Manque d’arrosage",
+   "what": "La plante ne reçoit pas assez d’eau pour ses besoins.",
+   "check": "Soulevez le pot : un pot léger et un terreau sec en profondeur signifient que la plante a soif.",
+   "steps": [
+    "Arrosez lentement jusqu’à ce que l’eau sorte par le bas, puis videz la soucoupe.",
+    "Si le terreau s’est décollé du bord du pot, faites tremper le pot par le bas 20 à 30 minutes.",
+    "Revérifiez dans quelques jours et adoptez un rythme régulier."
+   ],
+   "prevent": "Contrôlez le terreau régulièrement et arrosez abondamment plutôt que par petites gorgées.",
+   "worry": "Si les feuilles restent cassantes après quelques semaines d’arrosage régulier, les racines sont peut-être abîmées."
+  },
+  "inconsistent_watering": {
+   "name": "Arrosage irrégulier",
+   "what": "Les écarts entre trop humide et trop sec stressent les racines.",
+   "check": "Réfléchissez : le terreau est-il passé de détrempé à sec comme de l’os plus d’une fois ?",
+   "steps": [
+    "Choisissez une routine simple : vérifiez le terreau le même jour chaque semaine.",
+    "Arrosez abondamment à chaque fois, puis laissez le dessus sécher avant le prochain arrosage.",
+    "Coupez les feuilles très abîmées une fois la routine stable."
+   ],
+   "prevent": "Utilisez le test du terreau, pas seulement le calendrier.",
+   "worry": "Si les nouvelles feuilles continuent à être abîmées malgré une routine stable, regardez la lumière et les racines."
+  },
+  "root_rot": {
+   "name": "Pourriture des racines",
+   "what": "Les racines restent mouillées, meurent et deviennent molles : la plante ne peut plus boire.",
+   "check": "Sortez la plante du pot. Des racines saines sont fermes et pâles. Des racines pourries sont brunes ou noires, molles et sentent l’aigre.",
+   "steps": [
+    "Sortez la plante et coupez toutes les racines molles et sombres avec des ciseaux propres.",
+    "Rempotez dans un terreau frais et drainant, dans un pot propre percé.",
+    "Arrosez légèrement ensuite et gardez la plante dans une lumière vive et indirecte."
+   ],
+   "prevent": "Utilisez un terreau drainant et ne laissez jamais le pot dans l’eau.",
+   "worry": "Si plus de la moitié des racines a disparu ou si la base de la tige est molle, la plante risque de ne pas survivre. Faites des boutures de tiges saines si possible."
+  },
+  "edema": {
+   "name": "Œdème (cloques d’eau)",
+   "what": "Les racines absorbent plus d’eau que les feuilles n’en évacuent : les cellules gonflent en petites bosses.",
+   "check": "Regardez sous les feuilles : de petites bosses en forme de cloques, parfois brunes et liégeuses.",
+   "steps": [
+    "Arrosez moins souvent et laissez le terreau sécher un peu plus entre deux arrosages.",
+    "Donnez plus de lumière et d’air à la plante.",
+    "Ne retirez pas les feuilles sauf si elles sont très abîmées. Les bosses existantes ne disparaîtront pas."
+   ],
+   "prevent": "Évitez d’arroser quand l’air est frais et humide, et gardez la plante bien éclairée.",
+   "worry": "Si vous voyez des bosses et aussi des tiges ou feuilles molles, vérifiez la pourriture des racines."
+  },
+  "tap_water_burn": {
+   "name": "Brûlure par l’eau du robinet (minéraux ou chlore)",
+   "what": "Les sels ou le chlore de l’eau du robinet s’accumulent et brûlent la pointe des feuilles.",
+   "check": "Cherchez une croûte blanche sur le terreau ou le bord du pot, et des pointes brunes et sèches.",
+   "steps": [
+    "Laissez reposer l’eau du robinet une nuit avant de l’utiliser, ou utilisez de l’eau de pluie ou filtrée.",
+    "Rincez le terreau avec beaucoup d’eau tous les quelques mois pour évacuer les sels.",
+    "Coupez les pointes brunes avec des ciseaux propres si vous le souhaitez. Elles ne reverdiront pas."
+   ],
+   "prevent": "Utilisez une eau douce si possible et rincez le pot de temps en temps.",
+   "worry": "Si les dégâts continuent de s’étendre, vérifiez aussi l’humidité et l’engrais."
+  },
+  "low_humidity": {
+   "name": "Air trop sec",
+   "what": "L’air sec retire l’humidité des bords des feuilles plus vite que la plante ne peut la remplacer.",
+   "check": "Des pointes brunes et cassantes sur plusieurs feuilles, surtout l’hiver avec le chauffage, indiquent un air sec.",
+   "steps": [
+    "Éloignez la plante des radiateurs, bouches d’aération et courants d’air.",
+    "Regroupez les plantes ou utilisez un humidificateur.",
+    "Gardez un arrosage régulier. Vaporiser aide très peu et peut causer des taches."
+   ],
+   "prevent": "Éloignez les plantes qui aiment l’humidité des radiateurs et des climatiseurs.",
+   "worry": "Si toute la plante se dessèche malgré des soins réguliers, cherchez des parasites comme les acariens."
+  },
+  "too_little_light": {
+   "name": "Manque de lumière",
+   "what": "La plante s’étire et ralentit parce qu’elle manque de lumière.",
+   "check": "Comparez les jeunes pousses aux anciennes. De longs espaces entre les feuilles et de petites feuilles pâles indiquent un manque de lumière.",
+   "steps": [
+    "Placez la plante dans un endroit plus lumineux, idéalement près d’une fenêtre en lumière indirecte.",
+    "Tournez le pot chaque semaine ou toutes les deux semaines pour une croissance régulière.",
+    "Taillez les longues tiges dégarnies au printemps pour favoriser une plante plus fournie."
+   ],
+   "prevent": "Adaptez la plante à la lumière de votre pièce, ou ajoutez une lampe de culture.",
+   "worry": "Si la plante continue de dépérir dans un endroit lumineux, regardez l’arrosage et les racines."
+  },
+  "too_much_light": {
+   "name": "Trop de lumière directe (coup de soleil)",
+   "what": "Un soleil fort brûle les tissus des feuilles et laisse des zones pâles ou brunes.",
+   "check": "Les dégâts se trouvent du côté de la fenêtre et sont secs ou décolorés.",
+   "steps": [
+    "Éloignez la plante de la fenêtre ou filtrez la lumière avec un voilage.",
+    "Ne coupez pas les feuilles saines. Retirez seulement celles très brûlées.",
+    "Augmentez la lumière progressivement si vous voulez la placer au soleil."
+   ],
+   "prevent": "Introduisez plus de lumière peu à peu, sur une à deux semaines.",
+   "worry": "Si les nouvelles feuilles brûlent aussi, l’endroit est trop intense et la plante doit être déplacée."
+  },
+  "light_change": {
+   "name": "Changement brusque de lumière",
+   "what": "Un déplacement vers un endroit très différent fait perdre ou jaunir des feuilles le temps de l’adaptation.",
+   "check": "La plante a-t-elle récemment changé de pièce, de fenêtre ou de saison de lumière ?",
+   "steps": [
+    "Laissez-la à son nouvel emplacement et évitez de la déplacer pendant quelques semaines.",
+    "Gardez un arrosage régulier.",
+    "Attendez-vous à perdre quelques feuilles pendant l’adaptation."
+   ],
+   "prevent": "Déplacez les plantes progressivement quand c’est possible.",
+   "worry": "Si le déclin continue après quatre à six semaines, vérifiez les autres causes."
+  },
+  "cold_draft": {
+   "name": "Dégâts du froid ou des courants d’air",
+   "what": "L’air froid fait s’effondrer les cellules des feuilles, laissant des zones sombres d’aspect mouillé.",
+   "check": "Vérifiez si la plante est contre une vitre froide, près d’une porte ou dans un courant d’air.",
+   "steps": [
+    "Éloignez-la des vitres froides et des courants d’air.",
+    "Gardez-la au-dessus d’environ 12 à 15 °C, sauf si elle aime la fraîcheur.",
+    "Coupez les feuilles très abîmées."
+   ],
+   "prevent": "Gardez les plantes tropicales au chaud, loin des fenêtres ouvertes par temps froid.",
+   "worry": "Si la tige devient molle ou noire, traitez-le comme une pourriture de la tige."
+  },
+  "heat_stress": {
+   "name": "Stress dû à la chaleur",
+   "what": "Les fortes températures dessèchent la plante et causent affaissement et brûlures.",
+   "check": "Vérifiez si la plante est près d’un chauffage, d’un radiateur ou sur un rebord de fenêtre brûlant.",
+   "steps": [
+    "Déplacez-la dans un endroit plus frais et ombragé.",
+    "Vérifiez le terreau et arrosez s’il est sec.",
+    "Éloignez-la des bouches de chaleur."
+   ],
+   "prevent": "Évitez les endroits très chauds et laissez de l’espace entre les plantes et les fenêtres en été.",
+   "worry": "Si les feuilles restent cassantes après le déplacement, cherchez des parasites et vérifiez les racines."
+  },
+  "nitrogen_deficiency": {
+   "name": "Manque d’azote",
+   "what": "La plante manque d’azote : les vieilles feuilles pâlissent car elle déplace les nutriments vers les jeunes pousses.",
+   "check": "Cherchez des vieilles feuilles qui jaunissent uniformément, une croissance lente et un long délai depuis le dernier engrais.",
+   "steps": [
+    "Donnez un engrais équilibré pour plantes d’intérieur à la moitié de la dose indiquée.",
+    "Fertilisez seulement pendant la période de croissance, généralement au printemps et en été.",
+    "Ne fertilisez pas une plante sèche ou stressée. Arrosez d’abord."
+   ],
+   "prevent": "Fertilisez régulièrement pendant la croissance, à faible dose.",
+   "worry": "Si le jaunissement continue après deux apports, vérifiez les racines, la lumière et l’arrosage."
+  },
+  "magnesium_deficiency": {
+   "name": "Manque de magnésium",
+   "what": "Les vieilles feuilles jaunissent entre les nervures alors que celles-ci restent vertes.",
+   "check": "Cherchez des vieilles feuilles avec des nervures vertes et du jaune entre elles.",
+   "steps": [
+    "Donnez un engrais équilibré contenant des oligo-éléments, à demi-dose.",
+    "Vérifiez que l’arrosage et le drainage sont normaux. Des racines en mauvais état n’absorbent pas les nutriments.",
+    "N’ajoutez pas de sel d’Epsom sauf si vous savez que le magnésium est en cause."
+   ],
+   "prevent": "Utilisez un engrais complet pendant la période de croissance.",
+   "worry": "Si cela gagne rapidement beaucoup de feuilles, vérifiez les racines et l’arrosage."
+  },
+  "iron_deficiency": {
+   "name": "Manque de fer",
+   "what": "Les jeunes feuilles jaunissent entre les nervures vertes car le fer n’est pas disponible pour la plante.",
+   "check": "Cherchez des jeunes feuilles jaunes avec des nervures vertes.",
+   "steps": [
+    "Utilisez un engrais contenant du fer chélaté à la dose indiquée.",
+    "Vérifiez que le terreau n’est pas détrempé : des racines mouillées bloquent l’absorption du fer.",
+    "Utilisez une eau plus douce si votre eau du robinet est très calcaire."
+   ],
+   "prevent": "Évitez l’excès d’arrosage et l’eau très calcaire.",
+   "worry": "Si les jeunes feuilles restent jaunes après correction de l’arrosage et de l’engrais, vérifiez les racines."
+  },
+  "fertiliser_burn": {
+   "name": "Brûlure par l’engrais",
+   "what": "Trop d’engrais laisse des sels qui brûlent les racines et le bord des feuilles.",
+   "check": "Cherchez une croûte blanche sur le terreau et des bords bruns et secs peu après la fertilisation.",
+   "steps": [
+    "Rincez le pot avec beaucoup d’eau, en laissant bien s’écouler, trois ou quatre fois.",
+    "Arrêtez la fertilisation pendant au moins deux mois.",
+    "Retirez la croûte en surface et remplacez-la par du terreau frais si elle est épaisse."
+   ],
+   "prevent": "Fertilisez à demi-dose, seulement pendant la croissance et dans un terreau humide.",
+   "worry": "Si les racines paraissent sombres et molles après le rinçage, vérifiez les dégâts aux racines."
+  },
+  "rootbound": {
+   "name": "Plante à l’étroit (racines saturées)",
+   "what": "Les racines remplissent le pot et ne peuvent plus absorber assez d’eau ni de nutriments.",
+   "check": "Sortez la plante du pot. Un dense tapis de racines enroulées sur le pourtour indique qu’elle est à l’étroit.",
+   "steps": [
+    "Rempotez dans un pot un peu plus grand (2 à 5 cm de plus) avec du terreau frais.",
+    "Démêlez délicatement les racines extérieures avant de rempoter.",
+    "Arrosez bien ensuite et gardez la plante à l’abri du soleil fort pendant une semaine."
+   ],
+   "prevent": "Rempotez tous les un à deux ans au printemps, selon la croissance.",
+   "worry": "Si la plante va mal après le rempotage, vérifiez la pourriture des racines."
+  },
+  "compacted_soil": {
+   "name": "Terreau tassé",
+   "what": "Un terreau vieux ou lourd se tasse : l’eau stagne ou passe sans atteindre les racines.",
+   "check": "Arrosez et observez. Si l’eau stagne en surface ou sort d’un coup par le bas, le terreau est tassé.",
+   "steps": [
+    "Ameublissez délicatement le dessus du terreau avec une baguette.",
+    "Rempotez dans un terreau frais et aéré avec de la perlite ou de l’écorce.",
+    "Arrosez lentement, en plusieurs fois, pour que l’eau pénètre."
+   ],
+   "prevent": "Renouvelez le terreau tous les un à deux ans.",
+   "worry": "Si la plante continue de flétrir après le rempotage, vérifiez les racines."
+  },
+  "poor_drainage": {
+   "name": "Mauvais drainage",
+   "what": "L’eau ne peut pas sortir du pot : les racines baignent dans l’eau.",
+   "check": "Vérifiez que le pot a des trous de drainage et que la soucoupe est vide.",
+   "steps": [
+    "Mettez la plante dans un pot percé, ou gardez-la dans son pot de culture à l’intérieur d’un cache-pot.",
+    "Utilisez un terreau drainant.",
+    "Videz l’eau de la soucoupe après l’arrosage."
+   ],
+   "prevent": "Utilisez toujours un pot avec des trous de drainage.",
+   "worry": "Si le terreau sent mauvais ou si la base est molle, vérifiez la pourriture des racines."
+  },
+  "mineral_crust": {
+   "name": "Croûte minérale sur le terreau",
+   "what": "Les sels de l’eau et de l’engrais s’accumulent en croûte blanche ou grise.",
+   "check": "Cherchez une croûte dure blanche ou grise sur le terreau ou autour du bord du pot.",
+   "steps": [
+    "Grattez la croûte et remplacez les 2 premiers cm de terreau.",
+    "Rincez le pot avec de l’eau jusqu’à ce qu’elle sorte claire.",
+    "Utilisez une eau plus douce si possible."
+   ],
+   "prevent": "Rincez de temps en temps et évitez l’excès d’engrais.",
+   "worry": "Si les pointes des feuilles continuent à brunir, rempotez dans un terreau frais."
+  },
+  "spider_mites": {
+   "name": "Acariens (araignées rouges)",
+   "what": "De minuscules acariens sucent la sève, laissant des points pâles et de fines toiles.",
+   "check": "Tenez une feuille de papier blanc sous une feuille et tapotez. De minuscules points qui bougent ou des toiles indiquent des acariens.",
+   "steps": [
+    "Isolez la plante des autres.",
+    "Essuyez les feuilles, dessus et dessous, avec un chiffon humide, ou rincez la plante sous la douche.",
+    "Pulvérisez une solution de savon doux (quelques gouttes de savon liquide doux dans un litre d’eau), testez d’abord sur une feuille, et répétez tous les 5 à 7 jours pendant quelques semaines.",
+    "Augmentez l’humidité, car les acariens aiment l’air sec."
+   ],
+   "prevent": "Vérifiez régulièrement le dessous des feuilles et évitez l’air très sec.",
+   "worry": "Si les toiles s’étendent ou si les feuilles jaunissent et tombent vite, continuez le traitement et gardez la plante isolée."
+  },
+  "mealybugs": {
+   "name": "Cochenilles farineuses",
+   "what": "De petits insectes mous couverts de duvet blanc se nourrissent de sève, souvent à l’aisselle des feuilles.",
+   "check": "Cherchez des amas blancs cotonneux à l’aisselle des feuilles et sur les tiges.",
+   "steps": [
+    "Isolez la plante.",
+    "Touchez chaque insecte avec un coton-tige imbibé d’alcool à friction (testez d’abord sur une feuille).",
+    "Essuyez la plante avec une solution de savon doux et répétez chaque semaine pendant plusieurs semaines."
+   ],
+   "prevent": "Inspectez les nouvelles plantes avant de les approcher des autres.",
+   "worry": "S’ils gagnent les racines (duvet blanc dans le terreau), rempotez et traitez le terreau."
+  },
+  "scale": {
+   "name": "Cochenilles à bouclier",
+   "what": "De petites bosses dures sur les tiges et les feuilles se nourrissent de sève et laissent un résidu collant.",
+   "check": "Cherchez des bosses brunes ou beiges le long des tiges ou des nervures que vous pouvez gratter avec l’ongle.",
+   "steps": [
+    "Isolez la plante.",
+    "Grattez ou essuyez les cochenilles avec un coton-tige imbibé d’alcool à friction.",
+    "Essuyez la plante avec une solution de savon doux et répétez chaque semaine pendant quelques semaines."
+   ],
+   "prevent": "Vérifiez les tiges et le dessous des feuilles à l’achat et au rempotage.",
+   "worry": "Si la plante continue de dépérir, répétez le traitement plus longtemps et gardez-la isolée."
+  },
+  "fungus_gnats": {
+   "name": "Moucherons du terreau",
+   "what": "De minuscules mouches sombres pondent dans un terreau constamment humide.",
+   "check": "Repérez de petites mouches sombres autour du terreau, surtout après l’arrosage.",
+   "steps": [
+    "Laissez sécher les 3 à 5 premiers cm de terreau entre les arrosages.",
+    "Utilisez des pièges collants jaunes pour attraper les adultes.",
+    "Couvrez le terreau d’une fine couche de sable ou de gravier."
+   ],
+   "prevent": "Évitez de garder le terreau constamment humide.",
+   "worry": "Si les plantes flétrissent aussi, vérifiez la pourriture des racines."
+  },
+  "thrips": {
+   "name": "Thrips",
+   "what": "De fins et minuscules insectes râpent les feuilles et laissent des traînées argentées et des pousses déformées.",
+   "check": "Tapotez une feuille au-dessus d’un papier blanc. Les thrips ressemblent à de minuscules filaments sombres qui bougent.",
+   "steps": [
+    "Isolez la plante.",
+    "Essuyez les feuilles et pulvérisez une solution de savon doux.",
+    "Répétez tous les 5 à 7 jours pendant plusieurs semaines."
+   ],
+   "prevent": "Inspectez les nouvelles plantes et les fleurs avant de les rentrer.",
+   "worry": "Si les nouvelles pousses restent déformées après plusieurs semaines, continuez le traitement."
+  },
+  "aphids": {
+   "name": "Pucerons",
+   "what": "De petits insectes mous s’agglutinent sur les jeunes pousses et sucent la sève.",
+   "check": "Regardez les pousses tendres et les boutons : de petits amas verts, noirs ou bruns.",
+   "steps": [
+    "Rincez la plante ou essuyez les pucerons.",
+    "Pulvérisez une solution de savon doux.",
+    "Répétez tous les quelques jours jusqu’à leur disparition."
+   ],
+   "prevent": "Vérifiez régulièrement les jeunes pousses tendres.",
+   "worry": "S’ils reviennent vite, isolez la plante et continuez à la traiter."
+  },
+  "whiteflies": {
+   "name": "Aleurodes (mouches blanches)",
+   "what": "De minuscules insectes blancs s’envolent quand on dérange la plante.",
+   "check": "Secouez doucement la plante. Un nuage de minuscules mouches blanches indique des aleurodes.",
+   "steps": [
+    "Isolez la plante.",
+    "Utilisez des pièges collants jaunes pour les adultes.",
+    "Essuyez le dessous des feuilles et pulvérisez une solution de savon doux tous les 5 à 7 jours."
+   ],
+   "prevent": "Vérifiez régulièrement le dessous des feuilles.",
+   "worry": "Si l’infestation persiste, répétez les traitements pendant plusieurs semaines."
+  },
+  "chewing_pests": {
+   "name": "Parasites mâcheurs (chenilles, limaces, coléoptères)",
+   "what": "De plus gros parasites rongent des trous ou des bords déchiquetés dans les feuilles.",
+   "check": "Cherchez sous les feuilles et dans le terreau, de préférence le soir, des chenilles, limaces, escargots ou coléoptères. Une traînée de bave est un indice.",
+   "steps": [
+    "Ramassez les parasites à la main et éloignez-les de la plante.",
+    "Vérifiez les plantes voisines, surtout celles de l’extérieur ou rentrées récemment.",
+    "Retirez les feuilles très abîmées."
+   ],
+   "prevent": "Vérifiez les plantes sorties dehors et inspectez-les avant de les rentrer.",
+   "worry": "Si les dégâts continuent après avoir retiré les parasites visibles, regardez à nouveau après la tombée de la nuit."
+  },
+  "powdery_mildew": {
+   "name": "Oïdium",
+   "what": "Un champignon forme un dépôt blanc poudreux sur les feuilles.",
+   "check": "La poudre s’essuie et apparaît sur la face supérieure des feuilles.",
+   "steps": [
+    "Isolez la plante.",
+    "Retirez les feuilles très atteintes.",
+    "Améliorez la circulation d’air et gardez les feuilles sèches.",
+    "Pulvérisez 1 cuillère à café de bicarbonate dans un litre d’eau (testez sur une feuille), ou utilisez un produit indiqué contre l’oïdium."
+   ],
+   "prevent": "Laissez de l’espace entre les plantes et évitez de mouiller les feuilles.",
+   "worry": "S’il revient sans cesse, traitez plus longtemps et réduisez l’humidité."
+  },
+  "fungal_leaf_spot": {
+   "name": "Taches foliaires fongiques",
+   "what": "Des champignons causent des taches brunes ou noires, souvent avec un anneau plus foncé ou un halo jaune.",
+   "check": "Regardez si les taches ont des bords nets ou un halo jaune et apparaissent après des feuilles mouillées.",
+   "steps": [
+    "Retirez les feuilles très tachées.",
+    "Évitez de mouiller les feuilles et améliorez la circulation d’air.",
+    "N’arrosez pas le soir."
+   ],
+   "prevent": "Arrosez au pied, pas sur les feuilles.",
+   "worry": "Si les taches gagnent vite les nouvelles feuilles, continuez le traitement et isolez la plante."
+  },
+  "bacterial_leaf_spot": {
+   "name": "Taches foliaires bactériennes",
+   "what": "Des taches anguleuses d’aspect gorgé d’eau avec un halo jaune indiquent une infection bactérienne.",
+   "check": "Cherchez des taches d’aspect mouillé ou gras, limitées par les nervures.",
+   "steps": [
+    "Retirez les feuilles atteintes et jetez-les, pas au compost.",
+    "Gardez les feuilles sèches et lavez-vous les mains et les outils ensuite.",
+    "Isolez la plante."
+   ],
+   "prevent": "Arrosez au pied et évitez les éclaboussures.",
+   "worry": "Si cela se propage vite, envisagez de jeter la plante pour protéger les autres."
+  },
+  "grey_mould": {
+   "name": "Pourriture grise (botrytis)",
+   "what": "Une moisissure grise et duveteuse se développe sur les tissus morts ou abîmés dans un air humide et immobile.",
+   "check": "Cherchez un duvet gris sur les fleurs, les feuilles mortes ou les tiges.",
+   "steps": [
+    "Retirez les parties atteintes et jetez-les.",
+    "Augmentez la circulation d’air et réduisez l’humidité.",
+    "Retirez régulièrement les feuilles et fleurs mortes."
+   ],
+   "prevent": "Éliminez les matières mortes et donnez de l’air à la plante.",
+   "worry": "Si elle gagne les tiges saines, isolez la plante."
+  },
+  "rust": {
+   "name": "Rouille",
+   "what": "Un champignon cause des taches poudreuses orange ou rouille, souvent sous les feuilles.",
+   "check": "Frottez légèrement une tache. Une poudre orange sur le doigt suggère de la rouille.",
+   "steps": [
+    "Retirez les feuilles atteintes.",
+    "Gardez les feuilles sèches et améliorez la circulation d’air.",
+    "Isolez la plante."
+   ],
+   "prevent": "Arrosez au pied et gardez les feuilles sèches.",
+   "worry": "Si elle continue de se propager, poursuivez le traitement et isolez la plante."
+  },
+  "anthracnose": {
+   "name": "Anthracnose",
+   "what": "Une maladie fongique qui cause des taches sombres et creusées et un brunissement sec depuis les pointes et les bords.",
+   "check": "Cherchez des taches sombres légèrement creusées avec une bordure, et un brunissement qui part des bords.",
+   "steps": [
+    "Retirez les feuilles atteintes.",
+    "Gardez les feuilles sèches et améliorez la circulation d’air.",
+    "Ne serrez pas les plantes."
+   ],
+   "prevent": "Évitez de mouiller les feuilles et laissez de l’espace entre les plantes.",
+   "worry": "Si elle se propage, isolez la plante."
+  },
+  "stem_rot": {
+   "name": "Pourriture de la tige",
+   "what": "La base ou la tige devient molle et sombre, souvent à cause de conditions humides et froides.",
+   "check": "Pressez doucement la base de la tige. Si elle est molle, spongieuse ou noire, elle pourrit.",
+   "steps": [
+    "Coupez au-dessus de la pourriture dans un tissu vert sain avec des ciseaux propres.",
+    "Faites raciner des boutures saines dans l’eau ou un terreau frais si possible.",
+    "Jetez les parties pourries et nettoyez le pot avant de le réutiliser."
+   ],
+   "prevent": "N’arrosez pas trop et évitez le froid humide.",
+   "worry": "Si la pourriture atteint la tige principale, la plante risque de ne pas survivre. Sauvez des boutures."
+  },
+  "sooty_mould": {
+   "name": "Fumagine",
+   "what": "Un film noir se développe sur le miellat collant laissé par des insectes suceurs de sève.",
+   "check": "Essuyez une feuille avec un chiffon humide. Si le film noir s’enlève et que la feuille est collante, c’est de la fumagine.",
+   "steps": [
+    "Essuyez le film avec un chiffon humide.",
+    "Cherchez les parasites qui ont produit le miellat, comme les pucerons, les cochenilles ou les cochenilles farineuses, et traitez-les.",
+    "Gardez les feuilles propres."
+   ],
+   "prevent": "Traitez d’abord les parasites. La moisissure les suit.",
+   "worry": "Si le film revient, il y a encore des parasites."
+  },
+  "old_leaf_drop": {
+   "name": "Chute normale des vieilles feuilles",
+   "what": "Les plantes perdent leurs plus vieilles feuilles avec le temps.",
+   "check": "S’agit-il d’une feuille ou deux en bas, alors que le reste de la plante a bonne mine ?",
+   "steps": [
+    "Aucune action nécessaire. Retirez les feuilles tombées pour garder la plante nette.",
+    "Gardez votre routine d’entretien habituelle."
+   ],
+   "prevent": "Rien à prévenir. Cela fait partie de la croissance.",
+   "worry": "Si beaucoup de feuilles tombent d’un coup, vérifiez l’arrosage et la lumière."
+  },
+  "dormancy": {
+   "name": "Dormance hivernale",
+   "what": "Beaucoup de plantes ralentissent ou arrêtent leur croissance quand les jours sont courts et frais.",
+   "check": "Est-ce l’hiver, et la plante est-elle par ailleurs en bonne santé ?",
+   "steps": [
+    "Arrosez moins souvent et suspendez l’engrais.",
+    "Gardez la plante à son endroit le plus lumineux.",
+    "Reprenez les soins habituels au printemps."
+   ],
+   "prevent": "Réduisez l’arrosage et l’engrais pendant la saison fraîche.",
+   "worry": "Si les feuilles jaunissent ou ramollissent, vérifiez un excès d’arrosage."
+  },
+  "repot_shock": {
+   "name": "Choc du rempotage",
+   "what": "Des racines dérangées mettent quelques semaines à se rétablir : les feuilles peuvent s’affaisser ou tomber.",
+   "check": "La plante a-t-elle été rempotée le mois dernier ?",
+   "steps": [
+    "Gardez le terreau légèrement humide, pas détrempé.",
+    "Gardez la plante à l’abri du soleil direct pendant deux semaines.",
+    "Ne fertilisez pas pendant environ un mois."
+   ],
+   "prevent": "Manipulez les racines avec précaution et rempotez en période de croissance.",
+   "worry": "Si elle continue de dépérir après six semaines, vérifiez la pourriture des racines."
+  },
+  "settling_in": {
+   "name": "Adaptation après l’achat",
+   "what": "Un nouvel environnement signifie une lumière, une humidité et une température différentes : les plantes perdent ou jaunissent souvent quelques feuilles.",
+   "check": "La plante a-t-elle été achetée ou déplacée ces dernières semaines ?",
+   "steps": [
+    "Placez-la dans un endroit stable avec la lumière adaptée et laissez-la tranquille.",
+    "Arrosez seulement quand le terreau est sec.",
+    "Évitez de rempoter ou de fertiliser pendant quelques semaines."
+   ],
+   "prevent": "Donnez aux nouvelles plantes un endroit stable et quelques semaines pour s’adapter.",
+   "worry": "Si le déclin continue au-delà d’un mois, vérifiez les parasites et l’arrosage."
+  },
+  "flower_fade": {
+   "name": "Fanaison naturelle des fleurs",
+   "what": "Les fleurs se fanent et brunissent quand elles finissent, c’est naturel.",
+   "check": "La plante a-t-elle récemment fini de fleurir ?",
+   "steps": [
+    "Retirez les fleurs fanées et les hampes florales.",
+    "Gardez votre routine d’entretien habituelle.",
+    "Certaines plantes se reposent brièvement après la floraison."
+   ],
+   "prevent": "Rien à prévenir.",
+   "worry": "Si les feuilles jaunissent ou tombent aussi, vérifiez l’arrosage et la lumière."
+  }
+ }
+}

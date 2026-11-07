@@ -24,10 +24,15 @@ class _SymptomCheckerScreenState extends State<SymptomCheckerScreen> {
   bool _showResults = false;
   final Set<String> _selected = {};
 
+  String? _lang;
+
   @override
-  void initState() {
-    super.initState();
-    SymptomChecker.load().then((c) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final lang = Localizations.localeOf(context).languageCode;
+    if (lang == _lang) return;
+    _lang = lang;
+    SymptomChecker.load(lang: lang).then((c) {
       if (mounted) setState(() => _checker = c);
     }).catchError((Object _) {
       if (mounted) setState(() => _failed = true);

@@ -1,0 +1,558 @@
+{
+ "labels": {
+  "leaves": "Folhas",
+  "stems": "Caules",
+  "roots_soil": "Raízes ou solo",
+  "whole": "Planta inteira",
+  "flowers": "Flores",
+  "yellowing": "Folhas amareladas",
+  "brown_tips": "Pontas ou bordas marrons",
+  "brown_spots": "Manchas marrons",
+  "black_spots": "Manchas pretas",
+  "wilting": "Murchando ou caída",
+  "white_powder": "Pó branco na superfície",
+  "white_fluff": "Tufos brancos como algodão",
+  "sticky": "Resíduo pegajoso",
+  "black_film": "Película preta que sai ao limpar",
+  "webbing": "Teias finas",
+  "insects": "Insetos visíveis",
+  "tiny_flies": "Mosquinhas",
+  "holes": "Furos ou folhas mordidas",
+  "leggy": "Crescimento longo e esticado",
+  "curling": "Folhas enroladas ou deformadas",
+  "mushy_base": "Base mole ou molenga",
+  "no_growth": "Sem brotos novos",
+  "bleached": "Manchas claras ou desbotadas",
+  "pale_new": "Folhas novas pequenas ou pálidas",
+  "leaf_drop": "Folhas caindo",
+  "bumps": "Bolhas sob as folhas",
+  "brown_bumps": "Caroços marrons duros em caules ou folhas",
+  "stippling": "Pontinhos claros nas folhas",
+  "crust": "Crosta branca ou cinza no solo ou no vaso",
+  "grey_fuzz": "Mofo cinza felpudo",
+  "rust_spots": "Manchas em pó laranja ou cor de ferrugem",
+  "age_old": "Primeiro as folhas mais velhas",
+  "age_new": "Primeiro as folhas novas",
+  "loc_edges": "Nas bordas",
+  "loc_between_veins": "Entre as nervuras verdes",
+  "loc_patchy": "Em manchas isoladas",
+  "loc_even": "Por igual na planta toda",
+  "wet_soil": "O solo fica molhado por dias",
+  "dry_soil": "O solo fica totalmente seco por muito tempo",
+  "irregular_water": "A rega é irregular",
+  "no_drainage": "O vaso não tem furo de drenagem",
+  "hard_soil": "O solo é duro ou a água escorre direto",
+  "rootbound": "As raízes dão voltas no vaso ou saem pelos furos",
+  "low_light": "Local com pouca luz",
+  "strong_sun": "Sol direto forte",
+  "hot_spot": "Perto de um aquecedor ou local muito quente",
+  "cold_or_draft": "Janela fria ou corrente de ar",
+  "dry_air": "Ar muito seco",
+  "humid_stagnant": "Úmido e com pouca circulação de ar",
+  "tap_water": "Água da torneira dura ou com cloro",
+  "long_unfed": "Sem adubo há seis meses ou mais",
+  "heavy_feed": "Adubada muito ou com frequência",
+  "just_moved": "Mudou de lugar recentemente",
+  "just_repotted": "Foi replantada recentemente",
+  "just_bought": "Foi comprada recentemente",
+  "winter": "Inverno ou estação fria",
+  "flowers_done": "Acabou de florescer",
+  "nearby_infested": "Uma planta próxima tem pragas",
+  "otherwise_healthy": "No mais, está crescendo bem"
+ },
+ "problems": {
+  "overwatering": {
+   "name": "Excesso de rega",
+   "what": "O solo fica molhado e as raízes não recebem ar suficiente.",
+   "check": "Enfie um dedo de 3 a 5 cm no solo. Se ainda estiver úmido, espere antes de regar.",
+   "steps": [
+    "Pare de regar até que os primeiros centímetros estejam secos.",
+    "Verifique se a água escorre pelo vaso e esvazie o pratinho.",
+    "Se o solo estiver encharcado por inteiro, leve a planta a um local claro e arejado para secar mais rápido."
+   ],
+   "prevent": "Regue só quando a superfície do solo estiver seca ao toque e use um vaso com furo de drenagem.",
+   "worry": "Se a base ficar mole ou cheirar mal, trate como podridão de raízes."
+  },
+  "underwatering": {
+   "name": "Falta de rega",
+   "what": "A planta não está recebendo água suficiente para suas necessidades.",
+   "check": "Levante o vaso: vaso leve e solo seco por dentro indicam sede.",
+   "steps": [
+    "Regue devagar até a água sair por baixo e depois esvazie o pratinho.",
+    "Se o solo estiver descolado da borda do vaso, mergulhe o vaso em água por 20 a 30 minutos.",
+    "Confira de novo em alguns dias e crie uma rotina regular."
+   ],
+   "prevent": "Verifique o solo regularmente e regue bem, em vez de dar golinhos de água.",
+   "worry": "Se as folhas continuarem secas depois de algumas semanas de rega regular, as raízes podem estar danificadas."
+  },
+  "inconsistent_watering": {
+   "name": "Rega irregular",
+   "what": "Variações entre muito molhado e muito seco estressam as raízes.",
+   "check": "Pense: o solo passou de encharcado a totalmente seco mais de uma vez?",
+   "steps": [
+    "Escolha uma rotina simples: verifique o solo no mesmo dia da semana.",
+    "Regue bem a cada vez e deixe a superfície secar antes da próxima rega.",
+    "Apare as folhas muito danificadas quando a rotina estiver estável."
+   ],
+   "prevent": "Use o teste do solo, não só o calendário.",
+   "worry": "Se as folhas novas continuarem danificadas com rotina estável, veja a luz e as raízes."
+  },
+  "root_rot": {
+   "name": "Podridão de raízes",
+   "what": "As raízes ficam molhadas, morrem e amolecem, e a planta não consegue beber água.",
+   "check": "Tire a planta do vaso. Raízes saudáveis são firmes e claras. Raízes podres são marrons ou pretas, moles e com cheiro azedo.",
+   "steps": [
+    "Retire a planta e corte todas as raízes moles e escuras com tesoura limpa.",
+    "Replante em substrato novo e bem drenado, em vaso limpo com furos.",
+    "Regue pouco depois e mantenha a planta com luz forte e indireta."
+   ],
+   "prevent": "Use um substrato bem drenado e nunca deixe o vaso parado na água.",
+   "worry": "Se mais da metade das raízes sumiu ou a base do caule está mole, a planta pode não se recuperar. Faça mudas de hastes saudáveis, se puder."
+  },
+  "edema": {
+   "name": "Edema (bolhas de água)",
+   "what": "As raízes absorvem mais água do que as folhas conseguem liberar, e as células incham em pequenas bolhas.",
+   "check": "Procure sob as folhas pequenas bolhas que podem ficar marrons e corticosas.",
+   "steps": [
+    "Regue com menos frequência e deixe o solo secar um pouco mais entre as regas.",
+    "Dê mais luz e ventilação à planta.",
+    "Não remova as folhas, a menos que estejam muito danificadas. As bolhas existentes não desaparecem."
+   ],
+   "prevent": "Evite regar quando o ar está frio e úmido e mantenha a planta bem iluminada.",
+   "worry": "Se houver bolhas e também caules ou folhas moles, verifique as raízes."
+  },
+  "tap_water_burn": {
+   "name": "Queima por minerais ou cloro da água",
+   "what": "Sais ou cloro da água da torneira se acumulam e queimam as pontas das folhas.",
+   "check": "Procure uma crosta branca no solo ou na borda do vaso e pontas marrons e secas.",
+   "steps": [
+    "Deixe a água da torneira descansar uma noite antes de usar, ou use água da chuva ou filtrada.",
+    "Lave o solo com bastante água a cada poucos meses para eliminar os sais.",
+    "Apare as pontas marrons com tesoura limpa, se quiser. Elas não voltam a ficar verdes."
+   ],
+   "prevent": "Use água mais macia quando puder e lave o vaso de vez em quando.",
+   "worry": "Se os danos continuarem aumentando, verifique também a umidade e o adubo."
+  },
+  "low_humidity": {
+   "name": "Pouca umidade do ar",
+   "what": "O ar seco puxa a umidade das bordas das folhas mais rápido do que a planta consegue repor.",
+   "check": "Pontas marrons e quebradiças em várias folhas, principalmente no inverno com aquecimento, indicam ar seco.",
+   "steps": [
+    "Afaste a planta de aquecedores, saídas de ar e correntes de ar.",
+    "Agrupe plantas ou use um umidificador.",
+    "Mantenha a rega regular. Borrifar ajuda muito pouco e pode causar manchas."
+   ],
+   "prevent": "Mantenha plantas que gostam de umidade longe de radiadores e ar-condicionado.",
+   "worry": "Se a planta inteira secar apesar dos cuidados, procure pragas como ácaros."
+  },
+  "too_little_light": {
+   "name": "Pouca luz",
+   "what": "A planta está esticando e desacelerando porque não recebe luz suficiente.",
+   "check": "Compare o crescimento novo com o antigo. Grandes espaços entre folhas e folhas novas pequenas e pálidas indicam pouca luz.",
+   "steps": [
+    "Leve a planta a um local mais claro, de preferência perto de uma janela com luz indireta.",
+    "Gire o vaso a cada uma ou duas semanas para um crescimento uniforme.",
+    "Pode as hastes longas e sem folhas na primavera para estimular um crescimento mais cheio."
+   ],
+   "prevent": "Combine a planta com a luz do ambiente ou use uma luz de cultivo.",
+   "worry": "Se a planta continuar piorando em local claro, veja a rega e as raízes."
+  },
+  "too_much_light": {
+   "name": "Muita luz direta (queimadura de sol)",
+   "what": "O sol forte queima o tecido da folha e deixa manchas claras ou marrons.",
+   "check": "O dano fica no lado voltado para a janela e está seco ou desbotado.",
+   "steps": [
+    "Afaste a planta da janela ou filtre a luz com uma cortina fina.",
+    "Não corte folhas saudáveis. Remova só as muito queimadas.",
+    "Aumente a luz aos poucos se quiser levá-la para mais sol."
+   ],
+   "prevent": "Aumente a luz gradualmente, ao longo de uma ou duas semanas.",
+   "worry": "Se as folhas novas também queimarem, o local é intenso demais e a planta deve mudar de lugar."
+  },
+  "light_change": {
+   "name": "Mudança brusca de luz",
+   "what": "Mudar para um local muito diferente faz a planta perder ou amarelar folhas enquanto se adapta.",
+   "check": "A planta mudou há pouco de cômodo, janela ou estação de luz?",
+   "steps": [
+    "Deixe-a no novo local e evite mudá-la de novo por algumas semanas.",
+    "Mantenha a rega regular.",
+    "Espere alguma perda de folhas durante a adaptação."
+   ],
+   "prevent": "Mude as plantas aos poucos sempre que puder.",
+   "worry": "Se o declínio continuar após quatro a seis semanas, verifique as outras causas."
+  },
+  "cold_draft": {
+   "name": "Dano por frio ou corrente de ar",
+   "what": "O ar frio faz as células da folha colapsarem, deixando manchas escuras com aspecto molhado.",
+   "check": "Verifique se a planta está encostada em vidro frio, perto de uma porta ou em corrente de ar.",
+   "steps": [
+    "Afaste-a de vidros frios e correntes de ar.",
+    "Mantenha-a acima de cerca de 12 a 15 °C, a menos que goste de frio.",
+    "Apare as folhas muito danificadas."
+   ],
+   "prevent": "Mantenha plantas tropicais aquecidas e longe de janelas abertas no frio.",
+   "worry": "Se o caule ficar mole ou preto, trate como podridão do caule."
+  },
+  "heat_stress": {
+   "name": "Estresse por calor",
+   "what": "Temperaturas altas ressecam a planta e causam murcha e queimaduras.",
+   "check": "Verifique se a planta está perto de um aquecedor, radiador ou peitoril muito quente.",
+   "steps": [
+    "Leve-a para um local mais fresco e sombreado.",
+    "Verifique o solo e regue se estiver seco.",
+    "Mantenha-a longe de saídas de ar quente."
+   ],
+   "prevent": "Evite locais muito quentes e afaste as plantas das janelas no verão.",
+   "worry": "Se as folhas continuarem secas após a mudança, procure pragas e verifique as raízes."
+  },
+  "nitrogen_deficiency": {
+   "name": "Falta de nitrogênio",
+   "what": "A planta está com pouco nitrogênio, então as folhas velhas ficam pálidas enquanto ela leva nutrientes aos brotos novos.",
+   "check": "Procure folhas velhas amarelando por igual, crescimento lento e muito tempo sem adubo.",
+   "steps": [
+    "Use um adubo equilibrado para plantas de interior na metade da dose do rótulo.",
+    "Adube só na fase de crescimento, geralmente primavera e verão.",
+    "Não adube uma planta seca ou estressada. Regue primeiro."
+   ],
+   "prevent": "Adube regularmente durante o crescimento, em dose suave.",
+   "worry": "Se o amarelamento continuar após duas adubações, verifique raízes, luz e rega."
+  },
+  "magnesium_deficiency": {
+   "name": "Falta de magnésio",
+   "what": "As folhas velhas amarelam entre as nervuras, enquanto as nervuras continuam verdes.",
+   "check": "Procure folhas velhas com nervuras verdes e amarelo entre elas.",
+   "steps": [
+    "Use um adubo equilibrado com micronutrientes, na metade da dose.",
+    "Verifique se a rega e a drenagem estão normais. Raízes em mau estado não absorvem nutrientes.",
+    "Não adicione sal de Epsom, a menos que saiba que o problema é o magnésio."
+   ],
+   "prevent": "Use um adubo completo durante a fase de crescimento.",
+   "worry": "Se atingir muitas folhas rapidamente, verifique raízes e rega."
+  },
+  "iron_deficiency": {
+   "name": "Falta de ferro",
+   "what": "As folhas novas amarelam entre as nervuras verdes porque o ferro não está disponível para a planta.",
+   "check": "Procure folhas novas com tecido amarelo e nervuras verdes.",
+   "steps": [
+    "Use um adubo com ferro quelatado na dose do rótulo.",
+    "Verifique se o solo não está encharcado, pois raízes molhadas bloqueiam a absorção de ferro.",
+    "Use água mais macia se a da torneira for muito dura."
+   ],
+   "prevent": "Evite excesso de rega e água muito dura.",
+   "worry": "Se as folhas novas continuarem amarelas após corrigir rega e adubo, verifique as raízes."
+  },
+  "fertiliser_burn": {
+   "name": "Queima por adubo",
+   "what": "Adubo demais deixa sais que queimam as raízes e as bordas das folhas.",
+   "check": "Procure uma crosta branca no solo e bordas marrons e secas logo após adubar.",
+   "steps": [
+    "Lave o vaso com bastante água, deixando escoar por completo, três ou quatro vezes.",
+    "Pare de adubar por pelo menos dois meses.",
+    "Retire a crosta da superfície e troque por substrato novo se estiver espessa."
+   ],
+   "prevent": "Adube na metade da dose, só na fase de crescimento e em solo úmido.",
+   "worry": "Se as raízes parecerem escuras e moles após a lavagem, verifique danos nas raízes."
+  },
+  "rootbound": {
+   "name": "Planta com raízes apertadas",
+   "what": "As raízes encheram o vaso e não absorvem água e nutrientes suficientes.",
+   "check": "Tire a planta do vaso. Um emaranhado denso de raízes dando voltas por fora indica que está apertada.",
+   "steps": [
+    "Replante em um vaso um tamanho maior (2 a 5 cm mais largo) com substrato novo.",
+    "Solte com cuidado as raízes externas antes de replantar.",
+    "Regue bem depois e mantenha longe do sol forte por uma semana."
+   ],
+   "prevent": "Replante a cada um ou dois anos, na primavera, conforme o crescimento.",
+   "worry": "Se a planta estiver mal após replantar, verifique podridão de raízes."
+  },
+  "compacted_soil": {
+   "name": "Solo compactado",
+   "what": "Solo velho ou pesado se compacta, e a água empoça ou passa direto pelas raízes.",
+   "check": "Regue e observe. Se a água empoça no topo ou sai de uma vez por baixo, o solo está compactado.",
+   "steps": [
+    "Solte com cuidado a parte de cima do solo com um palito.",
+    "Replante em substrato novo e arejado, com perlita ou casca.",
+    "Regue devagar, em etapas, para a água penetrar."
+   ],
+   "prevent": "Renove o substrato a cada um ou dois anos.",
+   "worry": "Se a planta continuar murchando após replantar, verifique as raízes."
+  },
+  "poor_drainage": {
+   "name": "Drenagem ruim",
+   "what": "A água não consegue sair do vaso e as raízes ficam na água.",
+   "check": "Verifique se o vaso tem furos de drenagem e se o pratinho está vazio.",
+   "steps": [
+    "Passe a planta para um vaso com furos ou mantenha-a no vaso de cultivo dentro de um cachepô.",
+    "Use um substrato bem drenado.",
+    "Esvazie a água do pratinho depois de regar."
+   ],
+   "prevent": "Use sempre um vaso com furos de drenagem.",
+   "worry": "Se o solo cheirar mal ou a base estiver mole, verifique podridão de raízes."
+  },
+  "mineral_crust": {
+   "name": "Crosta mineral no solo",
+   "what": "Sais da água e do adubo se acumulam como uma crosta branca ou cinza.",
+   "check": "Procure uma crosta dura branca ou cinza no solo ou na borda do vaso.",
+   "steps": [
+    "Raspe a crosta e troque os 2 cm de cima do solo.",
+    "Lave o vaso com água até sair limpa.",
+    "Use água mais macia, se puder."
+   ],
+   "prevent": "Lave de vez em quando e evite excesso de adubo.",
+   "worry": "Se as pontas das folhas continuarem escurecendo, replante em substrato novo."
+  },
+  "spider_mites": {
+   "name": "Ácaros-aranha",
+   "what": "Ácaros minúsculos sugam a seiva, deixando pontinhos claros e teias finas.",
+   "check": "Segure uma folha de papel branco sob uma folha e bata de leve. Pontinhos que se movem ou teias indicam ácaros.",
+   "steps": [
+    "Isole a planta das outras.",
+    "Limpe as folhas, na frente e atrás, com pano úmido, ou lave a planta no chuveiro.",
+    "Borrife uma solução de sabão neutro (algumas gotas de detergente suave em um litro de água), teste antes em uma folha e repita a cada 5 a 7 dias por algumas semanas.",
+    "Aumente a umidade, pois os ácaros adoram ar seco."
+   ],
+   "prevent": "Verifique o verso das folhas com regularidade e evite ar muito seco.",
+   "worry": "Se as teias aumentarem ou as folhas amarelarem e caírem rápido, continue o tratamento e mantenha a planta isolada."
+  },
+  "mealybugs": {
+   "name": "Cochonilhas-farinhentas",
+   "what": "Insetos pequenos e moles cobertos de penugem branca sugam a seiva, geralmente nas axilas das folhas.",
+   "check": "Procure aglomerados brancos como algodão nas axilas das folhas e nos caules.",
+   "steps": [
+    "Isole a planta.",
+    "Toque cada inseto com um cotonete embebido em álcool (teste antes em uma folha).",
+    "Limpe a planta com solução de sabão neutro e repita toda semana por várias semanas."
+   ],
+   "prevent": "Inspecione plantas novas antes de colocá-las perto das outras.",
+   "worry": "Se chegarem às raízes (penugem branca no solo), replante e trate o solo."
+  },
+  "scale": {
+   "name": "Cochonilhas de carapaça",
+   "what": "Pequenos caroços duros em caules e folhas sugam a seiva e deixam resíduo pegajoso.",
+   "check": "Procure caroços marrons ou bege ao longo de caules ou nervuras que saem com a unha.",
+   "steps": [
+    "Isole a planta.",
+    "Raspe ou limpe as cochonilhas com um cotonete embebido em álcool.",
+    "Limpe a planta com solução de sabão neutro e repita toda semana por algumas semanas."
+   ],
+   "prevent": "Verifique caules e o verso das folhas ao comprar ou replantar.",
+   "worry": "Se a planta continuar piorando, repita o tratamento por mais tempo e mantenha-a isolada."
+  },
+  "fungus_gnats": {
+   "name": "Mosquinhas-do-solo",
+   "what": "Mosquinhas escuras e minúsculas botam ovos em solo constantemente úmido.",
+   "check": "Observe mosquinhas escuras ao redor do solo, principalmente depois de regar.",
+   "steps": [
+    "Deixe secar os 3 a 5 cm de cima do solo entre as regas.",
+    "Use armadilhas adesivas amarelas para pegar os adultos.",
+    "Cubra o solo com uma fina camada de areia ou cascalho."
+   ],
+   "prevent": "Evite manter o solo constantemente úmido.",
+   "worry": "Se as plantas também murcharem, verifique podridão de raízes."
+  },
+  "thrips": {
+   "name": "Tripes",
+   "what": "Insetos finos e minúsculos raspam as folhas e deixam riscos prateados e brotos deformados.",
+   "check": "Bata de leve uma folha sobre papel branco. Os tripes parecem fiapos escuros minúsculos que se movem.",
+   "steps": [
+    "Isole a planta.",
+    "Limpe as folhas e borrife solução de sabão neutro.",
+    "Repita a cada 5 a 7 dias por várias semanas."
+   ],
+   "prevent": "Inspecione plantas e flores novas antes de trazê-las para dentro.",
+   "worry": "Se os brotos novos continuarem deformados após várias semanas, continue o tratamento."
+  },
+  "aphids": {
+   "name": "Pulgões",
+   "what": "Insetos moles se agrupam nos brotos novos e sugam a seiva.",
+   "check": "Olhe os brotos tenros e botões: pequenos grupos verdes, pretos ou marrons.",
+   "steps": [
+    "Lave a planta ou limpe os pulgões.",
+    "Borrife solução de sabão neutro.",
+    "Repita a cada poucos dias até sumirem."
+   ],
+   "prevent": "Verifique regularmente os brotos novos e tenros.",
+   "worry": "Se voltarem rápido, isole a planta e continue o tratamento."
+  },
+  "whiteflies": {
+   "name": "Moscas-brancas",
+   "what": "Pequenos insetos brancos voam quando a planta é perturbada.",
+   "check": "Sacuda a planta de leve. Uma nuvem de moscas brancas minúsculas indica moscas-brancas.",
+   "steps": [
+    "Isole a planta.",
+    "Use armadilhas adesivas amarelas para os adultos.",
+    "Limpe o verso das folhas e borrife solução de sabão neutro a cada 5 a 7 dias."
+   ],
+   "prevent": "Verifique o verso das folhas com regularidade.",
+   "worry": "Se a infestação persistir, repita os tratamentos por várias semanas."
+  },
+  "chewing_pests": {
+   "name": "Pragas mastigadoras (lagartas, lesmas, besouros)",
+   "what": "Pragas maiores mordem furos ou bordas esfiapadas nas folhas.",
+   "check": "Procure sob as folhas e no solo, de preferência à noite, lagartas, lesmas, caracóis ou besouros. Rastros de baba são uma pista.",
+   "steps": [
+    "Retire as pragas à mão e leve-as para longe da planta.",
+    "Verifique plantas próximas, principalmente as de fora ou recém-trazidas para dentro.",
+    "Remova as folhas muito danificadas."
+   ],
+   "prevent": "Verifique as plantas que levar para fora e inspecione-as antes de trazê-las de volta.",
+   "worry": "Se o dano continuar depois de remover as pragas visíveis, procure de novo à noite."
+  },
+  "powdery_mildew": {
+   "name": "Oídio",
+   "what": "Um fungo forma uma camada branca em pó nas folhas.",
+   "check": "O pó sai ao limpar e aparece na face de cima da folha.",
+   "steps": [
+    "Isole a planta.",
+    "Remova as folhas muito atingidas.",
+    "Melhore a circulação de ar e mantenha as folhas secas.",
+    "Borrife 1 colher de chá de bicarbonato em um litro de água (teste em uma folha) ou use um produto indicado para oídio."
+   ],
+   "prevent": "Dê espaço às plantas e evite molhar as folhas.",
+   "worry": "Se continuar voltando, trate por mais tempo e reduza a umidade."
+  },
+  "fungal_leaf_spot": {
+   "name": "Manchas foliares por fungo",
+   "what": "Fungos causam manchas marrons ou pretas, muitas vezes com anel mais escuro ou halo amarelo.",
+   "check": "Veja se as manchas têm borda definida ou halo amarelo e aparecem após folhas molhadas.",
+   "steps": [
+    "Remova as folhas muito manchadas.",
+    "Evite molhar as folhas e melhore a circulação de ar.",
+    "Não regue à noite."
+   ],
+   "prevent": "Regue no solo, não nas folhas.",
+   "worry": "Se as manchas passarem rápido para folhas novas, continue o tratamento e isole a planta."
+  },
+  "bacterial_leaf_spot": {
+   "name": "Manchas foliares bacterianas",
+   "what": "Manchas angulares encharcadas com halo amarelo são sinal de infecção bacteriana.",
+   "check": "Procure manchas com aspecto molhado ou gorduroso, limitadas pelas nervuras.",
+   "steps": [
+    "Remova as folhas atingidas e descarte-as, não no composto.",
+    "Mantenha as folhas secas e lave as mãos e as ferramentas depois.",
+    "Isole a planta."
+   ],
+   "prevent": "Regue no solo e evite respingos.",
+   "worry": "Se se espalhar rápido, considere descartar a planta para proteger as outras."
+  },
+  "grey_mould": {
+   "name": "Mofo-cinzento (botrytis)",
+   "what": "Um mofo cinza e felpudo cresce em tecido morto ou danificado, em ar úmido e parado.",
+   "check": "Procure felpa cinza em flores, folhas mortas ou caules.",
+   "steps": [
+    "Remova as partes atingidas e descarte-as.",
+    "Aumente a ventilação e reduza a umidade.",
+    "Retire folhas e flores mortas com regularidade."
+   ],
+   "prevent": "Limpe o material morto e dê ar à planta.",
+   "worry": "Se passar para caules saudáveis, isole a planta."
+  },
+  "rust": {
+   "name": "Ferrugem",
+   "what": "Um fungo causa manchas em pó laranja ou cor de ferrugem, muitas vezes sob as folhas.",
+   "check": "Esfregue de leve uma mancha. Pó laranja no dedo sugere ferrugem.",
+   "steps": [
+    "Remova as folhas atingidas.",
+    "Mantenha as folhas secas e melhore a circulação de ar.",
+    "Isole a planta."
+   ],
+   "prevent": "Regue no solo e mantenha as folhas secas.",
+   "worry": "Se continuar se espalhando, continue tratando e isole a planta."
+  },
+  "anthracnose": {
+   "name": "Antracnose",
+   "what": "Uma doença fúngica que causa manchas escuras e fundas e secamento marrom a partir das pontas e bordas.",
+   "check": "Procure manchas escuras levemente fundas com margem e um escurecimento que avança a partir das bordas.",
+   "steps": [
+    "Remova as folhas atingidas.",
+    "Mantenha as folhas secas e melhore a circulação de ar.",
+    "Não deixe as plantas apertadas."
+   ],
+   "prevent": "Evite molhar as folhas e dê espaço às plantas.",
+   "worry": "Se se espalhar, isole a planta."
+  },
+  "stem_rot": {
+   "name": "Podridão do caule",
+   "what": "A base ou o caule fica mole e escuro, muitas vezes por condições úmidas e frias.",
+   "check": "Pressione de leve a base do caule. Se estiver mole, molenga ou preta, está apodrecendo.",
+   "steps": [
+    "Corte acima da podridão, em tecido verde saudável, com tesoura limpa.",
+    "Enraíze mudas saudáveis em água ou substrato novo, se puder.",
+    "Descarte as partes podres e limpe o vaso antes de reutilizar."
+   ],
+   "prevent": "Não regue demais e evite frio úmido.",
+   "worry": "Se a podridão chegar ao caule principal, a planta pode não sobreviver. Salve mudas."
+  },
+  "sooty_mould": {
+   "name": "Fumagina",
+   "what": "Uma película preta cresce na secreção pegajosa deixada por insetos sugadores de seiva.",
+   "check": "Limpe uma folha com pano úmido. Se a película preta sair e a folha estiver pegajosa, é fumagina.",
+   "steps": [
+    "Limpe a película com um pano úmido.",
+    "Procure as pragas que produziram a secreção, como pulgões, cochonilhas ou cochonilhas-farinhentas, e trate-as.",
+    "Mantenha as folhas limpas."
+   ],
+   "prevent": "Trate primeiro as pragas. O mofo vem atrás delas.",
+   "worry": "Se a película voltar, ainda há pragas."
+  },
+  "old_leaf_drop": {
+   "name": "Queda normal de folhas velhas",
+   "what": "As plantas soltam as folhas mais velhas com o tempo.",
+   "check": "São só uma ou duas folhas de baixo, enquanto o resto da planta está saudável?",
+   "steps": [
+    "Nenhuma ação é necessária. Retire as folhas caídas para manter tudo limpo.",
+    "Mantenha sua rotina de cuidados."
+   ],
+   "prevent": "Nada a prevenir. Faz parte do crescimento.",
+   "worry": "Se muitas folhas caírem de uma vez, verifique a rega e a luz."
+  },
+  "dormancy": {
+   "name": "Dormência de inverno",
+   "what": "Muitas plantas desaceleram ou param de crescer quando os dias são curtos e frios.",
+   "check": "É inverno e a planta está saudável no mais?",
+   "steps": [
+    "Regue com menos frequência e pare de adubar.",
+    "Mantenha a planta no local mais claro.",
+    "Retome os cuidados normais na primavera."
+   ],
+   "prevent": "Reduza a rega e a adubação na estação fria.",
+   "worry": "Se as folhas amarelarem ou amolecerem, verifique excesso de rega."
+  },
+  "repot_shock": {
+   "name": "Choque do replantio",
+   "what": "Raízes perturbadas levam algumas semanas para se recuperar, e as folhas podem cair ou murchar.",
+   "check": "A planta foi replantada no último mês?",
+   "steps": [
+    "Mantenha o solo levemente úmido, não molhado.",
+    "Mantenha a planta longe do sol direto por duas semanas.",
+    "Não adube por cerca de um mês."
+   ],
+   "prevent": "Trate as raízes com cuidado e replante na fase de crescimento.",
+   "worry": "Se continuar piorando após seis semanas, verifique podridão de raízes."
+  },
+  "settling_in": {
+   "name": "Adaptação após a compra",
+   "what": "Um novo lar significa luz, umidade e temperatura diferentes, então as plantas costumam perder ou amarelar algumas folhas.",
+   "check": "A planta foi comprada ou mudada nas últimas semanas?",
+   "steps": [
+    "Coloque-a em um local estável com a luz adequada e deixe-a em paz.",
+    "Regue só quando o solo estiver seco.",
+    "Evite replantar ou adubar por algumas semanas."
+   ],
+   "prevent": "Dê às plantas novas um local estável e algumas semanas para se adaptar.",
+   "worry": "Se o declínio continuar depois de um mês, verifique pragas e rega."
+  },
+  "flower_fade": {
+   "name": "Murcha natural das flores",
+   "what": "As flores murcham e escurecem quando terminam, o que é natural.",
+   "check": "A planta terminou de florescer há pouco?",
+   "steps": [
+    "Remova as flores murchas e as hastes florais.",
+    "Mantenha sua rotina de cuidados.",
+    "Algumas plantas descansam um pouco depois de florescer."
+   ],
+   "prevent": "Nada a prevenir.",
+   "worry": "Se as folhas também amarelarem ou caírem, verifique a rega e a luz."
+  }
+ }
+}

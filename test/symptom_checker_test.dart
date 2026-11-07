@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:growlog/services/offline/symptom_checker.dart';
@@ -78,5 +79,74 @@ void main() {
     for (final banned in ['pesticide', 'insecticide', 'bleach', 'fungicide']) {
       expect(text.contains(banned), isFalse, reason: banned);
     }
+  });
+
+  group('translated overlays', () {
+    final base = File('assets/care/symptoms.json').readAsStringSync();
+    final overlays = Directory('assets/care')
+        .listSync()
+        .whereType<File>()
+        .where((f) => RegExp(r'symptoms_[a-z]+\.json$').hasMatch(f.path))
+        .toList();
+
+    test('at least French, Portuguese and Arabic are translated', () {
+      final names = overlays.map((f) => f.path.split('/').last).toSet();
+      expect(names, containsAll(
+          ['symptoms_fr.json', 'symptoms_pt.json', 'symptoms_ar.json']));
+    });
+
+    for (final f in overlays) {
+      final lang = f.path.split('/').last;
+      test('$lang covers every label and problem and keeps step counts', () {
+        final over = jsonDecode(f.readAsStringSync()) as Map<String, dynamic>;
+        final english = SymptomChecker.parse(base);
+        final tr = SymptomChecker.parse(base, overlay: f.readAsStringSync());
+        final labels = over['labels'] as Map<String, dynamic>;
+        for (final g in english.groups.values) {
+          for (final o in g) {
+            expect(labels[o.id], isA<String>(), reason: '$lang label ${o.id}');
+            expect((labels[o.id] as String).trim(), isNotEmpty);
+          }
+        }
+        for (var i = 0; i < english.problems.length; i++) {
+          final e = english.problems[i];
+          final t = tr.problems[i];
+          expect(t.id, e.id);
+          expect(t.steps.length, e.steps.length, reason: '$lang ${e.id}');
+          // Translated, not silently falling back to English.
+          expect(t.name, isNot(e.name), reason: '$lang ${e.id} name');
+          expect(t.what, isNot(e.what), reason: '$lang ${e.id} what');
+          expect(t.steps, isNot(e.steps), reason: '$lang ${e.id} steps');
+          // Scoring data is never changed by translation.
+          expect(t.match, e.match);
+          expect(t.severity, e.severity);
+        }
+      });
+
+      test('$lang gives the same ranking as English', () {
+        final english = SymptomChecker.parse(base);
+        final tr = SymptomChecker.parse(base, overlay: f.readAsStringSync());
+        for (final sel in [
+          {'yellowing', 'wet_soil', 'no_drainage'},
+          {'webbing', 'stippling', 'dry_air'},
+          {'white_powder', 'humid_stagnant'},
+        ]) {
+          expect(tr.rank(sel).map((d) => d.problem.id),
+              english.rank(sel).map((d) => d.problem.id));
+        }
+      });
+    }
+
+    test('a missing or partial overlay falls back to English', () {
+      final english = SymptomChecker.parse(base);
+      final partial = SymptomChecker.parse(base,
+          overlay: '{"labels":{"yellowing":"X"},"problems":{"rust":{"name":"Y","steps":["only one"]}}}');
+      expect(partial.groups['symptom']!.first.label, 'X');
+      final rust = partial.problems.firstWhere((p) => p.id == 'rust');
+      final rustEn = english.problems.firstWhere((p) => p.id == 'rust');
+      expect(rust.name, 'Y');
+      expect(rust.steps, rustEn.steps); // wrong step count: whole list stays English
+      expect(rust.what, rustEn.what);
+    });
   });
 }
