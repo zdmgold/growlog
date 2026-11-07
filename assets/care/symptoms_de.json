@@ -1,0 +1,558 @@
+{
+ "labels": {
+  "leaves": "Blätter",
+  "stems": "Stängel",
+  "roots_soil": "Wurzeln oder Erde",
+  "whole": "Ganze Pflanze",
+  "flowers": "Blüten",
+  "yellowing": "Gelbe Blätter",
+  "brown_tips": "Braune Spitzen oder Ränder",
+  "brown_spots": "Braune Flecken",
+  "black_spots": "Schwarze Flecken",
+  "wilting": "Welken oder Hängen",
+  "white_powder": "Weißer, mehliger Belag",
+  "white_fluff": "Weiße, wattige Flöckchen",
+  "sticky": "Klebriger Belag",
+  "black_film": "Schwarzer Film, der sich abwischen lässt",
+  "webbing": "Feine Gespinste",
+  "insects": "Sichtbare Insekten",
+  "tiny_flies": "Winzige Fliegen",
+  "holes": "Löcher oder angefressene Blätter",
+  "leggy": "Langer, gestreckter Wuchs",
+  "curling": "Eingerollte oder verformte Blätter",
+  "mushy_base": "Weicher oder matschiger Stängelgrund",
+  "no_growth": "Kein neuer Wuchs",
+  "bleached": "Blasse oder gebleichte Stellen",
+  "pale_new": "Kleine oder blasse neue Blätter",
+  "leaf_drop": "Blattfall",
+  "bumps": "Blasenartige Beulen unter den Blättern",
+  "brown_bumps": "Harte braune Höcker an Stängeln oder Blättern",
+  "stippling": "Winzige helle Punkte auf den Blättern",
+  "crust": "Weiße oder graue Kruste auf Erde oder Topf",
+  "grey_fuzz": "Grauer, flaumiger Schimmel",
+  "rust_spots": "Orangefarbene oder rostige, pulvrige Flecken",
+  "age_old": "Zuerst die älteren Blätter",
+  "age_new": "Zuerst die neuen Blätter",
+  "loc_edges": "Entlang der Ränder",
+  "loc_between_veins": "Zwischen den grünen Adern",
+  "loc_patchy": "Fleckig, an einzelnen Stellen",
+  "loc_even": "Gleichmäßig über die ganze Pflanze",
+  "wet_soil": "Die Erde bleibt tagelang nass",
+  "dry_soil": "Die Erde ist lange knochentrocken",
+  "irregular_water": "Unregelmäßiges Gießen",
+  "no_drainage": "Der Topf hat kein Abzugsloch",
+  "hard_soil": "Die Erde ist hart oder das Wasser läuft einfach durch",
+  "rootbound": "Die Wurzeln kreisen im Topf oder ragen aus den Löchern",
+  "low_light": "Schattiger Standort",
+  "strong_sun": "Starke direkte Sonne",
+  "hot_spot": "Nahe einer Heizung oder sehr heißer Platz",
+  "cold_or_draft": "Kaltes Fenster oder Zugluft",
+  "dry_air": "Sehr trockene Luft",
+  "humid_stagnant": "Feucht mit wenig Luftbewegung",
+  "tap_water": "Hartes oder gechlortes Leitungswasser",
+  "long_unfed": "Seit sechs Monaten oder länger nicht gedüngt",
+  "heavy_feed": "Stark oder oft gedüngt",
+  "just_moved": "Vor Kurzem an einen neuen Platz gestellt",
+  "just_repotted": "Vor Kurzem umgetopft",
+  "just_bought": "Vor Kurzem gekauft",
+  "winter": "Winter oder kühle Jahreszeit",
+  "flowers_done": "Gerade fertig geblüht",
+  "nearby_infested": "Eine Pflanze in der Nähe hat Schädlinge",
+  "otherwise_healthy": "Wächst sonst gut"
+ },
+ "problems": {
+  "overwatering": {
+   "name": "Zu viel gegossen",
+   "what": "Die Erde bleibt nass, und die Wurzeln bekommen nicht genug Luft.",
+   "check": "Steck einen Finger 3 bis 5 cm tief in die Erde. Ist sie noch feucht, warte mit dem Gießen.",
+   "steps": [
+    "Gieße nicht, bis die obersten Zentimeter trocken sind.",
+    "Achte darauf, dass das Wasser aus dem Topf abfließen kann, und leere den Untersetzer.",
+    "Ist die Erde durch und durch nass, stell die Pflanze hell und luftig auf, damit sie schneller trocknet."
+   ],
+   "prevent": "Gieße nur, wenn die Erdoberfläche sich trocken anfühlt, und nutze einen Topf mit Abzugsloch.",
+   "worry": "Wird der Stängelgrund weich oder riecht schlecht, behandle es wie Wurzelfäule."
+  },
+  "underwatering": {
+   "name": "Zu wenig gegossen",
+   "what": "Die Pflanze bekommt nicht genug Wasser für ihren Bedarf.",
+   "check": "Heb den Topf an: Ein leichter Topf und tief trockene Erde bedeuten Durst.",
+   "steps": [
+    "Gieße langsam, bis Wasser unten herausläuft, und leere dann den Untersetzer.",
+    "Hat sich die Erde vom Topfrand gelöst, stell den Topf 20 bis 30 Minuten in Wasser.",
+    "Prüf nach einigen Tagen erneut und finde einen festen Rhythmus."
+   ],
+   "prevent": "Prüf die Erde regelmäßig und gieße gründlich statt in kleinen Schlucken.",
+   "worry": "Bleiben die Blätter nach einigen Wochen regelmäßigen Gießens trocken, können die Wurzeln geschädigt sein."
+  },
+  "inconsistent_watering": {
+   "name": "Unregelmäßiges Gießen",
+   "what": "Wechsel zwischen zu nass und zu trocken stressen die Wurzeln.",
+   "check": "Denk nach: Ist die Erde mehr als einmal von durchnässt zu knochentrocken gewechselt?",
+   "steps": [
+    "Wähl eine einfache Routine: Prüf die Erde jede Woche am selben Tag.",
+    "Gieße jedes Mal gründlich und lass die Oberfläche vor dem nächsten Gießen trocknen.",
+    "Schneide stark geschädigte Blätter ab, sobald die Routine stabil ist."
+   ],
+   "prevent": "Nutz die Fingerprobe, nicht nur den Kalender.",
+   "worry": "Werden neue Blätter trotz stabiler Routine geschädigt, prüf Licht und Wurzeln."
+  },
+  "root_rot": {
+   "name": "Wurzelfäule",
+   "what": "Die Wurzeln bleiben nass, sterben ab und werden weich, sodass die Pflanze nicht mehr trinken kann.",
+   "check": "Heb die Pflanze aus dem Topf. Gesunde Wurzeln sind fest und hell. Faulende Wurzeln sind braun oder schwarz, matschig und riechen sauer.",
+   "steps": [
+    "Nimm die Pflanze heraus und schneide alle weichen, dunklen Wurzeln mit einer sauberen Schere ab.",
+    "Topf sie in frische, durchlässige Erde in einen sauberen Topf mit Abzugslöchern um.",
+    "Gieße danach sparsam und stell sie hell, aber ohne direkte Sonne auf."
+   ],
+   "prevent": "Nimm durchlässige Erde und lass den Topf nie im Wasser stehen.",
+   "worry": "Fehlt mehr als die Hälfte der Wurzeln oder ist der Stängelgrund matschig, erholt sich die Pflanze vielleicht nicht. Nimm wenn möglich Stecklinge von gesunden Trieben."
+  },
+  "edema": {
+   "name": "Ödem (Wasserbläschen)",
+   "what": "Die Wurzeln nehmen mehr Wasser auf, als die Blätter abgeben können, und Zellen schwellen zu kleinen Beulen an.",
+   "check": "Such unter den Blättern nach kleinen blasenartigen Beulen, die braun und korkig werden können.",
+   "steps": [
+    "Gieße seltener und lass die Erde zwischen den Wassergaben etwas stärker trocknen.",
+    "Gib der Pflanze mehr Licht und Luft.",
+    "Entferne Blätter nur, wenn sie ganz geschädigt sind. Bestehende Beulen heilen nicht."
+   ],
+   "prevent": "Gieße nicht bei kühler, feuchter Luft und halte die Pflanze gut beleuchtet.",
+   "worry": "Gibt es Beulen und dazu weiche Stängel oder Blätter, prüf die Wurzeln auf Fäulnis."
+  },
+  "tap_water_burn": {
+   "name": "Verbrennung durch Mineralien oder Chlor im Leitungswasser",
+   "what": "Salze oder Chlor im Leitungswasser reichern sich an und verbrennen die Blattspitzen.",
+   "check": "Such nach einer weißen Kruste auf der Erde oder am Topfrand und braunen, trockenen Spitzen.",
+   "steps": [
+    "Lass Leitungswasser über Nacht stehen oder nimm Regen- oder gefiltertes Wasser.",
+    "Spül die Erde alle paar Monate mit viel Wasser durch, damit die Salze abfließen.",
+    "Schneide braune Spitzen mit sauberer Schere ab, wenn du magst. Sie werden nicht wieder grün."
+   ],
+   "prevent": "Nimm möglichst weicheres Wasser und spül den Topf ab und zu durch.",
+   "worry": "Breitet sich der Schaden weiter aus, prüf auch Luftfeuchtigkeit und Düngung."
+  },
+  "low_humidity": {
+   "name": "Zu geringe Luftfeuchtigkeit",
+   "what": "Trockene Luft zieht den Blatträndern schneller Feuchtigkeit ab, als die Pflanze nachliefern kann.",
+   "check": "Braune, knusprige Spitzen an mehreren Blättern, besonders im Winter mit Heizung, deuten auf trockene Luft.",
+   "steps": [
+    "Rück die Pflanze von Heizungen, Lüftungsöffnungen und Zugluft weg.",
+    "Stell Pflanzen zusammen oder nutz einen Luftbefeuchter.",
+    "Gieße gleichmäßig. Besprühen hilft kaum und kann Flecken verursachen."
+   ],
+   "prevent": "Halt feuchtigkeitsliebende Pflanzen von Heizkörpern und Klimaanlagen fern.",
+   "worry": "Vertrocknet die ganze Pflanze trotz gleichmäßiger Pflege, such nach Schädlingen wie Spinnmilben."
+  },
+  "too_little_light": {
+   "name": "Zu wenig Licht",
+   "what": "Die Pflanze streckt sich und wächst langsamer, weil sie nicht genug Licht bekommt.",
+   "check": "Vergleich den neuen mit dem alten Wuchs. Große Abstände zwischen den Blättern und kleine, blasse neue Blätter deuten auf zu wenig Licht.",
+   "steps": [
+    "Stell die Pflanze an einen helleren Platz, am besten nahe einem Fenster mit indirektem Licht.",
+    "Dreh den Topf jede Woche oder alle zwei Wochen für gleichmäßigen Wuchs.",
+    "Schneide lange, kahle Triebe im Frühjahr zurück, damit die Pflanze buschiger wird."
+   ],
+   "prevent": "Wähl die Pflanze passend zum Licht im Raum oder nutz eine Pflanzenlampe.",
+   "worry": "Verschlechtert sich die Pflanze an einem hellen Platz weiter, prüf Gießen und Wurzeln."
+  },
+  "too_much_light": {
+   "name": "Zu viel direktes Licht (Sonnenbrand)",
+   "what": "Starke Sonne verbrennt das Blattgewebe und hinterlässt blasse oder braune Flecken.",
+   "check": "Der Schaden sitzt auf der Fensterseite und ist trocken oder gebleicht.",
+   "steps": [
+    "Rück die Pflanze vom Fenster weg oder filtere das Licht mit einem dünnen Vorhang.",
+    "Schneide keine gesunden Blätter ab. Entferne nur stark verbrannte.",
+    "Steiger das Licht langsam, wenn du sie in mehr Sonne stellen willst."
+   ],
+   "prevent": "Gewöhn die Pflanze innerhalb von ein bis zwei Wochen schrittweise an mehr Licht.",
+   "worry": "Verbrennen auch neue Blätter, ist der Platz zu intensiv und die Pflanze sollte umziehen."
+  },
+  "light_change": {
+   "name": "Plötzlicher Lichtwechsel",
+   "what": "Ein Umzug an einen ganz anderen Platz lässt Pflanzen Blätter abwerfen oder vergilben, während sie sich anpassen.",
+   "check": "Hat die Pflanze kürzlich Raum, Fenster oder Lichtverhältnisse der Jahreszeit gewechselt?",
+   "steps": [
+    "Lass sie am neuen Platz und stell sie einige Wochen nicht wieder um.",
+    "Gieße gleichmäßig weiter.",
+    "Rechne mit etwas Blattverlust während der Anpassung."
+   ],
+   "prevent": "Stell Pflanzen wenn möglich nach und nach um.",
+   "worry": "Hält der Rückgang nach vier bis sechs Wochen an, prüf die anderen Ursachen."
+  },
+  "cold_draft": {
+   "name": "Kälte- oder Zugluftschaden",
+   "what": "Kalte Luft lässt Blattzellen zusammenfallen und hinterlässt dunkle, nass wirkende Stellen.",
+   "check": "Prüf, ob die Pflanze an kaltem Glas, an einer Tür oder in Zugluft steht.",
+   "steps": [
+    "Stell sie von kalten Scheiben und Zugluft weg.",
+    "Halt sie über etwa 12 bis 15 °C, außer sie mag es kühl.",
+    "Schneide stark geschädigte Blätter ab."
+   ],
+   "prevent": "Halt tropische Zimmerpflanzen warm und fern von offenen Fenstern bei Kälte.",
+   "worry": "Wird der Stängel weich oder schwarz, behandle es wie Stängelfäule."
+  },
+  "heat_stress": {
+   "name": "Hitzestress",
+   "what": "Hohe Temperaturen trocknen die Pflanze aus und führen zu Hängen und Verbrennungen.",
+   "check": "Prüf, ob die Pflanze an einer Heizung, einem Heizkörper oder einer sehr heißen Fensterbank steht.",
+   "steps": [
+    "Stell sie an einen kühleren, schattigen Platz.",
+    "Prüf die Erde und gieße, wenn sie trocken ist.",
+    "Halt sie von heißen Luftauslässen fern."
+   ],
+   "prevent": "Vermeide sehr heiße Plätze und rück Pflanzen im Sommer etwas vom Fenster weg.",
+   "worry": "Bleiben die Blätter nach dem Umstellen knusprig, such nach Schädlingen und prüf die Wurzeln."
+  },
+  "nitrogen_deficiency": {
+   "name": "Stickstoffmangel",
+   "what": "Der Pflanze fehlt Stickstoff, deshalb werden ältere Blätter blass, weil sie Nährstoffe in den Neuaustrieb verschiebt.",
+   "check": "Such nach älteren Blättern, die gleichmäßig vergilben, bei langsamem Wuchs und langer Zeit seit der letzten Düngung.",
+   "steps": [
+    "Gib einen ausgewogenen Zimmerpflanzendünger in halber Konzentration der Packungsangabe.",
+    "Dünge nur in der Wachstumszeit, meist Frühling und Sommer.",
+    "Dünge keine trockene oder gestresste Pflanze. Gieße zuerst."
+   ],
+   "prevent": "Dünge in der Wachstumszeit regelmäßig und mild.",
+   "worry": "Vergilbt sie nach ein paar Düngergaben weiter, prüf Wurzeln, Licht und Gießen."
+  },
+  "magnesium_deficiency": {
+   "name": "Magnesiummangel",
+   "what": "Ältere Blätter vergilben zwischen den Adern, während die Adern grün bleiben.",
+   "check": "Such an älteren Blättern grüne Adern mit Gelb dazwischen.",
+   "steps": [
+    "Gib einen ausgewogenen Dünger mit Spurenelementen in halber Konzentration.",
+    "Prüf, ob Gießen und Abfluss normal sind. Wurzeln in schlechtem Zustand nehmen keine Nährstoffe auf.",
+    "Gib kein Bittersalz, wenn du nicht sicher weißt, dass Magnesium fehlt."
+   ],
+   "prevent": "Nimm in der Wachstumszeit einen Volldünger.",
+   "worry": "Breitet es sich schnell auf viele Blätter aus, prüf Wurzeln und Gießen."
+  },
+  "iron_deficiency": {
+   "name": "Eisenmangel",
+   "what": "Neue Blätter vergilben zwischen den grünen Adern, weil Eisen für die Pflanze nicht verfügbar ist.",
+   "check": "Such an neuen Blättern gelbes Gewebe mit grünen Adern.",
+   "steps": [
+    "Nimm einen Dünger mit Eisenchelat in der angegebenen Dosis.",
+    "Achte darauf, dass die Erde nicht durchnässt ist, denn nasse Wurzeln blockieren die Eisenaufnahme.",
+    "Nimm weicheres Wasser, wenn dein Leitungswasser sehr hart ist."
+   ],
+   "prevent": "Vermeide Übergießen und sehr hartes Wasser.",
+   "worry": "Bleiben neue Blätter nach Korrektur von Gießen und Düngen gelb, prüf die Wurzeln."
+  },
+  "fertiliser_burn": {
+   "name": "Düngerverbrennung",
+   "what": "Zu viel Dünger hinterlässt Salze, die Wurzeln und Blattränder verbrennen.",
+   "check": "Such nach einer weißen Kruste auf der Erde und braunen, knusprigen Rändern kurz nach dem Düngen.",
+   "steps": [
+    "Spül den Topf drei- bis viermal mit viel Wasser durch und lass es jedes Mal vollständig abtropfen.",
+    "Dünge mindestens zwei Monate nicht.",
+    "Entferne die Kruste oben und ersetze diese Schicht durch frische Erde, wenn sie dick ist."
+   ],
+   "prevent": "Dünge in halber Dosis, nur in der Wachstumszeit und nur in feuchte Erde.",
+   "worry": "Wirken die Wurzeln nach dem Spülen dunkel und weich, prüf auf Wurzelschäden."
+  },
+  "rootbound": {
+   "name": "Durchwurzelter Topf",
+   "what": "Die Wurzeln haben den Topf ausgefüllt und nehmen nicht mehr genug Wasser und Nährstoffe auf.",
+   "check": "Heb die Pflanze aus dem Topf. Ein dichter Filz aus außen kreisenden Wurzeln bedeutet, dass sie durchwurzelt ist.",
+   "steps": [
+    "Topf in einen Topf eine Nummer größer (2 bis 5 cm breiter) mit frischer Erde um.",
+    "Lockere die äußeren Wurzeln vor dem Umtopfen vorsichtig.",
+    "Gieße danach gut und halt sie eine Woche von starker Sonne fern."
+   ],
+   "prevent": "Topf je nach Wachstum alle ein bis zwei Jahre im Frühjahr um.",
+   "worry": "Geht es der Pflanze nach dem Umtopfen schlecht, prüf auf Wurzelfäule."
+  },
+  "compacted_soil": {
+   "name": "Verdichtete Erde",
+   "what": "Alte oder schwere Erde verdichtet sich, sodass Wasser steht oder an den Wurzeln vorbeiläuft.",
+   "check": "Gieße und beobachte. Steht das Wasser oben oder rauscht unten durch, ist die Erde verdichtet.",
+   "steps": [
+    "Lockere die Oberfläche vorsichtig mit einem Stäbchen.",
+    "Topf in frische, lockere Erde mit Perlit oder Rinde um.",
+    "Gieße langsam in mehreren Etappen, damit das Wasser einsickert."
+   ],
+   "prevent": "Erneuere die Erde alle ein bis zwei Jahre.",
+   "worry": "Welkt die Pflanze nach dem Umtopfen weiter, prüf die Wurzeln."
+  },
+  "poor_drainage": {
+   "name": "Schlechter Wasserabfluss",
+   "what": "Das Wasser kann den Topf nicht verlassen, sodass die Wurzeln im Wasser stehen.",
+   "check": "Prüf, ob der Topf Abzugslöcher hat und der Untersetzer leer ist.",
+   "steps": [
+    "Setz die Pflanze in einen Topf mit Löchern oder lass sie im Anzuchttopf in einem Übertopf.",
+    "Nimm durchlässige Erde.",
+    "Leere den Untersetzer nach dem Gießen."
+   ],
+   "prevent": "Nutz immer einen Topf mit Abzugslöchern.",
+   "worry": "Riecht die Erde schlecht oder ist der Stängelgrund weich, prüf auf Wurzelfäule."
+  },
+  "mineral_crust": {
+   "name": "Mineralkruste auf der Erde",
+   "what": "Salze aus Wasser und Dünger bilden eine weiße oder graue Kruste.",
+   "check": "Such nach einer harten weißen oder grauen Kruste auf der Erde oder am Topfrand.",
+   "steps": [
+    "Kratz die Kruste ab und ersetze die obersten 2 cm Erde.",
+    "Spül den Topf mit Wasser, bis es klar abläuft.",
+    "Nimm wenn möglich weicheres Wasser."
+   ],
+   "prevent": "Spül ab und zu durch und dünge nicht zu stark.",
+   "worry": "Bräunen die Blattspitzen weiter, topf in frische Erde um."
+  },
+  "spider_mites": {
+   "name": "Spinnmilben",
+   "what": "Winzige Milben saugen Pflanzensaft und hinterlassen blasse Punkte und feine Gespinste.",
+   "check": "Halt ein weißes Blatt Papier unter ein Blatt und klopf leicht. Winzige bewegliche Punkte oder Gespinste bedeuten Spinnmilben.",
+   "steps": [
+    "Isolier die Pflanze von den anderen.",
+    "Wisch die Blätter oben und unten mit einem feuchten Tuch ab oder brause die Pflanze ab.",
+    "Sprüh eine milde Seifenlösung (ein paar Tropfen mildes Spülmittel auf einen Liter Wasser), teste zuerst an einem Blatt und wiederhole alle 5 bis 7 Tage über einige Wochen.",
+    "Erhöhe die Luftfeuchtigkeit, denn Spinnmilben lieben trockene Luft."
+   ],
+   "prevent": "Kontrollier regelmäßig die Blattunterseiten und vermeide sehr trockene Luft.",
+   "worry": "Breiten sich die Gespinste aus oder vergilben und fallen die Blätter schnell, behandle weiter und halt die Pflanze isoliert."
+  },
+  "mealybugs": {
+   "name": "Wollläuse",
+   "what": "Kleine, weiche Insekten mit weißem Flaum saugen Pflanzensaft, meist in den Blattachseln.",
+   "check": "Such in Blattachseln und an Stängeln nach weißen, wattigen Klümpchen.",
+   "steps": [
+    "Isolier die Pflanze.",
+    "Betupf jedes Tier mit einem in Spiritus getränkten Wattestäbchen (erst an einem Blatt testen).",
+    "Wisch die Pflanze mit milder Seifenlösung ab und wiederhole das mehrere Wochen lang wöchentlich."
+   ],
+   "prevent": "Kontrollier neue Pflanzen, bevor du sie neben andere stellst.",
+   "worry": "Haben sie die Wurzeln erreicht (weißer Flaum in der Erde), topf um und behandle die Erde."
+  },
+  "scale": {
+   "name": "Schildläuse",
+   "what": "Kleine, harte Höcker an Stängeln und Blättern saugen Pflanzensaft und hinterlassen klebrigen Belag.",
+   "check": "Such braune oder hellbraune Höcker an Stängeln oder Blattadern, die sich mit dem Fingernagel abkratzen lassen.",
+   "steps": [
+    "Isolier die Pflanze.",
+    "Kratz oder wisch die Schildläuse mit einem in Spiritus getränkten Wattestäbchen ab.",
+    "Wisch die Pflanze mit milder Seifenlösung ab und wiederhole das einige Wochen lang wöchentlich."
+   ],
+   "prevent": "Kontrollier Stängel und Blattunterseiten beim Kauf und Umtopfen.",
+   "worry": "Verschlechtert sich die Pflanze weiter, wiederhole die Behandlung länger und halt sie isoliert."
+  },
+  "fungus_gnats": {
+   "name": "Trauermücken",
+   "what": "Winzige dunkle Fliegen legen Eier in dauerhaft feuchte Erde.",
+   "check": "Achte auf kleine dunkle Fliegen um die Erde, besonders nach dem Gießen.",
+   "steps": [
+    "Lass die obersten 3 bis 5 cm Erde zwischen dem Gießen trocknen.",
+    "Nutz gelbe Klebefallen, um die erwachsenen Tiere zu fangen.",
+    "Deck die Erde mit einer dünnen Schicht Sand oder Kies ab."
+   ],
+   "prevent": "Vermeide dauerhaft feuchte Erde.",
+   "worry": "Welken die Pflanzen auch, prüf die Wurzeln auf Fäulnis."
+  },
+  "thrips": {
+   "name": "Thripse",
+   "what": "Schlanke, winzige Insekten raspeln die Blätter an und hinterlassen silbrige Streifen und verformten Neuaustrieb.",
+   "check": "Klopf ein Blatt über weißem Papier ab. Thripse sehen aus wie winzige dunkle Splitter, die sich bewegen.",
+   "steps": [
+    "Isolier die Pflanze.",
+    "Wisch die Blätter ab und sprüh milde Seifenlösung.",
+    "Wiederhole alle 5 bis 7 Tage über mehrere Wochen."
+   ],
+   "prevent": "Kontrollier neue Pflanzen und Blumen, bevor du sie hereinholst.",
+   "worry": "Bleibt der Neuaustrieb nach mehreren Wochen verformt, behandle weiter."
+  },
+  "aphids": {
+   "name": "Blattläuse",
+   "what": "Weiche Insekten sammeln sich am Neuaustrieb und saugen Pflanzensaft.",
+   "check": "Schau dir weiche Triebspitzen und Knospen an: kleine grüne, schwarze oder braune Ansammlungen.",
+   "steps": [
+    "Spül die Pflanze ab oder wisch die Blattläuse ab.",
+    "Sprüh milde Seifenlösung.",
+    "Wiederhole alle paar Tage, bis sie weg sind."
+   ],
+   "prevent": "Kontrollier regelmäßig weichen Neuaustrieb.",
+   "worry": "Kommen sie schnell wieder, isolier die Pflanze und behandle weiter."
+  },
+  "whiteflies": {
+   "name": "Weiße Fliegen",
+   "what": "Kleine weiße Insekten fliegen auf, wenn die Pflanze gestört wird.",
+   "check": "Schüttle die Pflanze sanft. Eine Wolke winziger weißer Fliegen deutet auf Weiße Fliegen.",
+   "steps": [
+    "Isolier die Pflanze.",
+    "Nutz gelbe Klebefallen für erwachsene Tiere.",
+    "Wisch die Blattunterseiten ab und sprüh alle 5 bis 7 Tage milde Seifenlösung."
+   ],
+   "prevent": "Kontrollier regelmäßig die Blattunterseiten.",
+   "worry": "Hält der Befall an, wiederhole die Behandlungen über mehrere Wochen."
+  },
+  "chewing_pests": {
+   "name": "Fraßschädlinge (Raupen, Schnecken, Käfer)",
+   "what": "Größere Schädlinge fressen Löcher oder ausgefranste Ränder in die Blätter.",
+   "check": "Such unter den Blättern und in der Erde, am besten abends, nach Raupen, Schnecken oder Käfern. Schleimspuren sind ein Hinweis.",
+   "steps": [
+    "Sammle die Schädlinge von Hand ab und bring sie weit von der Pflanze weg.",
+    "Kontrollier Nachbarpflanzen, besonders solche draußen oder frisch hereingeholte.",
+    "Entferne stark beschädigte Blätter."
+   ],
+   "prevent": "Kontrollier Pflanzen, die du nach draußen stellst, und untersuch sie vor dem Hereinholen.",
+   "worry": "Geht der Schaden weiter, nachdem du die sichtbaren Schädlinge entfernt hast, schau nach Einbruch der Dunkelheit noch einmal nach."
+  },
+  "powdery_mildew": {
+   "name": "Echter Mehltau",
+   "what": "Ein Pilz bildet einen weißen, mehligen Belag auf den Blättern.",
+   "check": "Der Belag lässt sich abwischen und zeigt sich auf der Blattoberseite.",
+   "steps": [
+    "Isolier die Pflanze.",
+    "Entferne stark befallene Blätter.",
+    "Verbessere die Luftzirkulation und halt die Blätter trocken.",
+    "Sprüh 1 Teelöffel Natron auf einen Liter Wasser (an einem Blatt testen) oder nimm ein Mittel, das gegen Mehltau ausgewiesen ist."
+   ],
+   "prevent": "Gib den Pflanzen Platz und vermeide nasse Blätter.",
+   "worry": "Kehrt er immer wieder, behandle länger und senk die Luftfeuchtigkeit."
+  },
+  "fungal_leaf_spot": {
+   "name": "Pilzliche Blattflecken",
+   "what": "Pilze verursachen braune oder schwarze Flecken, oft mit dunklerem Ring oder gelbem Hof.",
+   "check": "Prüf, ob die Flecken klare Ränder oder einen gelben Hof haben und nach nassen Blättern auftreten.",
+   "steps": [
+    "Entferne stark gefleckte Blätter.",
+    "Vermeide nasse Blätter und verbessere die Luftzirkulation.",
+    "Gieße nicht abends."
+   ],
+   "prevent": "Gieße an der Erde, nicht auf die Blätter.",
+   "worry": "Springen die Flecken schnell auf neue Blätter über, behandle weiter und isolier die Pflanze."
+  },
+  "bacterial_leaf_spot": {
+   "name": "Bakterielle Blattflecken",
+   "what": "Eckige, wassergetränkte Flecken mit gelbem Hof deuten auf eine bakterielle Infektion.",
+   "check": "Such nach Flecken, die nass oder fettig aussehen und von den Adern begrenzt sind.",
+   "steps": [
+    "Entferne befallene Blätter und entsorg sie, nicht im Kompost.",
+    "Halt die Blätter trocken und wasch dir danach Hände und Werkzeug.",
+    "Isolier die Pflanze."
+   ],
+   "prevent": "Gieße an der Erde und vermeide Spritzwasser.",
+   "worry": "Breitet es sich schnell aus, denk daran, die Pflanze zum Schutz der anderen zu entsorgen."
+  },
+  "grey_mould": {
+   "name": "Grauschimmel (Botrytis)",
+   "what": "Ein grauer, flaumiger Schimmel wächst auf totem oder beschädigtem Gewebe in feuchter, stehender Luft.",
+   "check": "Such nach grauem Flaum auf Blüten, abgestorbenen Blättern oder Stängeln.",
+   "steps": [
+    "Entferne befallene Teile und entsorg sie.",
+    "Erhöh die Luftzirkulation und senk die Luftfeuchtigkeit.",
+    "Entferne regelmäßig abgestorbene Blätter und Blüten."
+   ],
+   "prevent": "Räum totes Material weg und gib der Pflanze Luft.",
+   "worry": "Greift er auf gesunde Stängel über, isolier die Pflanze."
+  },
+  "rust": {
+   "name": "Rost",
+   "what": "Ein Pilz verursacht orange oder rostfarbene pulvrige Flecken, oft unter den Blättern.",
+   "check": "Reib leicht über einen Fleck. Orangefarbenes Pulver am Finger deutet auf Rost.",
+   "steps": [
+    "Entferne befallene Blätter.",
+    "Halt die Blätter trocken und verbessere die Luftzirkulation.",
+    "Isolier die Pflanze."
+   ],
+   "prevent": "Gieße an der Erde und halt die Blätter trocken.",
+   "worry": "Breitet er sich weiter aus, behandle weiter und isolier die Pflanze."
+  },
+  "anthracnose": {
+   "name": "Anthraknose",
+   "what": "Eine Pilzkrankheit mit dunklen, eingesunkenen Flecken und trockener Bräunung ab Spitzen und Rändern.",
+   "check": "Such nach dunklen, leicht eingesunkenen Flecken mit Rand und einer Bräunung, die von den Rändern ausgeht.",
+   "steps": [
+    "Entferne befallene Blätter.",
+    "Halt die Blätter trocken und verbessere die Luftzirkulation.",
+    "Stell Pflanzen nicht zu eng."
+   ],
+   "prevent": "Vermeide nasse Blätter und gib den Pflanzen Platz.",
+   "worry": "Breitet sie sich aus, isolier die Pflanze."
+  },
+  "stem_rot": {
+   "name": "Stängelfäule",
+   "what": "Der Stängelgrund oder Stängel wird weich und dunkel, oft durch nasse, kalte Bedingungen.",
+   "check": "Drück vorsichtig auf den Stängelgrund. Ist er weich, matschig oder schwarz, fault er.",
+   "steps": [
+    "Schneide mit einer sauberen Schere oberhalb der Fäule im gesunden grünen Gewebe ab.",
+    "Bewurzle gesunde Stecklinge wenn möglich in Wasser oder frischer Erde.",
+    "Entsorg die faulen Teile und reinige den Topf vor der Wiederverwendung."
+   ],
+   "prevent": "Gieße nicht zu viel und vermeide kalte Nässe.",
+   "worry": "Erreicht die Fäule den Haupttrieb, überlebt die Pflanze vielleicht nicht. Rette einige Stecklinge."
+  },
+  "sooty_mould": {
+   "name": "Rußtau",
+   "what": "Ein schwarzer Film wächst auf klebrigem Honigtau, den saftsaugende Insekten hinterlassen.",
+   "check": "Wisch ein Blatt mit einem feuchten Tuch ab. Lässt sich der schwarze Film abwischen und ist das Blatt klebrig, ist es Rußtau.",
+   "steps": [
+    "Wisch den Film mit einem feuchten Tuch ab.",
+    "Such die Schädlinge, die den Honigtau erzeugt haben, etwa Blattläuse, Schildläuse oder Wollläuse, und bekämpf sie.",
+    "Halt die Blätter sauber."
+   ],
+   "prevent": "Bekämpf zuerst die Schädlinge. Der Schimmel folgt ihnen.",
+   "worry": "Kehrt der Film zurück, sind noch Schädlinge da."
+  },
+  "old_leaf_drop": {
+   "name": "Normaler Abwurf älterer Blätter",
+   "what": "Pflanzen werfen mit der Zeit ihre ältesten Blätter ab.",
+   "check": "Sind es nur ein oder zwei Blätter ganz unten, während der Rest der Pflanze gesund aussieht?",
+   "steps": [
+    "Es ist nichts nötig. Entferne abgefallene Blätter, damit alles ordentlich bleibt.",
+    "Behalt deine gewohnte Pflege bei."
+   ],
+   "prevent": "Es gibt nichts zu verhindern. Das gehört zum Wachstum.",
+   "worry": "Fallen viele Blätter auf einmal ab, prüf Gießen und Licht."
+  },
+  "dormancy": {
+   "name": "Winterruhe",
+   "what": "Viele Pflanzen verlangsamen oder pausieren ihr Wachstum, wenn die Tage kurz und kühl sind.",
+   "check": "Ist es Winter, und ist die Pflanze sonst gesund?",
+   "steps": [
+    "Gieße seltener und pausiere das Düngen.",
+    "Stell die Pflanze an ihren hellsten Platz.",
+    "Nimm die gewohnte Pflege im Frühjahr wieder auf."
+   ],
+   "prevent": "Reduzier Gießen und Düngen in der kühlen Jahreszeit.",
+   "worry": "Vergilben oder erweichen die Blätter, prüf auf Übergießen."
+  },
+  "repot_shock": {
+   "name": "Umtopfschock",
+   "what": "Gestörte Wurzeln brauchen einige Wochen, um sich zu erholen, daher können Blätter hängen oder abfallen.",
+   "check": "Wurde die Pflanze im letzten Monat umgetopft?",
+   "steps": [
+    "Halt die Erde leicht feucht, nicht nass.",
+    "Halt die Pflanze zwei Wochen von direkter Sonne fern.",
+    "Dünge etwa einen Monat nicht."
+   ],
+   "prevent": "Geh vorsichtig mit den Wurzeln um und topf in der Wachstumszeit um.",
+   "worry": "Geht es nach sechs Wochen weiter bergab, prüf die Wurzeln auf Fäulnis."
+  },
+  "settling_in": {
+   "name": "Eingewöhnung nach dem Kauf",
+   "what": "Ein neues Zuhause bedeutet anderes Licht, andere Luftfeuchtigkeit und Temperatur, daher werfen Pflanzen oft einige Blätter ab oder vergilben.",
+   "check": "Wurde die Pflanze in den letzten Wochen gekauft oder umgestellt?",
+   "steps": [
+    "Stell sie an einen stabilen Platz mit passendem Licht und lass sie in Ruhe.",
+    "Gieße nur, wenn die Erde trocken ist.",
+    "Vermeide Umtopfen oder Düngen für einige Wochen."
+   ],
+   "prevent": "Gib neuen Pflanzen einen stabilen Platz und einige Wochen zum Eingewöhnen.",
+   "worry": "Hält der Rückgang über einen Monat an, prüf auf Schädlinge und das Gießen."
+  },
+  "flower_fade": {
+   "name": "Natürliches Verblühen",
+   "what": "Blüten welken und bräunen, wenn sie fertig sind, das ist normal.",
+   "check": "Hat die Pflanze kürzlich zu Ende geblüht?",
+   "steps": [
+    "Entferne verwelkte Blüten und Blütenstiele.",
+    "Behalt deine gewohnte Pflege bei.",
+    "Manche Pflanzen ruhen nach der Blüte kurz."
+   ],
+   "prevent": "Es gibt nichts zu verhindern.",
+   "worry": "Vergilben oder fallen auch Blätter ab, prüf Gießen und Licht."
+  }
+ }
+}

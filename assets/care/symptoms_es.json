@@ -1,0 +1,558 @@
+{
+ "labels": {
+  "leaves": "Hojas",
+  "stems": "Tallos",
+  "roots_soil": "Raíces o tierra",
+  "whole": "Toda la planta",
+  "flowers": "Flores",
+  "yellowing": "Hojas amarillentas",
+  "brown_tips": "Puntas o bordes marrones",
+  "brown_spots": "Manchas marrones",
+  "black_spots": "Manchas negras",
+  "wilting": "Marchitamiento o caída",
+  "white_powder": "Polvo blanco en la superficie",
+  "white_fluff": "Pelusa blanca como algodón",
+  "sticky": "Residuo pegajoso",
+  "black_film": "Película negra que se limpia",
+  "webbing": "Telarañas finas",
+  "insects": "Insectos visibles",
+  "tiny_flies": "Mosquitas diminutas",
+  "holes": "Agujeros u hojas mordidas",
+  "leggy": "Crecimiento largo y estirado",
+  "curling": "Hojas enrolladas o deformadas",
+  "mushy_base": "Base blanda o pastosa",
+  "no_growth": "Sin brotes nuevos",
+  "bleached": "Zonas pálidas o decoloradas",
+  "pale_new": "Hojas nuevas pequeñas o pálidas",
+  "leaf_drop": "Caída de hojas",
+  "bumps": "Ampollas bajo las hojas",
+  "brown_bumps": "Bultos marrones duros en tallos u hojas",
+  "stippling": "Puntitos claros en las hojas",
+  "crust": "Costra blanca o gris en la tierra o la maceta",
+  "grey_fuzz": "Moho gris velloso",
+  "rust_spots": "Manchas polvorientas naranjas u oxidadas",
+  "age_old": "Primero las hojas más viejas",
+  "age_new": "Primero las hojas nuevas",
+  "loc_edges": "A lo largo de los bordes",
+  "loc_between_veins": "Entre las nervaduras verdes",
+  "loc_patchy": "En manchas sueltas",
+  "loc_even": "Parejo en toda la planta",
+  "wet_soil": "La tierra sigue mojada durante días",
+  "dry_soil": "La tierra está totalmente seca por mucho tiempo",
+  "irregular_water": "El riego es irregular",
+  "no_drainage": "La maceta no tiene agujero de drenaje",
+  "hard_soil": "La tierra está dura o el agua pasa directo",
+  "rootbound": "Las raíces dan vueltas o salen por los agujeros",
+  "low_light": "Lugar con poca luz",
+  "strong_sun": "Sol directo fuerte",
+  "hot_spot": "Cerca de un calefactor o lugar muy caluroso",
+  "cold_or_draft": "Ventana fría o corriente de aire",
+  "dry_air": "Aire muy seco",
+  "humid_stagnant": "Húmedo y con poco aire en movimiento",
+  "tap_water": "Agua del grifo dura o con cloro",
+  "long_unfed": "Sin abono desde hace seis meses o más",
+  "heavy_feed": "Abonada mucho o con frecuencia",
+  "just_moved": "Cambió de lugar hace poco",
+  "just_repotted": "Se trasplantó hace poco",
+  "just_bought": "Se compró hace poco",
+  "winter": "Invierno o estación fría",
+  "flowers_done": "Acaba de terminar de florecer",
+  "nearby_infested": "Una planta cercana tiene plagas",
+  "otherwise_healthy": "Por lo demás crece bien"
+ },
+ "problems": {
+  "overwatering": {
+   "name": "Exceso de riego",
+   "what": "La tierra sigue mojada y las raíces no reciben suficiente aire.",
+   "check": "Hunde un dedo de 3 a 5 cm en la tierra. Si sigue mojada, espera antes de regar.",
+   "steps": [
+    "Deja de regar hasta que los primeros centímetros estén secos.",
+    "Asegúrate de que el agua salga de la maceta y vacía el plato.",
+    "Si la tierra está empapada por completo, lleva la planta a un lugar luminoso y ventilado para que se seque más rápido."
+   ],
+   "prevent": "Riega solo cuando la superficie de la tierra esté seca al tacto y usa una maceta con agujero de drenaje.",
+   "worry": "Si la base se vuelve blanda o huele mal, trátalo como pudrición de raíces."
+  },
+  "underwatering": {
+   "name": "Falta de riego",
+   "what": "La planta no recibe agua suficiente para sus necesidades.",
+   "check": "Levanta la maceta: si pesa poco y la tierra está seca por dentro, tiene sed.",
+   "steps": [
+    "Riega despacio hasta que el agua salga por abajo y luego vacía el plato.",
+    "Si la tierra se separó del borde de la maceta, sumerge la maceta en agua por abajo durante 20 a 30 minutos.",
+    "Vuelve a comprobar en unos días y crea un ritmo regular."
+   ],
+   "prevent": "Revisa la tierra con regularidad y riega abundantemente en lugar de dar sorbitos.",
+   "worry": "Si las hojas siguen crujientes tras unas semanas de riego regular, las raíces pueden estar dañadas."
+  },
+  "inconsistent_watering": {
+   "name": "Riego irregular",
+   "what": "Pasar de muy mojado a muy seco estresa las raíces.",
+   "check": "Piensa: ¿la tierra ha pasado de empapada a totalmente seca más de una vez?",
+   "steps": [
+    "Elige una rutina sencilla: revisa la tierra el mismo día cada semana.",
+    "Riega a fondo cada vez y deja que la superficie se seque antes del siguiente riego.",
+    "Recorta las hojas muy dañadas cuando la rutina sea estable."
+   ],
+   "prevent": "Usa la prueba de la tierra, no solo el calendario.",
+   "worry": "Si las hojas nuevas siguen dañadas con una rutina estable, revisa la luz y las raíces."
+  },
+  "root_rot": {
+   "name": "Pudrición de raíces",
+   "what": "Las raíces permanecen mojadas, mueren y se ponen blandas, y la planta no puede beber.",
+   "check": "Saca la planta de la maceta. Las raíces sanas son firmes y claras. Las podridas son marrones o negras, blandas y huelen agrio.",
+   "steps": [
+    "Saca la planta y corta todas las raíces blandas y oscuras con tijeras limpias.",
+    "Trasplanta a sustrato nuevo y bien drenado en una maceta limpia con agujeros.",
+    "Riega poco después y mantén la planta con luz brillante e indirecta."
+   ],
+   "prevent": "Usa un sustrato bien drenado y nunca dejes la maceta metida en agua.",
+   "worry": "Si falta más de la mitad de las raíces o la base del tallo está blanda, la planta puede no recuperarse. Toma esquejes de tallos sanos si puedes."
+  },
+  "edema": {
+   "name": "Edema (ampollas de agua)",
+   "what": "Las raíces absorben más agua de la que las hojas pueden liberar, y las células se hinchan en pequeños bultos.",
+   "check": "Mira bajo las hojas: pequeñas ampollas que pueden volverse marrones y acorchadas.",
+   "steps": [
+    "Riega con menos frecuencia y deja que la tierra se seque un poco más entre riegos.",
+    "Dale más luz y ventilación a la planta.",
+    "No quites hojas salvo que estén muy dañadas. Las ampollas existentes no se curan."
+   ],
+   "prevent": "Evita regar cuando el aire está fresco y húmedo y mantén la planta bien iluminada.",
+   "worry": "Si ves ampollas y además tallos u hojas blandas, revisa si hay pudrición de raíces."
+  },
+  "tap_water_burn": {
+   "name": "Quemadura por minerales o cloro del agua",
+   "what": "Las sales o el cloro del agua del grifo se acumulan y queman las puntas de las hojas.",
+   "check": "Busca una costra blanca en la tierra o en el borde de la maceta y puntas marrones y secas.",
+   "steps": [
+    "Deja reposar el agua del grifo una noche antes de usarla, o usa agua de lluvia o filtrada.",
+    "Lava la tierra con abundante agua cada pocos meses para arrastrar las sales.",
+    "Recorta las puntas marrones con tijeras limpias si quieres. No volverán a ponerse verdes."
+   ],
+   "prevent": "Usa agua más blanda cuando puedas y lava la maceta de vez en cuando.",
+   "worry": "Si el daño sigue extendiéndose, revisa también la humedad y el abono."
+  },
+  "low_humidity": {
+   "name": "Poca humedad ambiental",
+   "what": "El aire seco le quita humedad a los bordes de las hojas más rápido de lo que la planta puede reponerla.",
+   "check": "Puntas marrones y quebradizas en varias hojas, sobre todo en invierno con calefacción, indican aire seco.",
+   "steps": [
+    "Aleja la planta de calefactores, rejillas de aire y corrientes.",
+    "Agrupa plantas o usa un humidificador.",
+    "Mantén un riego constante. Pulverizar ayuda muy poco y puede causar manchas."
+   ],
+   "prevent": "Mantén las plantas que aman la humedad lejos de radiadores y aires acondicionados.",
+   "worry": "Si toda la planta se reseca a pesar de los cuidados regulares, busca plagas como los ácaros."
+  },
+  "too_little_light": {
+   "name": "Poca luz",
+   "what": "La planta se estira y se ralentiza porque no recibe suficiente luz.",
+   "check": "Compara el crecimiento nuevo con el antiguo. Grandes espacios entre hojas y hojas nuevas pequeñas y pálidas indican poca luz.",
+   "steps": [
+    "Lleva la planta a un lugar más luminoso, idealmente cerca de una ventana con luz indirecta.",
+    "Gira la maceta cada una o dos semanas para un crecimiento parejo.",
+    "Poda los tallos largos y desnudos en primavera para que la planta quede más frondosa."
+   ],
+   "prevent": "Elige la planta según la luz de tu habitación o añade una luz de cultivo.",
+   "worry": "Si la planta sigue empeorando en un lugar luminoso, revisa el riego y las raíces."
+  },
+  "too_much_light": {
+   "name": "Exceso de luz directa (quemadura solar)",
+   "what": "El sol fuerte quema el tejido de la hoja y deja manchas pálidas o marrones.",
+   "check": "El daño está en el lado que da a la ventana y es seco o decolorado.",
+   "steps": [
+    "Aleja la planta de la ventana o filtra la luz con una cortina fina.",
+    "No cortes hojas sanas. Quita solo las muy quemadas.",
+    "Aumenta la luz poco a poco si quieres llevarla a más sol."
+   ],
+   "prevent": "Introduce más luz gradualmente durante una o dos semanas.",
+   "worry": "Si las hojas nuevas también se queman, el lugar es demasiado intenso y la planta debe moverse."
+  },
+  "light_change": {
+   "name": "Cambio brusco de luz",
+   "what": "Mudarse a un lugar muy distinto hace que la planta pierda o amarillee hojas mientras se adapta.",
+   "check": "¿Se cambió la planta hace poco de habitación, ventana o estación de luz?",
+   "steps": [
+    "Déjala en su nuevo lugar y evita moverla de nuevo durante unas semanas.",
+    "Mantén un riego constante.",
+    "Espera cierta pérdida de hojas mientras se adapta."
+   ],
+   "prevent": "Mueve las plantas gradualmente cuando puedas.",
+   "worry": "Si el deterioro continúa pasadas cuatro a seis semanas, revisa las otras causas."
+  },
+  "cold_draft": {
+   "name": "Daño por frío o corriente de aire",
+   "what": "El aire frío hace que las células de la hoja colapsen y deja manchas oscuras de aspecto mojado.",
+   "check": "Comprueba si la planta está pegada a un vidrio frío, cerca de una puerta o en una corriente.",
+   "steps": [
+    "Aléjala de vidrios fríos y corrientes de aire.",
+    "Mantenla por encima de unos 12 a 15 °C, salvo que le guste el fresco.",
+    "Recorta las hojas muy dañadas."
+   ],
+   "prevent": "Mantén las plantas tropicales abrigadas y lejos de ventanas abiertas con frío.",
+   "worry": "Si el tallo se pone blando o negro, trátalo como pudrición del tallo."
+  },
+  "heat_stress": {
+   "name": "Estrés por calor",
+   "what": "Las temperaturas altas resecan la planta y causan caída y quemaduras.",
+   "check": "Comprueba si la planta está cerca de un calefactor, radiador o un alféizar muy caliente.",
+   "steps": [
+    "Llévala a un lugar más fresco y con sombra.",
+    "Revisa la tierra y riega si está seca.",
+    "Mantenla lejos de salidas de aire caliente."
+   ],
+   "prevent": "Evita lugares muy calurosos y separa un poco las plantas de las ventanas en verano.",
+   "worry": "Si las hojas siguen crujientes tras moverla, busca plagas y revisa las raíces."
+  },
+  "nitrogen_deficiency": {
+   "name": "Falta de nitrógeno",
+   "what": "A la planta le falta nitrógeno, así que las hojas viejas palidecen mientras lleva nutrientes a los brotes nuevos.",
+   "check": "Busca hojas viejas que amarillean de forma pareja, crecimiento lento y mucho tiempo sin abonar.",
+   "steps": [
+    "Aplica un abono equilibrado para plantas de interior a la mitad de la dosis indicada.",
+    "Abona solo durante la época de crecimiento, normalmente primavera y verano.",
+    "No abones una planta seca o estresada. Riega primero."
+   ],
+   "prevent": "Abona con regularidad durante el crecimiento, en dosis suaves.",
+   "worry": "Si el amarillamiento sigue tras un par de abonados, revisa raíces, luz y riego."
+  },
+  "magnesium_deficiency": {
+   "name": "Falta de magnesio",
+   "what": "Las hojas viejas amarillean entre las nervaduras mientras estas siguen verdes.",
+   "check": "Busca hojas viejas con nervaduras verdes y amarillo entre ellas.",
+   "steps": [
+    "Aplica un abono equilibrado con micronutrientes a media dosis.",
+    "Comprueba que el riego y el drenaje sean normales. Unas raíces en mal estado no absorben nutrientes.",
+    "No añadas sal de Epsom salvo que sepas que el problema es el magnesio."
+   ],
+   "prevent": "Usa un abono completo durante la época de crecimiento.",
+   "worry": "Si se extiende rápido a muchas hojas, revisa raíces y riego."
+  },
+  "iron_deficiency": {
+   "name": "Falta de hierro",
+   "what": "Las hojas nuevas amarillean entre las nervaduras verdes porque el hierro no está disponible para la planta.",
+   "check": "Busca hojas nuevas con tejido amarillo y nervaduras verdes.",
+   "steps": [
+    "Usa un abono con hierro quelado a la dosis indicada.",
+    "Asegúrate de que la tierra no esté encharcada, porque las raíces mojadas bloquean la absorción de hierro.",
+    "Usa agua más blanda si la del grifo es muy dura."
+   ],
+   "prevent": "Evita el exceso de riego y el agua muy dura.",
+   "worry": "Si las hojas nuevas siguen amarillas tras corregir riego y abono, revisa las raíces."
+  },
+  "fertiliser_burn": {
+   "name": "Quemadura por abono",
+   "what": "Demasiado abono deja sales que queman las raíces y los bordes de las hojas.",
+   "check": "Busca una costra blanca en la tierra y bordes marrones y crujientes poco después de abonar.",
+   "steps": [
+    "Lava la maceta con abundante agua, dejando que escurra por completo, tres o cuatro veces.",
+    "Deja de abonar durante al menos dos meses.",
+    "Retira la costra de la superficie y reemplaza esa capa con tierra nueva si es gruesa."
+   ],
+   "prevent": "Abona a media dosis, solo en la época de crecimiento y sobre tierra húmeda.",
+   "worry": "Si las raíces se ven oscuras y blandas tras el lavado, revisa si hay daño en las raíces."
+  },
+  "rootbound": {
+   "name": "Raíces apretadas en la maceta",
+   "what": "Las raíces llenaron la maceta y no pueden absorber suficiente agua ni nutrientes.",
+   "check": "Saca la planta de la maceta. Una maraña densa de raíces enrolladas por fuera indica que está apretada.",
+   "steps": [
+    "Trasplanta a una maceta un tamaño mayor (2 a 5 cm más ancha) con sustrato nuevo.",
+    "Suelta con cuidado las raíces exteriores antes de trasplantar.",
+    "Riega bien después y mantenla lejos del sol fuerte durante una semana."
+   ],
+   "prevent": "Trasplanta cada uno o dos años en primavera, según el crecimiento.",
+   "worry": "Si la planta empeora tras el trasplante, revisa si hay pudrición de raíces."
+  },
+  "compacted_soil": {
+   "name": "Tierra compactada",
+   "what": "La tierra vieja o pesada se apelmaza y el agua se encharca o pasa de largo sin llegar a las raíces.",
+   "check": "Riega y observa. Si el agua se acumula arriba o sale de golpe por abajo, la tierra está compactada.",
+   "steps": [
+    "Afloja con cuidado la parte de arriba de la tierra con un palillo.",
+    "Trasplanta a sustrato nuevo y aireado con perlita o corteza.",
+    "Riega despacio y por etapas para que el agua se absorba."
+   ],
+   "prevent": "Renueva el sustrato cada uno o dos años.",
+   "worry": "Si la planta sigue marchitándose tras trasplantar, revisa las raíces."
+  },
+  "poor_drainage": {
+   "name": "Mal drenaje",
+   "what": "El agua no puede salir de la maceta y las raíces quedan en el agua.",
+   "check": "Comprueba que la maceta tenga agujeros de drenaje y que el plato esté vacío.",
+   "steps": [
+    "Pasa la planta a una maceta con agujeros, o déjala en su maceta de cultivo dentro de un cubremacetas.",
+    "Usa un sustrato bien drenado.",
+    "Vacía el agua del plato después de regar."
+   ],
+   "prevent": "Usa siempre una maceta con agujeros de drenaje.",
+   "worry": "Si la tierra huele mal o la base está blanda, revisa si hay pudrición de raíces."
+  },
+  "mineral_crust": {
+   "name": "Costra mineral en la tierra",
+   "what": "Las sales del agua y del abono se acumulan como una costra blanca o gris.",
+   "check": "Busca una costra dura blanca o gris en la tierra o alrededor del borde de la maceta.",
+   "steps": [
+    "Raspa la costra y cambia los 2 cm superiores de tierra.",
+    "Lava la maceta con agua hasta que salga clara.",
+    "Usa agua más blanda si puedes."
+   ],
+   "prevent": "Lava de vez en cuando y evita abonar en exceso.",
+   "worry": "Si las puntas de las hojas siguen oscureciéndose, trasplanta a sustrato nuevo."
+  },
+  "spider_mites": {
+   "name": "Ácaros (araña roja)",
+   "what": "Ácaros diminutos succionan la savia y dejan puntitos pálidos y finas telarañas.",
+   "check": "Sostén una hoja de papel blanco bajo una hoja y da unos golpecitos. Puntos diminutos que se mueven o telarañas indican ácaros.",
+   "steps": [
+    "Aísla la planta de las demás.",
+    "Limpia las hojas, por encima y por debajo, con un paño húmedo, o enjuaga la planta en la ducha.",
+    "Pulveriza una solución de jabón suave (unas gotas de jabón líquido suave en un litro de agua), prueba primero en una hoja y repite cada 5 a 7 días durante unas semanas.",
+    "Aumenta la humedad, porque los ácaros prosperan en aire seco."
+   ],
+   "prevent": "Revisa el envés de las hojas con regularidad y evita el aire muy seco.",
+   "worry": "Si las telarañas se extienden o las hojas amarillean y caen rápido, sigue con el tratamiento y mantén la planta aislada."
+  },
+  "mealybugs": {
+   "name": "Cochinillas algodonosas",
+   "what": "Insectos pequeños y blandos cubiertos de pelusa blanca se alimentan de savia, normalmente en las axilas de las hojas.",
+   "check": "Busca racimos blancos algodonosos en las axilas de las hojas y en los tallos.",
+   "steps": [
+    "Aísla la planta.",
+    "Toca cada insecto con un bastoncillo de algodón con alcohol de limpieza (prueba primero en una hoja).",
+    "Limpia la planta con una solución de jabón suave y repite cada semana durante varias semanas."
+   ],
+   "prevent": "Inspecciona las plantas nuevas antes de ponerlas cerca de otras.",
+   "worry": "Si llegan a las raíces (pelusa blanca en la tierra), trasplanta y trata la tierra."
+  },
+  "scale": {
+   "name": "Cochinillas de caparazón",
+   "what": "Pequeños bultos duros en tallos y hojas se alimentan de savia y dejan residuo pegajoso.",
+   "check": "Busca bultos marrones o beige a lo largo de tallos o nervaduras que se desprenden con la uña.",
+   "steps": [
+    "Aísla la planta.",
+    "Raspa o limpia las cochinillas con un bastoncillo con alcohol de limpieza.",
+    "Limpia la planta con una solución de jabón suave y repite cada semana durante unas semanas."
+   ],
+   "prevent": "Revisa tallos y envés de las hojas al comprar o trasplantar.",
+   "worry": "Si la planta sigue empeorando, repite el tratamiento más tiempo y mantenla aislada."
+  },
+  "fungus_gnats": {
+   "name": "Mosquitas del sustrato",
+   "what": "Mosquitas oscuras y diminutas ponen huevos en tierra constantemente húmeda.",
+   "check": "Fíjate en mosquitas oscuras alrededor de la tierra, sobre todo después de regar.",
+   "steps": [
+    "Deja secar los 3 a 5 cm superiores de tierra entre riegos.",
+    "Usa trampas adhesivas amarillas para atrapar a los adultos.",
+    "Cubre la tierra con una capa fina de arena o grava."
+   ],
+   "prevent": "Evita mantener la tierra siempre húmeda.",
+   "worry": "Si las plantas también se marchitan, revisa si hay pudrición de raíces."
+  },
+  "thrips": {
+   "name": "Trips",
+   "what": "Insectos finos y diminutos raspan las hojas y dejan vetas plateadas y brotes deformados.",
+   "check": "Da golpecitos a una hoja sobre papel blanco. Los trips parecen astillas oscuras diminutas que se mueven.",
+   "steps": [
+    "Aísla la planta.",
+    "Limpia las hojas y pulveriza una solución de jabón suave.",
+    "Repite cada 5 a 7 días durante varias semanas."
+   ],
+   "prevent": "Inspecciona plantas y flores nuevas antes de meterlas en casa.",
+   "worry": "Si los brotes nuevos siguen deformados tras varias semanas, continúa el tratamiento."
+  },
+  "aphids": {
+   "name": "Pulgones",
+   "what": "Insectos blandos se agrupan en los brotes nuevos y chupan la savia.",
+   "check": "Mira los brotes tiernos y los capullos: pequeños grupos verdes, negros o marrones.",
+   "steps": [
+    "Enjuaga la planta o limpia los pulgones.",
+    "Pulveriza una solución de jabón suave.",
+    "Repite cada pocos días hasta que desaparezcan."
+   ],
+   "prevent": "Revisa con regularidad los brotes nuevos y tiernos.",
+   "worry": "Si vuelven rápido, aísla la planta y sigue tratándola."
+  },
+  "whiteflies": {
+   "name": "Mosca blanca",
+   "what": "Pequeños insectos blancos salen volando cuando se molesta la planta.",
+   "check": "Sacude suavemente la planta. Una nube de moscas blancas diminutas indica mosca blanca.",
+   "steps": [
+    "Aísla la planta.",
+    "Usa trampas adhesivas amarillas para los adultos.",
+    "Limpia el envés de las hojas y pulveriza una solución de jabón suave cada 5 a 7 días."
+   ],
+   "prevent": "Revisa el envés de las hojas con regularidad.",
+   "worry": "Si la plaga persiste, repite los tratamientos durante varias semanas."
+  },
+  "chewing_pests": {
+   "name": "Plagas masticadoras (orugas, babosas, escarabajos)",
+   "what": "Plagas más grandes muerden agujeros o bordes deshilachados en las hojas.",
+   "check": "Busca bajo las hojas y en la tierra, mejor al anochecer, orugas, babosas, caracoles o escarabajos. Los rastros de baba son una pista.",
+   "steps": [
+    "Retira las plagas a mano y llévalas lejos de la planta.",
+    "Revisa las plantas cercanas, sobre todo las de exterior o recién metidas en casa.",
+    "Quita las hojas muy dañadas."
+   ],
+   "prevent": "Revisa las plantas que saques al exterior y examínalas antes de volver a entrarlas.",
+   "worry": "Si el daño continúa después de quitar las plagas visibles, vuelve a mirar de noche."
+  },
+  "powdery_mildew": {
+   "name": "Oídio",
+   "what": "Un hongo forma una capa blanca polvorienta sobre las hojas.",
+   "check": "El polvo se limpia con facilidad y aparece en la cara superior de la hoja.",
+   "steps": [
+    "Aísla la planta.",
+    "Quita las hojas muy afectadas.",
+    "Mejora la ventilación y mantén las hojas secas.",
+    "Pulveriza 1 cucharadita de bicarbonato en un litro de agua (prueba en una hoja) o usa un producto indicado contra el oídio."
+   ],
+   "prevent": "Deja espacio entre plantas y evita mojar las hojas.",
+   "worry": "Si sigue volviendo, trata durante más tiempo y reduce la humedad."
+  },
+  "fungal_leaf_spot": {
+   "name": "Manchas foliares por hongos",
+   "what": "Los hongos causan manchas marrones o negras, a menudo con un anillo más oscuro o un halo amarillo.",
+   "check": "Fíjate si las manchas tienen bordes definidos o un halo amarillo y aparecen tras mojarse las hojas.",
+   "steps": [
+    "Quita las hojas muy manchadas.",
+    "Evita mojar las hojas y mejora la ventilación.",
+    "No riegues por la noche."
+   ],
+   "prevent": "Riega la tierra, no las hojas.",
+   "worry": "Si las manchas pasan rápido a hojas nuevas, sigue con el tratamiento y aísla la planta."
+  },
+  "bacterial_leaf_spot": {
+   "name": "Manchas foliares bacterianas",
+   "what": "Manchas angulares de aspecto empapado con halo amarillo indican una infección bacteriana.",
+   "check": "Busca manchas de aspecto mojado o grasiento, limitadas por las nervaduras.",
+   "steps": [
+    "Quita las hojas afectadas y deséchalas, no en el compost.",
+    "Mantén las hojas secas y lávate las manos y las herramientas después.",
+    "Aísla la planta."
+   ],
+   "prevent": "Riega la tierra y evita las salpicaduras.",
+   "worry": "Si se extiende rápido, considera desechar la planta para proteger a las demás."
+  },
+  "grey_mould": {
+   "name": "Moho gris (botritis)",
+   "what": "Un moho gris y velloso crece sobre tejido muerto o dañado en aire húmedo y quieto.",
+   "check": "Busca vellosidad gris en flores, hojas muertas o tallos.",
+   "steps": [
+    "Quita las partes afectadas y deséchalas.",
+    "Aumenta la ventilación y reduce la humedad.",
+    "Retira hojas y flores muertas con regularidad."
+   ],
+   "prevent": "Retira el material muerto y dale aire a la planta.",
+   "worry": "Si pasa a tallos sanos, aísla la planta."
+  },
+  "rust": {
+   "name": "Roya",
+   "what": "Un hongo causa manchas polvorientas naranjas u oxidadas, a menudo bajo las hojas.",
+   "check": "Frota suavemente una mancha. Un polvo naranja en el dedo sugiere roya.",
+   "steps": [
+    "Quita las hojas afectadas.",
+    "Mantén las hojas secas y mejora la ventilación.",
+    "Aísla la planta."
+   ],
+   "prevent": "Riega la tierra y mantén las hojas secas.",
+   "worry": "Si sigue extendiéndose, continúa el tratamiento y aísla la planta."
+  },
+  "anthracnose": {
+   "name": "Antracnosis",
+   "what": "Una enfermedad fúngica que causa manchas oscuras y hundidas y un oscurecimiento seco desde las puntas y los bordes.",
+   "check": "Busca manchas oscuras algo hundidas con un margen y un oscurecimiento que avanza desde los bordes.",
+   "steps": [
+    "Quita las hojas afectadas.",
+    "Mantén las hojas secas y mejora la ventilación.",
+    "No amontones las plantas."
+   ],
+   "prevent": "Evita mojar las hojas y deja espacio entre plantas.",
+   "worry": "Si se extiende, aísla la planta."
+  },
+  "stem_rot": {
+   "name": "Pudrición del tallo",
+   "what": "La base o el tallo se vuelve blando y oscuro, a menudo por condiciones húmedas y frías.",
+   "check": "Presiona suavemente la base del tallo. Si está blanda, pastosa o negra, se está pudriendo.",
+   "steps": [
+    "Corta por encima de la pudrición, en tejido verde sano, con tijeras limpias.",
+    "Enraíza esquejes sanos en agua o sustrato nuevo si puedes.",
+    "Desecha las partes podridas y limpia la maceta antes de reutilizarla."
+   ],
+   "prevent": "No riegues en exceso y evita el frío húmedo.",
+   "worry": "Si la pudrición llega al tallo principal, la planta puede no sobrevivir. Salva algunos esquejes."
+  },
+  "sooty_mould": {
+   "name": "Negrilla (fumagina)",
+   "what": "Una película negra crece sobre la melaza pegajosa que dejan los insectos chupadores de savia.",
+   "check": "Limpia una hoja con un paño húmedo. Si la película negra sale y la hoja está pegajosa, es negrilla.",
+   "steps": [
+    "Limpia la película con un paño húmedo.",
+    "Busca las plagas que produjeron la melaza, como pulgones, cochinillas o cochinillas algodonosas, y trátalas.",
+    "Mantén las hojas limpias."
+   ],
+   "prevent": "Trata primero las plagas. El moho las sigue.",
+   "worry": "Si la película vuelve, todavía hay plagas."
+  },
+  "old_leaf_drop": {
+   "name": "Caída normal de hojas viejas",
+   "what": "Las plantas sueltan sus hojas más viejas con el tiempo.",
+   "check": "¿Es solo una o dos hojas de abajo, mientras el resto de la planta se ve sano?",
+   "steps": [
+    "No hace falta hacer nada. Retira las hojas caídas para mantener todo ordenado.",
+    "Sigue con tu rutina habitual de cuidados."
+   ],
+   "prevent": "No hay nada que prevenir. Es parte del crecimiento.",
+   "worry": "Si caen muchas hojas de golpe, revisa el riego y la luz."
+  },
+  "dormancy": {
+   "name": "Reposo invernal",
+   "what": "Muchas plantas frenan o detienen su crecimiento cuando los días son cortos y frescos.",
+   "check": "¿Es invierno y la planta está por lo demás sana?",
+   "steps": [
+    "Riega con menos frecuencia y pausa el abono.",
+    "Mantén la planta en su lugar más luminoso.",
+    "Retoma los cuidados normales en primavera."
+   ],
+   "prevent": "Reduce el riego y el abono en la estación fresca.",
+   "worry": "Si las hojas amarillean o se ablandan, revisa si hay exceso de riego."
+  },
+  "repot_shock": {
+   "name": "Choque por trasplante",
+   "what": "Las raíces alteradas necesitan unas semanas para recuperarse, por lo que las hojas pueden caer o marchitarse.",
+   "check": "¿Se trasplantó la planta en el último mes?",
+   "steps": [
+    "Mantén la tierra ligeramente húmeda, no mojada.",
+    "Mantén la planta lejos del sol directo durante dos semanas.",
+    "No abones durante aproximadamente un mes."
+   ],
+   "prevent": "Maneja las raíces con cuidado y trasplanta en la época de crecimiento.",
+   "worry": "Si sigue empeorando tras seis semanas, revisa si hay pudrición de raíces."
+  },
+  "settling_in": {
+   "name": "Adaptación tras la compra",
+   "what": "Un hogar nuevo significa luz, humedad y temperatura distintas, así que las plantas suelen perder o amarillear algunas hojas.",
+   "check": "¿Se compró o se cambió de lugar la planta en las últimas semanas?",
+   "steps": [
+    "Colócala en un lugar estable con la luz adecuada y déjala tranquila.",
+    "Riega solo cuando la tierra esté seca.",
+    "Evita trasplantar o abonar durante unas semanas."
+   ],
+   "prevent": "Dale a las plantas nuevas un lugar estable y unas semanas para adaptarse.",
+   "worry": "Si el deterioro continúa pasado un mes, revisa si hay plagas y el riego."
+  },
+  "flower_fade": {
+   "name": "Marchitamiento natural de las flores",
+   "what": "Las flores se marchitan y se oscurecen cuando terminan, lo cual es natural.",
+   "check": "¿La planta terminó de florecer hace poco?",
+   "steps": [
+    "Quita las flores marchitas y los tallos florales.",
+    "Sigue con tu rutina habitual de cuidados.",
+    "Algunas plantas descansan un poco tras florecer."
+   ],
+   "prevent": "No hay nada que prevenir.",
+   "worry": "Si las hojas también amarillean o caen, revisa el riego y la luz."
+  }
+ }
+}
