@@ -114,7 +114,9 @@ void main() {
           expect(t.id, e.id);
           expect(t.steps.length, e.steps.length, reason: '$lang ${e.id}');
           // Translated, not silently falling back to English.
-          expect(t.name, isNot(e.name), reason: '$lang ${e.id} name');
+          // Some names are the same word in English and French (Thrips,
+          // Anthracnose), so only the sentences are required to differ.
+          expect(t.name.trim(), isNotEmpty, reason: '$lang ${e.id} name');
           expect(t.what, isNot(e.what), reason: '$lang ${e.id} what');
           expect(t.steps, isNot(e.steps), reason: '$lang ${e.id} steps');
           // Scoring data is never changed by translation.
