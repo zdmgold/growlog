@@ -89,10 +89,12 @@ void main() {
         .where((f) => RegExp(r'symptoms_[a-z]+\.json$').hasMatch(f.path))
         .toList();
 
-    test('at least French, Portuguese and Arabic are translated', () {
+    test('every app language except English has a translation', () {
       final names = overlays.map((f) => f.path.split('/').last).toSet();
-      expect(names, containsAll(
-          ['symptoms_fr.json', 'symptoms_pt.json', 'symptoms_ar.json']));
+      expect(names, containsAll([
+        for (final l in ['es', 'fr', 'de', 'pt', 'ar', 'hi', 'ja', 'ko', 'zh', 'he'])
+          'symptoms_$l.json',
+      ]));
     });
 
     for (final f in overlays) {
