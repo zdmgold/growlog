@@ -1,0 +1,69 @@
+apk: 113518296 build/app/outputs/flutter-apk/app-release.apk | siblings: .:4096 ..:4096 app-release.apk:113518296 app-release.apk.sha1:40 
+install: Success
+shot 01_home
+tapped (540,1128)
+shot 02_gate
+tapped (540,1719)
+shot 03_network_choice
+tapped (540,1988)
+shot 04_downloading
+model installed after 71s
+run-as: package not debuggable: com.zdmgold.growlog
+shot 05_after_download
+shot 06_analyzing
+result: not sure after 29s (emulator CPU, debug build)
+shot 07_result
+screen text: Identify | I'm not sure what this is | It doesn't look like a plant I know yet. Try a closer photo of a leaf or the whole plant in good light. | Take another photo | playlist%3Flist%3DPLOU2XLYxmsIKX0pUJV3uqp6N3NeHwHh0c%26gclid%3DEAIaIQobChMI4peFpMf0lwMV1DCyAx20RRKDEAEYASAAEgLlI_D_BwE | Test Ad
+== photo 0_Monstera_deliciosa ==
+tapped (268,1295)
+shot photo_0_Monstera_deliciosa_picker
+picked thumbnail at (177,1586)
+photo 0_Monstera_deliciosa -> guesses shown after 30s
+shot photo_0_Monstera_deliciosa_result
+  screen: Identify | Which one is it? | These are the closest matches. Tap the right one. | Tree philodendron&#10;Philodendron bipinnatifidum&#10;53% | Zebra elephant ear&#10;Alocasia zebrina&#10;18% | Japanese aralia&#10;Fatsia japonica&#10;11% | Health isn't checked offline. After saving, use Doctor on the plant with an AI key for a health check. | Save to garden | %3Fgclid%3DEAIaIQobChMIiee2wMf0lwMVqCeyAx2WhTyCEAEYASAAEgKDm
+== photo 1_Aloe_vera ==
+tapped (268,1295)
+shot photo_1_Aloe_vera_picker
+picked thumbnail at (177,1586)
+photo 1_Aloe_vera -> guesses shown after 24s
+shot photo_1_Aloe_vera_result
+  screen: Identify | Looks like this | Identified on this phone. Pick another if it is not right. | Aloe vera&#10;Aloe vera&#10;Likely · 99% | Snake plant&#10;Dracaena trifasciata&#10;0% | Mother of thousands&#10;Kalanchoe daigremontiana&#10;0% | Care starting points&#10;Water about every 14 days&#10;Feed about every 60 days&#10;Bright, indirect light&#10;General guidance. You can change it on the plant page. | %3Fgclid%3DEAIa
+== save test: scrolling to Save to garden ==
+tapped (540,1985)
+shot photo_1_Aloe_vera_after_save
+alarms mentioning the app after save: 6
+tapped (324,2016)
+shot garden_after_save
+  garden screen: GrowLog | Change language | Switch to dark theme | Settings | Good morning | Your garden is up to date | PLANT SCAN | Scan a plant | Point your camera to identify it, check its health and get care steps. | Open camera&#10;Open camera | Gallery&#10;Gallery | My scans&#10;My scans | Ask Paul&#10;Ask Paul | Offline model ready&#10;Offline model ready | Today’s care | See All | Home&#10;Home | Garden&#10;Garden | Schedul
+== photo 2_Epipremnum_aureum ==
+tapped (268,1295)
+shot photo_2_Epipremnum_aureum_picker
+picked thumbnail at (177,1586)
+photo 2_Epipremnum_aureum -> guesses shown after 25s
+shot photo_2_Epipremnum_aureum_result
+  screen: Identify | Which one is it? | These are the closest matches. Tap the right one. | Pothos&#10;Epipremnum aureum&#10;60% | Satin pothos&#10;Scindapsus pictus&#10;7% | Areca palm&#10;Dypsis lutescens&#10;6% | Health isn't checked offline. After saving, use Doctor on the plant with an AI key for a health check. | Save to garden | %3Fgclid%3DEAIaIQobChMIrf6di8j0lwMVbo02Bx1azjCwEAEYASAAEgJ9-_D_BwE | Test Ad
+== photo 3_Zamioculcas_zamiifolia ==
+tapped (268,1295)
+shot photo_3_Zamioculcas_zamiifolia_picker
+picked thumbnail at (177,1586)
+photo 3_Zamioculcas_zamiifolia -> guesses shown after 30s
+shot photo_3_Zamioculcas_zamiifolia_result
+  screen: Identify | Looks like this | Identified on this phone. Pick another if it is not right. | ZZ plant&#10;Zamioculcas zamiifolia&#10;Likely · 100% | Dwarf umbrella tree&#10;Schefflera arboricola&#10;0% | Flaming Katy&#10;Kalanchoe blossfeldiana&#10;0% | Care starting points&#10;Water about every 14 days&#10;Feed about every 60 days&#10;Medium light&#10;General guidance. You can change it on the plant page. | %3Fgclid%3D
+== photo 4_Ficus_lyrata ==
+tapped (268,1295)
+shot photo_4_Ficus_lyrata_picker
+picked thumbnail at (177,1586)
+photo 4_Ficus_lyrata -> guesses shown after 23s
+shot photo_4_Ficus_lyrata_result
+  screen: Identify | Looks like this | Identified on this phone. Pick another if it is not right. | Fiddle-leaf fig&#10;Ficus lyrata&#10;Likely · 98% | Creeping fig&#10;Ficus pumila&#10;2% | Rubber plant&#10;Ficus elastica&#10;1% | Care starting points&#10;Water about every 7 days&#10;Feed about every 30 days&#10;Bright, indirect light&#10;General guidance. You can change it on the plant page. | %3Fgclid%3DEAIaIQobChMI9-ndxsj0
+== scans history check ==
+tapped (972,2016)
+shot scans_list
+PASS: 4 offline scan(s) listed with the On this phone tag
+tapped (540,1788)
+shot scans_reopen
+PASS: saved offline scan reopened with its guesses
+  Native Heap    49408    49376        4       19    50652    63832    57749     1495
+         Native Heap:    49376                          50652
+           TOTAL PSS:   183909            TOTAL RSS:   315640       TOTAL SWAP PSS:      226
+error lines: 40
