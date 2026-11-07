@@ -106,11 +106,24 @@ class _Item extends StatelessWidget {
             children: [
               Icon(selected ? activeIcon : icon, size: 26, color: color),
               const SizedBox(height: 4),
-              Text(
-                label,
-                style: AppTypography.caption.copyWith(
-                  color: color,
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              // Navigation labels grow with the phone's text size, but only up
+              // to 1.3x and never wrap mid-word, so the dock keeps its height.
+              MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler:
+                      MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.3),
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: AppTypography.caption.copyWith(
+                      color: color,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
             ],

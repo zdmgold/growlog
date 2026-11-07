@@ -8,6 +8,8 @@ LOG="$OUT/steps.txt"; : > "$LOG"; A11Y="$OUT/a11y.txt"; : > "$A11Y"
 say(){ echo "$*" | tee -a "$LOG"; }
 adb install -r -g "$APK" >/dev/null 2>&1
 adb shell settings put system font_scale 2.0
+adb shell settings put global hide_error_dialogs 1
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1
 DENS=$(adb shell wm density | grep -o '[0-9]\+' | tail -1); say "density=$DENS font_scale=$(adb shell settings get system font_scale)"
 adb logcat -c
 adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 25
