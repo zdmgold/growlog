@@ -321,13 +321,29 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
             decoration: InputDecoration(
               labelText: l10n?.notesLabel ?? 'Notes (optional)',
               alignLabelWithHint: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 1.5,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
-          SizedBox(
-            width: double.infinity,
-            height: 54,
-            child: ElevatedButton(
+          ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 54),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
               onPressed: _saving ? null : _save,
               child: _saving
                   ? const SizedBox(
@@ -336,6 +352,7 @@ class _AddPlantScreenState extends State<AddPlantScreen> {
                       child: CircularProgressIndicator(strokeWidth: 2.5),
                     )
                   : Text(l10n?.savePlant ?? 'Save Plant'),
+              ),
             ),
           ),
         ],
@@ -474,56 +491,88 @@ class _CareRow extends StatelessWidget {
               : (isDark ? AppColors.borderSubtleDark : AppColors.borderSubtle),
         ),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 38,
-            height: 38,
-            decoration: BoxDecoration(
-              color: type.color.withOpacity(enabled ? 0.16 : 0.08),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(careIcon(type), size: 19, color: type.color),
-          ),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Text(
-              label,
-              style: AppTypography.body.copyWith(color: enabled ? ink : sub),
-            ),
-          ),
-          if (enabled) ...[
-            SizedBox(
-              width: 52,
-              height: 48,
-              child: TextField(
-                controller: controller,
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                style: AppTypography.body.copyWith(
-                  color: ink,
-                  fontWeight: FontWeight.w700,
-                ),
-                decoration: const InputDecoration(
-                  isDense: true,
-                  filled: false,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
-                ),
-              ),
-            ),
-            Text(suffix, style: AppTypography.footnote.copyWith(color: sub)),
-            const SizedBox(width: 4),
-          ],
-          Semantics(
-            label: label,
-            child: Switch(value: enabled, onChanged: onToggle),
-          ),
-        ],
+      child: _body(context, ink, sub),
+    );
+  }
+
+  /// At large text sizes "Fertilize every" no longer fits beside the number
+  /// field and switch, so the interval moves to its own line under the label.
+  Widget _body(BuildContext context, Color ink, Color sub) {
+    final large = MediaQuery.textScalerOf(context).scale(16) > 20.8;
+    final icon = Container(
+      width: 38,
+      height: 38,
+      decoration: BoxDecoration(
+        color: type.color.withOpacity(enabled ? 0.16 : 0.08),
+        shape: BoxShape.circle,
       ),
+      child: Icon(careIcon(type), size: 19, color: type.color),
+    );
+    final title = Expanded(
+      child: Text(
+        label,
+        style: AppTypography.body.copyWith(color: enabled ? ink : sub),
+      ),
+    );
+    final interval = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: 52,
+          height: 48,
+          child: TextField(
+            controller: controller,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            style: AppTypography.body.copyWith(
+              color: ink,
+              fontWeight: FontWeight.w700,
+            ),
+            decoration: const InputDecoration(
+              isDense: true,
+              filled: false,
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(vertical: 12),
+            ),
+          ),
+        ),
+        Text(suffix, style: AppTypography.footnote.copyWith(color: sub)),
+        const SizedBox(width: 4),
+      ],
+    );
+    final toggle = Semantics(
+      label: label,
+      child: Switch(value: enabled, onChanged: onToggle),
+    );
+    if (large) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(children: [
+            icon,
+            const SizedBox(width: AppSpacing.md),
+            title,
+            toggle,
+          ]),
+          if (enabled)
+            Padding(
+              padding: const EdgeInsets.only(left: 38 + AppSpacing.md),
+              child: interval,
+            ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        icon,
+        const SizedBox(width: AppSpacing.md),
+        title,
+        if (enabled) interval,
+        toggle,
+      ],
     );
   }
 }
@@ -605,4 +654,5 @@ class _SpeciesSuggestions extends StatelessWidget {
       ),
     );
   }
+
 }
