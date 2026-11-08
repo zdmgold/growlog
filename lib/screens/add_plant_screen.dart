@@ -495,6 +495,7 @@ class _CareRow extends StatelessWidget {
           if (enabled) ...[
             SizedBox(
               width: 52,
+              height: 48,
               child: TextField(
                 controller: controller,
                 textAlign: TextAlign.center,
@@ -510,7 +511,7 @@ class _CareRow extends StatelessWidget {
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 6),
+                  contentPadding: EdgeInsets.symmetric(vertical: 12),
                 ),
               ),
             ),

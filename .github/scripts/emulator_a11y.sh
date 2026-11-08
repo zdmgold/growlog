@@ -28,6 +28,12 @@ tap "Wishlist" && visit 05_wishlist
 tap "Rooms" && visit 06_rooms
 tap "Plants"; tap "Add plant" "Add Plant" && visit 07_add_plant
 scroll; visit 08_add_plant_scrolled
+# Create a plant, then check the Plant Page
+scroll; adb shell input swipe 540 600 540 2000 300; adb shell input swipe 540 600 540 2000 300; sleep 1
+dump cur; XY=$(python3 .github/scripts/ui_edit.py "$OUT/cur.xml" 0) && { set -- $XY; adb shell input tap "$1" "$2"; sleep 1; adb shell input text "Fern"; sleep 1; adb shell input keyevent 4; sleep 1; }
+scroll; scroll; tap "Save Plant" "Save"; sleep 3; shot 08c_after_save
+tap "Fern" && sleep 2 && visit 18_plant_page
+scroll; visit 19_plant_page_scrolled; scroll; visit 20_plant_page_bottom
 back; back
 tap "Schedule" && visit 09_schedule
 tap "Scans" && visit 10_scans
