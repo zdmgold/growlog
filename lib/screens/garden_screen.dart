@@ -80,13 +80,13 @@ class _GardenScreenState extends State<GardenScreen>
       appBar: AppBar(
         title: Text(context.l10n.navGarden),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(58),
+          preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.sm,
             ),
             child: Container(
-              height: 46,
+              height: 48,
               decoration: BoxDecoration(
                 color: isDark ? AppColors.bgSecondaryDark : AppColors.bgTertiary,
                 borderRadius: BorderRadius.circular(AppRadii.pill),

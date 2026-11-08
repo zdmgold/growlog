@@ -555,17 +555,23 @@ class _ThemeSelector extends StatelessWidget {
                                     : AppColors.textSecondary),
                           ),
                           const SizedBox(width: 6),
-                          Text(
-                            label,
-                            style: AppTypography.callout.copyWith(
-                              color: value == mode
-                                  ? accent
-                                  : (isDark
-                                      ? AppColors.textSecondaryDark
-                                      : AppColors.textSecondary),
-                              fontWeight: value == mode
-                                  ? FontWeight.w700
-                                  : FontWeight.w500,
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                label,
+                                maxLines: 1,
+                                style: AppTypography.callout.copyWith(
+                                  color: value == mode
+                                      ? accent
+                                      : (isDark
+                                          ? AppColors.textSecondaryDark
+                                          : AppColors.textSecondary),
+                                  fontWeight: value == mode
+                                      ? FontWeight.w700
+                                      : FontWeight.w500,
+                                ),
+                              ),
                             ),
                           ),
                         ],
