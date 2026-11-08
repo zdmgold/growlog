@@ -110,12 +110,13 @@ class _CareScheduleScreenState extends State<CareScheduleScreen>
                     unselectedLabelStyle: AppTypography.callout,
                     tabs: [
                       Tab(
+                        height: 48,
                         text: due.isEmpty
                             ? context.l10n.dueNow
                             : context.l10n.dueNowCount(due.length),
                       ),
-                      Tab(text: context.l10n.upcoming),
-                      Tab(text: context.l10n.all),
+                      Tab(height: 48, text: context.l10n.upcoming),
+                      Tab(height: 48, text: context.l10n.all),
                     ],
                   ),
                 ),

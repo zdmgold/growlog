@@ -16,7 +16,7 @@ adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 25
 shot(){ adb exec-out screencap -p > "$OUT/$1.png"; }
 dump(){ for i in 1 2 3; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && break; sleep 2; done; adb pull /sdcard/ui.xml "$OUT/$1.xml" >/dev/null 2>&1; }
 tap(){ dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "$@") || { say "NOT FOUND: $*"; return 1; }; set -- $XY; adb shell input tap "$1" "$2"; sleep 2; return 0; }
-visit(){ sleep 1; shot "$1"; dump "$1"; python3 .github/scripts/a11y_scan.py "$OUT/$1.xml" "$1" "$DENS" | tee -a "$A11Y"; }
+visit(){ sleep 1; adb logcat -d -s flutter | grep -c overflowed | sed "s/^/overflow-count-before-$1: /" >> "$OUT/steps.txt"; shot "$1"; dump "$1"; python3 .github/scripts/a11y_scan.py "$OUT/$1.xml" "$1" "$DENS" | tee -a "$A11Y"; }
 back(){ adb shell input keyevent 4; sleep 2; }
 scroll(){ adb shell input swipe 540 1700 540 600 300; sleep 1; }
 
@@ -40,8 +40,8 @@ dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Settings" "sett
 visit 14_settings_or_home
 scroll; visit 15_settings_scrolled
 back
-tap "Set up plant identification" "Add your API key" && visit 16_gate_sheet
+scroll; tap "Set up plant identification" && visit 16_gate_sheet
 tap "Use my own AI key" && visit 17_connect_ai
-adb logcat -d | grep -i "overflow\|RenderFlex\|exceeded" | sort | uniq -c | head -20 > "$OUT/overflow.txt"
+adb logcat -d -s flutter | grep -i -A14 "overflowed" | cut -c1-200 > "$OUT/overflow.txt"
 say "overflow lines: $(grep -c . "$OUT/overflow.txt")"
 adb logcat -d -s AndroidRuntime:E flutter:E > "$OUT/errors.txt" 2>&1; say "error lines: $(grep -c . "$OUT/errors.txt")"

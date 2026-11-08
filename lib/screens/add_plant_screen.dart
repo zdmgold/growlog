@@ -517,7 +517,10 @@ class _CareRow extends StatelessWidget {
             Text(suffix, style: AppTypography.footnote.copyWith(color: sub)),
             const SizedBox(width: 4),
           ],
-          Switch(value: enabled, onChanged: onToggle),
+          Semantics(
+            label: label,
+            child: Switch(value: enabled, onChanged: onToggle),
+          ),
         ],
       ),
     );

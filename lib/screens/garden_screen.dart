@@ -108,9 +108,9 @@ class _GardenScreenState extends State<GardenScreen>
                 labelStyle: AppTypography.callout.copyWith(fontWeight: FontWeight.w700),
                 unselectedLabelStyle: AppTypography.callout,
                 tabs: [
-                  Tab(text: context.l10n.plantsTab),
-                  Tab(text: context.l10n.wishlistTitle),
-                  Tab(text: context.l10n.rooms),
+                  Tab(height: 48, text: context.l10n.plantsTab),
+                  Tab(height: 48, text: context.l10n.wishlistTitle),
+                  Tab(height: 48, text: context.l10n.rooms),
                 ],
               ),
             ),

@@ -541,7 +541,7 @@ class _ThemeSelector extends StatelessWidget {
                     customBorder: const StadiumBorder(),
                     onTap: () => onChanged(mode),
                     child: SizedBox(
-                      height: 44,
+                      height: 48,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

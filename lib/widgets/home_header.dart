@@ -134,8 +134,8 @@ class _HeaderIcon extends StatelessWidget {
             onTap();
           },
           child: SizedBox(
-            width: 42,
-            height: 42,
+            width: 48,
+            height: 48,
             child: Icon(
               icon,
               size: 21,
