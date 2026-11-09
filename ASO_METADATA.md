@@ -1,39 +1,43 @@
-# App Store Optimization Metadata (draft — fill in before submission)
+# Store listing text (matches the current app)
 
-## App Name
-GrowLog — Plant Care Tracker
+## App name
+GrowLog: Plant ID & Care
 
-## Subtitle (iOS, 30 chars)
-Growth photos & care reminders
+## Subtitle (iOS, 30 characters)
+Identify plants, track care
 
-## Short Description (Play, 80 chars)
-Track plant growth with photos, care reminders. No subscription wall.
+## Short description (Play, 80 characters)
+Identify plants on your phone, even offline. Care reminders and a symptom checker.
 
-## Full Description (draft)
-GrowLog helps you track your plants' growth over time with a
-before/after photo comparison slider, set care reminders for
-watering, fertilizing, misting, repotting, pruning, and treating —
-and it's free, fully, without a locked-down free tier.
+## Full description
+Point your camera at a plant and GrowLog tells you what it is. The identifier runs
+on your phone, so it works without internet and your photos stay with you. Add your
+own AI key if you want a second opinion.
 
-Unlike other plant apps, nothing meaningful is paywalled. Track
-unlimited plants, unlimited photos, and unlimited reminders at no
-cost. The only purchase is a one-time ad removal — no subscription,
-ever.
+IDENTIFY
+- Offline identification with a short list of the most likely plants to choose from
+- Common names and the Latin name, with how sure the app is
+- Honest "not sure" answers instead of guesses
 
-FEATURES
-- Growth timeline with drag-to-compare before/after photos
-- Care reminders for 6 care types: water, fertilize, mist, repot, prune, treat
-- Organize plants by room
-- Wishlist for plants you're planning to get
-- Full data export/import — your data, your device
-- Light and dark mode
-- 11 languages including Arabic and Hebrew (RTL supported)
+CARE
+- Save a plant to your garden and get a starting watering and feeding schedule
+- Reminders for water, feeding, misting, repotting, pruning and treatment
+- Edit the schedule any time, and organise plants into rooms
 
-## Keywords (iOS, comma-separated, 100 char limit)
-plant care,plant tracker,watering reminder,plant journal,houseplant,garden log,grow log
+SYMPTOM CHECKER
+- Answer a few questions to narrow down what may be wrong with a plant
+- Ranked likely causes with what to check first, simple steps and prevention
+- Works with no internet, no key and no photo
 
-## Category
-Lifestyle (primary), Productivity (secondary, Play only)
+YOUR DATA
+- Plants, photos and settings are stored on your device
+- Export and import your data any time
+- No account and no sign-up
+- Bring your own AI key if you want cloud features. Your photo goes only to the provider you choose
 
-## Screenshots needed (see SCREENSHOT_STRATEGY.md)
-6.7" iPhone, 6.5" iPhone, iPad, Android phone, Android tablet (per current store requirements — verify against current App Store Connect / Play Console specs before submission, as required sizes change)
+Available in English, Spanish, French, German, Portuguese, Arabic, Hindi, Japanese,
+Korean, Chinese and Hebrew.
+
+The app shows ads. A one-time purchase removes them. Plant information is general
+guidance and can be wrong. Do not rely on it for decisions about eating plants or
+the safety of pets and children.

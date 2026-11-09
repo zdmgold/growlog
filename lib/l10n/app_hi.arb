@@ -419,5 +419,13 @@
   "symptomDisclaimer": "केवल सामान्य मार्गदर्शन। अपने पौधे को ध्यान से देखें और हालत बिगड़े तो विशेषज्ञ से मदद लें।",
   "noSpeciesMatch": "देखभाल गाइड में कोई मेल नहीं मिला। आप अपना नाम खुद लिख सकते हैं।",
   "speciesGuideFilled": "देखभाल का कार्यक्रम गाइड से भर दिया गया।",
-  "scanOnDevice": "इस फ़ोन पर"
+  "scanOnDevice": "इस फ़ोन पर",
+  "licencesAndCredits": "लाइसेंस और श्रेय",
+  "creditsIdentifier": "पौधों की पहचान",
+  "creditsIdentifierBody": "ऑफ़लाइन पहचान Imageomics Institute द्वारा MIT लाइसेंस के तहत जारी BioCLIP 2 का उपयोग करती है और ONNX Runtime (MIT) पर चलती है।",
+  "creditsDesign": "फ़ॉन्ट और आइकन",
+  "creditsDesignBody": "Fraunces और Inter फ़ॉन्ट (SIL Open Font License)। Phosphor Icons (MIT)।",
+  "creditsGuide": "देखभाल गाइड",
+  "creditsGuideBody": "देखभाल गाइड और लक्षण जाँचकर्ता GrowLog के लिए लिखा गया सामान्य मार्गदर्शन है। यह विशेषज्ञ की सलाह का विकल्प नहीं है।",
+  "openSourceLicences": "ओपन-सोर्स लाइसेंस"
 }

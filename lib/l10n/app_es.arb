@@ -83,7 +83,7 @@
   "about": "Acerca de",
   "version": "Versión",
   "privacyPolicy": "Política de Privacidad",
-  "termsOfService": "Términos de Servicio",
+  "termsOfService": "Términos del servicio",
   "support": "Soporte",
   "proFeatures": "Funciones Pro",
   "upgradeToPro": "Actualizar a Pro",
@@ -419,5 +419,13 @@
   "symptomDisclaimer": "Solo orientación general. Observa bien tu planta y busca ayuda experta si empeora.",
   "noSpeciesMatch": "Sin coincidencias en la guía de cuidados. Aún puedes escribir la tuya.",
   "speciesGuideFilled": "Calendario de cuidados rellenado desde la guía.",
-  "scanOnDevice": "En este teléfono"
+  "scanOnDevice": "En este teléfono",
+  "licencesAndCredits": "Licencias y créditos",
+  "creditsIdentifier": "Identificación de plantas",
+  "creditsIdentifierBody": "El identificador sin conexión usa BioCLIP 2, publicado por el Imageomics Institute con licencia MIT, y se ejecuta con ONNX Runtime (MIT).",
+  "creditsDesign": "Tipografías e iconos",
+  "creditsDesignBody": "Tipografías Fraunces e Inter (SIL Open Font License). Iconos Phosphor (MIT).",
+  "creditsGuide": "Guía de cuidados",
+  "creditsGuideBody": "La guía de cuidados y el verificador de síntomas son orientación general escrita para GrowLog. No sustituyen el consejo de un experto.",
+  "openSourceLicences": "Licencias de código abierto"
 }

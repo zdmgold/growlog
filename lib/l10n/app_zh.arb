@@ -419,5 +419,13 @@
   "symptomDisclaimer": "仅为一般性指导。请仔细观察植物，情况恶化时请寻求专家帮助。",
   "noSpeciesMatch": "养护指南中没有匹配项。你仍然可以自己输入。",
   "speciesGuideFilled": "已根据指南填好养护计划。",
-  "scanOnDevice": "在本机上"
+  "scanOnDevice": "在本机上",
+  "licencesAndCredits": "许可与致谢",
+  "creditsIdentifier": "植物识别",
+  "creditsIdentifierBody": "离线识别使用 Imageomics Institute 以 MIT 许可发布的 BioCLIP 2，并通过 ONNX Runtime（MIT）运行。",
+  "creditsDesign": "字体与图标",
+  "creditsDesignBody": "Fraunces 与 Inter 字体（SIL Open Font License）。Phosphor 图标（MIT）。",
+  "creditsGuide": "养护指南",
+  "creditsGuideBody": "养护指南和症状检查是为 GrowLog 编写的一般性指导，不能替代专家建议。",
+  "openSourceLicences": "开源许可"
 }

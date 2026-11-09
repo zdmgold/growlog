@@ -419,5 +419,13 @@
   "symptomDisclaimer": "إرشادات عامة فقط. تفحّص نبتتك جيدًا واطلب مساعدة خبير إذا ساءت حالتها.",
   "noSpeciesMatch": "لا توجد نتيجة مطابقة في دليل العناية. يمكنك كتابة الاسم بنفسك.",
   "speciesGuideFilled": "تم ملء جدول العناية من الدليل.",
-  "scanOnDevice": "على هذا الهاتف"
+  "scanOnDevice": "على هذا الهاتف",
+  "licencesAndCredits": "التراخيص والشكر",
+  "creditsIdentifier": "التعرّف على النباتات",
+  "creditsIdentifierBody": "يستخدم المُعرّف دون اتصال نموذج BioCLIP 2 الصادر عن معهد Imageomics بترخيص MIT، ويعمل عبر ONNX Runtime (MIT).",
+  "creditsDesign": "الخطوط والأيقونات",
+  "creditsDesignBody": "خطا Fraunces وInter (رخصة SIL Open Font). أيقونات Phosphor (MIT).",
+  "creditsGuide": "دليل العناية",
+  "creditsGuideBody": "دليل العناية وفاحص الأعراض إرشادات عامة كُتبت لتطبيق GrowLog، ولا تغني عن استشارة خبير.",
+  "openSourceLicences": "تراخيص المصدر المفتوح"
 }

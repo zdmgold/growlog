@@ -1,3 +1,4 @@
+import 'credits_screen.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/offline/offline_model_service.dart';
 import '../widgets/identifier_gate_sheet.dart';
@@ -405,6 +406,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: PhosphorRegular.shieldCheck,
                 label: l10n?.privacyPolicy ?? 'Privacy Policy',
                 onTap: () => _open(Uri.parse('$_site/privacy')),
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.clipboard,
+                label: context.l10n.termsOfService,
+                onTap: () => _open(Uri.parse('$_site/terms')),
+              ),
+              _SettingsTile(
+                icon: PhosphorRegular.info,
+                label: context.l10n.licencesAndCredits,
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CreditsScreen()),
+                ),
               ),
               _SettingsTile(
                 icon: PhosphorRegular.chatCircleDots,

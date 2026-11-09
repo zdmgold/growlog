@@ -419,5 +419,13 @@
   "symptomDisclaimer": "הנחיה כללית בלבד. התבוננו היטב בצמח, ופנו למומחה אם המצב מחמיר.",
   "noSpeciesMatch": "אין התאמה במדריך הטיפול. אפשר עדיין להקליד בעצמכם.",
   "speciesGuideFilled": "לוח הטיפול מולא מתוך המדריך.",
-  "scanOnDevice": "בטלפון הזה"
+  "scanOnDevice": "בטלפון הזה",
+  "licencesAndCredits": "רישיונות והוקרות",
+  "creditsIdentifier": "זיהוי צמחים",
+  "creditsIdentifierBody": "המזהה הלא מקוון משתמש ב-BioCLIP 2 של Imageomics Institute ברישיון MIT, ופועל על ONNX Runtime (MIT).",
+  "creditsDesign": "גופנים וסמלים",
+  "creditsDesignBody": "גופני Fraunces ו-Inter (SIL Open Font License). סמלי Phosphor (MIT).",
+  "creditsGuide": "מדריך טיפול",
+  "creditsGuideBody": "מדריך הטיפול ובודק התסמינים הם הנחיות כלליות שנכתבו עבור GrowLog. הם אינם תחליף לייעוץ מומחה.",
+  "openSourceLicences": "רישיונות קוד פתוח"
 }

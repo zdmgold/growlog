@@ -83,7 +83,7 @@
   "about": "À propos",
   "version": "Version",
   "privacyPolicy": "Politique de Confidentialité",
-  "termsOfService": "Conditions d'Utilisation",
+  "termsOfService": "Conditions d’utilisation",
   "support": "Assistance",
   "proFeatures": "Fonctionnalités Pro",
   "upgradeToPro": "Passer à Pro",
@@ -419,5 +419,13 @@
   "symptomDisclaimer": "Conseils généraux uniquement. Observez bien votre plante et demandez l’avis d’un expert si cela empire.",
   "noSpeciesMatch": "Aucune correspondance dans le guide d’entretien. Vous pouvez saisir la vôtre.",
   "speciesGuideFilled": "Calendrier d’entretien rempli depuis le guide.",
-  "scanOnDevice": "Sur ce téléphone"
+  "scanOnDevice": "Sur ce téléphone",
+  "licencesAndCredits": "Licences et crédits",
+  "creditsIdentifier": "Identification des plantes",
+  "creditsIdentifierBody": "L’identificateur hors ligne utilise BioCLIP 2, publié par l’Imageomics Institute sous licence MIT, et s’exécute avec ONNX Runtime (MIT).",
+  "creditsDesign": "Polices et icônes",
+  "creditsDesignBody": "Polices Fraunces et Inter (SIL Open Font License). Icônes Phosphor (MIT).",
+  "creditsGuide": "Guide d’entretien",
+  "creditsGuideBody": "Le guide d’entretien et le vérificateur de symptômes sont des conseils généraux rédigés pour GrowLog. Ils ne remplacent pas l’avis d’un expert.",
+  "openSourceLicences": "Licences open source"
 }

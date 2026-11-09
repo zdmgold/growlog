@@ -419,5 +419,13 @@
   "symptomDisclaimer": "Nur allgemeine Hinweise. Sieh dir deine Pflanze genau an und hol Expertenrat, wenn es schlimmer wird.",
   "noSpeciesMatch": "Kein Treffer im Pflegeleitfaden. Du kannst trotzdem selbst etwas eingeben.",
   "speciesGuideFilled": "Pflegeplan aus dem Leitfaden übernommen.",
-  "scanOnDevice": "Auf diesem Handy"
+  "scanOnDevice": "Auf diesem Handy",
+  "licencesAndCredits": "Lizenzen und Danksagungen",
+  "creditsIdentifier": "Pflanzenerkennung",
+  "creditsIdentifierBody": "Die Offline-Erkennung nutzt BioCLIP 2 des Imageomics Institute unter MIT-Lizenz und läuft mit ONNX Runtime (MIT).",
+  "creditsDesign": "Schriften und Symbole",
+  "creditsDesignBody": "Schriften Fraunces und Inter (SIL Open Font License). Phosphor Icons (MIT).",
+  "creditsGuide": "Pflegeleitfaden",
+  "creditsGuideBody": "Pflegeleitfaden und Symptom-Check sind allgemeine Hinweise, die für GrowLog geschrieben wurden. Sie ersetzen keinen Expertenrat.",
+  "openSourceLicences": "Open-Source-Lizenzen"
 }

@@ -1147,5 +1147,13 @@
   "symptomDisclaimer": "General guidance only. Look closely at your plant, and get expert help if it gets worse.",
   "noSpeciesMatch": "No match in the care guide. You can still type your own.",
   "speciesGuideFilled": "Care schedule filled in from the guide.",
-  "scanOnDevice": "On this phone"
+  "scanOnDevice": "On this phone",
+  "licencesAndCredits": "Licences and credits",
+  "creditsIdentifier": "Plant identification",
+  "creditsIdentifierBody": "The offline identifier uses BioCLIP 2, released by the Imageomics Institute under the MIT licence, running on ONNX Runtime (MIT).",
+  "creditsDesign": "Fonts and icons",
+  "creditsDesignBody": "Fraunces and Inter fonts (SIL Open Font Licence). Phosphor Icons (MIT).",
+  "creditsGuide": "Care guide",
+  "creditsGuideBody": "The care guide and symptom checker are general guidance written for GrowLog. They are not a substitute for expert advice.",
+  "openSourceLicences": "Open-source licences"
 }

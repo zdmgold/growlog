@@ -419,5 +419,13 @@
   "symptomDisclaimer": "일반적인 안내일 뿐입니다. 식물을 자세히 살펴보고 더 나빠지면 전문가의 도움을 받으세요.",
   "noSpeciesMatch": "관리 가이드에 일치하는 항목이 없습니다. 직접 입력할 수 있습니다.",
   "speciesGuideFilled": "가이드에서 관리 일정을 채웠습니다.",
-  "scanOnDevice": "이 휴대폰에서"
+  "scanOnDevice": "이 휴대폰에서",
+  "licencesAndCredits": "라이선스 및 크레딧",
+  "creditsIdentifier": "식물 식별",
+  "creditsIdentifierBody": "오프라인 식별기는 Imageomics Institute가 MIT 라이선스로 공개한 BioCLIP 2를 ONNX Runtime(MIT)에서 실행합니다.",
+  "creditsDesign": "글꼴 및 아이콘",
+  "creditsDesignBody": "Fraunces 및 Inter 글꼴(SIL Open Font License). Phosphor Icons(MIT).",
+  "creditsGuide": "관리 가이드",
+  "creditsGuideBody": "관리 가이드와 증상 확인기는 GrowLog를 위해 작성된 일반적인 안내이며 전문가의 조언을 대신하지 않습니다.",
+  "openSourceLicences": "오픈소스 라이선스"
 }

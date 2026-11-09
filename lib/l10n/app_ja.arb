@@ -419,5 +419,13 @@
   "symptomDisclaimer": "一般的な目安です。植物をよく観察し、悪化する場合は専門家に相談してください。",
   "noSpeciesMatch": "お世話ガイドに一致するものがありません。自分で入力することもできます。",
   "speciesGuideFilled": "ガイドからお世話スケジュールを入力しました。",
-  "scanOnDevice": "この端末で"
+  "scanOnDevice": "この端末で",
+  "licencesAndCredits": "ライセンスとクレジット",
+  "creditsIdentifier": "植物の識別",
+  "creditsIdentifierBody": "オフライン識別には、Imageomics InstituteがMITライセンスで公開しているBioCLIP 2を、ONNX Runtime（MIT）上で使用しています。",
+  "creditsDesign": "フォントとアイコン",
+  "creditsDesignBody": "フォントはFrauncesとInter（SIL Open Font License）、アイコンはPhosphor Icons（MIT）です。",
+  "creditsGuide": "お世話ガイド",
+  "creditsGuideBody": "お世話ガイドと症状チェッカーはGrowLog向けに書かれた一般的な目安であり、専門家の助言に代わるものではありません。",
+  "openSourceLicences": "オープンソースライセンス"
 }
