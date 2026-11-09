@@ -7,6 +7,7 @@ import '../utils/care_due.dart';
 import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
+import '../widgets/tab_label.dart';
 import '../widgets/care_today_row.dart';
 import '../widgets/next_care_badge.dart';
 import '../widgets/plant_thumb.dart';
@@ -111,12 +112,14 @@ class _CareScheduleScreenState extends State<CareScheduleScreen>
                     tabs: [
                       Tab(
                         height: 48,
-                        text: due.isEmpty
-                            ? context.l10n.dueNow
-                            : context.l10n.dueNowCount(due.length),
+                        child: TabLabel(
+                          due.isEmpty
+                              ? context.l10n.dueNow
+                              : context.l10n.dueNowCount(due.length),
+                        ),
                       ),
-                      Tab(height: 48, text: context.l10n.upcoming),
-                      Tab(height: 48, text: context.l10n.all),
+                      Tab(height: 48, child: TabLabel(context.l10n.upcoming)),
+                      Tab(height: 48, child: TabLabel(context.l10n.all)),
                     ],
                   ),
                 ),

@@ -440,9 +440,14 @@ class _PhotoPicker extends StatelessWidget {
                         style: AppTypography.title2.copyWith(color: accent),
                       ),
                       const SizedBox(height: 2),
-                      Text(
-                        context.l10n.photoPickerHint,
-                        style: AppTypography.footnote.copyWith(color: sub),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.md),
+                        child: Text(
+                          context.l10n.photoPickerHint,
+                          textAlign: TextAlign.center,
+                          style: AppTypography.footnote.copyWith(color: sub),
+                        ),
                       ),
                     ],
                   ),

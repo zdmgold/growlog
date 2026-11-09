@@ -4,6 +4,7 @@ import '../providers/plant_provider.dart';
 import '../l10n/l10n_ext.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
+import '../widgets/tab_label.dart';
 import '../widgets/room_chips.dart';
 import '../widgets/specimen_card.dart';
 import 'add_plant_screen.dart';
@@ -108,9 +109,9 @@ class _GardenScreenState extends State<GardenScreen>
                 labelStyle: AppTypography.callout.copyWith(fontWeight: FontWeight.w700),
                 unselectedLabelStyle: AppTypography.callout,
                 tabs: [
-                  Tab(height: 48, text: context.l10n.plantsTab),
-                  Tab(height: 48, text: context.l10n.wishlistTitle),
-                  Tab(height: 48, text: context.l10n.rooms),
+                  Tab(height: 48, child: TabLabel(context.l10n.plantsTab)),
+                  Tab(height: 48, child: TabLabel(context.l10n.wishlistTitle)),
+                  Tab(height: 48, child: TabLabel(context.l10n.rooms)),
                 ],
               ),
             ),
