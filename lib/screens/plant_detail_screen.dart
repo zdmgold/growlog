@@ -390,8 +390,8 @@ class _RoundButton extends StatelessWidget {
             customBorder: const CircleBorder(),
             onTap: onTap,
             child: SizedBox(
-              width: 42,
-              height: 42,
+              width: 48,
+              height: 48,
               child: Icon(
                 icon,
                 size: 20,
@@ -667,7 +667,7 @@ class _CareRow extends StatelessWidget {
           ),
           DoneCheckButton(
             type: type,
-            size: 44,
+            size: 48,
             semanticLabel: context.l10n.markCareDone(context.careLabel(type)),
             background: isDark ? AppColors.accentLight : AppColors.accent,
             foreground: isDark ? AppColors.bgPrimaryDark : Colors.white,
