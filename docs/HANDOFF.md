@@ -58,3 +58,39 @@ android/app/{build.gradle,proguard-rules.pro,src/main/AndroidManifest.xml} | cod
 - uiautomator dumps are flaky; scripts retry and handle ANR dialogs. Do not use `adb root`.
 - First launch on a debug build logs a flutter_local_notifications null-context error once (caught; retries on next schedule).
 - Commons categories use new taxonomy names (aliases in bakeoff/species.txt). ONNX pack text embeddings are tied to species.json order.
+
+
+## Update, Nov 9 2026 (latest first)
+
+State of main: Compile Check green (64 tests, 0 analyzer errors).
+
+Done since the last handoff
+- Signing: release builds are signed with the upload key from repo secrets
+  ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_PASSWORD,
+  ANDROID_KEY_ALIAS (alias GrowLog). The Build Android workflow verifies the
+  certificate SHA-256 before uploading. Do NOT start Build Android until the owner asks.
+  Emulator workflows may be run freely (they build a CI-only APK and upload nothing).
+- Offline Symptom Checker: assets/care/symptoms.json (41 problems) with language
+  overlays symptoms_<lang>.json for all 10 non-English app languages (machine drafts).
+  Engine: lib/services/offline/symptom_checker.dart (ties broken by file order).
+  Screen: lib/screens/symptom_checker_screen.dart; entry cards on Scans and Plant Page.
+- Species search in Add Plant (care-guide search, fills species, name and schedule).
+- Offline scans saved to Scans history (DB v3: scans.source, scans.candidates). Tile
+  shows "On this phone"; reopening does not re-run the model. Migration is unit tested.
+- Accessibility: 48dp targets (header, tabs, chips, Plant Page buttons, theme
+  selector), dock and tab labels shrink to fit at 200% text, Add Plant care rows wrap.
+  Checked by .github/workflows/emulator-a11y.yml (reports on branch ci-report-emu-a11y).
+  Not yet checked at large text: the scan result screen.
+- Store paperwork: website/terms.html, Terms and Licences rows in Settings,
+  lib/screens/credits_screen.dart, docs/STORE_PAPERWORK.md, ASO_METADATA.md rewritten
+  for the current app, cropped badges in website/badges/ (low resolution; not linked yet).
+- Branch cleanup: 15 throwaway code branches deleted. Report branches (ci-report*) kept as evidence.
+
+Still open
+- Owner decisions: iOS 16 minimum, iOS tracking prompt, ad consent message, model
+  hosting (GitHub vs Cloudflare R2), iNaturalist terms, care-guide and symptom text review.
+- Real AdMob IDs; Play Console upload-key registration; Data Safety form and listings entry.
+- Website: confirm Cloudflare serves /terms (cannot be reached from the sandbox).
+- Native review of all machine-drafted translations; Arabic/Hebrew layout of new screens unseen.
+- Nothing has run on a phone since the signed arm64 build (Nov 5); no iPhone run ever.
+- Result caching by image (not built).
