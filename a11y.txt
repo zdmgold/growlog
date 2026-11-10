@@ -1,0 +1,37 @@
+== 01_home: 12 tappable, 1 under 48dp, 1 unlabeled
+  SMALL: My scans My scans 180x14dp at [129,1884]
+  UNLABELED: [120,2195][960,2326] 320x50dp
+== 02_home_scrolled: 11 tappable, 0 under 48dp, 0 unlabeled
+== 03_home_bottom: 8 tappable, 0 under 48dp, 0 unlabeled
+== 04_garden: 11 tappable, 0 under 48dp, 1 unlabeled
+  UNLABELED: [63,454][1017,637] 363x70dp
+== 05_wishlist: 10 tappable, 0 under 48dp, 0 unlabeled
+== 06_rooms: 18 tappable, 0 under 48dp, 4 unlabeled
+  UNLABELED: [63,454][519,990] 174x204dp
+  UNLABELED: [561,454][1017,990] 174x204dp
+  UNLABELED: [63,1032][519,1568] 174x204dp
+  UNLABELED: [561,1032][1017,1568] 174x204dp
+== 07_add_plant: 6 tappable, 0 under 48dp, 2 unlabeled
+  UNLABELED: [63,937][1017,1120] 363x70dp
+  UNLABELED: [63,1162][1017,1448] 363x109dp
+== 08_add_plant_scrolled: 11 tappable, 1 under 48dp, 1 unlabeled
+  SMALL: Water every 60x18dp at [815,275]
+  UNLABELED: [63,1632][1017,2036] 363x154dp
+== 18_plant_page: 5 tappable, 1 under 48dp, 0 unlabeled
+  SMALL: %3Fgclid%3DEAIaIQobChMIs5_92qX9lwMVZ-LEBx0rtBHhEAE 320x42dp at [120,2205]
+== 19_plant_page_scrolled: 11 tappable, 2 under 48dp, 0 unlabeled
+  SMALL: Mark Fertilize done 48x7dp at [846,275]
+  SMALL: %3Fgclid%3DEAIaIQobChMIs5_92qX9lwMVZ-LEBx0rtBHhEAE 320x42dp at [120,2205]
+== 20_plant_page_bottom: 5 tappable, 1 under 48dp, 0 unlabeled
+  SMALL: %3Fgclid%3DEAIaIQobChMIs5_92qX9lwMVZ-LEBx0rtBHhEAE 320x42dp at [120,2205]
+== 09_schedule: 9 tappable, 0 under 48dp, 0 unlabeled
+== 10_scans: 7 tappable, 0 under 48dp, 0 unlabeled
+== 11_symptom_step1: 2 tappable, 0 under 48dp, 0 unlabeled
+== 12_symptom_step2: 1 tappable, 0 under 48dp, 0 unlabeled
+== 13_symptom_step2_scrolled: 2 tappable, 0 under 48dp, 0 unlabeled
+== 14_settings_or_home: 10 tappable, 1 under 48dp, 0 unlabeled
+  SMALL: %3Fgclid%3DEAIaIQobChMIi8C_hqb9lwMVQuLEBx3rSADFEAE 320x42dp at [120,2205]
+== 15_settings_scrolled: 10 tappable, 1 under 48dp, 0 unlabeled
+  SMALL: %3Fgclid%3DEAIaIQobChMIi8C_hqb9lwMVQuLEBx3rSADFEAE 320x42dp at [120,2205]
+== 16_gate_sheet: 3 tappable, 0 under 48dp, 0 unlabeled
+== 17_connect_ai: 4 tappable, 0 under 48dp, 0 unlabeled

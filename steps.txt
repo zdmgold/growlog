@@ -1,0 +1,23 @@
+density=420 font_scale=2.0
+overflow-count-before-01_home: 0
+overflow-count-before-02_home_scrolled: 0
+overflow-count-before-03_home_bottom: 0
+overflow-count-before-04_garden: 0
+overflow-count-before-05_wishlist: 0
+overflow-count-before-06_rooms: 0
+overflow-count-before-07_add_plant: 0
+overflow-count-before-08_add_plant_scrolled: 0
+overflow-count-before-18_plant_page: 0
+overflow-count-before-19_plant_page_scrolled: 0
+overflow-count-before-20_plant_page_bottom: 0
+overflow-count-before-09_schedule: 0
+overflow-count-before-10_scans: 0
+overflow-count-before-11_symptom_step1: 0
+overflow-count-before-12_symptom_step2: 0
+overflow-count-before-13_symptom_step2_scrolled: 0
+overflow-count-before-14_settings_or_home: 0
+overflow-count-before-15_settings_scrolled: 0
+overflow-count-before-16_gate_sheet: 0
+overflow-count-before-17_connect_ai: 0
+overflow lines: 0
+error lines: 0
