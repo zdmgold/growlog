@@ -216,8 +216,6 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
               icon: const Icon(PhosphorRegular.arrowSquareOut, size: 18),
               label: Text(context.l10n.getAKey),
             ),
-            const Spacer(),
-            Text(_hintText(context, p.hint), style: AppTypography.caption.copyWith(color: sub)),
           ],
         ),
         if (_error != null)
@@ -436,9 +434,19 @@ class _ProviderTile extends StatelessWidget {
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
-                    child: Text(
-                      provider.name,
-                      style: AppTypography.title2.copyWith(color: ink),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          provider.name,
+                          style: AppTypography.title2.copyWith(color: ink),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          _hintText(context, provider.hint),
+                          style: AppTypography.caption.copyWith(color: sub),
+                        ),
+                      ],
                     ),
                   ),
                   if (connected)
