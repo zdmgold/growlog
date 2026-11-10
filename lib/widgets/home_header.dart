@@ -61,11 +61,22 @@ class HomeHeader extends StatelessWidget {
                 excludeFromSemantics: true,
               ),
               const SizedBox(width: AppSpacing.sm),
-              Text(
-                'GrowLog',
-                style: AppTypography.wordmark.copyWith(color: ink),
+              // Takes the free space and shrinks only if the text size is so large
+              // that the name would not fit beside the three icons.
+              Expanded(
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      'GrowLog',
+                      maxLines: 1,
+                      softWrap: false,
+                      style: AppTypography.wordmark.copyWith(color: ink),
+                    ),
+                  ),
+                ),
               ),
-              const Spacer(),
               _HeaderIcon(
                 icon: PhosphorRegular.translate,
                 label: l.headerChangeLanguage,
