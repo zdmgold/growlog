@@ -35,7 +35,10 @@ class CreditsScreen extends StatelessWidget {
             AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.xxl),
         children: [
           section(l10n.creditsIdentifier, l10n.creditsIdentifierBody),
-          section(l10n.creditsDesign, l10n.creditsDesignBody),
+          section(
+            l10n.creditsDesign,
+            '${l10n.creditsDesignBody}\nSeedling logo: Noto Emoji by Google (Apache 2.0).',
+          ),
           section(l10n.creditsGuide, l10n.creditsGuideBody),
           SizedBox(
             height: 52,

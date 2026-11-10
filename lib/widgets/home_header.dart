@@ -53,19 +53,17 @@ class HomeHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 34,
-                height: 34,
-                decoration: BoxDecoration(
-                  color: accent.withOpacity(0.14),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(PhosphorFill.leaf, size: 18, color: accent),
+              Image.asset(
+                'assets/brand/logo.png',
+                width: 38,
+                height: 38,
+                filterQuality: FilterQuality.medium,
+                excludeFromSemantics: true,
               ),
               const SizedBox(width: AppSpacing.sm),
               Text(
                 'GrowLog',
-                style: AppTypography.title1.copyWith(color: ink),
+                style: AppTypography.wordmark.copyWith(color: ink),
               ),
               const Spacer(),
               _HeaderIcon(

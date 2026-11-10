@@ -1,3 +1,4 @@
+import 'utils/firm_scroll.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,6 +88,7 @@ class GrowLogApp extends StatelessWidget {
               // which otherwise has no BuildContext of its own to
               // navigate with. See lib/utils/error_handler.dart.
               navigatorKey: ErrorHandler.navigatorKey,
+              scrollBehavior: const FirmScrollBehavior(),
               title: 'GrowLog',
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [

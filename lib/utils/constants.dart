@@ -89,6 +89,16 @@ class AppTypography {
     height: 1.2,
     letterSpacing: -0.3,
   );
+  /// The GrowLog name beside the logo: Fraunces Bold, a little larger and
+  /// tighter than a heading so it reads as a mark rather than a title.
+  static const TextStyle wordmark = TextStyle(
+    fontFamily: serif,
+    fontSize: 26,
+    fontWeight: FontWeight.w700,
+    height: 1.15,
+    letterSpacing: -0.4,
+  );
+
   static const TextStyle title1 = TextStyle(
     fontFamily: serif,
     fontSize: 22,
