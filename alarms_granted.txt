@@ -1,0 +1,17 @@
+      operation=PendingIntent{78185e6: PendingIntentRecord{ed64727 com.google.android.apps.wellbeing broadcastIntent}}
+    RTC_WAKEUP #45: Alarm{1cfba43 type 0 origWhen 1794893982000 whenElapsed 605152066 com.zdmgold.growlog}
+      tag=*walarm*:com.zdmgold.growlog/com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver
+      type=RTC_WAKEUP origWhen=2026-11-17 05:39:42.000 window=+1h0m0s0ms repeatInterval=0 count=0 flags=0x20
+      policyWhenElapsed: requester=+6d23h59m47s406ms app_standby=-12s15ms device_idle=-- battery_saver=-12s15ms tare=-12s15ms
+      whenElapsed=+6d23h59m47s406ms maxWhenElapsed=+7d0h59m47s406ms
+      operation=PendingIntent{304e8c0: PendingIntentRecord{c81c9f9 com.zdmgold.growlog broadcastIntent}}
+      idle-options=Bundle[{android.pendingIntent.backgroundActivityAllowed=false, android:broadcast.temporaryAppAllowlistReasonCode=-1, android:broadcast.temporaryAppAllowlistDuration=10000, android:broadcast.temporaryAppAllowlistReason=, android:broadcast.temporaryAppAllowlistType=1, android:broadcast.flags=8}]
+    RTC_WAKEUP #46: Alarm{e630d3e type 0 origWhen 1796881182000 whenElapsed 2592352066 com.zdmgold.growlog}
+      tag=*walarm*:com.zdmgold.growlog/com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver
+      type=RTC_WAKEUP origWhen=2026-12-10 05:39:42.000 window=+1h0m0s0ms repeatInterval=0 count=0 flags=0x20
+      policyWhenElapsed: requester=+29d23h59m47s406ms app_standby=-11s909ms device_idle=-- battery_saver=-11s909ms tare=-11s909ms
+      whenElapsed=+29d23h59m47s406ms maxWhenElapsed=+30d0h59m47s406ms
+      operation=PendingIntent{a29b79f: PendingIntentRecord{dafd0ec com.zdmgold.growlog broadcastIntent}}
+      idle-options=Bundle[{android.pendingIntent.backgroundActivityAllowed=false, android:broadcast.temporaryAppAllowlistReasonCode=-1, android:broadcast.temporaryAppAllowlistDuration=10000, android:broadcast.temporaryAppAllowlistReason=, android:broadcast.temporaryAppAllowlistType=1, android:broadcast.flags=8}]
+    ELAPSED_WAKEUP #47: Alarm{a016bbe type 2 origWhen 315360080346 whenElapsed 315360080346 com.google.android.gms}
+      tag=*walarm*:com.google.android.gms/.auth.proximity.firstparty.SystemMemoryCacheService

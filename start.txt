@@ -1,0 +1,6 @@
+Starting: Intent { cmp=com.zdmgold.growlog/.MainActivity }
+Status: timeout
+LaunchState: UNKNOWN (-1)
+Activity: com.zdmgold.growlog/.MainActivity
+WaitTime: 11562
+Complete

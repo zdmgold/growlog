@@ -1,0 +1,51 @@
+install: Success
+cold start (debug build): WaitTime: 11562 
+shot 01_home 320680B
+labels on home: no ui dump [Errno 2] No such file or directory: '/tmp/emu/home.xml'
+tapped (324,2016)
+shot 02_garden 171255B
+tapped (756,2016)
+shot 03_schedule 154007B
+tapped (972,2016)
+shot 04_scans 194711B
+tapped (108,2016)
+shot 05_home_again 351317B
+tapped (660,233)
+shot 06_language 124480B
+tapped (954,233)
+shot 07_settings 183284B
+NOT FOUND: Add your API key Connect AI
+tapped (540,1144)
+shot 09_camera 293222B
+tapped (324,2016)
+tapped (862,1804)
+shot 10_add_plant 188969B
+tapped (540,585)
+shot 11_in_app_camera 68398B
+tapped (540,2017)
+shot 12_scan_without_key 182545B
+== reminder test ==
+[denied] appops exact alarm: No operations. Default mode: default 
+tapped (324,2016)
+tapped (862,1804)
+shot 13_denied_form 159113B
+tapped (540,1914)
+shot 14_denied_after_save 172550B
+[denied] alarms for app: 6
+[denied] reminder error lines: 0
+[granted] appops exact alarm: No operations. Default mode: default 
+tapped (324,2016)
+tapped (862,1804)
+shot 13_granted_form 159193B
+tapped (540,1914)
+shot 14_granted_after_save 178952B
+[granted] alarms for app: 6
+[granted] reminder error lines: 0
+process alive: 7321
+  Native Heap    67518    67496        0       19    68728   100636    66240    30235
+           Java Heap:    22244                          37408
+         Native Heap:    67496                          68728
+            Graphics:        0                              0
+           TOTAL PSS:   493277            TOTAL RSS:   616528       TOTAL SWAP PSS:      169
+error lines: 0
+ads log lines: 0
