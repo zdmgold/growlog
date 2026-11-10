@@ -49,7 +49,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   static const _site = 'https://growlog.zdmgold.workers.dev';
-  static const _email = 'stmakarios@gmail.com';
 
   String _version = '';
 
@@ -423,14 +422,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               _SettingsTile(
                 icon: PhosphorRegular.chatCircleDots,
                 label: context.l10n.contactUs,
-                subtitle: _email,
-                onTap: () => _open(
-                  Uri(
-                    scheme: 'mailto',
-                    path: _email,
-                    query: 'subject=GrowLog support',
-                  ),
-                ),
+                onTap: () => _open(Uri.parse('$_site/contact')),
               ),
               _SettingsTile(
                 icon: PhosphorRegular.info,
