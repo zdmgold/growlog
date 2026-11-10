@@ -216,6 +216,8 @@ class _AiSetupScreenState extends State<AiSetupScreen> {
               icon: const Icon(PhosphorRegular.arrowSquareOut, size: 18),
               label: Text(context.l10n.getAKey),
             ),
+            const Spacer(),
+            Text(_hintText(context, p.hint), style: AppTypography.caption.copyWith(color: sub)),
           ],
         ),
         if (_error != null)
