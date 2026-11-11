@@ -51,6 +51,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   bool _saving = false;
   bool _failed = false;
   String? _recordId;
+  bool _taskCounted = false;
 
   @override
   void initState() {
@@ -61,6 +62,25 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
     } else {
       _run();
     }
+  }
+
+  /// A result from a photo taken just now, not one reopened from history.
+  bool get _freshResult =>
+      _phase == _Phase.done &&
+      widget.record == null &&
+      (_result?.accepted ?? false);
+
+  /// One identified photo counts as one task, however many ad points it passes.
+  Future<void> _interstitial() async {
+    final count = !_taskCounted;
+    _taskCounted = true;
+    await InterstitialService.afterTask(count: count);
+  }
+
+  /// Interstitial point: leaving a fresh result, saved or not.
+  Future<void> _leave() async {
+    if (_freshResult) await _interstitial();
+    if (mounted) Navigator.pop(context);
   }
 
   /// Rebuilds the result from a saved scan.
@@ -187,8 +207,8 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.addedToGarden(displayName))),
       );
-      // Interstitial point 1: saving to the garden is a finished task.
-      await InterstitialService.afterTask(count: true);
+      // Interstitial point: saving to the garden is a finished task.
+      await _interstitial();
       if (mounted) Navigator.pop(context);
     } catch (e) {
       debugPrint('OfflineIdentifyScreen._save error: $e');
@@ -223,7 +243,12 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
     final sub = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
     final hasKey = AiSettings.instance.isConfigured;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _leave();
+      },
+      child: Scaffold(
       backgroundColor: bg,
       bottomNavigationBar: const SafeArea(top: false, child: AdSlot()),
       body: SafeArea(
@@ -235,7 +260,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: _leave,
                     icon: Icon(PhosphorRegular.arrowLeft, color: ink),
                   ),
                   Text(context.l10n.offIdentify, style: AppTypography.title1.copyWith(color: ink)),
@@ -271,6 +296,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

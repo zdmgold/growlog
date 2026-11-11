@@ -7,6 +7,7 @@ import '../models/photo_entry_model.dart';
 import '../models/plant_model.dart';
 import '../models/scan_record.dart';
 import '../providers/plant_provider.dart';
+import '../services/interstitial_service.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/scan_store.dart';
 import '../utils/care_due.dart';
@@ -238,6 +239,8 @@ class PlantDetailScreen extends StatelessWidget {
       messenger.showSnackBar(
         SnackBar(content: Text(l.photoAddedTo(plant.name))),
       );
+      // Interstitial point: a photo update is a finished task.
+      await InterstitialService.afterTask();
     } catch (e) {
       debugPrint('Add photo update error: $e');
       messenger.showSnackBar(

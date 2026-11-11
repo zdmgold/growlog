@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../l10n/l10n_ext.dart';
+import '../services/interstitial_service.dart';
 import '../services/offline/symptom_checker.dart';
 import '../utils/constants.dart';
 import '../utils/phosphor_icons.dart';
@@ -60,6 +61,9 @@ class _SymptomCheckerScreenState extends State<SymptomCheckerScreen> {
     return c.groups['symptom']!.any((o) => _selected.contains(o.id));
   }
 
+  /// One finished check counts as one task, however many ways it is left.
+  bool _taskCounted = false;
+
   void _next() {
     HapticFeedback.selectionClick();
     setState(() {
@@ -67,13 +71,22 @@ class _SymptomCheckerScreenState extends State<SymptomCheckerScreen> {
         _step++;
       } else {
         _showResults = true;
+        _taskCounted = false;
       }
     });
   }
 
+  /// Interstitial point: leaving the results, by Back or by Start over.
+  Future<void> _afterResults(VoidCallback action) async {
+    final count = !_taskCounted;
+    _taskCounted = true;
+    await InterstitialService.afterTask(count: count);
+    if (mounted) action();
+  }
+
   void _back() {
     if (_showResults) {
-      setState(() => _showResults = false);
+      _afterResults(() => setState(() => _showResults = false));
     } else if (_step > 0) {
       setState(() => _step--);
     } else {
@@ -81,11 +94,11 @@ class _SymptomCheckerScreenState extends State<SymptomCheckerScreen> {
     }
   }
 
-  void _restart() => setState(() {
+  void _restart() => _afterResults(() => setState(() {
         _selected.clear();
         _step = 0;
         _showResults = false;
-      });
+      }));
 
   @override
   Widget build(BuildContext context) {

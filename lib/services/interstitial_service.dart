@@ -6,23 +6,23 @@ import '../widgets/ad_slot.dart';
 import 'admob_service.dart';
 
 /// Full-screen ads, shown only right after the user finishes something:
-/// saving a scanned plant, leaving a fresh scan result, or saving a plant by
-/// hand. Never on app open or exit, never while a scan is running.
+/// saving a scanned plant, leaving a fresh scan result, saving a plant by
+/// hand, leaving the symptom check results, or adding a photo update. Never on
+/// app open or exit, never on the camera, never while a scan is running.
 ///
-/// Limits on top of Google's own rules: nothing until the user's third
-/// completed task, then at most one ad every 5 minutes and 3 per session.
+/// Limits on top of Google's own rules: nothing until the user's fifth
+/// completed task, then at most one ad every 7 minutes. There is no cap per
+/// session and no cap per day.
 class InterstitialService {
   InterstitialService._();
 
-  static const int minTasks = 3;
-  static const Duration minGap = Duration(minutes: 5);
-  static const int maxPerSession = 3;
+  static const int minTasks = 5;
+  static const Duration minGap = Duration(minutes: 7);
   static const String _kTasks = 'interstitial_tasks';
 
   static InterstitialAd? _ad;
   static bool _loading = false;
   static DateTime? _lastShown;
-  static int _shownThisSession = 0;
   static int _tasks = 0;
   static bool _tasksLoaded = false;
 
@@ -30,12 +30,10 @@ class InterstitialService {
   @visibleForTesting
   static bool allowed({
     required int tasks,
-    required int shownThisSession,
     required DateTime? lastShown,
     required DateTime now,
   }) {
     if (tasks < minTasks) return false;
-    if (shownThisSession >= maxPerSession) return false;
     if (lastShown != null && now.difference(lastShown) < minGap) return false;
     return true;
   }
@@ -95,7 +93,6 @@ class InterstitialService {
     if (!AdMobService.isSupported || AdSlot.isPurchased) return;
     if (!allowed(
       tasks: _tasks,
-      shownThisSession: _shownThisSession,
       lastShown: _lastShown,
       now: DateTime.now(),
     )) {
@@ -121,7 +118,6 @@ class InterstitialService {
       },
     );
     _lastShown = DateTime.now();
-    _shownThisSession++;
     try {
       await ad.show();
       await done.future;
