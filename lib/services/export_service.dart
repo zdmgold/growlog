@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'dart:ui' as ui;
 import '../models/plant_model.dart';
+import 'file_sweeper.dart';
 import '../models/room_model.dart';
 
 class ExportService {
@@ -26,10 +27,14 @@ class ExportService {
       final tempDir = await getTemporaryDirectory();
       final file = File('${tempDir.path}/growlog_share_${DateTime.now().millisecondsSinceEpoch}.png');
       await file.writeAsBytes(imageBytes);
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: text ?? 'My plant growth with GrowLog',
-      );
+      try {
+        await Share.shareXFiles(
+          [XFile(file.path)],
+          text: text ?? 'My plant growth with GrowLog',
+        );
+      } finally {
+        FileSweeper.deleteQuietly(file.path);
+      }
     } catch (e) {
       debugPrint('ExportService.shareImage error: $e');
     }
@@ -87,10 +92,14 @@ class ExportService {
   static Future<void> shareBackupFile(String filePath) async {
     try {
       if (File(filePath).existsSync()) {
-        await Share.shareXFiles(
-          [XFile(filePath)],
-          text: 'GrowLog backup',
-        );
+        try {
+          await Share.shareXFiles(
+            [XFile(filePath)],
+            text: 'GrowLog backup',
+          );
+        } finally {
+          FileSweeper.deleteQuietly(filePath);
+        }
       }
     } catch (e) {
       debugPrint('ExportService.shareBackupFile error: $e');

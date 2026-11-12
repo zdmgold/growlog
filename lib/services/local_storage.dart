@@ -350,6 +350,7 @@ class LocalStorage {
       await txn.delete('measurements');
       await txn.delete('plants');
       await txn.delete('rooms');
+      await txn.delete('scans');
     });
   }
 

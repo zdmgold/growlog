@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'services/file_sweeper.dart';
 import 'utils/firm_scroll.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -43,6 +45,9 @@ void main() async {
   final iapService = IAPService();
   AdSlot.setPurchased(iapService.value);
   iapService.addListener(() => AdSlot.setPurchased(iapService.value));
+
+  // Clean up files nothing needs any more, after the first screen is on its way.
+  unawaited(FileSweeper.runAtStartup(localStorage));
 
   runApp(
     GrowLogApp(

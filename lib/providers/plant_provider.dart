@@ -5,7 +5,9 @@ import '../models/room_model.dart';
 import '../models/care_log_model.dart';
 import '../models/photo_entry_model.dart';
 import '../models/measurement_model.dart';
+import '../services/file_sweeper.dart';
 import '../services/local_storage.dart';
+import '../services/scan_store.dart';
 import '../services/notification_service.dart';
 
 /// SURGICAL FIX (Fix Phase A): previously `_rooms` was a plain field
@@ -299,6 +301,9 @@ class PlantProvider extends ValueNotifier<PlantState> {
   Future<void> clearAll() async {
     try {
       await _storage.clearAll();
+      // Plant and scan photo files go with the data, then the scan list refreshes.
+      await FileSweeper.clearAllPhotos();
+      await ScanStore.instance.load();
       await NotificationService.cancelAllReminders();
       _imageExistsCache.clear();
       _lastDeleted = null;
