@@ -427,5 +427,12 @@
   "creditsDesignBody": "Fraunces और Inter फ़ॉन्ट (SIL Open Font License)। Phosphor Icons (MIT)।",
   "creditsGuide": "देखभाल गाइड",
   "creditsGuideBody": "देखभाल गाइड और लक्षण जाँचकर्ता GrowLog के लिए लिखा गया सामान्य मार्गदर्शन है। यह विशेषज्ञ की सलाह का विकल्प नहीं है।",
-  "openSourceLicences": "ओपन-सोर्स लाइसेंस"
+  "openSourceLicences": "ओपन-सोर्स लाइसेंस",
+  "offErrNoSpace": "खाली जगह पर्याप्त नहीं है। ऑफ़लाइन मॉडल को लगभग {size} MB खाली जगह चाहिए।",
+  "storageSection": "स्टोरेज",
+  "storageTempLabel": "अस्थायी और अनुपयोगी फ़ाइलें",
+  "storageSubtitle": "{size} खाली किया जा सकता है",
+  "storageNothing": "साफ़ करने के लिए कुछ नहीं",
+  "storageClear": "साफ़ करें",
+  "storageCleared": "{size} खाली किया गया"
 }

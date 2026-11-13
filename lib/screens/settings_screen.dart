@@ -1,3 +1,4 @@
+import '../services/file_sweeper.dart';
 import 'credits_screen.dart';
 import '../services/ai/ai_settings.dart';
 import '../services/offline/offline_model_service.dart';
@@ -48,6 +49,31 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  int? _reclaimBytes;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshStorage();
+  }
+
+  Future<void> _refreshStorage() async {
+    final n = await FileSweeper.reclaimableBytes(widget.plantProvider.storage);
+    if (mounted) setState(() => _reclaimBytes = n);
+  }
+
+  Future<void> _clearStorage() async {
+    final r = await FileSweeper.clearReclaimable(widget.plantProvider.storage);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(context.l10n.storageCleared(_fmtBytes(r.bytes)))),
+    );
+    _refreshStorage();
+  }
+
+  static String _fmtBytes(int b) =>
+      b < 1000000 ? '${(b / 1000).round()} KB' : '${(b / 1000000).toStringAsFixed(1)} MB';
+
   static const _site = 'https://growlog.zdmgold.workers.dev';
 
   String _version = '';
@@ -326,6 +352,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               );
             },
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          _SectionLabel(text: context.l10n.storageSection),
+          _Group(
+            isDark: isDark,
+            children: [
+              _SettingsTile(
+                icon: PhosphorRegular.images,
+                label: context.l10n.storageTempLabel,
+                subtitle: _reclaimBytes == null
+                    ? null
+                    : (_reclaimBytes == 0
+                        ? context.l10n.storageNothing
+                        : context.l10n.storageSubtitle(_fmtBytes(_reclaimBytes!))),
+                trailing: TextButton(
+                  style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+                  onPressed: (_reclaimBytes ?? 0) == 0 ? null : _clearStorage,
+                  child: Text(context.l10n.storageClear),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.lg),
           _SectionLabel(text: l10n?.backupRestore ?? 'Backup & Restore'),

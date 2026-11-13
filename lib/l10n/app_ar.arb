@@ -427,5 +427,12 @@
   "creditsDesignBody": "خطا Fraunces وInter (رخصة SIL Open Font). أيقونات Phosphor (MIT).",
   "creditsGuide": "دليل العناية",
   "creditsGuideBody": "دليل العناية وفاحص الأعراض إرشادات عامة كُتبت لتطبيق GrowLog، ولا تغني عن استشارة خبير.",
-  "openSourceLicences": "تراخيص المصدر المفتوح"
+  "openSourceLicences": "تراخيص المصدر المفتوح",
+  "offErrNoSpace": "لا توجد مساحة فارغة كافية. يحتاج النموذج دون اتصال إلى نحو {size} ميغابايت فارغة.",
+  "storageSection": "التخزين",
+  "storageTempLabel": "الملفات المؤقتة وغير المستخدمة",
+  "storageSubtitle": "يمكن تحرير {size}",
+  "storageNothing": "لا شيء لمسحه",
+  "storageClear": "مسح",
+  "storageCleared": "تم تحرير {size}"
 }

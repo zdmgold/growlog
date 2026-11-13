@@ -427,5 +427,12 @@
   "creditsDesignBody": "フォントはFrauncesとInter（SIL Open Font License）、アイコンはPhosphor Icons（MIT）です。",
   "creditsGuide": "お世話ガイド",
   "creditsGuideBody": "お世話ガイドと症状チェッカーはGrowLog向けに書かれた一般的な目安であり、専門家の助言に代わるものではありません。",
-  "openSourceLicences": "オープンソースライセンス"
+  "openSourceLicences": "オープンソースライセンス",
+  "offErrNoSpace": "空き容量が足りません。オフラインモデルには約{size} MBの空きが必要です。",
+  "storageSection": "ストレージ",
+  "storageTempLabel": "一時ファイルと未使用のファイル",
+  "storageSubtitle": "{size}を削除できます",
+  "storageNothing": "削除するものはありません",
+  "storageClear": "削除",
+  "storageCleared": "{size}を削除しました"
 }

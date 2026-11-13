@@ -66,6 +66,8 @@ class _GateSheetState extends State<_GateSheet> {
         return l.offErrIncomplete;
       case OfflineErrorKind.damaged:
         return l.offErrDamaged;
+      case OfflineErrorKind.notEnoughSpace:
+        return l.offErrNoSpace(_mb(_svc.neededBytes));
       default:
         return l.offFailedGeneric;
     }

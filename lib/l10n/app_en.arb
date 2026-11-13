@@ -1155,5 +1155,33 @@
   "creditsDesignBody": "Fraunces and Inter fonts (SIL Open Font Licence). Phosphor Icons (MIT).",
   "creditsGuide": "Care guide",
   "creditsGuideBody": "The care guide and symptom checker are general guidance written for GrowLog. They are not a substitute for expert advice.",
-  "openSourceLicences": "Open-source licences"
+  "openSourceLicences": "Open-source licences",
+  "offErrNoSpace": "Not enough free space. The offline model needs about {size} MB free.",
+  "@offErrNoSpace": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "storageSection": "Storage",
+  "storageTempLabel": "Temporary and unused files",
+  "storageSubtitle": "{size} can be cleared",
+  "@storageSubtitle": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "storageNothing": "Nothing to clear",
+  "storageClear": "Clear",
+  "storageCleared": "Cleared {size}",
+  "@storageCleared": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  }
 }

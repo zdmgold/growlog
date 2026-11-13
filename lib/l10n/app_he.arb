@@ -427,5 +427,12 @@
   "creditsDesignBody": "גופני Fraunces ו-Inter (SIL Open Font License). סמלי Phosphor (MIT).",
   "creditsGuide": "מדריך טיפול",
   "creditsGuideBody": "מדריך הטיפול ובודק התסמינים הם הנחיות כלליות שנכתבו עבור GrowLog. הם אינם תחליף לייעוץ מומחה.",
-  "openSourceLicences": "רישיונות קוד פתוח"
+  "openSourceLicences": "רישיונות קוד פתוח",
+  "offErrNoSpace": "אין מספיק מקום פנוי. המודל הלא מקוון זקוק לכ-{size} MB פנויים.",
+  "storageSection": "אחסון",
+  "storageTempLabel": "קבצים זמניים ולא בשימוש",
+  "storageSubtitle": "אפשר לפנות {size}",
+  "storageNothing": "אין מה לנקות",
+  "storageClear": "נקה",
+  "storageCleared": "פונו {size}"
 }

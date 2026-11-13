@@ -1,3 +1,4 @@
+import '../storage_check.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -28,7 +29,15 @@ class _Cancelled implements Exception {
 }
 
 /// Why a download stopped. The screens turn this into text in the app's language.
-enum OfflineErrorKind { noInternet, timeout, server, incomplete, damaged, generic }
+enum OfflineErrorKind {
+  noInternet,
+  timeout,
+  server,
+  incomplete,
+  damaged,
+  notEnoughSpace,
+  generic
+}
 
 class _KindException implements Exception {
   final OfflineErrorKind kind;
@@ -143,6 +152,11 @@ class OfflineModelService extends ChangeNotifier {
     if (w != null && !w.isCompleted) w.complete(false);
   }
 
+  int _neededBytes = 0;
+
+  /// Bytes the last failed download wanted free, shown in the "not enough space" message.
+  int get neededBytes => _neededBytes;
+
   Future<void> download({required bool allowMobileData}) async {
     if (isBusy || isInstalled) return;
     _cancelRequested = false;
@@ -168,6 +182,17 @@ class OfflineModelService extends ChangeNotifier {
             ModelManifest.fromJson(jsonDecode(raw) as Map<String, dynamic>);
         final dir = await _dir();
         _bytesTotal = manifest.totalBytes;
+        // Fail early and clearly if the phone cannot hold the rest of the pack.
+        var onDisk = 0;
+        for (final e in dir.listSync().whereType<File>()) {
+          onDisk += e.lengthSync();
+        }
+        final need = (manifest.totalBytes - onDisk).clamp(0, manifest.totalBytes);
+        if (!StorageCheck.enough(
+            needBytes: need, freeMb: await StorageCheck.freeMb())) {
+          _neededBytes = need + StorageCheck.marginBytes;
+          throw const _KindException(OfflineErrorKind.notEnoughSpace);
+        }
         var before = 0;
         for (final f in manifest.files) {
           await _fetchFile(client, dir, f, before);

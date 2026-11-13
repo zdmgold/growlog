@@ -427,5 +427,12 @@
   "creditsDesignBody": "Fontes Fraunces e Inter (SIL Open Font License). Ícones Phosphor (MIT).",
   "creditsGuide": "Guia de cuidados",
   "creditsGuideBody": "O guia de cuidados e o verificador de sintomas são orientações gerais escritas para o GrowLog. Não substituem o conselho de um especialista.",
-  "openSourceLicences": "Licenças de código aberto"
+  "openSourceLicences": "Licenças de código aberto",
+  "offErrNoSpace": "Espaço livre insuficiente. O modelo offline precisa de cerca de {size} MB livres.",
+  "storageSection": "Armazenamento",
+  "storageTempLabel": "Arquivos temporários e sem uso",
+  "storageSubtitle": "{size} podem ser liberados",
+  "storageNothing": "Nada para limpar",
+  "storageClear": "Limpar",
+  "storageCleared": "{size} liberados"
 }

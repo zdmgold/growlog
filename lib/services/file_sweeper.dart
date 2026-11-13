@@ -189,6 +189,44 @@ class FileSweeper {
     }
   }
 
+  /// Everything the Storage row can clear: every share/backup temp file and every
+  /// photo file nothing refers to, whatever its age. A person pressing Clear has
+  /// long since passed the short Undo window.
+  static Future<List<File>> reclaimableFiles(
+    LocalStorage storage, {
+    Directory? docs,
+    Directory? tmp,
+  }) async {
+    final out = <File>[];
+    try {
+      final t = tmp ?? await getTemporaryDirectory();
+      out.addAll(_filesIn(t).where((f) => tempName.hasMatch(p.basename(f.path))));
+      final d = docs ?? await getApplicationDocumentsDirectory();
+      final names = await referencedNamesFrom(await storage.database);
+      final all = _filesIn(d).where((f) => photoName.hasMatch(p.basename(f.path))).toList();
+      if (!(names.isEmpty && all.length > suspiciousCount)) {
+        out.addAll(orphanPhotos(
+          files: all,
+          referencedNames: names,
+          now: DateTime.now(),
+          minAge: Duration.zero,
+        ));
+      }
+    } catch (e) {
+      debugPrint('FileSweeper.reclaimableFiles error: $e');
+    }
+    return out;
+  }
+
+  static Future<int> reclaimableBytes(LocalStorage storage,
+          {Directory? docs, Directory? tmp}) async =>
+      (await reclaimableFiles(storage, docs: docs, tmp: tmp))
+          .fold<int>(0, (s, f) => s + f.lengthSync());
+
+  static Future<SweepReport> clearReclaimable(LocalStorage storage,
+          {Directory? docs, Directory? tmp}) async =>
+      _delete(await reclaimableFiles(storage, docs: docs, tmp: tmp));
+
   /// One pass at app start. Never throws and never blocks the first screen.
   static Future<void> runAtStartup(LocalStorage storage) async {
     final a = await sweepOrphanPhotos(storage);

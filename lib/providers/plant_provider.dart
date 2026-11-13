@@ -36,6 +36,7 @@ class PlantState {
 
 class PlantProvider extends ValueNotifier<PlantState> {
   final LocalStorage _storage;
+  LocalStorage get storage => _storage;
 
   // SURGICAL ADDITION: async image-existence cache. Widgets previously
   // called `File(path).existsSync()` directly during build, which is a

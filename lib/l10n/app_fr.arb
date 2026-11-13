@@ -427,5 +427,12 @@
   "creditsDesignBody": "Polices Fraunces et Inter (SIL Open Font License). Icônes Phosphor (MIT).",
   "creditsGuide": "Guide d’entretien",
   "creditsGuideBody": "Le guide d’entretien et le vérificateur de symptômes sont des conseils généraux rédigés pour GrowLog. Ils ne remplacent pas l’avis d’un expert.",
-  "openSourceLicences": "Licences open source"
+  "openSourceLicences": "Licences open source",
+  "offErrNoSpace": "Espace libre insuffisant. Le modèle hors ligne a besoin d’environ {size} Mo libres.",
+  "storageSection": "Stockage",
+  "storageTempLabel": "Fichiers temporaires et inutilisés",
+  "storageSubtitle": "{size} peuvent être libérés",
+  "storageNothing": "Rien à effacer",
+  "storageClear": "Effacer",
+  "storageCleared": "{size} libérés"
 }

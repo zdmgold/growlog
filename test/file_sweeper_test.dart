@@ -103,4 +103,29 @@ void main() {
       expect(r.map((f) => p.basename(f.path)), ['growlog_share_1.png']);
     });
   });
+
+  group('what the Storage row can clear', () {
+    test('every temp file and every unreferenced photo, whatever its age', () async {
+      final tmp = Directory.systemTemp.createTempSync('tmp_part');
+      addTearDown(() => tmp.deleteSync(recursive: true));
+      final db = await databaseFactory.openDatabase(inMemoryDatabasePath);
+      await db.execute('CREATE TABLE photos(id TEXT, path TEXT)');
+      await db.execute('CREATE TABLE scans(id TEXT, imagePath TEXT)');
+      await db.insert('photos', {'id': 'a', 'path': 'plant_$_u1.jpg'});
+      _make(dir, 'plant_$_u1.jpg', modified: old);          // used
+      _make(dir, 'plant_$_u2.jpg', modified: now);          // unused, brand new
+      _make(tmp, 'growlog_share_1.png', modified: now, bytes: 100);
+      _make(tmp, 'other.png');
+      // Reuse the pure rule with a zero age to check the same selection.
+      final names = await FileSweeper.referencedNamesFrom(db);
+      final picked = FileSweeper.orphanPhotos(
+        files: dir.listSync().whereType<File>(),
+        referencedNames: names,
+        now: now.add(const Duration(minutes: 1)),
+        minAge: Duration.zero,
+      );
+      expect(picked.map((f) => p.basename(f.path)), ['plant_$_u2.jpg']);
+      await db.close();
+    });
+  });
 }

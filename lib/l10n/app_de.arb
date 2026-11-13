@@ -427,5 +427,12 @@
   "creditsDesignBody": "Schriften Fraunces und Inter (SIL Open Font License). Phosphor Icons (MIT).",
   "creditsGuide": "Pflegeleitfaden",
   "creditsGuideBody": "Pflegeleitfaden und Symptom-Check sind allgemeine Hinweise, die für GrowLog geschrieben wurden. Sie ersetzen keinen Expertenrat.",
-  "openSourceLicences": "Open-Source-Lizenzen"
+  "openSourceLicences": "Open-Source-Lizenzen",
+  "offErrNoSpace": "Nicht genug freier Speicher. Das Offline-Modell braucht etwa {size} MB frei.",
+  "storageSection": "Speicher",
+  "storageTempLabel": "Temporäre und ungenutzte Dateien",
+  "storageSubtitle": "{size} können gelöscht werden",
+  "storageNothing": "Nichts zu löschen",
+  "storageClear": "Löschen",
+  "storageCleared": "{size} gelöscht"
 }
