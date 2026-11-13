@@ -1,0 +1,155 @@
+Resolving dependencies...
+Downloading packages...
+  cli_util 0.4.2 (0.6.0 available)
+  code_assets 1.2.1 (2.2.0 available)
+  connectivity_plus 7.3.1 (7.3.2 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  dbus 0.7.15 (0.8.0 available)
++ disk_space_plus 0.2.8
+  equatable 2.1.0 (3.0.0 available)
+  file_picker 8.3.7 (13.3.3 available)
+  fl_chart 0.68.0 (1.3.1 available)
+  flutter_launcher_icons 0.13.1 (0.14.4 available)
+  flutter_lints 4.0.0 (6.0.0 available)
+  flutter_local_notifications 17.2.4 (23.0.2 available)
+  flutter_local_notifications_linux 4.0.1 (9.0.0 available)
+  flutter_local_notifications_platform_interface 7.2.0 (13.0.0 available)
+  flutter_markdown 0.7.7+1 (discontinued replaced by flutter_markdown_plus)
+  flutter_secure_storage 10.3.4 (11.2.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.3 available)
+  flutter_secure_storage_windows 4.1.0 (4.2.2 available)
+  hooks 2.0.2 (2.2.0 available)
+  lints 4.0.0 (6.1.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.6 available)
+  nm 0.5.0 (0.6.0 available)
+  objective_c 9.5.0 (9.6.4 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  petitparser 7.0.2 (7.1.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences_foundation 2.5.7 (2.6.2 available)
+  sqlite3 3.5.2 (3.9.1 available)
+  test_api 0.7.12 (0.7.15 available)
+  timezone 0.9.4 (0.11.2 available)
+  vector_math 2.4.0 (2.4.4 available)
+  win32 5.15.0 (6.4.0 available)
+  xml 7.0.1 (7.1.0 available)
+Changed 1 dependency!
+1 package is discontinued.
+37 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Resolving dependencies...
+Downloading packages...
+  cli_util 0.4.2 (0.6.0 available)
+  code_assets 1.2.1 (2.2.0 available)
+  connectivity_plus 7.3.1 (7.3.2 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  dbus 0.7.15 (0.8.0 available)
+  equatable 2.1.0 (3.0.0 available)
+  file_picker 8.3.7 (13.3.3 available)
+  fl_chart 0.68.0 (1.3.1 available)
+  flutter_launcher_icons 0.13.1 (0.14.4 available)
+  flutter_lints 4.0.0 (6.0.0 available)
+  flutter_local_notifications 17.2.4 (23.0.2 available)
+  flutter_local_notifications_linux 4.0.1 (9.0.0 available)
+  flutter_local_notifications_platform_interface 7.2.0 (13.0.0 available)
+  flutter_markdown 0.7.7+1 (discontinued replaced by flutter_markdown_plus)
+  flutter_secure_storage 10.3.4 (11.2.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.3 available)
+  flutter_secure_storage_windows 4.1.0 (4.2.2 available)
+  hooks 2.0.2 (2.2.0 available)
+  lints 4.0.0 (6.1.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  native_toolchain_c 0.19.2 (0.19.6 available)
+  nm 0.5.0 (0.6.0 available)
+  objective_c 9.5.0 (9.6.4 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
+  petitparser 7.0.2 (7.1.0 available)
+  record_use 0.6.0 (1.1.1 available)
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences_foundation 2.5.7 (2.6.2 available)
+  sqlite3 3.5.2 (3.9.1 available)
+  test_api 0.7.12 (0.7.15 available)
+  timezone 0.9.4 (0.11.2 available)
+  vector_math 2.4.0 (2.4.4 available)
+  win32 5.15.0 (6.4.0 available)
+  xml 7.0.1 (7.1.0 available)
+Got dependencies!
+1 package is discontinued.
+37 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+== resolved:
+188:  disk_space_plus:
+189-    dependency: "direct main"
+190-    description:
+== dir: /home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8
+== licence:
+Copyright 2023 Harrowmykel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+== api:
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus.dart:4:  Future<String?> getPlatformVersion() {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus.dart:8:  Future<double?> get getFreeDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus.dart:12:  Future<double?> get getTotalDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus.dart:16:  Future<double?> getFreeDiskSpaceForPath(String path) async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_method_channel.dart:16:  Future<String?> getPlatformVersion() async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_method_channel.dart:24:  Future<double?> get getFreeDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_method_channel.dart:32:  Future<double?> get getTotalDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_method_channel.dart:40:  Future<double?> getFreeDiskSpaceForPath(String path) async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:9:  static final Object _token = Object();
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:11:  static DiskSpacePlusPlatform _instance = MethodChannelDiskSpacePlus();
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:16:  static DiskSpacePlusPlatform get instance => _instance;
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:21:  static set instance(DiskSpacePlusPlatform instance) {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:26:  Future<String?> getPlatformVersion() {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:30:  Future<double?> get getFreeDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:34:  Future<double?> get getTotalDiskSpace async {
+/home/runner/.pub-cache/hosted/pub.dev/disk_space_plus-0.2.8/lib/disk_space_plus_platform_interface.dart:38:  Future<double?> getFreeDiskSpaceForPath(String path) async {
+== platforms:
+36:    platforms:
+37-      android:
+38-        package: com.piccmaq.disk_space_plus
+39-        pluginClass: DiskSpacePlusPlugin
+40-      ios:
+41-        pluginClass: DiskSpacePlusPlugin
+42-
+43-  # To add assets to your plugin package, add an assets section, like this:
+44-  # assets:
+== environment:
+6:environment:
+7-  sdk: ^3.13.3
+8-  flutter: '>=3.3.0'
+9-
+BUILD OK
+Running Gradle task 'assembleDebug'...                          
+FORCED compileSdk 36 on file_picker (was 34)
+FORCED compileSdk 36 on flutter_local_notifications (was 34)
+FORCED compileSdk 36 on flutter_onnxruntime (was 35)
+FORCED compileSdk 36 on jni (was 35)
+FORCED compileSdk 36 on jni_flutter (was 35)
+FORCED compileSdk 36 on package_info_plus (was 34)
+FORCED compileSdk 36 on share_plus (was 34)
+WARNING: Your Android app project: app located at: /home/runner/work/growlog/growlog/android/app/build.gradle
+applies the Kotlin Gradle Plugin, which will cause build failures in future versions of Flutter.
+Please migrate your app to Built-in Kotlin using this guide: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers
+
+WARNING: Your app uses the following plugins that apply Kotlin Gradle Plugin (KGP): flutter_onnxruntime, package_info_plus, share_plus
+Future versions of Flutter will fail to build if your app uses plugins that apply KGP.
+
+Please check the changelogs of these plugins and upgrade to a version that supports Built-in Kotlin.
+If no such version exists, report the issue to the plugin. If necessary, here is a guide on filing
+an issue against a plugin: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers#report-incompatible-kotlin-gradle-plugin-usage-to-plugin-authors
+
+If you are a plugin author, please migrate your plugin to Built-in Kotlin using this guide: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
+Running Gradle task 'assembleDebug'...                             34.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
