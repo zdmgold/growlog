@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:growlog/l10n/app_localizations.dart';
@@ -77,6 +78,7 @@ class ScanThumb extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Image.file(
       File(scan.imagePath),
+      cacheWidth: ImageSizes.thumb,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => Container(
         color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,

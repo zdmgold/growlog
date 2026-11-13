@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -141,7 +142,8 @@ class PlantDetailScreen extends StatelessWidget {
     if (exists == false) return _placeholderHero(isDark);
     return Hero(
       tag: 'plant_${plant.id}',
-      child: Image.file(File(photo.path), fit: BoxFit.cover),
+      child: Image.file(File(photo.path),
+          cacheWidth: ImageSizes.hero, fit: BoxFit.cover),
     );
   }
 
@@ -1021,6 +1023,7 @@ class _GrowthSection extends StatelessWidget {
   Widget _image(PhotoEntry p, {BoxFit fit = BoxFit.cover}) {
     return Image.file(
       File(p.path),
+      cacheWidth: ImageSizes.medium,
       fit: fit,
       errorBuilder: (_, __, ___) => Container(
         color: isDark ? AppColors.bgTertiaryDark : AppColors.bgTertiary,

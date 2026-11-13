@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -278,6 +279,7 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
                       height: 220,
                       child: Image.file(
                         File(widget.imagePath),
+                        cacheWidth: ImageSizes.fullWidth,
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => Container(
                           color: isDark

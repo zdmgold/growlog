@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -403,7 +404,8 @@ class _PhotoPicker extends StatelessWidget {
                 ? Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.file(photoFile!, fit: BoxFit.cover),
+                      Image.file(photoFile!,
+                          cacheWidth: ImageSizes.fullWidth, fit: BoxFit.cover),
                       Positioned(
                         right: AppSpacing.md,
                         bottom: AppSpacing.md,

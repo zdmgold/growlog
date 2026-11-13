@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/plant_model.dart';
@@ -28,6 +29,7 @@ class PlantThumb extends StatelessWidget {
     if (exists == false) return _placeholder(isDark);
     return Image.file(
       File(thumb.path),
+      cacheWidth: ImageSizes.thumb,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => _placeholder(isDark),
     );

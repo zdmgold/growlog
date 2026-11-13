@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/room_model.dart';
@@ -171,6 +172,6 @@ class _PhotoGrid extends StatelessWidget {
     if (exists == false) {
       return Container(color: Colors.black12);
     }
-    return Image.file(File(path), fit: fit);
+    return Image.file(File(path), cacheWidth: ImageSizes.thumb, fit: fit);
   }
 }

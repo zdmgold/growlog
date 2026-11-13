@@ -1,3 +1,4 @@
+import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -271,6 +272,7 @@ class _ScanScreenState extends State<ScanScreen>
     final path = _record?.imagePath ?? widget.imagePath!;
     return Image.file(
       File(path),
+      cacheWidth: ImageSizes.hero,
       fit: BoxFit.cover,
       errorBuilder: (_, __, ___) => const ColoredBox(color: Colors.black12),
     );
