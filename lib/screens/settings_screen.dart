@@ -51,12 +51,6 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   int? _reclaimBytes;
 
-  @override
-  void initState() {
-    super.initState();
-    _refreshStorage();
-  }
-
   Future<void> _refreshStorage() async {
     final n = await FileSweeper.reclaimableBytes(widget.plantProvider.storage);
     if (mounted) setState(() => _reclaimBytes = n);
@@ -92,6 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     super.initState();
     _loadVersion();
+    _refreshStorage();
   }
 
   Future<void> _loadVersion() async {
