@@ -1,0 +1,63 @@
+name: Probe Free Space Plugin
+
+# Manual only. Checks that a free-space plugin resolves, builds for Android and what its licence and API are.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.6'
+          channel: 'stable'
+          cache: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - run: flutter create --platforms=android .
+      - run: rm -f android/app/build.gradle.kts
+      - name: Remove incomplete preinstalled NDK
+        run: |
+          for d in "$ANDROID_SDK_ROOT"/ndk/*; do
+            if [ -d "$d" ] && [ ! -f "$d/source.properties" ]; then sudo rm -rf "$d"; fi
+          done
+      - name: Install Gradle init script (plugin compileSdk 36)
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cp .github/gradle/force-plugin-compilesdk.gradle ~/.gradle/init.d/
+      - run: flutter pub get
+      - run: flutter gen-l10n
+      - run: flutter build apk --debug
+      - name: Add the plugin and build
+        run: |
+          mkdir -p /tmp/emu
+          R=/tmp/emu/report.txt; : > $R
+          flutter pub add disk_space_plus >> $R 2>&1 || echo "PUB ADD FAILED" >> $R
+          flutter pub get >> $R 2>&1
+          echo "== resolved:" >> $R; grep -n -A2 "disk_space_plus:" pubspec.lock >> $R
+          D=$(ls -d ~/.pub-cache/hosted/pub.dev/disk_space_plus-* | head -1)
+          echo "== dir: $D" >> $R
+          echo "== licence:" >> $R; head -5 $D/LICENSE >> $R 2>&1
+          echo "== api:" >> $R; grep -rn "static\|Future<" $D/lib/*.dart | head -20 >> $R
+          echo "== platforms:" >> $R; grep -n -A8 "platforms:" $D/pubspec.yaml >> $R
+          echo "== environment:" >> $R; grep -n -A3 "environment:" $D/pubspec.yaml >> $R
+          flutter build apk --debug --target-platform android-arm64 >> /tmp/emu/build.txt 2>&1 && echo "BUILD OK" >> $R || echo "BUILD FAILED" >> $R
+          tail -25 /tmp/emu/build.txt >> $R
+      - name: Publish report
+        if: always()
+        run: |
+          mkdir -p /tmp/emu; touch /tmp/emu/none
+          git clone --depth 1 "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" /tmp/rep
+          cd /tmp/rep
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report-probe-freespace; git rm -rf . -q || true
+          cp /tmp/emu/report.txt . 2>/dev/null || true
+          git add -A; git commit -q -m "probe free space" || true; git push -f origin ci-report-probe-freespace
