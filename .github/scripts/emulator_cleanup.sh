@@ -50,6 +50,8 @@ adb shell am force-stop "$PKG"; sleep 2
 adb shell "run-as $PKG sh -c 'mkdir -p cache; head -c 2000000 /dev/zero > cache/growlog_share_9.png'"
 adb shell "run-as $PKG sh -c 'echo x > app_flutter/plant_$U4.jpg'"
 adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 20
+# A slow emulator can show an "isn't responding" dialog over the app; dismiss it.
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1; tap "Wait"; sleep 2
 dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Settings" "settings") && { set -- $XY; adb shell input tap "$1" "$2"; sleep 3; }
 for i in 1 2 3; do dump cur; grep -qi "Temporary and unused files" "$OUT/cur.xml" && break; adb shell input swipe 540 1700 540 700 300; sleep 1; done
 shot 04_storage_row; dump st
