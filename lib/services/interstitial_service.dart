@@ -11,14 +11,15 @@ import 'admob_service.dart';
 /// app open or exit, never on the camera, never while a scan is running.
 ///
 /// Limits on top of Google's own rules: nothing until the user's fifth
-/// completed task, then at most one ad every 7 minutes. There is no cap per
-/// session and no cap per day.
+/// completed task, then at most one ad every 7 minutes, counted from the last
+/// ad even across an app restart. There is no cap per session and no cap per day.
 class InterstitialService {
   InterstitialService._();
 
   static const int minTasks = 5;
   static const Duration minGap = Duration(minutes: 7);
   static const String _kTasks = 'interstitial_tasks';
+  static const String _kLastShown = 'interstitial_last_shown';
 
   static InterstitialAd? _ad;
   static bool _loading = false;
@@ -38,12 +39,34 @@ class InterstitialService {
     return true;
   }
 
+  /// Turns the saved time back into a date. A missing value, or one in the
+  /// future (the phone's clock was set back), is ignored so it can never block
+  /// ads for longer than the gap.
+  @visibleForTesting
+  static DateTime? decodeLastShown(int? millis, {required DateTime now}) {
+    if (millis == null) return null;
+    final t = DateTime.fromMillisecondsSinceEpoch(millis);
+    return t.isAfter(now) ? null : t;
+  }
+
+  static Future<void> _saveLastShown() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final t = _lastShown;
+      if (t != null) await prefs.setInt(_kLastShown, t.millisecondsSinceEpoch);
+    } catch (e) {
+      debugPrint('InterstitialService last-shown save error: $e');
+    }
+  }
+
   static Future<void> _loadTasks() async {
     if (_tasksLoaded) return;
     _tasksLoaded = true;
     try {
       final prefs = await SharedPreferences.getInstance();
       _tasks = prefs.getInt(_kTasks) ?? 0;
+      // The gap between ads survives a restart.
+      _lastShown ??= decodeLastShown(prefs.getInt(_kLastShown), now: DateTime.now());
     } catch (e) {
       debugPrint('InterstitialService tasks load error: $e');
     }
@@ -118,6 +141,7 @@ class InterstitialService {
       },
     );
     _lastShown = DateTime.now();
+    unawaited(_saveLastShown());
     try {
       await ad.show();
       await done.future;
