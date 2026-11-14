@@ -1,0 +1,281 @@
+
+##### environment
+commit: 3e5bbabbbdbba15c9b19947ef2219060e06ddfbf
+Flutter 3.47.6 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 5fc346839b (6 weeks ago) • 2026-09-30 15:02:49 -0700
+Engine • hash b8c8d3d8d5d0095127057f8a29ca8cc53da2167c (revision 692136cb65) (1 months ago) • 2026-09-30 00:56:59.000Z
+Tools • Dart 3.13.5 • DevTools 2.60.0
+
+##### pub get
+Resolving dependencies...
+Downloading packages...
+  archive 4.5.2 (4.7.1 available)
+  camera_web 0.3.5+7 (0.3.6 available)
+  cli_util 0.4.2 (0.6.0 available)
+  code_assets 2.1.0 (2.2.0 available)
+  connectivity_plus 7.3.1 (7.3.2 available)
+  cross_file 0.3.5+5 (0.4.0 available)
+  cupertino_icons 1.0.9 (2.0.0 available)
+  dbus 0.7.15 (0.8.0 available)
++ disk_space_plus 0.2.8
+  equatable 2.1.0 (3.0.0 available)
+  file_picker 8.3.7 (13.3.3 available)
+  fl_chart 0.68.0 (1.3.1 available)
+  flutter_launcher_icons 0.13.1 (0.14.4 available)
+  flutter_lints 4.0.0 (6.0.0 available)
+  flutter_local_notifications 17.2.4 (23.0.2 available)
+  flutter_local_notifications_linux 4.0.1 (9.0.0 available)
+  flutter_local_notifications_platform_interface 7.2.0 (13.0.0 available)
+  flutter_markdown 0.7.7+1 (discontinued replaced by flutter_markdown_plus)
+  flutter_secure_storage 10.3.4 (11.2.0 available)
+  flutter_secure_storage_darwin 0.3.2 (0.4.3 available)
+  flutter_secure_storage_windows 4.1.0 (4.2.2 available)
++ glob 2.2.0
+  image 4.12.0 (4.13.0 available)
+  image_picker_ios 0.8.13+14 (0.8.13+15 available)
+  in_app_purchase_storekit 0.4.16 (0.4.17 available)
+  jni 1.1.1 (1.1.2 available)
+  lints 4.0.0 (6.1.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
++ native_toolchain_c 0.19.5 (0.19.6 available)
+  nm 0.5.0 (0.6.0 available)
+  objective_c 9.6.2 (9.6.4 available)
+  package_info_plus 8.3.1 (10.2.2 available)
+  package_info_plus_platform_interface 3.2.1 (4.1.0 available)
++ process 5.0.6
+  share_plus 10.1.4 (13.3.1 available)
+  share_plus_platform_interface 5.0.2 (7.2.0 available)
+  shared_preferences_android 2.5.4 (2.5.5 available)
+  shared_preferences_foundation 2.6.1 (2.6.2 available)
+  sqflite 2.4.5 (2.4.6 available)
+  sqflite_android 2.4.5 (2.4.6 available)
+  sqflite_common 2.5.14 (2.5.17 available)
++ sqflite_common_ffi 2.4.7
+  sqflite_darwin 2.4.4+1 (2.4.6 available)
+  sqflite_platform_interface 2.4.3 (2.4.4 available)
++ sqlite3 3.9.1
+  synchronized 3.5.0 (3.6.1+1 available)
+  test_api 0.7.12 (0.7.15 available)
+  timezone 0.9.4 (0.11.2 available)
+  win32 5.15.0 (6.4.0 available)
+Changed 6 dependencies!
+1 package is discontinued.
+43 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Upgrading analysis_options.yaml to exclude build and platform directories.
+exit=0
+
+##### gen-l10n
+Because l10n.yaml exists, the options defined there will be used instead.
+To use the command line arguments, delete the l10n.yaml file in the Flutter project.
+
+
+exit=0
+generated l10n files:
+lib/l10n/app_localizations.dart
+lib/l10n/app_localizations_ar.dart
+lib/l10n/app_localizations_de.dart
+lib/l10n/app_localizations_en.dart
+lib/l10n/app_localizations_es.dart
+lib/l10n/app_localizations_fr.dart
+lib/l10n/app_localizations_he.dart
+lib/l10n/app_localizations_hi.dart
+lib/l10n/app_localizations_ja.dart
+lib/l10n/app_localizations_ko.dart
+lib/l10n/app_localizations_pt.dart
+lib/l10n/app_localizations_zh.dart
+
+##### analyze (errors only, then summary)
+warnings: 9
+infos: 86
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • test/storage_check_test.dart:14:5 • prefer_const_declarations
+
+95 issues found. (ran in 12.6s)
+exit=0
+
+##### unit tests
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: nothing before the fifth completed task
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: at least seven minutes between ads
+✅ /home/runner/work/growlog/growlog/test/interstitial_rules_test.dart: no cap per session or per day
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: orphan photos only old, unreferenced photo files are chosen
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: orphan photos a file is matched by name, not by folder
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: orphan photos a zero minimum age lets tests sweep right away
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: orphan photos database references include plant photos and scans
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: orphan photos clearAllPhotos removes every app photo and nothing else
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: temp files old share and backup files go, young ones stay
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: temp files over the size cap the oldest young files go first
+✅ /home/runner/work/growlog/growlog/test/file_sweeper_test.dart: what the Storage row can clear every temp file and every unreferenced photo, whatever its age
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: half precision values decode correctly
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: decodeFp16 reads little-endian pairs
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: closest species wins and probabilities sum to about one
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: embedding far from every species is not accepted
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: a tie is accepted but not confident
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: zero embedding gives no guesses
+✅ /home/runner/work/growlog/growlog/test/identify_math_test.dart: manifest parses and totals file sizes
+✅ /home/runner/work/growlog/growlog/test/storage_check_test.dart: enough room passes, too little fails
+✅ /home/runner/work/growlog/growlog/test/storage_check_test.dart: the margin is kept on top of the download
+✅ /home/runner/work/growlog/growlog/test/storage_check_test.dart: if free space cannot be read, the download is not blocked
+✅ /home/runner/work/growlog/growlog/test/care_guide_test.dart: the care guide covers every species the offline model knows
+✅ /home/runner/work/growlog/growlog/test/care_guide_test.dart: every entry has a name and sensible intervals
+✅ /home/runner/work/growlog/growlog/test/care_guide_test.dart: desert plants are watered less often than ferns
+✅ /home/runner/work/growlog/growlog/test/care_guide_test.dart: lithops are not fed on a schedule
+✅ /home/runner/work/growlog/growlog/test/care_guide_test.dart: species search finds common and Latin names, best matches first
+✅ /home/runner/work/growlog/growlog/test/l10n_consistency_test.dart: every language has exactly the same keys as English
+✅ /home/runner/work/growlog/growlog/test/image_sizes_test.dart: a scan thumbnail is decoded at thumbnail size, not full size
+✅ /home/runner/work/growlog/growlog/test/image_sizes_test.dart: decode widths grow with how much of the screen the photo covers
+✅ /home/runner/work/growlog/growlog/test/l10n_consistency_test.dart: every translation keeps the placeholders English uses
+✅ /home/runner/work/growlog/growlog/test/l10n_consistency_test.dart: no translation is empty
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: parses a well-formed answer
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: tolerates markdown bold and "None" issues
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: a non-plant photo is flagged
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: clamps unrealistic watering intervals
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: ScanRecord survives a database round trip
+✅ /home/runner/work/growlog/growlog/test/scan_parse_test.dart: care schedule starts from the day the plant was added
+::endgroup::
+
+🎉 77 tests passed.
+exit=0
+
+##### dart compile (flutter build bundle)
+exit=0
+
+##### android scaffold
+exit=0
+app
+build.gradle.kts
+gradle
+gradle.properties
+gradlew
+gradlew.bat
+growlog_android.iml
+local.properties
+settings.gradle.kts
+com
+
+##### android diagnostics (which build script and app id are used)
+-- android/app files:
+total 24
+drwxr-xr-x 3 runner runner 4096 Nov 14 11:53 .
+drwxr-xr-x 4 runner runner 4096 Nov 14 11:53 ..
+-rw-r--r-- 1 runner runner 2217 Nov 14 11:52 build.gradle
+-rw-r--r-- 1 runner runner 1764 Nov 14 11:53 build.gradle.kts
+-rw-r--r-- 1 runner runner  926 Nov 14 11:52 proguard-rules.pro
+drwxr-xr-x 5 runner runner 4096 Nov 14 11:53 src
+-- android/app/src files:
+android/app/src/debug/AndroidManifest.xml
+android/app/src/main/AndroidManifest.xml
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+android/app/src/main/kotlin/com/zdmgold/growlog/MainActivity.kt
+android/app/src/main/res/drawable-v21/launch_background.xml
+android/app/src/main/res/drawable/launch_background.xml
+android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png
+android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png
+android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png
+android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png
+android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+android/app/src/main/res/values-night/styles.xml
+android/app/src/main/res/values/ic_launcher_background.xml
+android/app/src/main/res/values/styles.xml
+android/app/src/profile/AndroidManifest.xml
+-- build script settings:
+android/app/build.gradle:19:    namespace 'com.zdmgold.growlog'
+android/app/build.gradle:34:        applicationId "com.zdmgold.growlog"
+android/app/build.gradle:35:        minSdk 24
+android/app/build.gradle:42:    signingConfigs {
+android/app/build.gradle:57:                signingConfig signingConfigs.release
+android/app/build.gradle:59:                signingConfig signingConfigs.debug
+android/app/build.gradle:61:            minifyEnabled true
+android/app/build.gradle:63:            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+android/app/build.gradle:66:            signingConfig signingConfigs.debug
+android/app/build.gradle.kts:8:    namespace = "com.zdmgold.growlog"
+android/app/build.gradle.kts:19:        applicationId = "com.zdmgold.growlog"
+android/app/build.gradle.kts:22:        minSdk = flutter.minSdkVersion
+android/app/build.gradle.kts:36:            signingConfig = signingConfigs.getByName("debug")
+-- manifest activity + permissions:
+6:    <uses-permission android:name="android.permission.INTERNET" />
+12:    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+13:    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+17:    <uses-permission android:name="android.permission.CAMERA" />
+24:    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+25:    <uses-permission
+31:    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+42:            android:name="com.google.android.gms.ads.APPLICATION_ID"
+46:            android:name=".MainActivity"
+-- MainActivity:
+android/app/src/main/kotlin/com/zdmgold/growlog/MainActivity.kt
+package com.zdmgold.growlog
+
+import io.flutter.embedding.android.FlutterActivity
+
+-- settings.gradle.kts head:
+pluginManagement {
+    val flutterSdkPath =
+        run {
+            val properties = java.util.Properties()
+            file("local.properties").inputStream().use { properties.load(it) }
+            val flutterSdkPath = properties.getProperty("flutter.sdk")
+            require(flutterSdkPath != null) { "flutter.sdk not set in local.properties" }
+            flutterSdkPath
+        }
+
+    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id("dev.flutter.flutter-plugin-loader") version "1.0.0"
+    id("com.android.application") version "9.1.0" apply false
+    id("org.jetbrains.kotlin.android") version "2.4.0" apply false
+}
+
+include(":app")
+buildFile: /home/runner/work/growlog/growlog/android/app/build.gradle
+group: android
+name: app
+
+##### android kotlin + java compile (no APK)
+an issue against a plugin: https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-app-developers#report-incompatible-kotlin-gradle-plugin-usage-to-plugin-authors
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+BUILD SUCCESSFUL in 1m 40s
+> Task :shared_preferences_android:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared_preferences_android:bundleLibCompileToJarDebug
+> Task :app:compileDebugKotlin
+> Task :app:compileDebugJavaWithJavac
+
+[Incubating] Problems report is available at: file:///home/runner/work/growlog/growlog/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 40s
+196 actionable tasks: 191 executed, 5 up-to-date
+exit=0
+
+##### android release checks (AAR metadata on every plugin + R8, no APK)
+BUILD SUCCESSFUL in 3m 38s
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 38s
+417 actionable tasks: 412 executed, 5 up-to-date
+exit=0
+
+##### result
+ALL CHECKS PASSED
