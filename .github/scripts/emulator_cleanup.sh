@@ -43,4 +43,26 @@ say "after Clear All Data:"; ls_docs | sed 's/^/  /' | tee -a "$LOG"
 B=$(ls_docs)
 echo "$B" | grep -Eq "^(plant|scan)_" && say "FAIL: app photo files remain after Clear All Data" || say "PASS: no app photo files after Clear All Data"
 echo "$B" | grep -q "notes_keep.txt" && say "PASS: non-photo file still untouched" || say "FAIL: non-photo file deleted by Clear All"
+
+# ---- Storage row: temp and unused files can be seen and cleared
+say "== storage row =="
+adb shell am force-stop "$PKG"; sleep 2
+adb shell "run-as $PKG sh -c 'mkdir -p cache; head -c 2000000 /dev/zero > cache/growlog_share_9.png'"
+adb shell "run-as $PKG sh -c 'echo x > app_flutter/plant_$U4.jpg'"
+adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 20
+dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Settings" "settings") && { set -- $XY; adb shell input tap "$1" "$2"; sleep 3; }
+for i in 1 2 3; do dump cur; grep -qi "Temporary and unused files" "$OUT/cur.xml" && break; adb shell input swipe 540 1700 540 700 300; sleep 1; done
+shot 04_storage_row; dump st
+python3 - <<'PY'
+import re
+s=open('/tmp/emu/st.xml',encoding='utf8').read()
+m=re.search(r'(\d+(?:\.\d+)? (?:KB|MB)) can be cleared',s)
+print('storage subtitle:', m.group(0) if m else 'NOT SHOWN')
+PY
+grep -qi "can be cleared" "$OUT/st.xml" && say "PASS: storage row shows a size to clear" || say "FAIL: storage row shows no size"
+tap "Clear" ; sleep 3; shot 05_storage_cleared
+dump st2; grep -qi "Nothing to clear" "$OUT/st2.xml" && say "PASS: row says nothing left to clear" || say "FAIL: row still shows files"
+adb shell "run-as $PKG sh -c 'ls cache app_flutter 2>/dev/null'" | tr -d '\r' | grep -E "growlog_share_9|plant_$U4" && say "FAIL: files remain after Clear" || say "PASS: temp file and unused photo removed by Clear"
+say "free space as the plugin reported it:"; adb logcat -d | grep "StorageCheck free space" | tail -1 | sed 's/^/  /' | tee -a "$LOG"
+say "free space as the system reports it:"; adb shell df -k /data | tail -1 | sed 's/^/  /' | tee -a "$LOG"
 adb logcat -d -s AndroidRuntime:E flutter:E > "$OUT/errors.txt" 2>&1; say "error lines: $(grep -c . "$OUT/errors.txt")"

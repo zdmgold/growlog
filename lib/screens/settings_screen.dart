@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import '../services/storage_check.dart';
 import '../services/file_sweeper.dart';
 import 'credits_screen.dart';
 import '../services/ai/ai_settings.dart';
@@ -52,6 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int? _reclaimBytes;
 
   Future<void> _refreshStorage() async {
+    if (kDebugMode) StorageCheck.freeMb(); // logs the reading so tests can compare it with the system's
     final n = await FileSweeper.reclaimableBytes(widget.plantProvider.storage);
     if (mounted) setState(() => _reclaimBytes = n);
   }
