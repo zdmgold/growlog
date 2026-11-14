@@ -1,0 +1,32 @@
+before start:
+  flutter_assets
+  notes_keep.txt
+  plant_aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.jpg
+  plant_cccccccc-cccc-4ccc-8ccc-cccccccccccc.jpg
+  res_timestamp-1-1794657574670
+  scan_bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb.jpg
+after start:
+  flutter_assets
+  notes_keep.txt
+  plant_cccccccc-cccc-4ccc-8ccc-cccccccccccc.jpg
+  res_timestamp-1-1794657574670
+PASS: old orphan plant photo swept
+PASS: old orphan scan photo swept
+PASS: fresh orphan kept (Undo window)
+PASS: non-photo file untouched
+after Clear All Data:
+  flutter_assets
+  notes_keep.txt
+  res_timestamp-1-1794657574670
+PASS: no app photo files after Clear All Data
+PASS: non-photo file still untouched
+== storage row ==
+NOT FOUND: Wait
+PASS: storage row shows a size to clear
+PASS: row says nothing left to clear
+PASS: temp file and unused photo removed by Clear
+free space as the plugin reported it:
+  11-14 12:01:53.314  6400  6400 I flutter : StorageCheck free space: 4522.53515625 MB
+free space as the system reports it:
+  /dev/block/dm-40   6082144 1308528   4631404  23% /data/user/0
+error lines: 0
