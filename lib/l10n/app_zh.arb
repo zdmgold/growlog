@@ -434,5 +434,6 @@
   "storageSubtitle": "可清理 {size}",
   "storageNothing": "没有可清理的内容",
   "storageClear": "清理",
-  "storageCleared": "已清理 {size}"
+  "storageCleared": "已清理 {size}",
+  "privacyChoices": "隐私选项"
 }

@@ -1,3 +1,4 @@
+import '../services/admob_service.dart';
 import 'package:flutter/foundation.dart';
 import '../services/storage_check.dart';
 import '../services/file_sweeper.dart';
@@ -52,6 +53,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   int? _reclaimBytes;
+  bool _privacyOptions = false;
 
   Future<void> _refreshStorage() async {
     if (kDebugMode) StorageCheck.freeMb(); // logs the reading so tests can compare it with the system's
@@ -90,6 +92,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _loadVersion();
     _refreshStorage();
+    AdMobService.isPrivacyOptionsRequired().then((v) {
+      if (mounted) setState(() => _privacyOptions = v);
+    });
   }
 
   Future<void> _loadVersion() async {
@@ -451,6 +456,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 label: l10n?.privacyPolicy ?? 'Privacy Policy',
                 onTap: () => _open(Uri.parse('$_site/privacy')),
               ),
+              if (_privacyOptions)
+                _SettingsTile(
+                  icon: PhosphorRegular.slidersHorizontal,
+                  label: context.l10n.privacyChoices,
+                  onTap: () => AdMobService.showPrivacyOptions(),
+                ),
               _SettingsTile(
                 icon: PhosphorRegular.clipboard,
                 label: context.l10n.termsOfService,

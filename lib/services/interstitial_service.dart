@@ -87,6 +87,10 @@ class InterstitialService {
     if (_ad != null || _loading) return;
     _loading = true;
     await AdMobService.ready;
+    if (!AdMobService.adsAllowed) {
+      _loading = false;
+      return;
+    }
     await InterstitialAd.load(
       adUnitId: AdMobService.interstitialUnitId!,
       request: const AdRequest(),

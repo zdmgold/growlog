@@ -434,5 +434,6 @@
   "storageSubtitle": "{size} peuvent être libérés",
   "storageNothing": "Rien à effacer",
   "storageClear": "Effacer",
-  "storageCleared": "{size} libérés"
+  "storageCleared": "{size} libérés",
+  "privacyChoices": "Choix de confidentialité"
 }

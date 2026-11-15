@@ -36,7 +36,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   Future<void> _load() async {
     if (!AdMobService.isSupported) return;
     await AdMobService.ready;
-    if (!mounted || _isDisposed) return;
+    if (!mounted || _isDisposed || !AdMobService.adsAllowed) return;
     final ad = BannerAd(
       adUnitId: AdMobService.bannerUnitId!,
       size: AdSize.banner,

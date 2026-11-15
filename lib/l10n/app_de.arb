@@ -434,5 +434,6 @@
   "storageSubtitle": "{size} können gelöscht werden",
   "storageNothing": "Nichts zu löschen",
   "storageClear": "Löschen",
-  "storageCleared": "{size} gelöscht"
+  "storageCleared": "{size} gelöscht",
+  "privacyChoices": "Datenschutzoptionen"
 }

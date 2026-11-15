@@ -434,5 +434,6 @@
   "storageSubtitle": "{size} खाली किया जा सकता है",
   "storageNothing": "साफ़ करने के लिए कुछ नहीं",
   "storageClear": "साफ़ करें",
-  "storageCleared": "{size} खाली किया गया"
+  "storageCleared": "{size} खाली किया गया",
+  "privacyChoices": "गोपनीयता विकल्प"
 }

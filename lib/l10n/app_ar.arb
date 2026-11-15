@@ -434,5 +434,6 @@
   "storageSubtitle": "يمكن تحرير {size}",
   "storageNothing": "لا شيء لمسحه",
   "storageClear": "مسح",
-  "storageCleared": "تم تحرير {size}"
+  "storageCleared": "تم تحرير {size}",
+  "privacyChoices": "خيارات الخصوصية"
 }

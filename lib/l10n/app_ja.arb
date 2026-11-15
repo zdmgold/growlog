@@ -434,5 +434,6 @@
   "storageSubtitle": "{size}を削除できます",
   "storageNothing": "削除するものはありません",
   "storageClear": "削除",
-  "storageCleared": "{size}を削除しました"
+  "storageCleared": "{size}を削除しました",
+  "privacyChoices": "プライバシー設定"
 }

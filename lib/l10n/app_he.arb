@@ -434,5 +434,6 @@
   "storageSubtitle": "אפשר לפנות {size}",
   "storageNothing": "אין מה לנקות",
   "storageClear": "נקה",
-  "storageCleared": "פונו {size}"
+  "storageCleared": "פונו {size}",
+  "privacyChoices": "אפשרויות פרטיות"
 }

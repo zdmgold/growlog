@@ -1183,5 +1183,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "privacyChoices": "Privacy choices"
 }
