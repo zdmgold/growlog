@@ -111,7 +111,7 @@ class AdMobService {
     }
     var optionsRequired = false;
     try {
-      optionsRequired = await ConsentInformation.instance.isPrivacyOptionsRequired();
+      optionsRequired = await _privacyOptionsRequired();
     } catch (e) {
       debugPrint('isPrivacyOptionsRequired error: $e');
     }
@@ -184,11 +184,17 @@ class AdMobService {
   static Future<bool> isPrivacyOptionsRequired() async {
     if (!isSupported) return false;
     try {
-      return await ConsentInformation.instance.isPrivacyOptionsRequired();
+      return await _privacyOptionsRequired();
     } catch (e) {
       debugPrint('isPrivacyOptionsRequired error: $e');
       return false;
     }
+  }
+
+  static Future<bool> _privacyOptionsRequired() async {
+    final status =
+        await ConsentInformation.instance.getPrivacyOptionsRequirementStatus();
+    return status == PrivacyOptionsRequirementStatus.required;
   }
 
   /// Reopens Google's privacy options form. Completes when it is closed.
