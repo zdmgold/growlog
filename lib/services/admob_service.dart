@@ -89,11 +89,16 @@ class AdMobService {
   }
 
   /// Runs the consent step and reports the outcome. Never throws.
+  ///
+  /// The short timeout covers only the network part. Once Google's message is
+  /// on screen, the person can take as long as they like to answer.
   static Future<ConsentDecision> _runConsent() async {
     var failed = false;
     try {
-      final ok = await _gatherConsent().timeout(const Duration(seconds: 15));
-      if (!ok) failed = true;
+      final infoOk = await _updateConsentInfo().timeout(const Duration(seconds: 15));
+      if (!infoOk) failed = true;
+      final formOk = await _showFormIfRequired().timeout(const Duration(minutes: 10));
+      if (!formOk) failed = true;
     } on TimeoutException {
       debugPrint('Consent step timed out');
       failed = true;
@@ -139,35 +144,34 @@ class AdMobService {
     return ConsentRequestParameters();
   }
 
-  /// Refreshes the consent state and shows Google's consent message when one is
-  /// required. Returns false if any part reported an error. The message itself
-  /// is created in the AdMob account under Privacy and messaging.
-  static Future<bool> _gatherConsent() async {
-    var ok = true;
-    final updated = Completer<void>();
+  /// Refreshes the consent state. Returns false if Google reported an error.
+  static Future<bool> _updateConsentInfo() {
+    final done = Completer<bool>();
     ConsentInformation.instance.requestConsentInfoUpdate(
       _params(),
       () {
-        if (!updated.isCompleted) updated.complete();
+        if (!done.isCompleted) done.complete(true);
       },
       (FormError error) {
         debugPrint('Consent info update failed: ${error.errorCode} ${error.message}');
-        ok = false;
-        if (!updated.isCompleted) updated.complete();
+        if (!done.isCompleted) done.complete(false);
       },
     );
-    await updated.future;
+    return done.future;
+  }
 
-    final shown = Completer<void>();
+  /// Shows Google's consent message when one is required, and completes when it
+  /// is closed. The message itself is created in the AdMob account under
+  /// Privacy and messaging. Returns false if Google reported an error.
+  static Future<bool> _showFormIfRequired() {
+    final done = Completer<bool>();
     ConsentForm.loadAndShowConsentFormIfRequired((FormError? error) {
       if (error != null) {
         debugPrint('Consent form error: ${error.errorCode} ${error.message}');
-        ok = false;
       }
-      if (!shown.isCompleted) shown.complete();
+      if (!done.isCompleted) done.complete(error == null);
     });
-    await shown.future;
-    return ok;
+    return done.future;
   }
 
   /// If the first consent step failed, try once more the next time the app

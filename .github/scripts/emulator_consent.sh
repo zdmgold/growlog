@@ -13,7 +13,10 @@ shot(){ adb exec-out screencap -p > "$OUT/$1.png"; }
 dump(){ for i in 1 2 3; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && break; sleep 2; done; adb pull /sdcard/ui.xml "$OUT/$1.xml" >/dev/null 2>&1; }
 flog(){ adb logcat -d -s flutter | grep -i "consent\|canRequestAds\|privacyOptions"; }
 
-adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 30
+adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 25
+shot 00_consent_form
+dump form; grep -qi "Do not consent" "$OUT/form.xml" && say "PASS: Google's consent form is on screen" || say "NOTE: no consent form seen"
+tap "Do not consent" && say "declined the form"; sleep 8
 adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS >/dev/null 2>&1
 shot 01_after_launch; dump home
 say "== consent log after launch =="; flog | cut -c1-230 | tee -a "$LOG"
@@ -34,5 +37,6 @@ N2=$(flog | grep -c "Consent retry on return to foreground")
 dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "Settings" "settings") && { set -- $XY; adb shell input tap "$1" "$2"; sleep 3; }
 for i in 1 2 3 4; do adb shell input swipe 540 1700 540 700 300; sleep 1; done
 shot 02_settings_about; dump st
-grep -qi "Privacy choices" "$OUT/st.xml" && say "NOTE: Privacy choices row is shown" || say "NOTE: Privacy choices row is not shown (Google did not require it)"
+grep -qi "Privacy choices" "$OUT/st.xml" && say "PASS: Privacy choices row is shown" || say "FAIL: Privacy choices row is not shown"
+tap "Privacy choices" && sleep 6 && shot 03_options_form && { dump opt; grep -qi "consent\|Manage options\|Do not consent" "$OUT/opt.xml" && say "PASS: the privacy options form opened" || say "FAIL: no options form"; }
 adb logcat -d -s AndroidRuntime:E flutter:E > "$OUT/errors.txt" 2>&1; say "error lines: $(grep -c . "$OUT/errors.txt")"
