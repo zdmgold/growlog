@@ -1,0 +1,13 @@
+tapped Do not consent
+== consent log after launch ==
+11-17 03:50:43.017  3433  3433 I flutter : Consent outcome: failed=false canRequestAds=true requestAds=true privacyOptions=true
+PASS: the consent step ran and reported an outcome
+PASS: ads are allowed to be requested
+PASS: a banner ad is showing
+== consent log after returning ==
+11-17 03:50:43.017  3433  3433 I flutter : Consent outcome: failed=false canRequestAds=true requestAds=true privacyOptions=true
+retry lines: 0
+PASS: retried at most once (count 0)
+PASS: Privacy choices row is shown
+opened Privacy choices (see 03_options_form.png)
+error lines: 0
