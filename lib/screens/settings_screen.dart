@@ -1,3 +1,5 @@
+import 'dart:io';
+import '../services/review_prompt.dart';
 import '../services/admob_service.dart';
 import 'package:flutter/foundation.dart';
 import '../services/storage_check.dart';
@@ -461,6 +463,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: PhosphorRegular.slidersHorizontal,
                   label: context.l10n.privacyChoices,
                   onTap: () => AdMobService.showPrivacyOptions(),
+                ),
+              // The store number for iPhone is not known until there is a listing,
+              // so the row is shown on Android only for now.
+              if (Platform.isAndroid)
+                _SettingsTile(
+                  icon: PhosphorRegular.info,
+                  label: context.l10n.rateGrowLog,
+                  onTap: ReviewPrompt.openStoreListing,
                 ),
               _SettingsTile(
                 icon: PhosphorRegular.clipboard,

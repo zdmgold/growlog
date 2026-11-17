@@ -435,5 +435,6 @@
   "storageNothing": "Nichts zu löschen",
   "storageClear": "Löschen",
   "storageCleared": "{size} gelöscht",
-  "privacyChoices": "Datenschutzoptionen"
+  "privacyChoices": "Datenschutzoptionen",
+  "rateGrowLog": "GrowLog bewerten"
 }

@@ -435,5 +435,6 @@
   "storageNothing": "साफ़ करने के लिए कुछ नहीं",
   "storageClear": "साफ़ करें",
   "storageCleared": "{size} खाली किया गया",
-  "privacyChoices": "गोपनीयता विकल्प"
+  "privacyChoices": "गोपनीयता विकल्प",
+  "rateGrowLog": "GrowLog को रेटिंग दें"
 }

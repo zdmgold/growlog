@@ -435,5 +435,6 @@
   "storageNothing": "Rien à effacer",
   "storageClear": "Effacer",
   "storageCleared": "{size} libérés",
-  "privacyChoices": "Choix de confidentialité"
+  "privacyChoices": "Choix de confidentialité",
+  "rateGrowLog": "Noter GrowLog"
 }

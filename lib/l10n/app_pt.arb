@@ -435,5 +435,6 @@
   "storageNothing": "Nada para limpar",
   "storageClear": "Limpar",
   "storageCleared": "{size} liberados",
-  "privacyChoices": "Opções de privacidade"
+  "privacyChoices": "Opções de privacidade",
+  "rateGrowLog": "Avaliar o GrowLog"
 }

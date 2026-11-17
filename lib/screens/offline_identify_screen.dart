@@ -1,3 +1,4 @@
+import '../services/review_prompt.dart';
 import '../utils/image_sizes.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -75,7 +76,10 @@ class _OfflineIdentifyScreenState extends State<OfflineIdentifyScreen> {
   Future<void> _interstitial() async {
     final count = !_taskCounted;
     _taskCounted = true;
-    await InterstitialService.afterTask(count: count);
+    final adShown = await InterstitialService.afterTask(count: count);
+    // A finished scan counts towards the review prompt once, however it is left.
+    if (count) await ReviewPrompt.recordScan();
+    await ReviewPrompt.maybeAsk(adShownNow: adShown);
   }
 
   /// Interstitial point: leaving a fresh result, saved or not.

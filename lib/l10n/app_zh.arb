@@ -435,5 +435,6 @@
   "storageNothing": "没有可清理的内容",
   "storageClear": "清理",
   "storageCleared": "已清理 {size}",
-  "privacyChoices": "隐私选项"
+  "privacyChoices": "隐私选项",
+  "rateGrowLog": "为 GrowLog 评分"
 }

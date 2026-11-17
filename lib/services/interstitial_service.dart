@@ -110,25 +110,25 @@ class InterstitialService {
 
   /// Call at a finish point. Counts the task (unless [count] is false), and
   /// shows an ad if every rule allows it. Completes when the ad is closed, or
-  /// immediately when nothing is shown.
-  static Future<void> afterTask({bool count = true}) async {
+  /// immediately when nothing is shown. Returns true when an ad was shown.
+  static Future<bool> afterTask({bool count = true}) async {
     await _loadTasks();
     if (count) {
       _tasks++;
       await _saveTasks();
     }
-    if (!AdMobService.isSupported || AdSlot.isPurchased) return;
+    if (!AdMobService.isSupported || AdSlot.isPurchased) return false;
     if (!allowed(
       tasks: _tasks,
       lastShown: _lastShown,
       now: DateTime.now(),
     )) {
-      return;
+      return false;
     }
     final ad = _ad;
     if (ad == null) {
       unawaited(preload());
-      return;
+      return false;
     }
     _ad = null;
 
@@ -153,5 +153,9 @@ class InterstitialService {
       debugPrint('Interstitial show error: $e');
     }
     unawaited(preload());
+    return true;
   }
+
+  /// When the last interstitial was shown, or null if none this install.
+  static DateTime? get lastShownAt => _lastShown;
 }

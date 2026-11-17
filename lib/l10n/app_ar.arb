@@ -435,5 +435,6 @@
   "storageNothing": "لا شيء لمسحه",
   "storageClear": "مسح",
   "storageCleared": "تم تحرير {size}",
-  "privacyChoices": "خيارات الخصوصية"
+  "privacyChoices": "خيارات الخصوصية",
+  "rateGrowLog": "قيّم GrowLog"
 }
