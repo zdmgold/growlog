@@ -11,6 +11,7 @@ adb shell settings put global hide_error_dialogs 1
 adb logcat -c
 shot(){ adb exec-out screencap -p > "$OUT/$1.png"; }
 dump(){ for i in 1 2 3; do adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 && break; sleep 2; done; adb pull /sdcard/ui.xml "$OUT/$1.xml" >/dev/null 2>&1; }
+tap(){ dump cur; XY=$(python3 .github/scripts/ui_tap.py "$OUT/cur.xml" "$@") || { say "NOT FOUND: $*"; return 1; }; set -- $XY; adb shell input tap "$1" "$2"; sleep 2; return 0; }
 flog(){ adb logcat -d -s flutter | grep -i "consent\|canRequestAds\|privacyOptions"; }
 
 adb shell am start -W -n "$PKG/.MainActivity" >/dev/null 2>&1; sleep 25
