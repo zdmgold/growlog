@@ -38,6 +38,6 @@ cloudSync, the Journal strings). The search is crude (it would miss dynamic look
 navSettings is used by the language test, so do not delete anything from this list unreviewed.
 
 ## Not covered
-- Symptom Checker labels and problem text (lib/data/symptom_i18n/fr or equivalent): not yet read.
+- Symptom Checker labels and problem text (assets/care/symptoms_fr.json, with English in assets/care/symptoms.json): not yet read.
 - Screens: French has not been looked at on an emulator beyond the dock and Garden/Schedule
   tabs (language test run 44412505316: fr first launch, manual choice, restart, phone default all PASS).
