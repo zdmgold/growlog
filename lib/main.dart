@@ -41,6 +41,7 @@ void main() async {
   final plantProvider = PlantProvider(localStorage);
   final themeProvider = ThemeProvider();
   final localeProvider = LocaleProvider();
+  await localeProvider.ready;
   final iapService = IAPService();
   AdSlot.setPurchased(iapService.value);
   iapService.addListener(() => AdSlot.setPurchased(iapService.value));

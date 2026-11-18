@@ -7,8 +7,12 @@ class LocaleProvider extends ValueNotifier<Locale?> {
   static const _prefsKey = 'locale_code';
 
   LocaleProvider() : super(null) {
-    _load();
+    ready = _load();
   }
+
+  /// Completes once the saved choice has been read, so the first screen can wait
+  /// for it and never flash the phone's language before the person's own.
+  late final Future<void> ready;
 
   Future<void> _load() async {
     try {
