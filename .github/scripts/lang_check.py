@@ -22,10 +22,10 @@ def centres(xml_path):
     return out
 
 def find_x(nodes, text):
-    for label, x, y in nodes:
-        if text in label:
-            return x
-    return None
+    # Several nodes can carry the same word (a page title and the dock label). The dock is
+    # the lowest one on screen, so prefer the match with the largest y.
+    hits = [(y, x) for label, x, y in nodes if text in label]
+    return max(hits)[1] if hits else None
 
 def main():
     if sys.argv[1] == "text":
