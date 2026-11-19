@@ -18,7 +18,7 @@ This table is the single place to see where the review stands.
 | Lang | UI strings (437) | Symptom text | Findings file | Fixes |
 |---|---|---|---|---|
 | fr | 437/437 read | 59/59 labels + 41/41 problems read | fr.md | items 1-4 applied early (e234c4d); items 5-11 wait for the batch |
-| es | 437/437 read | not read | es.md | none (batch phase) |
+| es | 437/437 read | 59/59 labels + 41/41 problems read | es.md | none (batch phase) |
 | de | not started | not started | - | - |
 | pt | not started | not started | - | - |
 | ar | not started | not started | - | - |

@@ -37,5 +37,20 @@ Which Spanish? Option A: Latin American neutral (Agregar, Tomar una foto, Califi
 (Añadir, Hacer una foto, Valorar). My default if you do not choose: A, because most Spanish speakers
 are in Latin America. Either way the file must use ONE of them. The tú/usted fix (#1) does not depend on it.
 
-## Not yet covered
-- Symptom Checker labels and problems (assets/care/symptoms_es.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_es.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared, every number matches English (cm, minutes, days, deg C, 1 teaspoon per
+litre, 2 cm), every step count matches, no meaning reversals. Voice is consistent informal tú throughout
+this file (it does NOT share the usted/tú split of the interface strings). Cleaner than the French file.
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | mealybugs (step 2), scale (step 2) | alcohol de limpieza | Not "rubbing alcohol"; could send someone to a household cleaner | alcohol isopropílico (de farmacia) | medium |
+| S2 | brown_tips-style wording: mineral_crust (worry), anthracnose (what, check), flower_fade (what) | oscureciéndose / oscurecimiento / se oscurecen | "browning" rendered as "darkening" (slight meaning shift) | poniéndose marrones / pardeamiento / se ponen marrones | low |
+| S3 | chewing_pests (name, what) | Plagas masticadoras; muerden agujeros | Literal | Plagas que roen; hacen agujeros | low |
+| S4 | underwatering (prevent) | dar sorbitos | Literal "sips" | dar poca agua cada vez | low |
+| S5 | old_leaf_drop (check) | ¿Es solo una o dos hojas de abajo | Number agreement | ¿Son solo una o dos hojas de abajo | low |
+| S6 | sooty_mould (what, step 2) | melaza | Acceptable horticultural term; "mielato" is more precise | optional | low |
+| S7 | label loc_even | Parejo en toda la planta | Latin-American colloquial; neutral is "Uniforme" | Uniforme en toda la planta | low |
+| S8 | compacted_soil (step 1) | un palillo | Chopstick; fine | un palillo chino (optional) | info |
