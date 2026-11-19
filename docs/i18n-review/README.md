@@ -20,7 +20,7 @@ This table is the single place to see where the review stands.
 | fr | 437/437 read | 59/59 labels + 41/41 problems read | fr.md | items 1-4 applied early (e234c4d); items 5-11 wait for the batch |
 | es | 437/437 read | 59/59 labels + 41/41 problems read | es.md | none yet; dialect decided: Option A Latin American (batch phase) |
 | de | 437/437 read | 59/59 labels + 41/41 problems read | de.md | none (batch phase) |
-| pt | not started | not started | - | - |
+| pt | 437/437 read | not read | pt.md | none (batch phase) |
 | ar | not started | not started | - | - |
 | hi | not started | not started | - | - |
 | ja | not started | not started | - | - |
