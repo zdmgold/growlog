@@ -38,5 +38,23 @@ the emulator (header, dock, alignment all mirror correctly). Nothing has been ch
 | 19 | proFeatures (85) | ميزات الاحتراف | Possibly unused; "Pro" is a product tier | ميزات Pro | low (may be unused) |
 | 20 | Date composition: photoAccessibility (120), scannedLabel (159) | بتاريخ {date}, تم المسح {date} | Reads acceptably in Arabic with اليوم/أمس; shared code item | Code item 5 (shared) | low |
 
-## Not covered yet
-- Symptom Checker labels and problems (assets/care/symptoms_ar.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_ar.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared; 328 have identical digits and the one difference is correct (English
+"1 teaspoon" is written "ملعقة صغيرة", a teaspoon, in powdery_mildew step 4). Every step count matches, no
+meaning reversals. Horticultural terminology is strong and correct: تعفن الجذور, الوذمة, البق الدقيقي,
+الحشرات القشرية, المنّ, التربس, الذبابة البيضاء, العناكب الحمراء (الحلم), البياض الدقيقي, الندوة العسلية,
+الأنثراكنوز, العفن الرمادي, ملح إبسوم. Masculine-singular imperative throughout (consistent).
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | label leggy | نمو طويل ومستطيل | "مستطيل" means rectangular, not stretched (problem #7 correctly uses "تستطيل") | نمو طويل ومتطاول (or: ممتد) | medium |
+| S2 | mealybugs (step 2), scale (step 2) | بعود قطني مبلل بكحول التنظيف | "cleaning alcohol" is not the term for rubbing alcohol; could point to a household product. Same safety point as es/pt | بكحول طبي (إيزوبروبيل 70٪) | medium |
+| S3 | old_leaf_drop (prevent), flower_fade (prevent) | لا شيء يُمنع | Reads "nothing is prohibited"; intended "nothing to prevent" | لا شيء يمكن منعه | medium-low |
+| S4 | whiteflies (worry) | إذا استمر الإصابة | Gender agreement (الإصابة is feminine) | إذا استمرت الإصابة | low-medium |
+| S5 | settling_in (what) | تُسقط النباتات أو تُصفرّ | "تُصفرّ" is a passive form; the verb is intransitive | أو تصفرّ | low |
+| S6 | label tap_water | ماء الصنبور عسر أو مكلور | Ungrammatical definiteness | ماء الصنبور العسر أو المكلور | low |
+| S7 | label otherwise_healthy | تنمو جيدًا من غير ذلك | Awkward | وفيما عدا ذلك تنمو جيدًا | low |
+| S8 | light_change (check) | تغيّر موسم الضوء | Literal "light season" | تغيّر الضوء بتغيّر الفصل | low |
+| S9 | Watering nouns: الري (labels, names) vs the verb اسقِ (steps) | mixed | Natural noun/verb pairing; only the interface mixes ري/سقي as nouns (interface finding 9) | none here | info |

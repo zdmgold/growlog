@@ -21,7 +21,7 @@ This table is the single place to see where the review stands.
 | es | 437/437 read | 59/59 labels + 41/41 problems read | es.md | none yet; dialect decided: Option A Latin American (batch phase) |
 | de | 437/437 read | 59/59 labels + 41/41 problems read | de.md | none yet; decided: convert clipped imperatives S1 (batch phase) |
 | pt | 437/437 read | 59/59 labels + 41/41 problems read | pt.md | none (batch phase) |
-| ar | 437/437 read | not read | ar.md | none (batch phase) |
+| ar | 437/437 read | 59/59 labels + 41/41 problems read | ar.md | none (batch phase) |
 | hi | not started | not started | - | - |
 | ja | not started | not started | - | - |
 | ko | not started | not started | - | - |
