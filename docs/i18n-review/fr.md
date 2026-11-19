@@ -40,6 +40,26 @@ cloudSync, the Journal strings). The search is crude (it would miss dynamic look
 navSettings is used by the language test, so do not delete anything from this list unreviewed.
 
 ## Not covered
-- Symptom Checker labels and problem text (assets/care/symptoms_fr.json, with English in assets/care/symptoms.json): not yet read.
+- (Symptom Checker is now covered, see the next section.)
 - Screens: French has not been looked at on an emulator beyond the dock and Garden/Schedule
   tabs (language test run 44412505316: fr first launch, manual choice, restart, phone default all PASS).
+
+## Symptom Checker review (assets/care/symptoms_fr.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared, every number matches English (cm, minutes, days, deg C, the
+1 teaspoon per litre ratio, 2 cm soil), every step count matches, no meaning reversals found,
+pest treatments stay conservative (wipe, rubbing alcohol, mild soap).
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | label dry_soil; problem inconsistent_watering (check) | sec comme de l'os | Literal "bone dry"; not natural French | complètement sec | medium |
+| S2 | rootbound (prevent), compacted_soil (prevent) | tous les un à deux ans | Ungrammatical | tous les un ou deux ans | medium |
+| S3 | compacted_soil (step 1) | avec une baguette | "baguette" reads as bread | avec une baguette chinoise (or un bâtonnet) | medium |
+| S4 | mealybugs (step 2), scale (step 2) | alcool à friction | Quebec term; in France: alcool à 70° / alcool isopropylique | alcool à 70° | medium (regional) |
+| S5 | chewing_pests (name) | Parasites mâcheurs | Unnatural | Parasites qui rongent (chenilles, limaces, coléoptères) | low-medium |
+| S6 | anthracnose (step 3) | Ne serrez pas les plantes | Ambiguous ("don't squeeze") | N'entassez pas les plantes | medium |
+| S7 | rootbound (check) | Un dense tapis | Word order | Un tapis dense | low |
+| S8 | fungal_leaf_spot (check) | après des feuilles mouillées | Awkward | après un feuillage mouillé | low |
+| S9 | old_leaf_drop (check) | a bonne mine | Idiom for people | a l'air en bonne santé | low |
+| S10 | underwatering (prevent) | par petites gorgées | Literal "sips"; understandable | par petites quantités | low |
+| S11 | label brown_bumps | Bosses brunes dures | Acceptable; "Excroissances brunes dures" is more natural | optional | low |
