@@ -32,7 +32,8 @@ looks like two translation passes with different voices. Nothing has been change
 | 15 | noSpeciesMatch (417) | ...escribir la tuya | "la tuya" has no clear antecedent | ...escribir el nombre tú mismo | low |
 | 16 | Dead-looking strings | upgradeToPro, aiPlantId, cloudSync, Journal strings | Not confirmed unused | none | info |
 
-## Decision needed from you (affects #2, #3, #4)
+## DECISION MADE: Option A, Latin American neutral (Agregar, Tomar una foto, Calificar). Apply in the batch phase.
+(Original question, kept for the record; affects #2, #3, #4)
 Which Spanish? Option A: Latin American neutral (Agregar, Tomar una foto, Calificar). Option B: Spain
 (Añadir, Hacer una foto, Valorar). My default if you do not choose: A, because most Spanish speakers
 are in Latin America. Either way the file must use ONE of them. The tú/usted fix (#1) does not depend on it.
