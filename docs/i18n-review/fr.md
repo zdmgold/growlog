@@ -13,7 +13,9 @@ Symptom Checker content (59 labels, 41 problems) is NOT covered here; see the en
 No wrong-meaning translations, no untranslated strings, no broken placeholders found.
 Findings below are wording, consistency and context issues. Nothing has been changed yet.
 
-## Findings (to approve before editing)
+## Findings
+Items 1-4: APPLIED in e234c4d (compile check passed). Items 5-11: pending the batch fix phase
+(see README.md).
 | # | Key (index) | Current | Issue | Suggested | Severity |
 |---|---|---|---|---|---|
 | 1 | shareDefaultText (114) | Ma croissance de plante avec GrowLog | Awkward word order | La croissance de ma plante avec GrowLog | medium |
