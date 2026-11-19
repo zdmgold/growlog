@@ -32,5 +32,23 @@ No wrong-meaning translations or broken placeholders. Quality is high; German ha
 | 15 | paulGreeting (312) | ...komisch aussieht | Slightly casual | seltsam | low |
 | 16 | Possibly dead strings | upgradeToPro, aiPlantId, cloudSync, journal strings | Not confirmed unused | none | info |
 
-## Not covered yet
-- Symptom Checker labels and problems (assets/care/symptoms_de.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_de.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared, every number matches English (cm, minutes, days, deg C, 1 teaspoon
+Natron per litre, 2 cm), every step count matches, no meaning reversals. Terminology is strong:
+Bittersalz (Epsom salt), Wollläuse, Schildläuse, Trauermücken, Rußtau, Honigtau, Echter Mehltau,
+Anthraknose, Grauschimmel are all the correct German terms. Pest treatments stay conservative.
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | Whole file: 68 texts use clipped du-imperatives ("Prüf", "Nutz", "Wähl", "Rück", "Steiger", "Isolier", "Kontrollier", "Sprüh", "Spül", "Wisch") vs only 2 with full forms | Prüf die Erde | The interface strings use full forms ("Prüfe", "Wähle", "Nutze"). The symptom text is more colloquial; the two voices differ. Clipped forms are not wrong (normal for strong verbs like Heb, Steck, Halt) but forms like "Prüf/Nutz/Wähl/Rück/Steiger" read as slang | DECISION: keep colloquial, or convert the non-strong-verb ones to full forms (Prüfe, Nutze, Wähle, Rücke, Steigere, Isoliere, Kontrolliere, Sprühe, Spüle, Wische) | medium (consistency) |
+| S2 | root_rot step 2; rootbound prevent and step 1; compacted_soil step 2 | "Topf sie in frische... um", "Topf je nach Wachstum... um", "Topf in einen Topf eine Nummer größer... um", "Topf in frische, lockere Erde... um" | Sentence-initial "Topf" (imperative of umtopfen) reads as the noun "pot"; step 1 of rootbound has "Topf in einen Topf" | "Topfe sie in frische... um" / "Topfe die Pflanze alle ein bis zwei Jahre im Frühjahr um" / "Topfe sie in einen Topf eine Nummer größer um" | medium |
+| S3 | mealybugs step 2; scale step 2 | in Spiritus getränkten Wattestäbchen | Common German advice but Brennspiritus strength varies (about 94 %) and is denatured | in Isopropanol (70 %) getränkten Wattestäbchen | low-medium |
+| S4 | label low_light | Schattiger Standort | Means "shady spot", not strictly "low light" | Standort mit wenig Licht | low |
+| S5 | label yellowing | Gelbe Blätter | Loses the process ("yellowing") | Vergilbende Blätter | low |
+| S6 | label hot_spot | Nahe einer Heizung oder sehr heißer Platz | Mixed grammar | In der Nähe einer Heizung oder an einem sehr heißen Platz | low |
+| S7 | underwatering (prevent) | in kleinen Schlucken | Literal "sips" | in kleinen Mengen | low |
+| S8 | whiteflies (name, check) | Weiße Fliegen / deutet auf Weiße Fliegen | Capital W mid-sentence | weiße Fliegen in running text | low |
+| S9 | light_change (check) | Lichtverhältnisse der Jahreszeit | Awkward | Licht (z. B. durch die Jahreszeit) | low |
+| S10 | underwatering (worry) | trocken | EN says "crisp" | knusprig | low |
