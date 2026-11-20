@@ -21,7 +21,7 @@ Nothing has been changed yet.
 | 1 | offProgress (352) | {done} MB में से {total} MB · {pct}% | REVERSED. "X में से Y" = "Y out of X", so it reads "{total} out of {done}" (e.g. "309 MB out of 100 MB") | {total} MB में से {done} MB · {pct}% | high |
 | 2 | yesterday (5), tomorrow (12) | कल / कल | "कल" means both yesterday and tomorrow; two different strings with identical text | yesterday: बीता कल; tomorrow: आने वाला कल (or: कल, for tomorrow only) | medium-high |
 | 3 | waterEvery..treatEvery (61-66) + daysSuffix (67) | हर इतने दिनों में पानी दें [N] दिन | "every so-many days" followed by a number field and "दिन" is redundant; the English "Water every [N] days" order does not carry into Hindi (verb last) | Rename the labels to noun phrases: पानी देने का अंतराल / खाद देने का अंतराल / छिड़काव का अंतराल / गमला बदलने का अंतराल / छंटाई का अंतराल / उपचार का अंतराल, keep "दिन" | medium |
-| 4 | Spelling: anusvara "-ाएं" in 8 strings (30, 36, 37, 38, 76, 85, 97, 101); chandrabindu "-ाएँ" in 13 (143-387); also ऊंचाई (111) | दबाएं / हटाएं vs जाएँ / हटाएँ | Two spelling conventions in one file (same action even differs: 36 "हटाएं" vs 160 "हटाएँ") | Use chandrabindu (ँ) everywhere (majority, standard): दबाएँ, हटाएँ, सूचनाएँ, ऊँचाई | medium-low |
+| 4 | Spelling: anusvara "-ाएं" in 8 strings (30, 36, 37, 38, 76, 85, 97, 101); chandrabindu "-ाएँ" in 13 (143-387); also ऊंचाई (111) | दबाएं / हटाएं vs जाएँ / हटाएँ | Two spelling conventions in one file (same action even differs: 36 "हटाएं" vs 160 "हटाएँ") | Use chandrabindu (ँ) everywhere (majority, standard): दबाएँ, हटाएँ, सूचनाएँ, ऊँचाई; also पत्तियां (112) -> पत्तियाँ | medium-low |
 | 5 | "Schedule": अनुसूची in 42, 60, 102, 117; शेड्यूल in 190, 197, 245, 249, 250; कार्यक्रम in 418 | three terms | One concept, three words | Unify to शेड्यूल (matches the buttons the person taps: 245, 249) | medium-low |
 | 6 | paulStarter4 (310) | इसे कब गमले में बदलना चाहिए? | "गमले में बदलना" = "change it into a pot", not repot | इसका गमला कब बदलना चाहिए? | medium-low |
 | 7 | greetingAfternoon (137) | नमस्कार | Generic greeting, not "Good afternoon" | शुभ दोपहर | low-medium |
@@ -39,5 +39,24 @@ Nothing has been changed yet.
 | 19 | confidenceHigh/Medium/Low (216-218) | उच्च/मध्यम/कम विश्वास | "विश्वास" = belief/trust | उच्च/मध्यम/कम भरोसा | low |
 | 20 | Possibly dead strings | proFeatures, upgradeToPro, aiPlantId, cloudSync, journal strings | Not confirmed unused | none | info |
 
-## Not covered yet
-- Symptom Checker labels and problems (assets/care/symptoms_hi.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_hi.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared, 0 digit mismatches (cm, minutes, days, deg C, 1 teaspoon baking soda per
+litre, 2 cm), every step count matches, no meaning reversals. The file uses chandrabindu spelling
+consistently (पत्तियाँ, रोएँदार, फफूँद), unlike the interface strings. Terminology is strong:
+जड़ गलन, तना गलन, एडिमा, माहू (aphids), सफ़ेद मक्खी, इल्लियाँ, भृंग, गेरुई (rust), कालिख फफूँद,
+एप्सम नमक; the idiom ठूँस-ठूँसकर न रखें for "do not crowd plants" is excellent. "रबिंग अल्कोहल" is an
+explicit, correct term (not flagged, unlike es/pt/ar).
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | fungal_leaf_spot (what, check), bacterial_leaf_spot (what) | पीले हाले / पीला हाला | "हाला" in Hindi mainly means liquor; this looks like a mis-transliteration of "halo". CONFIRM WITH A NATIVE SPEAKER, I cannot verify it from here | पीला घेरा (or: पीले घेरे) | medium (verify) |
+| S2 | mealybugs (step 2), scale (step 2) | रुई की फाहे से | "फाहा" is masculine singular: gender/number slip | रुई के फाहे से | low-medium |
+| S3 | root_rot (step 3), too_little_light (step 1) | परोक्ष रोशनी | Interface uses अप्रत्यक्ष (lightBrightIndirect 234, 392) for the same term | अप्रत्यक्ष | low-medium |
+| S4 | "इलाज" in 11 problems | इलाज जारी रखें | Interface uses उपचार for "Treat" (careTypeTreat 22, 66) | Pick one; उपचार matches the care type, इलाज reads more natural | low |
+| S5 | label just_moved | हाल ही में नई जगह रखा | Missing "गया" (was placed) | हाल ही में नई जगह रखा गया | low |
+| S6 | old_leaf_drop (prevent), flower_fade (prevent) | रोकने को कुछ नहीं | Terse | रोकथाम की ज़रूरत नहीं | low |
+| S7 | light_change (check) | रोशनी के मौसम में | Literal "light season" | रोशनी या मौसम बदलने की जगह पर | low |
+| S8 | sooty_mould (what, step 2) | हनीड्यू | English loanword | मधुरस (or keep हनीड्यू, understood) | low |
+| S9 | label crust | स्लेटी परत | Acceptable ("slate-grey" for grey) | none | info |
