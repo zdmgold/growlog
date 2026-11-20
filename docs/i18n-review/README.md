@@ -23,7 +23,7 @@ This table is the single place to see where the review stands.
 | pt | 437/437 read | 59/59 labels + 41/41 problems read | pt.md | none (batch phase) |
 | ar | 437/437 read | 59/59 labels + 41/41 problems read | ar.md | none (batch phase) |
 | hi | 437/437 read | 59/59 labels + 41/41 problems read | hi.md | none (batch phase) |
-| ja | 437/437 read | not read | ja.md | none (batch phase) |
+| ja | 437/437 read | 59/59 labels + 41/41 problems read | ja.md | none (batch phase) |
 | ko | not started | not started | - | - |
 | zh | not started | not started | - | - |
 | he | not started | not started | - | - |

@@ -41,5 +41,26 @@ issues, with the same two-pass signature as the other languages. Nothing has bee
 | 19 | lightLabel (231) | 日当たり | Outdoor-leaning word for indoor light | 光の強さ (optional) | info |
 | 20 | Possibly dead strings | proFeatures, upgradeToPro, aiPlantId, cloudSync, journal strings | Not confirmed unused | none | info |
 
-## Not covered yet
-- Symptom Checker labels and problems (assets/care/symptoms_ja.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_ja.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared; 312 have identical digits. The other 17 were checked BY HAND against the
+English: each is an English number word ("a week or two", "four to six weeks", "a couple of weeks",
+"a litre", "one leaf", "a month") written as a digit in Japanese, and every quantity matches.
+0 real number errors. Every step count matches, no meaning reversals. Terminology is the strongest of
+all languages reviewed so far: ハダニ, コナカイガラムシ, カイガラムシ, キノコバエ, アザミウマ,
+アブラムシ, コナジラミ, 根詰まり, 葉焼け, 汲み置き, 消毒用アルコール (the correct Japanese term for
+rubbing alcohol, so no safety flag here, unlike es/pt/ar), うどんこ病, 灰色かび病, さび病, 炭疽病, すす病.
+Note on method: the digit script cannot see a wrong number written as a word on both sides; that is
+covered by reading each field, which was done for every language.
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | label crust; tap_water_burn (check), fertiliser_burn (check, step 3), mineral_crust (name, what, check, step 1), compacted_soil (name 土の固まり) | 白い固まり / 土の固まり | "固まり" = lump/clump; the English is "crust" (a layer) and "compacted". Two different meanings share one word | 白い塩類の皮膜 or 白い付着物 for crust; 土の締まり (or 土の固結) for compacted soil | low-medium |
+| S2 | "browning": 茶色化 (mineral_crust worry) vs 褐変 (anthracnose, flower_fade) vs 茶色く... | mixed | Three words for one idea | 褐変 | low |
+| S3 | しおれ (kana: 3 + label wilting) vs 萎れ (kanji: 2: flower_fade) | mixed | Inconsistent script | しおれ (or 萎れ) everywhere | low |
+| S4 | low_humidity (check) | 乾燥した空気が原因です | Too certain; English says it "signals" dry air | 乾燥した空気のサインです | low |
+| S5 | symptom text uses 世話 (4 times, no お); interface uses お手入れ (9) and お世話 (19) | mixed | Same "care" terminology split (interface finding 1) | Resolve with finding 1 (お世話) | low |
+| S6 | edema (name) | 浮腫（水ぶくれ） | 浮腫 is the medical term; understood, slightly clinical | エデマ（水ぶくれ症） optional | info |
+| S7 | 中性洗剤 (6 times) for "mild liquid soap" | 薄めた中性洗剤 | Standard Japanese household advice; detergent not soap, but safe and conservative | none | info |
+| S8 | label tiny_flies | 小さなハエ | Fungus gnats are usually コバエ; label covers gnats and whiteflies, so acceptable | none | info |
