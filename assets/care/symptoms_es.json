@@ -36,7 +36,7 @@
   "loc_edges": "A lo largo de los bordes",
   "loc_between_veins": "Entre las nervaduras verdes",
   "loc_patchy": "En manchas sueltas",
-  "loc_even": "Parejo en toda la planta",
+  "loc_even": "Uniforme en toda la planta",
   "wet_soil": "La tierra sigue mojada durante días",
   "dry_soil": "La tierra está totalmente seca por mucho tiempo",
   "irregular_water": "El riego es irregular",
@@ -82,7 +82,7 @@
     "Si la tierra se separó del borde de la maceta, sumerge la maceta en agua por abajo durante 20 a 30 minutos.",
     "Vuelve a comprobar en unos días y crea un ritmo regular."
    ],
-   "prevent": "Revisa la tierra con regularidad y riega abundantemente en lugar de dar sorbitos.",
+   "prevent": "Revisa la tierra con regularidad y riega abundantemente en lugar de dar poca agua cada vez.",
    "worry": "Si las hojas siguen crujientes tras unas semanas de riego regular, las raíces pueden estar dañadas."
   },
   "inconsistent_watering": {
@@ -299,7 +299,7 @@
     "Usa agua más blanda si puedes."
    ],
    "prevent": "Lava de vez en cuando y evita abonar en exceso.",
-   "worry": "Si las puntas de las hojas siguen oscureciéndose, trasplanta a sustrato nuevo."
+   "worry": "Si las puntas de las hojas siguen poniéndose marrones, trasplanta a sustrato nuevo."
   },
   "spider_mites": {
    "name": "Ácaros (araña roja)",
@@ -320,7 +320,7 @@
    "check": "Busca racimos blancos algodonosos en las axilas de las hojas y en los tallos.",
    "steps": [
     "Aísla la planta.",
-    "Toca cada insecto con un bastoncillo de algodón con alcohol de limpieza (prueba primero en una hoja).",
+    "Toca cada insecto con un bastoncillo de algodón con alcohol isopropílico (prueba primero en una hoja).",
     "Limpia la planta con una solución de jabón suave y repite cada semana durante varias semanas."
    ],
    "prevent": "Inspecciona las plantas nuevas antes de ponerlas cerca de otras.",
@@ -332,7 +332,7 @@
    "check": "Busca bultos marrones o beige a lo largo de tallos o nervaduras que se desprenden con la uña.",
    "steps": [
     "Aísla la planta.",
-    "Raspa o limpia las cochinillas con un bastoncillo con alcohol de limpieza.",
+    "Raspa o limpia las cochinillas con un bastoncillo con alcohol isopropílico.",
     "Limpia la planta con una solución de jabón suave y repite cada semana durante unas semanas."
    ],
    "prevent": "Revisa tallos y envés de las hojas al comprar o trasplantar.",
@@ -387,8 +387,8 @@
    "worry": "Si la plaga persiste, repite los tratamientos durante varias semanas."
   },
   "chewing_pests": {
-   "name": "Plagas masticadoras (orugas, babosas, escarabajos)",
-   "what": "Plagas más grandes muerden agujeros o bordes deshilachados en las hojas.",
+   "name": "Plagas que roen (orugas, babosas, escarabajos)",
+   "what": "Plagas más grandes hacen agujeros o bordes deshilachados en las hojas.",
    "check": "Busca bajo las hojas y en la tierra, mejor al anochecer, orugas, babosas, caracoles o escarabajos. Los rastros de baba son una pista.",
    "steps": [
     "Retira las plagas a mano y llévalas lejos de la planta.",
@@ -461,8 +461,8 @@
   },
   "anthracnose": {
    "name": "Antracnosis",
-   "what": "Una enfermedad fúngica que causa manchas oscuras y hundidas y un oscurecimiento seco desde las puntas y los bordes.",
-   "check": "Busca manchas oscuras algo hundidas con un margen y un oscurecimiento que avanza desde los bordes.",
+   "what": "Una enfermedad fúngica que causa manchas oscuras y hundidas y un pardeamiento seco desde las puntas y los bordes.",
+   "check": "Busca manchas oscuras algo hundidas con un margen y un pardeamiento que avanza desde los bordes.",
    "steps": [
     "Quita las hojas afectadas.",
     "Mantén las hojas secas y mejora la ventilación.",
@@ -498,7 +498,7 @@
   "old_leaf_drop": {
    "name": "Caída normal de hojas viejas",
    "what": "Las plantas sueltan sus hojas más viejas con el tiempo.",
-   "check": "¿Es solo una o dos hojas de abajo, mientras el resto de la planta se ve sano?",
+   "check": "¿Son solo una o dos hojas de abajo, mientras el resto de la planta se ve sano?",
    "steps": [
     "No hace falta hacer nada. Retira las hojas caídas para mantener todo ordenado.",
     "Sigue con tu rutina habitual de cuidados."
@@ -544,7 +544,7 @@
   },
   "flower_fade": {
    "name": "Marchitamiento natural de las flores",
-   "what": "Las flores se marchitan y se oscurecen cuando terminan, lo cual es natural.",
+   "what": "Las flores se marchitan y se ponen marrones cuando terminan, lo cual es natural.",
    "check": "¿La planta terminó de florecer hace poco?",
    "steps": [
     "Quita las flores marchitas y los tallos florales.",
