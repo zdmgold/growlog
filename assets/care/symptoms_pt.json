@@ -9,7 +9,7 @@
   "brown_tips": "Pontas ou bordas marrons",
   "brown_spots": "Manchas marrons",
   "black_spots": "Manchas pretas",
-  "wilting": "Murchando ou caída",
+  "wilting": "Murcha ou caída",
   "white_powder": "Pó branco na superfície",
   "white_fluff": "Tufos brancos como algodão",
   "sticky": "Resíduo pegajoso",
@@ -53,7 +53,7 @@
   "long_unfed": "Sem adubo há seis meses ou mais",
   "heavy_feed": "Adubada muito ou com frequência",
   "just_moved": "Mudou de lugar recentemente",
-  "just_repotted": "Foi replantada recentemente",
+  "just_repotted": "Teve o vaso trocado recentemente",
   "just_bought": "Foi comprada recentemente",
   "winter": "Inverno ou estação fria",
   "flowers_done": "Acabou de florescer",
@@ -103,7 +103,7 @@
    "check": "Tire a planta do vaso. Raízes saudáveis são firmes e claras. Raízes podres são marrons ou pretas, moles e com cheiro azedo.",
    "steps": [
     "Retire a planta e corte todas as raízes moles e escuras com tesoura limpa.",
-    "Replante em substrato novo e bem drenado, em vaso limpo com furos.",
+    "Troque a planta para substrato novo e bem drenado, em vaso limpo com furos.",
     "Regue pouco depois e mantenha a planta com luz forte e indireta."
    ],
    "prevent": "Use um substrato bem drenado e nunca deixe o vaso parado na água.",
@@ -152,7 +152,7 @@
    "steps": [
     "Leve a planta a um local mais claro, de preferência perto de uma janela com luz indireta.",
     "Gire o vaso a cada uma ou duas semanas para um crescimento uniforme.",
-    "Pode as hastes longas e sem folhas na primavera para estimular um crescimento mais cheio."
+    "Faça a poda das hastes longas e sem folhas na primavera para estimular um crescimento mais cheio."
    ],
    "prevent": "Combine a planta com a luz do ambiente ou use uma luz de cultivo.",
    "worry": "Se a planta continuar piorando em local claro, veja a rega e as raízes."
@@ -172,7 +172,7 @@
   "light_change": {
    "name": "Mudança brusca de luz",
    "what": "Mudar para um local muito diferente faz a planta perder ou amarelar folhas enquanto se adapta.",
-   "check": "A planta mudou há pouco de cômodo, janela ou estação de luz?",
+   "check": "A planta mudou há pouco de cômodo, de janela ou com a luz da estação?",
    "steps": [
     "Deixe-a no novo local e evite mudá-la de novo por algumas semanas.",
     "Mantenha a rega regular.",
@@ -258,12 +258,12 @@
    "what": "As raízes encheram o vaso e não absorvem água e nutrientes suficientes.",
    "check": "Tire a planta do vaso. Um emaranhado denso de raízes dando voltas por fora indica que está apertada.",
    "steps": [
-    "Replante em um vaso um tamanho maior (2 a 5 cm mais largo) com substrato novo.",
-    "Solte com cuidado as raízes externas antes de replantar.",
+    "Passe a planta para um vaso um tamanho maior (2 a 5 cm mais largo) com substrato novo.",
+    "Solte com cuidado as raízes externas antes de trocar de vaso.",
     "Regue bem depois e mantenha longe do sol forte por uma semana."
    ],
-   "prevent": "Replante a cada um ou dois anos, na primavera, conforme o crescimento.",
-   "worry": "Se a planta estiver mal após replantar, verifique podridão de raízes."
+   "prevent": "Troque de vaso a cada um ou dois anos, na primavera, conforme o crescimento.",
+   "worry": "Se a planta estiver mal após trocar de vaso, verifique podridão de raízes."
   },
   "compacted_soil": {
    "name": "Solo compactado",
@@ -271,11 +271,11 @@
    "check": "Regue e observe. Se a água empoça no topo ou sai de uma vez por baixo, o solo está compactado.",
    "steps": [
     "Solte com cuidado a parte de cima do solo com um palito.",
-    "Replante em substrato novo e arejado, com perlita ou casca.",
+    "Passe a planta para substrato novo e arejado, com perlita ou casca.",
     "Regue devagar, em etapas, para a água penetrar."
    ],
    "prevent": "Renove o substrato a cada um ou dois anos.",
-   "worry": "Se a planta continuar murchando após replantar, verifique as raízes."
+   "worry": "Se a planta continuar murchando após trocar de vaso, verifique as raízes."
   },
   "poor_drainage": {
    "name": "Drenagem ruim",
@@ -299,7 +299,7 @@
     "Use água mais macia, se puder."
    ],
    "prevent": "Lave de vez em quando e evite excesso de adubo.",
-   "worry": "Se as pontas das folhas continuarem escurecendo, replante em substrato novo."
+   "worry": "Se as pontas das folhas continuarem ficando marrons, passe a planta para substrato novo."
   },
   "spider_mites": {
    "name": "Ácaros-aranha",
@@ -320,11 +320,11 @@
    "check": "Procure aglomerados brancos como algodão nas axilas das folhas e nos caules.",
    "steps": [
     "Isole a planta.",
-    "Toque cada inseto com um cotonete embebido em álcool (teste antes em uma folha).",
+    "Toque cada inseto com um cotonete embebido em álcool 70% (teste antes em uma folha).",
     "Limpe a planta com solução de sabão neutro e repita toda semana por várias semanas."
    ],
    "prevent": "Inspecione plantas novas antes de colocá-las perto das outras.",
-   "worry": "Se chegarem às raízes (penugem branca no solo), replante e trate o solo."
+   "worry": "Se chegarem às raízes (penugem branca no solo), troque de vaso e trate o solo."
   },
   "scale": {
    "name": "Cochonilhas de carapaça",
@@ -332,10 +332,10 @@
    "check": "Procure caroços marrons ou bege ao longo de caules ou nervuras que saem com a unha.",
    "steps": [
     "Isole a planta.",
-    "Raspe ou limpe as cochonilhas com um cotonete embebido em álcool.",
+    "Raspe ou limpe as cochonilhas com um cotonete embebido em álcool 70%.",
     "Limpe a planta com solução de sabão neutro e repita toda semana por algumas semanas."
    ],
-   "prevent": "Verifique caules e o verso das folhas ao comprar ou replantar.",
+   "prevent": "Verifique caules e o verso das folhas ao comprar ou trocar de vaso.",
    "worry": "Se a planta continuar piorando, repita o tratamento por mais tempo e mantenha-a isolada."
   },
   "fungus_gnats": {
@@ -388,7 +388,7 @@
   },
   "chewing_pests": {
    "name": "Pragas mastigadoras (lagartas, lesmas, besouros)",
-   "what": "Pragas maiores mordem furos ou bordas esfiapadas nas folhas.",
+   "what": "Pragas maiores fazem furos ou bordas esfiapadas nas folhas.",
    "check": "Procure sob as folhas e no solo, de preferência à noite, lagartas, lesmas, caracóis ou besouros. Rastros de baba são uma pista.",
    "steps": [
     "Retire as pragas à mão e leve-as para longe da planta.",
@@ -462,7 +462,7 @@
   "anthracnose": {
    "name": "Antracnose",
    "what": "Uma doença fúngica que causa manchas escuras e fundas e secamento marrom a partir das pontas e bordas.",
-   "check": "Procure manchas escuras levemente fundas com margem e um escurecimento que avança a partir das bordas.",
+   "check": "Procure manchas escuras levemente fundas com margem e um amarronzamento que avança a partir das bordas.",
    "steps": [
     "Remova as folhas atingidas.",
     "Mantenha as folhas secas e melhore a circulação de ar.",
@@ -519,15 +519,15 @@
    "worry": "Se as folhas amarelarem ou amolecerem, verifique excesso de rega."
   },
   "repot_shock": {
-   "name": "Choque do replantio",
+   "name": "Choque da troca de vaso",
    "what": "Raízes perturbadas levam algumas semanas para se recuperar, e as folhas podem cair ou murchar.",
-   "check": "A planta foi replantada no último mês?",
+   "check": "A planta teve o vaso trocado no último mês?",
    "steps": [
     "Mantenha o solo levemente úmido, não molhado.",
     "Mantenha a planta longe do sol direto por duas semanas.",
     "Não adube por cerca de um mês."
    ],
-   "prevent": "Trate as raízes com cuidado e replante na fase de crescimento.",
+   "prevent": "Trate as raízes com cuidado e troque de vaso na fase de crescimento.",
    "worry": "Se continuar piorando após seis semanas, verifique podridão de raízes."
   },
   "settling_in": {
@@ -537,14 +537,14 @@
    "steps": [
     "Coloque-a em um local estável com a luz adequada e deixe-a em paz.",
     "Regue só quando o solo estiver seco.",
-    "Evite replantar ou adubar por algumas semanas."
+    "Evite trocar de vaso ou adubar por algumas semanas."
    ],
    "prevent": "Dê às plantas novas um local estável e algumas semanas para se adaptar.",
    "worry": "Se o declínio continuar depois de um mês, verifique pragas e rega."
   },
   "flower_fade": {
    "name": "Murcha natural das flores",
-   "what": "As flores murcham e escurecem quando terminam, o que é natural.",
+   "what": "As flores murcham e ficam marrons quando terminam, o que é natural.",
    "check": "A planta terminou de florescer há pouco?",
    "steps": [
     "Remova as flores murchas e as hastes florais.",
