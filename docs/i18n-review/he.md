@@ -42,5 +42,28 @@ No wrong-meaning translations and no broken placeholders. Quality is high and id
 | 19 | Date composition: scannedLabel (159) | {name}, נסרק {date} | Reads correctly with היום / אתמול; no problem in Hebrew | none | info |
 | 20 | Possibly dead strings | proFeatures, upgradeToPro, aiPlantId, cloudSync, journal strings | Not confirmed unused | none | info |
 
-## Not covered yet
-- Symptom Checker labels and problems (assets/care/symptoms_he.json): not read yet.
+
+## Symptom Checker review (assets/care/symptoms_he.json against assets/care/symptoms.json)
+Read by hand: 59/59 labels, 41/41 problems (name, what, check, prevent, worry, every step).
+Scripted: 329 fields compared; 328 have identical digits. The one difference is correct (English
+"1 teaspoon" is written "כפית", powdery_mildew step 4). Hebrew also writes many quantities as number
+words, which a digit check cannot see, so those were read BY HAND against the English: שלוש או ארבע
+פעמים, לפחות חודשיים, ארבעה עד שישה שבועות, שישה שבועות, שבועיים, כחודש, כל שנה או שנתיים, כל
+שבוע או שבועיים, שבוע (a week), מעבר לחודש, שישה חודשים (label): all match. Every step count matches,
+no meaning reversals. The file is fully plural-address (34 plural imperatives, 0 singular), which
+supports interface finding 1. Terminology is strong: ריקבון שורשים, בצקת, פקקיות, עקת חום, יסודות קורט,
+מלח אפסום, ברזל קלאטי, כנימות קמח, כנימות מגן, כנימות עלה, כנימות עש, יתושי פטריות, תריפסים, קמחונית,
+חלודה, אנתרקנוז, עובש פיח, טל דבש, הילה, הלם החלפת עציץ, תרדמת חורף. "אלכוהול רפואי" is an explicit
+term for rubbing alcohol (no safety flag, unlike es/pt/ar). "אין מה למנוע" is natural (unlike Arabic).
+
+| # | Where | Current | Issue | Suggested | Severity |
+|---|---|---|---|---|---|
+| S1 | "ורידים" for leaf veins: 7 uses in 4 problems (iron_deficiency, magnesium_deficiency, scale, bacterial_leaf_spot) + label loc_between_veins | בין הורידים הירוקים | ורידים is the word for blood veins; I believe the usual botanical word for leaf veins is עורקים (עורקי העלה). CONFIRM WITH A NATIVE SPEAKER, I cannot verify it from here | עורקי העלה / העורקים הירוקים (if confirmed) | medium (verify) |
+| S2 | "ותיקים" for older leaves: 6 uses in 3 problems (nitrogen_deficiency, magnesium_deficiency, old_leaf_drop) + label age_old | עלים ותיקים | ותיק = veteran/long-standing; unusual for leaves. CONFIRM | עלים ישנים / בוגרים | low-medium (verify) |
+| S3 | chewing_pests (what) | מזיקים גדולים יותר כרסמים חורים | "כרסמים" reads as the noun "rodents": "larger pests, rodents, holes" | מזיקים גדולים יותר אוכלים חורים או שוליים מרוטים בעלים | medium-low |
+| S4 | spider_mites (name) | אקריות (קדי עכביש) | "קדי" looks like a typo (a missing letter). CONFIRM | אקריות (קרדיות עכביש) | low-medium (verify) |
+| S5 | whiteflies (worry) | אם ההדבקה נמשכת | הדבקה = infection; for pests the word is נגיעות (הדבקה is right in bacterial_leaf_spot) | אם הנגיעות נמשכת | low |
+| S6 | label hot_spot; low_humidity (step 1); heat_stress (check) | ליד תנור / מתנורים / ליד תנור | תנור = oven/stove; a heater is תנור חימום (heat_stress check also names רדיאטור, which clarifies it) | ליד תנור חימום | low |
+| S7 | "growth": גידול 16 uses in the symptom text (+ labels leggy, no_growth) vs גדילה 2, צמיחה 0 | גידול חדש / גידול איטי | Same issue as interface finding 4 (גידול also means tumour). NOT a blind replace: עציץ הגידול (grow pot, #18) is correct | Decide with finding 4; keep עציץ הגידול | low-medium |
+| S8 | labels long_unfed, heavy_feed | לא דישנו / דישנו הרבה | Impersonal "they fertilised" vs the passive (הועבר, נקנה) used in neighbouring labels | לא דושן / דושן הרבה (optional) | low |
+| S9 | mineral_crust (worry) | ממשיכים להשחים | "darkening" for "browning" (same slight shift as es/pt/ar) | ממשיכים להחוויר... see native speaker | low |
