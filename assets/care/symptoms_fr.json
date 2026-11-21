@@ -26,7 +26,7 @@
   "pale_new": "Jeunes feuilles petites ou pâles",
   "leaf_drop": "Chute des feuilles",
   "bumps": "Boursouflures sous les feuilles",
-  "brown_bumps": "Bosses brunes dures sur tiges ou feuilles",
+  "brown_bumps": "Excroissances brunes dures sur tiges ou feuilles",
   "stippling": "Minuscules points pâles sur les feuilles",
   "crust": "Croûte blanche ou grise sur le terreau ou le pot",
   "grey_fuzz": "Moisissure grise duveteuse",
@@ -38,7 +38,7 @@
   "loc_patchy": "Par plaques, en taches",
   "loc_even": "Uniformément sur la plante",
   "wet_soil": "Le terreau reste humide plusieurs jours",
-  "dry_soil": "Le terreau est sec comme de l’os pendant longtemps",
+  "dry_soil": "Le terreau est complètement sec pendant longtemps",
   "irregular_water": "Arrosage irrégulier",
   "no_drainage": "Le pot n’a pas de trou de drainage",
   "hard_soil": "Terreau dur ou l’eau le traverse directement",
@@ -82,13 +82,13 @@
     "Si le terreau s’est décollé du bord du pot, faites tremper le pot par le bas 20 à 30 minutes.",
     "Revérifiez dans quelques jours et adoptez un rythme régulier."
    ],
-   "prevent": "Contrôlez le terreau régulièrement et arrosez abondamment plutôt que par petites gorgées.",
+   "prevent": "Contrôlez le terreau régulièrement et arrosez abondamment plutôt que par petites quantités.",
    "worry": "Si les feuilles restent cassantes après quelques semaines d’arrosage régulier, les racines sont peut-être abîmées."
   },
   "inconsistent_watering": {
    "name": "Arrosage irrégulier",
    "what": "Les écarts entre trop humide et trop sec stressent les racines.",
-   "check": "Réfléchissez : le terreau est-il passé de détrempé à sec comme de l’os plus d’une fois ?",
+   "check": "Réfléchissez : le terreau est-il passé de détrempé à complètement sec plus d’une fois ?",
    "steps": [
     "Choisissez une routine simple : vérifiez le terreau le même jour chaque semaine.",
     "Arrosez abondamment à chaque fois, puis laissez le dessus sécher avant le prochain arrosage.",
@@ -256,13 +256,13 @@
   "rootbound": {
    "name": "Plante à l’étroit (racines saturées)",
    "what": "Les racines remplissent le pot et ne peuvent plus absorber assez d’eau ni de nutriments.",
-   "check": "Sortez la plante du pot. Un dense tapis de racines enroulées sur le pourtour indique qu’elle est à l’étroit.",
+   "check": "Sortez la plante du pot. Un tapis dense de racines enroulées sur le pourtour indique qu’elle est à l’étroit.",
    "steps": [
     "Rempotez dans un pot un peu plus grand (2 à 5 cm de plus) avec du terreau frais.",
     "Démêlez délicatement les racines extérieures avant de rempoter.",
     "Arrosez bien ensuite et gardez la plante à l’abri du soleil fort pendant une semaine."
    ],
-   "prevent": "Rempotez tous les un à deux ans au printemps, selon la croissance.",
+   "prevent": "Rempotez tous les un ou deux ans au printemps, selon la croissance.",
    "worry": "Si la plante va mal après le rempotage, vérifiez la pourriture des racines."
   },
   "compacted_soil": {
@@ -270,11 +270,11 @@
    "what": "Un terreau vieux ou lourd se tasse : l’eau stagne ou passe sans atteindre les racines.",
    "check": "Arrosez et observez. Si l’eau stagne en surface ou sort d’un coup par le bas, le terreau est tassé.",
    "steps": [
-    "Ameublissez délicatement le dessus du terreau avec une baguette.",
+    "Ameublissez délicatement le dessus du terreau avec une baguette chinoise.",
     "Rempotez dans un terreau frais et aéré avec de la perlite ou de l’écorce.",
     "Arrosez lentement, en plusieurs fois, pour que l’eau pénètre."
    ],
-   "prevent": "Renouvelez le terreau tous les un à deux ans.",
+   "prevent": "Renouvelez le terreau tous les un ou deux ans.",
    "worry": "Si la plante continue de flétrir après le rempotage, vérifiez les racines."
   },
   "poor_drainage": {
@@ -320,7 +320,7 @@
    "check": "Cherchez des amas blancs cotonneux à l’aisselle des feuilles et sur les tiges.",
    "steps": [
     "Isolez la plante.",
-    "Touchez chaque insecte avec un coton-tige imbibé d’alcool à friction (testez d’abord sur une feuille).",
+    "Touchez chaque insecte avec un coton-tige imbibé d’alcool à 70° (testez d’abord sur une feuille).",
     "Essuyez la plante avec une solution de savon doux et répétez chaque semaine pendant plusieurs semaines."
    ],
    "prevent": "Inspectez les nouvelles plantes avant de les approcher des autres.",
@@ -332,7 +332,7 @@
    "check": "Cherchez des bosses brunes ou beiges le long des tiges ou des nervures que vous pouvez gratter avec l’ongle.",
    "steps": [
     "Isolez la plante.",
-    "Grattez ou essuyez les cochenilles avec un coton-tige imbibé d’alcool à friction.",
+    "Grattez ou essuyez les cochenilles avec un coton-tige imbibé d’alcool à 70°.",
     "Essuyez la plante avec une solution de savon doux et répétez chaque semaine pendant quelques semaines."
    ],
    "prevent": "Vérifiez les tiges et le dessous des feuilles à l’achat et au rempotage.",
@@ -387,7 +387,7 @@
    "worry": "Si l’infestation persiste, répétez les traitements pendant plusieurs semaines."
   },
   "chewing_pests": {
-   "name": "Parasites mâcheurs (chenilles, limaces, coléoptères)",
+   "name": "Parasites qui rongent (chenilles, limaces, coléoptères)",
    "what": "De plus gros parasites rongent des trous ou des bords déchiquetés dans les feuilles.",
    "check": "Cherchez sous les feuilles et dans le terreau, de préférence le soir, des chenilles, limaces, escargots ou coléoptères. Une traînée de bave est un indice.",
    "steps": [
@@ -414,7 +414,7 @@
   "fungal_leaf_spot": {
    "name": "Taches foliaires fongiques",
    "what": "Des champignons causent des taches brunes ou noires, souvent avec un anneau plus foncé ou un halo jaune.",
-   "check": "Regardez si les taches ont des bords nets ou un halo jaune et apparaissent après des feuilles mouillées.",
+   "check": "Regardez si les taches ont des bords nets ou un halo jaune et apparaissent après un feuillage mouillé.",
    "steps": [
     "Retirez les feuilles très tachées.",
     "Évitez de mouiller les feuilles et améliorez la circulation d’air.",
@@ -466,7 +466,7 @@
    "steps": [
     "Retirez les feuilles atteintes.",
     "Gardez les feuilles sèches et améliorez la circulation d’air.",
-    "Ne serrez pas les plantes."
+    "N’entassez pas les plantes."
    ],
    "prevent": "Évitez de mouiller les feuilles et laissez de l’espace entre les plantes.",
    "worry": "Si elle se propage, isolez la plante."
@@ -498,7 +498,7 @@
   "old_leaf_drop": {
    "name": "Chute normale des vieilles feuilles",
    "what": "Les plantes perdent leurs plus vieilles feuilles avec le temps.",
-   "check": "S’agit-il d’une feuille ou deux en bas, alors que le reste de la plante a bonne mine ?",
+   "check": "S’agit-il d’une feuille ou deux en bas, alors que le reste de la plante a l’air en bonne santé ?",
    "steps": [
     "Aucune action nécessaire. Retirez les feuilles tombées pour garder la plante nette.",
     "Gardez votre routine d’entretien habituelle."
