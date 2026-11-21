@@ -26,5 +26,5 @@ This table is the single place to see where the review stands.
 | ja | 437/437 read | 59/59 labels + 41/41 problems read | ja.md | none (batch phase) |
 | ko | 437/437 read | 59/59 labels + 41/41 problems read | ko.md | none (batch phase); decision pending: speech level (finding 1) |
 | zh | 437/437 read | 59/59 labels + 41/41 problems read | zh.md | none (batch phase) |
-| he | not started | not started | - | - |
+| he | 437/437 read | not read | he.md | none (batch phase) |
 | en | source text, not reviewed | not reviewed | - | - |
