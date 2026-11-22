@@ -1,0 +1,256 @@
+===== system language en (en), manual choice es =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [en]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_01_first_launch
+    MISSING navHome: 'Start'
+    MISSING navGarden: 'Garten'
+    MISSING navSchedule: 'Zeitplan'
+    MISSING scanAPlant: 'Pflanze scannen'
+    ENGLISH LEAK navHome: 'Home'
+    ENGLISH LEAK navGarden: 'Garden'
+    ENGLISH LEAK navSchedule: 'Schedule'
+    ENGLISH LEAK scanAPlant: 'Scan a plant'
+  RESULT FAIL
+PASS: en_01b_negative_control_must_not_look_german
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_06_manual_es
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_07_after_restart_es
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: en_08_phone_default
+  overflow lines so far: 0
+===== system language es (es), manual choice fr =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [es]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_06_manual_fr
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_07_after_restart_fr
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: es_08_phone_default
+  overflow lines so far: 0
+===== system language fr (fr), manual choice de =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [fr]
+  (app not in front:   mCurrentFocus=null -> relaunching)
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_06_manual_de
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_07_after_restart_de
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: fr_08_phone_default
+  overflow lines so far: 0
+===== system language de (de), manual choice pt =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [de]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_06_manual_pt
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_07_after_restart_pt
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: de_08_phone_default
+  overflow lines so far: 0
+===== system language pt (pt), manual choice ar =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [pt]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: pt_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: pt_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: pt_03_schedule
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: pt_06_manual_ar
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: pt_07_after_restart_ar
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: pt_08_phone_default
+  overflow lines so far: 0
+===== system language ar (ar), manual choice hi =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [ar]
+  (app not in front:   mCurrentFocus=null -> relaunching)
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: ar_01_first_launch
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: ar_02_garden
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: ar_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ar_06_manual_hi
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ar_07_after_restart_hi
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: ar_08_phone_default
+  overflow lines so far: 0
+===== system language hi (hi), manual choice ja =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [hi]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_06_manual_ja
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_07_after_restart_ja
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: hi_08_phone_default
+  overflow lines so far: 0
+===== system language ja (ja), manual choice ko =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [ja]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_06_manual_ko
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_07_after_restart_ko
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ja_08_phone_default
+  overflow lines so far: 0
+===== system language ko (ko), manual choice zh =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [ko]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_06_manual_zh
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_07_after_restart_zh
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: ko_08_phone_default
+  overflow lines so far: 0
+===== system language zh (zh-CN), manual choice he =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [zh-CN]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: zh_01_first_launch
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: zh_02_garden
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: zh_03_schedule
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: zh_06_manual_he
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: zh_07_after_restart_he
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: zh_08_phone_default
+  overflow lines so far: 0
+===== system language he (he), manual choice en =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [he]
+  (app not in front:   mCurrentFocus=null -> relaunching)
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: he_01_first_launch
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: he_02_garden
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: he_03_schedule
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: he_06_manual_en
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: he_07_after_restart_en
+    dock order right-to-left: ok
+  RESULT PASS
+PASS: he_08_phone_default
+  overflow lines so far: 0
+===== unsupported and variant system languages =====
+  locale set: Locales for com.zdmgold.growlog for user 0 are [sw-KE]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: x_swahili_falls_back_to_english
+  locale set: Locales for com.zdmgold.growlog for user 0 are [zh-TW]
+    dock order left-to-right: ok
+  RESULT PASS
+PASS: x_traditional_chinese_shows_simplified
+overflow lines total: 0
+error lines: 36
+SUMMARY pass=69 fail=0 notfound=0
