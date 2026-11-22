@@ -62,3 +62,41 @@ Already decided: Spanish dialect = Option A Latin American; German = convert cli
 - careDueToday / careOverdue / careDueWithType build a phrase from a verb label ("Regar atrasado"): needs noun forms.
 - Arabic: daysSuffix (67) has no count parameter; plural blocks need few/many; 6 numeric strings have no plural block.
 - Hebrew: =2 forms missing in 4 plural strings; 4 numeric strings with no plural block.
+
+
+## FIX PHASE APPLIED (one batch, branch i18n-fixes merged to main)
+Counted by script against the previous main: 467 interface strings and 276 symptom-text fields changed in total.
+| Lang | Interface strings changed | Symptom fields changed |
+|---|---|---|
+| fr | 44 | 14 |
+| es | 65 | 11 |
+| de | 23 | 156 (includes the clipped-imperative conversion) |
+| pt | 44 | 23 |
+| ar | 69 | 10 |
+| hi | 42 | 22 |
+| ja | 27 | 17 |
+| ko | 72 | 13 |
+| zh | 32 | 5 |
+| he | 49 | 5 |
+Code: scanDateLabel gained an optional `inline` flag (lower-cases the first letter, no effect on uncased scripts),
+used at the one place a date is dropped into the middle of a sentence (recent_scans_row.dart, a screen-reader label).
+Verified locally by a script mirroring the repo tests (same keys, same placeholders, symptom ids/step counts, text differs
+from English). The REAL check is the CI compile check plus the emulator language run, see results in the commit history.
+
+Decisions applied by default (you had not answered): Korean = Option A (formal 합니다체 everywhere; three user-voice chat
+starters 307/308/310 kept conversational), Chinese Treat label = 防治.
+
+### NOT applied, and why
+- Verb-label-as-noun phrases ("Regar atrasado": careDueToday/careOverdue/careDueWithType): needs new noun-form keys for the
+  six care types in all 11 languages. Design decision, not done.
+- Bare dates in "scanned {date}" ("scannée 7 oct."): needs a per-language "on" word; not done. Only the capitalised
+  Today/Yesterday case is fixed.
+- Hebrew: ורידים (leaf veins), ותיקים (older leaves), קדי עכביש (typo?), and the 16 symptom uses of גידול: left unchanged
+  until a native speaker confirms (I could not verify them). Hebrew offCareWater/offCareFeed (389/390) keep a static
+  "ימים" because their `days` placeholder is typed String in the English template (a plural needs a numeric type).
+- Arabic 389/390 reworded number-neutral for the same reason; Arabic schedule labels reworded to noun phrases + "بالأيام"
+  so no code change was needed.
+- Corrected review finding: German "Weiße Fliege" is a fixed capitalised pest name, so de S8 was wrong and was NOT applied.
+- Skipped as subjective or info-level: es S6/S8, fr style item 8, pt Doutor naming and "rega", hi S8 (हनीड्यू), ko
+  clear/delete verbs, ja clear/delete verbs, he theme words, ar offline wording.
+- Hindi S1 (हाला -> घेरा) WAS applied but still needs a native speaker to confirm.

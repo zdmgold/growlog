@@ -34,7 +34,7 @@ class RecentScansRow extends StatelessWidget {
                 width: 132,
                 child: Semantics(
                   button: true,
-                  label: context.l10n.scannedLabel(s.commonName, scanDateLabel(context, s.createdAt)),
+                  label: context.l10n.scannedLabel(s.commonName, scanDateLabel(context, s.createdAt, inline: true)),
                   child: Material(
                     color: isDark ? AppColors.bgSecondaryDark : AppColors.bgSecondary,
                     borderRadius: BorderRadius.circular(AppRadii.lg),

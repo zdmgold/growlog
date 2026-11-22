@@ -92,14 +92,26 @@ class ScanThumb extends StatelessWidget {
   }
 }
 
-String scanDateLabel(BuildContext context, DateTime d) {
+/// A short, localised date. With [inline] the first letter is lower-cased, for use in the
+/// middle of a sentence ("scanned today", not "scanned Today"); scripts without case are unaffected.
+String scanDateLabel(BuildContext context, DateTime d, {bool inline = false}) {
   final l = context.l10n;
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
   final day = DateTime(d.year, d.month, d.day);
   final diff = today.difference(day).inDays;
-  if (diff == 0) return l.today;
-  if (diff == 1) return l.yesterday;
-  if (diff < 7) return l.daysAgo(diff);
-  return DateFormat.MMMd(Localizations.localeOf(context).toString()).format(d);
+  final String label;
+  if (diff == 0) {
+    label = l.today;
+  } else if (diff == 1) {
+    label = l.yesterday;
+  } else if (diff < 7) {
+    label = l.daysAgo(diff);
+  } else {
+    label = DateFormat.MMMd(Localizations.localeOf(context).toString()).format(d);
+  }
+  if (inline && label.isNotEmpty) {
+    return label[0].toLowerCase() + label.substring(1);
+  }
+  return label;
 }
