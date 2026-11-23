@@ -1,0 +1,576 @@
+===== create one plant in English =====
+plant created: yes
+===== ar (ar) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'اسم النبتة *'
+    MISSING speciesLabel: 'النوع (اختياري)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_results
+  overflow lines in ar: 0
+===== he (he) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'שם הצמח *'
+    MISSING speciesLabel: 'מין (אופציונלי)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_results
+  overflow lines in he: 0
+===== ko (ko) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: '식물 이름 *'
+    MISSING speciesLabel: '종 (선택 사항)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_results
+  overflow lines in ko: 0
+===== zh (zh-CN) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: '植物名称 *'
+    MISSING speciesLabel: '种类（可选）'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_results
+  overflow lines in zh: 0
+===== ja (ja) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: '植物の名前 *'
+    MISSING speciesLabel: '種類（任意）'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_results
+  overflow lines in ja: 0
+===== de (de) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'Pflanzenname *'
+    MISSING speciesLabel: 'Art (optional)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_results
+  overflow lines in de: 0
+===== hi (hi) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'पौधे का नाम *'
+    MISSING speciesLabel: 'प्रजाति (वैकल्पिक)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_results
+  overflow lines in hi: 0
+===== fr (fr) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'Nom de la plante *'
+    MISSING speciesLabel: 'Espèce (facultatif)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_results
+  overflow lines in fr: 0
+===== es (es) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'Nombre de la planta *'
+    MISSING speciesLabel: 'Especie (opcional)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: es_results
+  overflow lines in es: 0
+===== pt (pt) =====
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      scanAPlant
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_home
+    ok      careTitle
+    ok      logCareNow
+    ok      growthTitle
+    ok      doctorTitle
+    ok      editScheduleAction
+    found 5/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_plant
+    ok      addPlantScreenTitle
+    MISSING plantNameLabel: 'Nome da planta *'
+    MISSING speciesLabel: 'Espécie (opcional)'
+    ok      careSchedule
+    ok      waterEvery
+    ok      savePlant
+    found 4/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_add
+    ok      dueNow
+    ok      upcoming
+    ok      all
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_schedule
+    ok      symptomCheckerTitle
+    ok      symptomStepWhere
+    ok      symptomNext
+    ok      sym:leaves
+    found 4/4 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_sym1
+    ok      symptomStepWhat
+    ok      sym:yellowing
+    ok      sym:wilting
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_sym2
+    ok      symptomStepContext
+    ok      sym:wet_soil
+    ok      sym:no_drainage
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_sym4
+    ok      prob:overwatering
+    ok      symptomMostLikely
+    ok      symptomResultsTitle
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: pt_results
+  overflow lines in pt: 0
+overflow lines total: 0
+error lines: 0
+GrowLog-related error lines: 0
+SUMMARY pass=80 fail=0 notfound=0
