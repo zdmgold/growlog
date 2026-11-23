@@ -100,3 +100,17 @@ starters 307/308/310 kept conversational), Chinese Treat label = 防治.
 - Skipped as subjective or info-level: es S6/S8, fr style item 8, pt Doutor naming and "rega", hi S8 (हनीड्यू), ko
   clear/delete verbs, ja clear/delete verbs, he theme words, ar offline wording.
 - Hindi S1 (हाला -> घेरा) WAS applied but still needs a native speaker to confirm.
+
+
+### Verification of the fix batch (main e6903e6)
+- Compile check (run 45044316055): ALL CHECKS PASSED. gen-l10n generated all 11 localization files, including Arabic
+  few/many plurals, Hebrew dual forms and the nested plural in photosCount/photosSpan. 88 unit tests passed.
+- Emulator language run (run 45045269908): SUMMARY pass=69 fail=0 notfound=0, overflow lines 0. The 36 error lines are
+  all the Android UiAutomation harness crash ("Bad file descriptor"); 0 lines come from GrowLog. The run checks the dock
+  and tab labels in all 11 languages for system language, manual choice, restart and phone default, plus the Swahili and
+  Traditional-Chinese fallbacks. It does NOT read the long new strings.
+- Looked at by eye: Hebrew first launch (RTL, plural imperatives, no overflow) and Korean first launch (formal speech
+  level, no overflow). Arabic, Chinese and the other languages were not looked at in this run.
+- Cosmetic, not caused by this batch: Korean text wraps inside a word ("연결 / 하세요").
+- Still NOT verified: any of the new wording by a native speaker; the long new strings (plural forms, schedule labels) on a
+  screen; Plant Page, Add Plant schedule row and Symptom Checker in the changed languages; a real phone.
