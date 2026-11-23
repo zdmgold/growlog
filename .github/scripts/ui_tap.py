@@ -21,7 +21,11 @@ for n in root.iter("node"):
     for key in ("text", "content-desc"):
         v = (n.get(key) or "").strip()
         if v:
-            nodes.append((v.lower(), (l + r) // 2, (t + bt) // 2, t))
+            # A tab's description repeats its label on two lines ("Scans\nScans"); treat that as one exact label
+            # so "Scans" is not confused with a longer label that merely contains it (e.g. the camera button).
+            parts = {p.strip().lower() for p in v.split("\n") if p.strip()}
+            norm = parts.pop() if len(parts) == 1 else v.lower()
+            nodes.append((norm, (l + r) // 2, (t + bt) // 2, t))
 for lab in labels:
     lab = lab.lower()
     for mode in ("exact", "sub"):

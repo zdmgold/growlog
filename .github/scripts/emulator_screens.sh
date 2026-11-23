@@ -53,7 +53,9 @@ for entry in ar:ar he:he ko:ko zh:zh-CN ja:ja de:de hi:hi fr:fr es:es pt:pt; do
   adb shell am force-stop $PKG; adb shell cmd locale set-app-locales $PKG --locales "$TAG" >/dev/null 2>&1
   launch 22; OV0=$(overflow)
   capture ${L}_home; verify ${L}_home $L 1.0 navHome navGarden navSchedule scanAPlant
-  for t in 1 2 3; do tap "Fern" && break; scrolldn; done; sleep 3
+  tap "$(key $L navGarden)"; sleep 2
+  PC=$(key $L plantCardAccessibility | sed 's/{plantName}/Fern/')
+  for t in 1 2 3; do tap "$PC" "Fern" && break; scrolldn; done; sleep 3
   capture_scroll ${L}_plant; verify ${L}_plant $L 0.5 careTitle logCareNow growthTitle doctorTitle editScheduleAction
   adb shell input keyevent 4; sleep 2
   tap "$(key $L navGarden)"; sleep 2; tap "$(key $L addPlant)" "$(key $L navAddPlant)"; sleep 2
