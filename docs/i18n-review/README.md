@@ -114,3 +114,22 @@ starters 307/308/310 kept conversational), Chinese Treat label = 防治.
 - Cosmetic, not caused by this batch: Korean text wraps inside a word ("연결 / 하세요").
 - Still NOT verified: any of the new wording by a native speaker; the long new strings (plural forms, schedule labels) on a
   screen; Plant Page, Add Plant schedule row and Symptom Checker in the changed languages; a real phone.
+
+
+### Verification: screens in all 10 languages (run 45254847465 on main 4865e20)
+Script: .github/scripts/emulator_screens.sh (+ screens_check.py). It creates one plant in English, then for each of ar, he, ko, zh,
+ja, de, hi, fr, es, pt it checks Home, Plant Page, Add Plant, Schedule and a full Symptom Checker run (4 steps) to a results
+screen, for the expected localized text (from the ARB files and the symptom overlay files), English leaks, and overflow.
+- RESULT: SUMMARY pass=80 fail=0 notfound=0; overflow lines 0; error lines 0 (0 GrowLog-related).
+- Items found: 100% on Home, Plant Page, Schedule and every Symptom Checker step in all 10 languages (the Symptom Checker run
+  reaches a result and finds the translated "Overwatering" name). Add Plant found 4 of 6 in every language: the two always-missed
+  items are the empty text-field floating labels (plantNameLabel, speciesLabel), which the accessibility dump does not expose;
+  they are visible in the screenshots (Korean, Hindi).
+- Looked at by eye: Arabic results (RTL, translated problem, "ممكن"), Korean Add Plant, Hindi Add Plant (relabelled schedule rows,
+  "पानी देने का अंतराल 7 दिन"), Japanese results, Korean/Hebrew home. All render correctly with no overflow.
+- The FIRST run of this script failed 17 checks. All 17 were bugs in my script, not the app: (1) in ko/zh/ja/hi the Scans tab label is
+  contained in the centre camera button's label, so the tap opened the identification sheet (fixed in ui_tap.py: a repeated tab label
+  now counts as an exact match); (2) the German Plant Page tap hit the "Next: Water Fern" text (fixed: open the plant via its card label).
+- NOT exercised by this run: Scan result and Doctor (need a model or an AI key), Settings, Connect AI, Paul chat, Wishlist and Rooms,
+  Growth/Doctor history (need photos), and the count-dependent plural strings (Arabic few/many, Hebrew dual: need overdue care,
+  several plants or photos). Native-speaker review of all wording is still outstanding. Nothing has run on a real phone.
