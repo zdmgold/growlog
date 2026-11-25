@@ -25,6 +25,60 @@ def english_labels():
     walk({k: v for k, v in base.items() if k != "problems"})
     return out
 
+
+def plural_cat(l, n):
+    """Dart intl plural rules for the languages in the app."""
+    if l == "ar":
+        if n == 0: return "zero"
+        if n == 1: return "one"
+        if n == 2: return "two"
+        m = n % 100
+        if 3 <= m <= 10: return "few"
+        if 11 <= m <= 99: return "many"
+        return "other"
+    if l == "he": return "one" if n == 1 else "two" if n == 2 else "other"
+    if l in ("ja", "ko", "zh"): return "other"
+    if l in ("fr", "pt", "hi"): return "one" if n in (0, 1) else "other"
+    return "one" if n == 1 else "other"
+
+def _match(msg, i):
+    d = 0
+    for j in range(i, len(msg)):
+        if msg[j] == "{": d += 1
+        elif msg[j] == "}":
+            d -= 1
+            if d == 0: return j
+    raise ValueError("unbalanced")
+
+def render(l, key, params):
+    """Evaluates an ARB message with Flutter's gen_l10n semantics (=1 -> one, =2 -> two, missing branch -> other)."""
+    def ev(msg):
+        out, i = [], 0
+        while i < len(msg):
+            if msg[i] != "{": out.append(msg[i]); i += 1; continue
+            j = _match(msg, i); inner = msg[i + 1:j]
+            m = re.match(r"(\w+),\s*plural,\s*", inner, re.ASCII)
+            if m:
+                n = int(params[m.group(1)]); body = inner[m.end():]; br = {}; k = 0
+                while k < len(body):
+                    mm = re.match(r"\s*(=\d+|\w+)\{", body[k:], re.ASCII)
+                    if not mm: break
+                    st = k + mm.end() - 1; en = _match(body, st); br[mm.group(1)] = body[st + 1:en]; k = en + 1
+                cat = plural_cat(l, n)
+                cands = {"zero": ["=0", "zero"], "one": ["=1", "one"], "two": ["=2", "two"]}.get(cat, [cat])
+                text = next((br[c] for c in cands if c in br), br["other"])
+                out.append(ev(text))
+            else: out.append(str(params.get(inner, "{" + inner + "}")))
+            i = j + 1
+        return "".join(out)
+    return ev(arb(l)[key])
+
+def parse_fmt(item):
+    _, key, rest = item.split(":", 2); params = {}
+    for kv in rest.split(","):
+        k, v = kv.split("=", 1); params[k] = int(v) if v.isdigit() else v
+    return key, params
+
 def texts(paths):
     out = []
     for p in paths:
@@ -37,6 +91,9 @@ def texts(paths):
     return out
 
 def expected(l, item):
+    if item.startswith("text:"): return item[5:], None
+    if item.startswith("fmt:"):
+        key, params = parse_fmt(item); return render(l, key, params), render("en", key, params)
     if item.startswith("sym:"):
         i = item[4:]; return sym(l)["labels"].get(i), sym("en")["labels"].get(i) if False else None
     if item.startswith("prob:"):
