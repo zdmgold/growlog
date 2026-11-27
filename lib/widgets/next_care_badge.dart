@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../l10n/l10n_ext.dart';
+import '../models/care_log_model.dart';
 import '../models/plant_model.dart';
 import '../utils/constants.dart';
 
@@ -25,38 +27,40 @@ class NextCareBadge extends StatelessWidget {
     final nextTreat = plant.nextTreatDate;
 
     final now = DateTime.now();
+    final l = context.l10n;
     DateTime? nearest;
-    String careType = '';
+    CareType? nearestType;
 
-    void check(DateTime? date, String type) {
+    void check(DateTime? date, CareType type) {
       if (date == null) return;
       if (nearest == null || date.isBefore(nearest!)) {
         nearest = date;
-        careType = type;
+        nearestType = type;
       }
     }
 
-    check(nextWater, 'Water');
-    check(nextFertilize, 'Fertilize');
-    check(nextMist, 'Mist');
-    check(nextRepot, 'Repot');
-    check(nextPrune, 'Prune');
-    check(nextTreat, 'Treat');
+    check(nextWater, CareType.water);
+    check(nextFertilize, CareType.fertilize);
+    check(nextMist, CareType.mist);
+    check(nextRepot, CareType.repot);
+    check(nextPrune, CareType.prune);
+    check(nextTreat, CareType.treat);
 
     if (nearest == null) {
       return _Badge(
-        text: 'No schedule',
+        text: l.noSchedule,
         backgroundColor: AppColors.bgTertiary,
         textColor: AppColors.textTertiary,
       );
     }
 
+    final careType = context.careLabel(nearestType!);
     final isOverdue = nearest!.isBefore(now);
     final diff = nearest!.difference(now).inDays;
 
     if (isOverdue) {
       return _Badge(
-        text: '$careType overdue',
+        text: l.careOverdue(careType),
         backgroundColor: AppColors.error.withOpacity(0.12),
         textColor: dark ? AppColors.errorDark : AppColors.error,
       );
@@ -64,14 +68,14 @@ class NextCareBadge extends StatelessWidget {
 
     if (diff == 0) {
       return _Badge(
-        text: '$careType today',
+        text: l.careDueToday(careType),
         backgroundColor: AppColors.warning.withOpacity(0.16),
         textColor: dark ? AppColors.warningDark : AppColors.watchText,
       );
     }
 
     return _Badge(
-      text: '$careType in $diff days',
+      text: l.careDueWithType(diff, careType),
       backgroundColor: AppColors.accent.withOpacity(0.12),
       textColor: dark ? AppColors.accentLight : AppColors.accent,
     );

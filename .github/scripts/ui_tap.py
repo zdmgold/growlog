@@ -23,9 +23,13 @@ for n in root.iter("node"):
         if v:
             # A tab's description repeats its label on two lines ("Scans\nScans"); treat that as one exact label
             # so "Scans" is not confused with a longer label that merely contains it (e.g. the camera button).
-            parts = {p.strip().lower() for p in v.split("\n") if p.strip()}
+            lines = [p.strip().lower() for p in v.split("\n") if p.strip()]
+            parts = set(lines)
             norm = parts.pop() if len(parts) == 1 else v.lower()
             nodes.append((norm, (l + r) // 2, (t + bt) // 2, t))
+            # A tab's description is "Label\nTab 2 of 3": let each line match on its own as well.
+            if len(parts) > 1 or len(lines) > 1:
+                for ln in set(lines): nodes.append((ln, (l + r) // 2, (t + bt) // 2, t))
 for lab in labels:
     lab = lab.lower()
     for mode in ("exact", "sub"):

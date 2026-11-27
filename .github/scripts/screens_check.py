@@ -73,10 +73,12 @@ def render(l, key, params):
         return "".join(out)
     return ev(arb(l)[key])
 
-def parse_fmt(item):
+def parse_fmt(item, lang=None):
     _, key, rest = item.split(":", 2); params = {}
     for kv in rest.split(","):
-        k, v = kv.split("=", 1); params[k] = int(v) if v.isdigit() else v
+        k, v = kv.split("=", 1)
+        if v.startswith("@"): v = arb(lang)[v[1:]]          # @careTypeWater -> that language's label
+        params[k] = int(v) if v.isdigit() else v
     return key, params
 
 def texts(paths):
@@ -93,7 +95,7 @@ def texts(paths):
 def expected(l, item):
     if item.startswith("text:"): return item[5:], None
     if item.startswith("fmt:"):
-        key, params = parse_fmt(item); return render(l, key, params), render("en", key, params)
+        key, params = parse_fmt(item, l); key2, params_en = parse_fmt(item, "en"); return render(l, key, params), render("en", key, params_en)
     if item.startswith("sym:"):
         i = item[4:]; return sym(l)["labels"].get(i), sym("en")["labels"].get(i) if False else None
     if item.startswith("prob:"):

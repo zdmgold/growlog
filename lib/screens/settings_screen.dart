@@ -595,7 +595,7 @@ class _ThemeSelector extends StatelessWidget {
               child: Semantics(
                 button: true,
                 selected: value == mode,
-                label: '$label theme',
+                label: '${context.l10n.theme}: $label',
                 child: Material(
                   color: value == mode
                       ? (isDark ? AppColors.bgTertiaryDark : AppColors.bgSecondary)

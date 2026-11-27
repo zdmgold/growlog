@@ -33,8 +33,8 @@ verify(){ local name=$1 l=$2 r=$3; shift 3; local xs=""; for s in a b c; do [ -f
   if echo "$R" | grep -q "RESULT PASS"; then say "PASS: $name"; PASSES=$((PASSES+1)); else say "FAIL: $name"; FAILS=$((FAILS+1)); echo "$R" | grep -E "MISSING|LEAK|found" | head -8 | sed 's/^/     /' | tee -a "$LOG" >/dev/null; fi; }
 openplant(){ # lang name
   tap "$(key $1 navGarden)"; sleep 2; tap "$(key $1 plantsTab)"; sleep 1
-  local PC; PC=$(key $1 plantCardAccessibility | sed "s/{plantName}/$2/")
-  for t in 1 2 3 4; do tap "$PC" && break; scrolldn; done; sleep 3; }
+  local PC; PC=$(key $1 openPlantLabel | sed "s/{name}/$2/")
+  for t in 1 2 3 4; do tap "$PC" "$2" && break; scrolldn; done; sleep 3; }
 
 say "===== seed the database ====="
 adb shell am force-stop $PKG; adb shell pm clear $PKG >/dev/null 2>&1
@@ -62,7 +62,7 @@ for entry in ar:ar he:he ko:ko zh:zh-CN ja:ja de:de hi:hi fr:fr es:es pt:pt; do
   tap "$(key $L navSchedule)"; sleep 2; capture_scroll ${L}_schedule
   verify ${L}_schedule $L 0.5 dueNow "fmt:overdueDays:count=15" "fmt:overdueDays:count=5" "fmt:overdueDays:count=2" "fmt:overdueDays:count=1"
   tap "$(key $L navGarden)"; sleep 2; tap "$(key $L plantsTab)"; sleep 1; capture ${L}_garden
-  verify ${L}_garden $L 0.0 "fmt:plantCountLabel:count=17" plantsTab
+  verify ${L}_garden $L 0.0 "fmt:plantCountLabel:count=17" plantsTab "fmt:careOverdue:careType=@careTypeWater" "fmt:careDueWithType:count=11,careType=@careTypeWater"
   tap "$(key $L roomsTitle)"; sleep 2; capture ${L}_rooms
   verify ${L}_rooms $L 0.6 "fmt:roomCardAccessibility:count=12,roomName=Room C" "fmt:roomCardAccessibility:count=3,roomName=Room B" "fmt:roomCardAccessibility:count=2,roomName=Room A"
   tap "$(key $L wishlistTitle)"; sleep 2; capture ${L}_wishlist; verify ${L}_wishlist $L 0.5 "text:Wish A" "text:Wish B"
@@ -80,7 +80,7 @@ for entry in ar:ar he:he ko:ko zh:zh-CN ja:ja de:de hi:hi fr:fr es:es pt:pt; do
   adb shell input keyevent 4; sleep 2
   tap "$(key $L offSetupTitle)"; sleep 2; tap "$(key $L offUseKey)"; sleep 3; capture ${L}_connectai
   verify ${L}_connectai $L 0.6 connectAiTitle chooseProvider hintPayAsYouGo hintFreeTier hintCheckPricing hintSomeFree
-  adb shell input keyevent 4; sleep 2; ensure_app; tap "$(key $L navHome)"; sleep 2
+  adb shell input keyevent 4; sleep 2; adb shell input keyevent 4; sleep 2; ensure_app; tap "$(key $L navHome)"; sleep 2
   tap "$(key $L askPaul)"; sleep 3; capture ${L}_paul; verify ${L}_paul $L 0.6 paulNeedsConnection connectAiToChat notConnected
   adb shell input keyevent 4; sleep 2
   say "  overflow lines in $L: $(( $(overflow) - OV0 ))"
