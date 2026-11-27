@@ -75,7 +75,7 @@ class NextCareBadge extends StatelessWidget {
     }
 
     return _Badge(
-      text: l.careDueWithType(diff, careType),
+      text: l.careDueWithType(careType, diff),
       backgroundColor: AppColors.accent.withOpacity(0.12),
       textColor: dark ? AppColors.accentLight : AppColors.accent,
     );
