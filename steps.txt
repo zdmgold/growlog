@@ -1,0 +1,964 @@
+===== seed the database =====
+database pulled: 61440 bytes
+photos copied into the app: 3
+{'rooms': 3, 'plants': 19, 'care_logs': 17, 'photos': 16, 'scans': 2}
+  (app not in front -> relaunching)
+    ok      fmt:statusDue:count=15
+    ok      navHome
+    ok      navGarden
+    found 3/3 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: seed_en_home
+===== ar (ar) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING dueNow: 'مستحق الآن'
+    ok      fmt:overdueDays:count=15
+    ok      fmt:overdueDays:count=5
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 4/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_schedule
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17 نباتًا'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: 'سقي خلال 11 يومًا'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:photosCount:count=3: '3 صور'
+    ok      fmt:overdueDays:count=2
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:photosCount:count=11: '11 صورة'
+    ok      fmt:overdueDays:count=5
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05، فتح النبتة P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05، فتح النبتة P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05، فتح النبتة P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05، فتح النبتة P05
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: 'خلال 5 أيام'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ar_p05
+       MISSING fmt:careDueInDays:count=5: 'خلال 5 أيام'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:careDueInDays:count=12
+    found 1/1 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_p17
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: 'الإشعارات'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: 'اربط الذكاء الاصطناعي للدردشة'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ar_paul
+  overflow lines in ar: 0
+===== he (he) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING dueNow: 'לביצוע עכשיו'
+    ok      fmt:overdueDays:count=15
+    ok      fmt:overdueDays:count=5
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 4/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_schedule
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17 צמחים'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: 'השקיה בעוד 11 ימים'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:photosCount:count=3: '3 תמונות'
+    MISSING fmt:overdueDays:count=2: 'באיחור של יומיים'
+    ok      doctorTitle
+    found 1/3 (need 2), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: he_p01
+       MISSING fmt:photosCount:count=3: '3 תמונות'
+       MISSING fmt:overdueDays:count=2: 'באיחור של יומיים'
+       found 1/3 (need 2), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:photosCount:count=11: '11 תמונות'
+    MISSING fmt:overdueDays:count=5: 'באיחור של 5 ימים'
+    found 0/2 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: he_p03
+       MISSING fmt:photosCount:count=11: '11 תמונות'
+       MISSING fmt:overdueDays:count=5: 'באיחור של 5 ימים'
+       found 0/2 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05, פתיחת הצמח P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, פתיחת הצמח P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, פתיחת הצמח P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, פתיחת הצמח P05
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: 'בעוד 5 ימים'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: he_p05
+       MISSING fmt:careDueInDays:count=5: 'בעוד 5 ימים'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: 'בעוד 12 ימים'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: he_p17
+       MISSING fmt:careDueInDays:count=12: 'בעוד 12 ימים'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: 'התראות'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: 'חברו AI כדי לשוחח'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: he_paul
+  overflow lines in he: 0
+===== ko (ko) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING dueNow: '지금 할 일'
+    MISSING fmt:overdueDays:count=15: '15일 지연'
+    MISSING fmt:overdueDays:count=5: '5일 지연'
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 2/5 (need 3), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ko_schedule
+       MISSING dueNow: '지금 할 일'
+       MISSING fmt:overdueDays:count=15: '15일 지연'
+       MISSING fmt:overdueDays:count=5: '5일 지연'
+       found 2/5 (need 3), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '식물 17개'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: '11일 후 물주기'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=3
+    MISSING fmt:overdueDays:count=2: '2일 지연'
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=11
+    MISSING fmt:overdueDays:count=5: '5일 지연'
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05, 식물 열기 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, 식물 열기 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, 식물 열기 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, 식물 열기 P05
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: '5일 후'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ko_p05
+       MISSING fmt:careDueInDays:count=5: '5일 후'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: '12일 후'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ko_p17
+       MISSING fmt:careDueInDays:count=12: '12일 후'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: '알림'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: '채팅하려면 AI 연결'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ko_paul
+  overflow lines in ko: 0
+===== zh (zh-CN) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      dueNow
+    MISSING fmt:overdueDays:count=15: '逾期 15 天'
+    MISSING fmt:overdueDays:count=5: '逾期 5 天'
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 3/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_schedule
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17 株植物'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: '11天后浇水'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=3
+    MISSING fmt:overdueDays:count=2: '逾期 2 天'
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=11
+    MISSING fmt:overdueDays:count=5: '逾期 5 天'
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05，打开植物 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05，打开植物 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05，打开植物 P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05，打开植物 P05
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: '5天后'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: zh_p05
+       MISSING fmt:careDueInDays:count=5: '5天后'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: '12天后'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: zh_p17
+       MISSING fmt:careDueInDays:count=12: '12天后'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: '通知'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: '连接 AI 即可聊天'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: zh_paul
+  overflow lines in zh: 0
+===== ja (ja) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      dueNow
+    MISSING fmt:overdueDays:count=15: '15日遅れ'
+    MISSING fmt:overdueDays:count=5: '5日遅れ'
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 3/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_schedule
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17株'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: '11日後に水やり'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=3
+    MISSING fmt:overdueDays:count=2: '2日遅れ'
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=11
+    MISSING fmt:overdueDays:count=5: '5日遅れ'
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05、植物を開く P05
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: '5日後'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ja_p05
+       MISSING fmt:careDueInDays:count=5: '5日後'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P17、植物を開く P17
+  (app not in front -> relaunching)
+  NOT FOUND: P17、植物を開く P17
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: '12日後'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: ja_p17
+       MISSING fmt:careDueInDays:count=12: '12日後'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: '通知'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: 'チャットするにはAIを接続'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: ja_paul
+  overflow lines in ja: 0
+===== de (de) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      dueNow
+    MISSING fmt:overdueDays:count=15: '15 Tage überfällig'
+    MISSING fmt:overdueDays:count=5: '5 Tage überfällig'
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 3/5 (need 3), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_schedule
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17 Pflanzen'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: 'Gießen in 11 Tagen'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=3
+    MISSING fmt:overdueDays:count=2: '2 Tage überfällig'
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=11
+    MISSING fmt:overdueDays:count=5: '5 Tage überfällig'
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05, Pflanze öffnen P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, Pflanze öffnen P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, Pflanze öffnen P05
+  (app not in front -> relaunching)
+  NOT FOUND: P05, Pflanze öffnen P05
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: 'In 5 Tagen'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: de_p05
+       MISSING fmt:careDueInDays:count=5: 'In 5 Tagen'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: 'In 12 Tagen'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: de_p17
+       MISSING fmt:careDueInDays:count=12: 'In 12 Tagen'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: 'Benachrichtigungen'
+    MISSING backupRestore: 'Sicherung & Wiederherstellung'
+    ok      exportData
+    ok      importData
+    MISSING about: 'Über die App'
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    MISSING storageSection: 'Speicher'
+    found 10/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: 'KI zum Chatten verbinden'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: de_paul
+  overflow lines in de: 1
+===== hi (hi) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_home
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING dueNow: 'अभी करना है'
+    MISSING fmt:overdueDays:count=15: '15 दिन की देरी'
+    MISSING fmt:overdueDays:count=5: '5 दिन की देरी'
+    ok      fmt:overdueDays:count=2
+    ok      fmt:overdueDays:count=1
+    found 2/5 (need 3), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: hi_schedule
+       MISSING dueNow: 'अभी करना है'
+       MISSING fmt:overdueDays:count=15: '15 दिन की देरी'
+       MISSING fmt:overdueDays:count=5: '5 दिन की देरी'
+       found 2/5 (need 3), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:plantCountLabel:count=17: '17 पौधे'
+    ok      plantsTab
+    ok      fmt:careOverdue:careType=@careTypeWater
+    MISSING fmt:careDueWithType:count=11,careType=@careTypeWater: 'पानी देना 11 दिन में'
+    found 2/4 (need 0), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_garden
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:roomCardAccessibility:count=12,roomName=Room C
+    ok      fmt:roomCardAccessibility:count=3,roomName=Room B
+    ok      fmt:roomCardAccessibility:count=2,roomName=Room A
+    found 3/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_rooms
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      text:Wish A
+    ok      text:Wish B
+    found 2/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_wishlist
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=3
+    MISSING fmt:overdueDays:count=2: '2 दिन की देरी'
+    ok      doctorTitle
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_p01
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      fmt:photosCount:count=11
+    MISSING fmt:overdueDays:count=5: '5 दिन की देरी'
+    found 1/2 (need 1), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_p03
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P05, पौधा खोलें P05
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=5: '5 दिन में'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: hi_p05
+       MISSING fmt:careDueInDays:count=5: '5 दिन में'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  NOT FOUND: P17, पौधा खोलें P17
+  (app not in front -> relaunching)
+  NOT FOUND: P17, पौधा खोलें P17
+  (app not in front -> relaunching)
+  NOT FOUND: P17, पौधा खोलें P17
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    MISSING fmt:careDueInDays:count=12: '12 दिन में'
+    found 0/1 (need 1), leaks 0, skipped 0
+  RESULT FAIL
+FAIL: hi_p17
+       MISSING fmt:careDueInDays:count=12: '12 दिन में'
+       found 0/1 (need 1), leaks 0, skipped 0
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      settingsTitle
+    ok      theme
+    ok      themeSystem
+    ok      themeLight
+    ok      themeDark
+    MISSING notifications: 'सूचनाएँ'
+    ok      backupRestore
+    ok      exportData
+    ok      importData
+    ok      about
+    ok      version
+    ok      privacyPolicy
+    ok      termsOfService
+    ok      storageSection
+    found 13/14 (need 7), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_settings
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      connectAiTitle
+    ok      chooseProvider
+    ok      hintPayAsYouGo
+    ok      hintFreeTier
+    ok      hintCheckPricing
+    ok      hintSomeFree
+    found 6/6 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_connectai
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+  (app not in front -> relaunching)
+    ok      paulNeedsConnection
+    MISSING connectAiToChat: 'चैट के लिए AI कनेक्ट करें'
+    ok      notConnected
+    found 2/3 (need 2), leaks 0, skipped 0
+  RESULT PASS
+PASS: hi_paul
+  overflow lines in hi: 0
+===== fr (fr) =====
+  (app not in front -> relaunching)
+    ok      navHome
+    ok      navGarden
+    ok      navSchedule
+    ok      fmt:statusDue:count=15
+    found 4/4 (need 4), leaks 0, skipped 0
+  RESULT PASS
+PASS: fr_home
+  (app not in front -> relaunching)
